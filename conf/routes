@@ -12,3 +12,4 @@ GET     /assets/*file                        controllers.Assets.versioned(path="
 GET     /login                               controllers.Application.login_with_github()
 GET     /github_oauth_callback               controllers.Application.just_received_code()
 GET     /logged_in                           controllers.Application.just_logged_in()
+GET     /logout                              controllers.Application.logout()
