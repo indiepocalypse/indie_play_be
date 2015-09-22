@@ -6,10 +6,12 @@ package models;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import com.avaje.ebean.Model;
 
 @Entity
 public class repo {
+    // TODO: rename to github_reopo
+    // TODO: create an indie_repo
+
     @Id
     public String id;
     public String name;
