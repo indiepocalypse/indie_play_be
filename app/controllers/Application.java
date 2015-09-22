@@ -46,6 +46,7 @@ public class Application extends Controller {
             session().put("token_type", token_type);
             session().put("scope", scope);
             return redirect(github_access.uri_logged_in);
+
         }
         return unauthorized();
     }
