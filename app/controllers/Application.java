@@ -15,6 +15,12 @@ import java.util.concurrent.TimeUnit;
 public class Application extends Controller {
 
     public Result index() {
+        // TODO: return a nice, mostly static page
+        if (session().get("token")!=null) {
+            // user is logged in
+            // TODO: make consts of all those routings...
+            return redirect("/logged_in");
+        }
         return ok(main.render("title!", Html.apply("<a href=\"/login\">Please login</a>")));
     }
     public Result login_with_github() {
@@ -52,7 +58,15 @@ public class Application extends Controller {
     }
 
     public F.Promise<Result> just_logged_in() {
+        // TODO: extract functions `is_logged_in` etc.
+        if (session().get("token")==null) {
+            // user is not really logged  in
+            return F.Promise.promise(()->redirect("/"));
+        }
         return F.Promise.promise(()-> {
+            // This is some (currently primitive) sync stuff. The user should eventually be able to trigger such
+            // sync from the FE. Also this should happen the first time a user logs in and periodically.
+            // so this should be refactore out, etc.
             WSResponse res_rep;
             WSResponse res_user;
             try {
@@ -76,13 +90,14 @@ public class Application extends Controller {
             } catch (Exception e) {
                 return ok(main.render("title!", Html.apply(e.toString())));
             }
-            return ok(main.render("title!", Html.apply("<img src=\"" + session("avatar_url") + "\" alt=\"avatar\" style=\"width:304px;height:304px;\">" + "   Your repos: " + res_rep.getBody())));
+            // TODO: return a SPA (React, etc.) This should be the whole FE
+            return ok(main.render("title!", Html.apply("<a href=\"/logout\">Logout</a>"+"<img src=\"" + session("avatar_url") + "\" alt=\"avatar\" style=\"width:304px;height:304px;\">" + "   Your repos: " + res_rep.getBody())));
         });
     }
 
     public Result logout() {
         session().clear();
-        return ok(main.render("title!", Html.apply("you are logged out!")));
+        return redirect("/");
     }
 }
 
