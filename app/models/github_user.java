@@ -1,18 +1,13 @@
 package models;
 
+import play.data.format.Formats;
+
 /**
  * Created by skariel on 22/09/15.
  */
 
-import play.data.format.Formats;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
-@Entity
 public class github_user {
     public String login;
-    @Id
     public int id;
     public String avatar_url;
     public String gravatar_id;

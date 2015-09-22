@@ -18,12 +18,12 @@ import java.util.concurrent.TimeUnit;
 public class API extends Controller {
     // TODO: implement some api!
     // wanted api:
-    // -- get github_user (avatar uri, name, mail)
-    // -- get github_user repos (repo name, uri)
-    // -- get github_user shares in indie repos (repo for each share, etc)
+    // -- get user (avatar uri, name, mail)
+    // -- get user repos (repo name, uri)
+    // -- get user shares in indie repos (repo for each share, etc)
     // -- get indie repos (shares, owners, etc.)
     // -- get pull requests for each repo
-    // -- get github_user/repo voting history/status
+    // -- get user/repo voting history/status
     // much more...
 
 

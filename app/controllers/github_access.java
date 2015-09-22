@@ -11,7 +11,7 @@ public class github_access {
     static final String callback_uri = "http://127.0.0.1:9000/github_oauth_callback";
     public static final String uri_logged_in = "http://127.0.0.1:9000/logged_in";
     public static String get_github_access_url(String state) {
-        final String github_access = "https://github.com/login/oauth/authorize?client_id=__CLIENT_ID__&redirect_uri=__CALLBACK_URI__&scope=github_user,public_repo&state=__STATE__";
+        final String github_access = "https://github.com/login/oauth/authorize?client_id=__CLIENT_ID__&redirect_uri=__CALLBACK_URI__&scope=user,public_repo&state=__STATE__";
         return github_access.replace("__STATE__", state)
                 .replace("__CLIENT_ID__", client_id)
                 .replace("__CALLBACK_URI__", callback_uri);

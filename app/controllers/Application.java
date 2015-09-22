@@ -17,7 +17,7 @@ public class Application extends Controller {
     public Result index() {
         // TODO: return a nice, mostly static page
         if (session().get("token")!=null) {
-            // github_user is logged in
+            // user is logged in
             // TODO: make consts of all those routings...
             return redirect("/logged_in");
         }
@@ -60,22 +60,22 @@ public class Application extends Controller {
     public F.Promise<Result> just_logged_in() {
         // TODO: extract functions `is_logged_in` etc.
         if (session().get("token")==null) {
-            // github_user is not really logged  in
+            // user is not really logged  in
             return F.Promise.promise(()->redirect("/"));
         }
         return F.Promise.promise(()-> {
-            // This is some (currently primitive) sync stuff. The github_user should eventually be able to trigger such
-            // sync from the FE. Also this should happen the first time a github_user logs in and periodically.
+            // This is some (currently primitive) sync stuff. The user should eventually be able to trigger such
+            // sync from the FE. Also this should happen the first time a user logs in and periodically.
             // so this should be refactore out, etc.
             WSResponse res_rep;
             WSResponse res_user;
             try {
-                WSRequest req_rep = WS.url("https://api.github.com/github_user/repos")
+                WSRequest req_rep = WS.url("https://api.github.com/user/repos")
                         .setHeader("Authorization", "token " + session().get("token"))
                         .setHeader("Accept", "application/vnd.github.v3 + json")
                         .setMethod("GET");
                 F.Promise<WSResponse> pres_rep = req_rep.execute();
-                WSRequest req_user = WS.url("https://api.github.com/github_user")
+                WSRequest req_user = WS.url("https://api.github.com/user")
                         .setHeader("Authorization", "token " + session().get("token"))
                         .setHeader("Accept", "application/vnd.github.v3 + json")
                         .setMethod("GET");
@@ -88,7 +88,7 @@ public class Application extends Controller {
                 session().put("avatar_url", avatar_url);
 
             } catch (Exception e) {
-                return ok(main.render("title!", Html.apply(e.toString())));
+                return ok(main.render("1111111", Html.apply(e.toString())));
             }
             // TODO: return a SPA (React, etc.) This should be the whole FE
             return ok(main.render("title!", Html.apply("<a href=\"/logout\">Logout</a>"+"<img src=\"" + session("avatar_url") + "\" alt=\"avatar\" style=\"width:304px;height:304px;\">" + "   Your repos: " + res_rep.getBody())));

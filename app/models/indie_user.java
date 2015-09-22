@@ -13,7 +13,7 @@ import javax.persistence.Id;
 public class indie_user {
     @Id
     public String id;
-    
+
     // TODO: should be like a supersetof the github user, include also shares etc.
     // this is just an initial list, most likely not complete at all.
 
