@@ -15,9 +15,13 @@ import java.util.concurrent.TimeUnit;
 public class Application extends Controller {
     // TODO: better organize routes, seems too much redirecting is going on...+
 
+    boolean user_is_logged() {
+        return session().get("token")!=null;
+    }
+
     public Result index() {
         // TODO: return a nice, mostly static page
-        if (session().get("token")!=null) {
+        if (user_is_logged()) {
             // user is logged in
             // TODO: make consts of all those routings...
             return redirect("/logged_in");
@@ -25,7 +29,7 @@ public class Application extends Controller {
         return ok(main.render("title!", Html.apply("<a href=\"/login\">Please login</a>")));
     }
     public Result login_with_github() {
-        if (session().get("token")==null) {
+        if (!user_is_logged()) {
             String state = github_access.get_random_string();
             session().put("state", state);
             return redirect(github_access.get_github_access_url(state));
@@ -58,8 +62,7 @@ public class Application extends Controller {
 
     public F.Promise<Result> just_logged_in() {
         // TODO: extract functions `is_logged_in` etc.
-        if (session().get("token")==null) {
-            // user is not really logged  in
+        if (!user_is_logged()) {
             return F.Promise.promise(()->redirect("/"));
         }
         return F.Promise.promise(()-> {
