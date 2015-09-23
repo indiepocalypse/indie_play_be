@@ -3,13 +3,9 @@
 # ~~~~
 
 # Home page
-GET     /                                    controllers.Application.index()
+GET     /                                    controllers.ApplicationRouts.index()
+GET     /logout                              controllers.ApplicationRouts.logout()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                        controllers.Assets.versioned(path="/public", file: Asset)
 
-# Login with github
-GET     /login                               controllers.Application.login_with_github()
-GET     /github_oauth_callback               controllers.Application.just_received_code()
-GET     /logged_in                           controllers.Application.just_logged_in()
-GET     /logout                              controllers.Application.logout()

@@ -8,9 +8,8 @@ import play.libs.ws.WSRequest;
  */
 public class github_access {
     static final String client_id = "9bc20dbe14087a22b6a7";
-    static final String callback_uri = "http://127.0.0.1:9000/github_oauth_callback";
+    static final String callback_uri = "http://127.0.0.1:9000/";
     static final String scope = ""; //"user,public_repo";
-    public static final String uri_logged_in = "http://127.0.0.1:9000/logged_in";
     public static String get_github_access_url(String state) {
         final String github_access = "https://github.com/login/oauth/authorize?client_id=__CLIENT_ID__&redirect_uri=__CALLBACK_URI__&scope="+scope+"&state=__STATE__";
         return github_access.replace("__STATE__", state)
