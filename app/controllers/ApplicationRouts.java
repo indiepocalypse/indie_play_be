@@ -1,5 +1,6 @@
 package controllers;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import play.libs.F;
 import play.libs.Json;
 import play.libs.ws.WS;
@@ -85,7 +86,17 @@ public class ApplicationRouts extends Controller {
         // user is not in the proceess of logging in
         String state = github_access.get_random_string();
         session().put("state", state);
-        return F.Promise.promise(()->ok(main.render("title!", Html.apply("<a href=\""+github_access.get_github_access_url(state)+"\">Please login</a>"))));
+
+
+        String login_link =
+                " <a class=\"btn btn-default btn-lg\""+
+                        " href=\""+github_access.get_github_access_url(state)+
+                        "\">"+
+
+                        "<img src=\"/assets/images/github_10_p.png\" alt=\"github\">" +
+
+                " Login</a>";
+        return F.Promise.promise(()->ok(main.render("title!", Html.apply(login_link))));
     }
 
     public Result logout() {
