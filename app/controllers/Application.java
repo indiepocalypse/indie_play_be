@@ -61,7 +61,6 @@ public class Application extends Controller {
     }
 
     public F.Promise<Result> just_logged_in() {
-        // TODO: extract functions `is_logged_in` etc.
         if (!user_is_logged()) {
             return F.Promise.promise(()->redirect("/"));
         }
