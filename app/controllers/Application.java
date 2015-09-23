@@ -13,6 +13,7 @@ import views.html.*;
 import java.util.concurrent.TimeUnit;
 
 public class Application extends Controller {
+    // TODO: better organize routes, seems too much redirecting is going on...+
 
     public Result index() {
         // TODO: return a nice, mostly static page
@@ -46,10 +47,8 @@ public class Application extends Controller {
                 }
                 String token = splitted[0].split("\\=")[1];
                 String token_type = splitted[2].split("\\=")[1];
-                String scope = splitted[1].split("\\=")[1];
                 session().put("token", token);
                 session().put("token_type", token_type);
-                session().put("scope", scope);
                 return redirect(github_access.uri_logged_in);
 
             });
@@ -64,7 +63,7 @@ public class Application extends Controller {
             return F.Promise.promise(()->redirect("/"));
         }
         return F.Promise.promise(()-> {
-            // This is some (currently primitive) sync stuff. The user should eventually be able to trigger such
+            // TODO: This is some (currently primitive) sync stuff. The user should eventually be able to trigger such
             // sync from the FE. Also this should happen the first time a user logs in and periodically.
             // so this should be refactore out, etc.
             WSResponse res_rep;
