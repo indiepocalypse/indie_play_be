@@ -12,7 +12,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!-- Bootstrap! -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">-->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 <html lang="en">
@@ -29,46 +29,44 @@
             <div class="container">
 
                 <a class="navbar-brand" href="/">
-                    <img alt="Indiepocalypse" src="">
+                    <strong>Indiepocalypse</strong>
                 </a>
                 <a class="navbar-link navbar-text" href="/faq">
-                    FAQ
+                    <small>FAQ</small>
                 </a>
                 <a class="navbar-link navbar-text" href="/explore">
-                    Explore
+                    <small>Explore</small>
                 </a>
                 <a class="navbar-link navbar-text" href="/blog">
-                    Blog
+                    <small>Blog</small>
                 </a>
 
-                    @if(app.user_is_logged()) {
+                @if(app.user_is_logged()) {
 
 
 
 
-                        <div class="dropdown navbar-text navbar-right" title="settings, profile & more">
-                          <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                          <img src="@app.get_avatar_url()" alt="@app.get_user_name()" style="width:30px;height:30px;">
-                          <span class="caret" ></span>
-                          </span>
-                          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <li class="dropdown-header">logged in as <strong>@app.get_user_name()</strong></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="u/@app.get_user_name()">Profile</a></li>
-                            <li><a href="/settings">Settings</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="/logout">Logout</a></li>
-                          </ul>
-                        </div>
+                    <div class="dropdown navbar-text navbar-right" title="settings, profile & more">
+                      <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                      <img src="@app.get_avatar_url()" alt="@app.get_user_name()" style="width:20px;height:20px;">
+                      <span class="caret" ></span>
+                      </span>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li class="dropdown-header">logged in as <strong>@app.get_user_name()</strong></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="u/@app.get_user_name()">Profile</a></li>
+                        <li><a href="/settings">Settings</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="/logout">Logout</a></li>
+                      </ul>
+                    </div>
 
 
 
 
-                    }else {
-                        <p class="navbar-text navbar-right">
-                            <a href=@github_access.get_github_access_url(app.get_state())>login with github</a>
-                        </p>
-                    }
+                }else {
+                    <a class="navbar-text navbar-right" href=@github_access.get_github_access_url(app.get_state())>login with github</a>
+                }
             </div>
         </nav>
         <div class="container">
