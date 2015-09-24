@@ -5,6 +5,7 @@ package models;
  */
 
 import com.avaje.ebean.Model;
+import com.avaje.ebean.annotation.Transactional;
 import com.fasterxml.jackson.databind.JsonNode;
 import play.libs.Json;
 
@@ -22,8 +23,9 @@ public class repo extends Model {
     public String description;
     public HashMap<String, Float> programming_languages_and_shares;
     public HashMap<String, BigDecimal> owners_and_shares;
-
-    public void sync(String txt) {
+    public static Finder<String, repo> find = new Finder<String,repo>(repo.class);
+    @Transactional
+    public static void sync(String txt) {
         JsonNode all_repos = Json.parse(txt);
         for (int i = 0; i < all_repos.size(); i++) {
             JsonNode repo_json = all_repos.get(i);

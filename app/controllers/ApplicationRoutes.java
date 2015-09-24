@@ -1,5 +1,6 @@
 package controllers;
 
+import models.repo;
 import play.libs.F;
 import play.libs.Json;
 import play.libs.ws.WSClient;
@@ -72,6 +73,7 @@ public class ApplicationRoutes extends Controller {
                 // TODO: This is some (currently primitive) sync stuff. The user should eventually be able to trigger such
                 // sync from the FE. Also this should happen the first time a user logs in and periodically.
                 // so this should be refactore out, etc.
+                if (repo.find.findRowCount()>0) return ok("123!");
                 WSResponse res_rep;
                 WSResponse res_user;
                 try {
@@ -95,6 +97,7 @@ public class ApplicationRoutes extends Controller {
                             .get("login")
                             .asText();
                     session().put("user_name", user_name);
+                    repo.sync(res_rep.getBody());
 
                 } catch (Exception e) {
                     return ok(main.render("1111111", Html.apply(e.toString()), this));
