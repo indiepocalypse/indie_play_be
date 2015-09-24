@@ -31,29 +31,31 @@
                     <img alt="Indiepocalypse" src="">
                 </a>
 
-                <p class="navbar-text navbar-right">
                     @if(app.user_is_logged()) {
 
 
 
 
-
-
-
-
-
-
-
-                        <img src="@app.get_avatar_url()" alt="@app.get_user_name()" style="width:30px;height:30px;">
+                        <div class="dropdown navbar-text navbar-right">
+                          <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                          <img src="@app.get_avatar_url()" alt="@app.get_user_name()" style="width:30px;height:30px;">
+                          <span class="caret" ></span>
+                          </span>
+                          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a href="#">Profile</a></li>
+                            <li><a href="#">Settings</a></li>
+                            <li><a href="#">Logout</a></li>
+                          </ul>
+                        </div>
 
 
 
 
                     }else {
-                        <a href=@github_access.get_github_access_url(app.get_state())>login with github</a>
+                        <p class="navbar-text navbar-right">
+                            <a href=@github_access.get_github_access_url(app.get_state())>login with github</a>
+                        </p>
                     }
-                </p>
-
             </div>
         </nav>
         <div class="container">
