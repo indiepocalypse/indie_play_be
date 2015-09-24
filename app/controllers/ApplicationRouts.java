@@ -67,7 +67,7 @@ public class ApplicationRouts extends Controller {
                     return ok(main.render("1111111", Html.apply(e.toString()), this));
                 }
                 // TODO: return a SPA (React, etc.) This should be the whole FE
-                return ok(main.render("title!", Html.apply("<a href=\"/logout\">Logout</a> Your repos: " + res_rep.getBody()), this));
+                return ok(main.render("title!", Html.apply("Your repos: " + res_rep.getBody()), this));
             });
         }
 
