@@ -26,7 +26,7 @@ import static org.junit.Assert.*;
 * If you are interested in mocking a whole application, see the wiki for more details.
 *
 */
-public class ApplicationRoutsTest {
+public class ApplicationRoutesTest {
     @Test
     public void simpleCheck() {
         int a = 1 + 1;

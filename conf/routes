@@ -2,9 +2,17 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page
-GET     /                                    controllers.ApplicationRouts.index()
-GET     /logout                              controllers.ApplicationRouts.logout()
+GET     /                                                      controllers.ApplicationRoutes.index()
+GET     /logout                                                controllers.ApplicationRoutes.logout()
+GET     /faq                                                   controllers.ApplicationRoutes.faq()
+GET     /explore                                               controllers.ApplicationRoutes.explore()
+GET     /blog                                                  controllers.ApplicationRoutes.blog()
+GET     /settings                                              controllers.ApplicationRoutes.settings()
+GET     /u/$user_name<[A-Za-z0-9_]+>                           controllers.ApplicationRoutes.user_profile(user_name: String)
+GET     /r/$repo_name<[A-Za-z0-9_]+>                           controllers.ApplicationRoutes.repo_profile(repo_name: String)
+GET     /r/$repo_name<[A-Za-z0-9_]+>/$pull_id<[0-9]+>         controllers.ApplicationRoutes.pull_profile(repo_name: String, pull_id: Long)
+
+# TODO: api routes
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                        controllers.Assets.versioned(path="/public", file: Asset)

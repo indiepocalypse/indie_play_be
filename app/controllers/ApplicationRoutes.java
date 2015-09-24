@@ -12,7 +12,7 @@ import views.html.*;
 
 import java.util.concurrent.TimeUnit;
 
-public class ApplicationRouts extends Controller {
+public class ApplicationRoutes extends Controller {
     // TODO: better organize routes, seems too much redirecting is going on...+
 
     public boolean user_is_logged() {
@@ -30,6 +30,35 @@ public class ApplicationRouts extends Controller {
 
     boolean is_redirected_from_github_login() {
         return request().getQueryString("code") != null;
+    }
+
+    public Result faq() {
+        return ok(main.render("faq", "This is the FAQ!", this));
+    }
+
+    public Result explore() {
+        return ok(main.render("explore", "This is Explore!", this));
+    }
+
+    public Result blog() {
+        return ok(main.render("blog", "This is the blog!", this));
+    }
+
+    public Result settings() {
+        return ok(main.render("settings", "This is user settings!", this));
+    }
+
+    public Result user_profile(String user_name) {
+        return ok(main.render(user_name, "This is the user profile of " + user_name, this));
+    }
+
+    public Result repo_profile(String repo_name) {
+        return ok(main.render(repo_name, "This is the profile of repo " + repo_name, this));
+    }
+
+    public Result pull_profile(String repo_name, Long pull_id) {
+        String pull_id_str = Long.toString(pull_id);
+        return ok(main.render(repo_name + "@" + pull_id_str, "This is the pull id " + pull_id_str + " in repo " + repo_name, this));
     }
 
     public F.Promise<Result> index() {
