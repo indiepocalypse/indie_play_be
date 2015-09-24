@@ -1,4 +1,4 @@
-@(title: String)(content: Html)
+@(title: String)(content: Object)(app: ApplicationRouts)
 
 <!DOCTYPE html>
 
@@ -25,15 +25,40 @@
 
     <body>
         <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
-        <a class="navbar-brand" href="/">
-        <img alt="Indiepocalypse" src="">
-        </a>
-        </div>
+            <div class="container">
+
+                <a class="navbar-brand" href="/">
+                    <img alt="Indiepocalypse" src="">
+                </a>
+
+                <p class="navbar-text navbar-right">
+                    @if(app.user_is_logged()) {
+
+
+
+
+
+
+
+
+
+
+
+                        <img src="@app.get_avatar_url()" alt="@app.get_user_name()" style="width:30px;height:30px;">
+
+
+
+
+                    }else {
+                        <a href=@github_access.get_github_access_url(app.get_state())>login with github</a>
+                    }
+                </p>
+
+            </div>
         </nav>
         <div class="container">
         @content
         </div>
-        </body>
+    </body>
 </html>
 

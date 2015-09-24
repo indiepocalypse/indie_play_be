@@ -1,6 +1,5 @@
 package controllers;
 
-import org.apache.commons.lang3.StringEscapeUtils;
 import play.libs.F;
 import play.libs.Json;
 import play.libs.ws.WS;
@@ -16,8 +15,17 @@ import java.util.concurrent.TimeUnit;
 public class ApplicationRouts extends Controller {
     // TODO: better organize routes, seems too much redirecting is going on...+
 
-    boolean user_is_logged() {
+    public boolean user_is_logged() {
         return session().get("token")!=null;
+    }
+    public String get_avatar_url() {
+        return session().get("avatar_url");
+    }
+    public String get_user_name() {
+        return session().get("user_name");
+    }
+    public String get_state() {
+        return session().get("state");
     }
 
     boolean is_redirected_from_github_login() {
@@ -50,12 +58,16 @@ public class ApplicationRouts extends Controller {
                             .get("avatar_url")
                             .asText();
                     session().put("avatar_url", avatar_url);
+                    String user_name = Json.parse(res_user.getBody())
+                            .get("login")
+                            .asText();
+                    session().put("user_name", user_name);
 
                 } catch (Exception e) {
-                    return ok(main.render("1111111", Html.apply(e.toString())));
+                    return ok(main.render("1111111", Html.apply(e.toString()), this));
                 }
                 // TODO: return a SPA (React, etc.) This should be the whole FE
-                return ok(main.render("title!", Html.apply("<a href=\"/logout\">Logout</a>" + "<img src=\"" + session("avatar_url") + "\" alt=\"avatar\" style=\"width:304px;height:304px;\">" + "   Your repos: " + res_rep.getBody())));
+                return ok(main.render("title!", Html.apply("<a href=\"/logout\">Logout</a> Your repos: " + res_rep.getBody()), this));
             });
         }
 
@@ -67,7 +79,6 @@ public class ApplicationRouts extends Controller {
                 session().put("github_code", code);
                 return F.Promise.promise(() -> {
                     WSResponse res = github_access.get_github_access_token(state, code).execute().get(60, TimeUnit.SECONDS);
-
                     String body = res.getBody();
                     String[] splitted = body.split("\\&");
                     if ((splitted.length != 3) || (!splitted[0].contains("=")) || (!splitted[1].contains("=")) || (!splitted[2].contains("="))) {
@@ -86,17 +97,7 @@ public class ApplicationRouts extends Controller {
         // user is not in the proceess of logging in
         String state = github_access.get_random_string();
         session().put("state", state);
-
-
-        String login_link =
-                " <a class=\"btn btn-default btn-lg\""+
-                        " href=\""+github_access.get_github_access_url(state)+
-                        "\">"+
-
-                        "<img src=\"/assets/images/github_10_p.png\" alt=\"github\">" +
-
-                " Login</a>";
-        return F.Promise.promise(()->ok(main.render("title!", Html.apply(login_link))));
+        return F.Promise.promise(()->ok(main.render("title!", null, this)));
     }
 
     public Result logout() {
