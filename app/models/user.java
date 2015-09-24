@@ -8,6 +8,7 @@ import play.data.format.Formats;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.ArrayList;
 
 @Entity
 public class user {
@@ -15,4 +16,6 @@ public class user {
     public String name;
     public String email;
     public Formats.DateTime joined_datetime;
+    public Formats.DateTime updated_datetime;
+    public ArrayList<String> repos;
 }

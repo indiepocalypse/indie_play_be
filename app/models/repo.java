@@ -5,6 +5,8 @@ package models;
  */
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.databind.JsonNode;
+import play.libs.Json;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -18,6 +20,17 @@ public class repo extends Model {
     public String github_url;
     public int stars;
     public String description;
-    public HashMap<String, Float> programming_languages;
-    public HashMap<String, BigDecimal> owners;
+    public HashMap<String, Float> programming_languages_and_shares;
+    public HashMap<String, BigDecimal> owners_and_shares;
+
+    public void sync(String txt) {
+        JsonNode all_repos = Json.parse(txt);
+        for (int i = 0; i < all_repos.size(); i++) {
+            JsonNode repo_json = all_repos.get(i);
+            String name = repo_json.get("name").asText();
+            repo r = new repo();
+            r.name = name;
+            r.save();
+        }
+    }
 }

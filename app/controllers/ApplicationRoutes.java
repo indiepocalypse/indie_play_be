@@ -2,7 +2,7 @@ package controllers;
 
 import play.libs.F;
 import play.libs.Json;
-import play.libs.ws.WS;
+import play.libs.ws.WSClient;
 import play.libs.ws.WSRequest;
 import play.libs.ws.WSResponse;
 import play.mvc.*;
@@ -10,10 +10,14 @@ import play.mvc.*;
 import play.twirl.api.Html;
 import views.html.*;
 
+import javax.inject.Inject;
 import java.util.concurrent.TimeUnit;
 
 public class ApplicationRoutes extends Controller {
     // TODO: better organize routes, seems too much redirecting is going on...+
+
+    @Inject
+    WSClient ws;
 
     public boolean user_is_logged() {
         return session().get("token")!=null;
@@ -71,12 +75,12 @@ public class ApplicationRoutes extends Controller {
                 WSResponse res_rep;
                 WSResponse res_user;
                 try {
-                    WSRequest req_rep = WS.url("https://api.github.com/user/repos")
+                    WSRequest req_rep = ws.url("https://api.github.com/user/repos")
                             .setHeader("Authorization", "token " + session().get("token"))
                             .setHeader("Accept", "application/vnd.github.v3 + json")
                             .setMethod("GET");
                     F.Promise<WSResponse> pres_rep = req_rep.execute();
-                    WSRequest req_user = WS.url("https://api.github.com/user")
+                    WSRequest req_user = ws.url("https://api.github.com/user")
                             .setHeader("Authorization", "token " + session().get("token"))
                             .setHeader("Accept", "application/vnd.github.v3 + json")
                             .setMethod("GET");
@@ -107,7 +111,7 @@ public class ApplicationRoutes extends Controller {
             if (state.equals(session().get("state"))) {
                 session().put("github_code", code);
                 return F.Promise.promise(() -> {
-                    WSResponse res = github_access.get_github_access_token(state, code).execute().get(60, TimeUnit.SECONDS);
+                    WSResponse res = github_access.get_github_access_token(this.ws, state, code).execute().get(60, TimeUnit.SECONDS);
                     String body = res.getBody();
                     String[] splitted = body.split("\\&");
                     if ((splitted.length != 3) || (!splitted[0].contains("=")) || (!splitted[1].contains("=")) || (!splitted[2].contains("="))) {
