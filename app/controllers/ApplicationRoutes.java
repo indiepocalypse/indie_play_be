@@ -12,10 +12,12 @@ import play.twirl.api.Html;
 import views.html.*;
 
 import javax.inject.Inject;
+import java.io.FileNotFoundException;
 import java.util.concurrent.TimeUnit;
 
 public class ApplicationRoutes extends Controller {
     // TODO: better organize routes, seems too much redirecting is going on...+
+    // TODO: initialization, for e.g. load credentials when class is constructed
 
     @Inject
     WSClient ws;
@@ -41,8 +43,20 @@ public class ApplicationRoutes extends Controller {
         return ok(main.render("faq", "This is the FAQ!", this));
     }
 
-    public Result explore() {
-        return ok(main.render("explore", "This is Explore!", this));
+    public F.Promise<Result> explore() {
+        // TODO: do this on initialization, see upper level todo...
+        credentials credentials = null;
+        try {
+            credentials = new credentials();
+        }
+        catch (FileNotFoundException e) {
+            return F.Promise.promise(()->ok(main.render("explore", "problem loading credentials!", this)));
+        }
+        F.Promise<WSResponse> pres = github_access.get_indie_repositories(ws, credentials).execute();
+        return F.Promise.promise(()-> {
+            String reps = pres.get(60, TimeUnit.SECONDS).getBody();
+            return ok(main.render("explore", reps, this));
+        });
     }
 
     public Result blog() {
@@ -73,7 +87,7 @@ public class ApplicationRoutes extends Controller {
                 // TODO: This is some (currently primitive) sync stuff. The user should eventually be able to trigger such
                 // sync from the FE. Also this should happen the first time a user logs in and periodically.
                 // so this should be refactore out, etc.
-                if (repo.find.findRowCount()>0) return ok("123!");
+                //if (repo.find.findRowCount()>0) return ok("123!");
                 WSResponse res_rep;
                 WSResponse res_user;
                 try {
@@ -97,7 +111,7 @@ public class ApplicationRoutes extends Controller {
                             .get("login")
                             .asText();
                     session().put("user_name", user_name);
-                    repo.sync(res_rep.getBody());
+                    //repo.sync(res_rep.getBody());
 
                 } catch (Exception e) {
                     return ok(main.render("1111111", Html.apply(e.toString()), this));

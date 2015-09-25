@@ -2,3 +2,4 @@ logs
 target
 .*
 !.gitignore
+credentials.java

@@ -28,4 +28,14 @@ public class github_access {
     public static String get_random_string() {
         return new RandomString(12).nextString();
     }
+
+    public static final WSRequest indie_auth_request(WSClient ws, credentials credentials, String path) {
+        return ws.url("https://api.github.com"+path)
+                .setHeader("Authorization", "Basic "+credentials.getAuth());
+    }
+    public static final WSRequest get_indie_repositories(WSClient ws, credentials credentials) {
+        return indie_auth_request(ws, credentials, "/user")
+                .setMethod("GET");
+        // TODO: this is just a stub, getting the user details for testing basic auth
+    }
 }
