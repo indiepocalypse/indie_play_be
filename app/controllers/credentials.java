@@ -1,5 +1,8 @@
 package controllers;
 
+import org.jboss.netty.handler.codec.base64.Base64Encoder;
+import sun.misc.BASE64Encoder;
+
 import java.io.FileNotFoundException;
 import java.util.Base64;
 
@@ -14,7 +17,7 @@ public class credentials {
     public credentials() throws FileNotFoundException {
         Base64.Encoder encoder = Base64.getMimeEncoder();
         String str = username+":"+pssw;
-        auth = encoder.encode(str.getBytes()).toString();
+        auth = encoder.encodeToString(str.getBytes());
     }
     public String getAuth() {
         return auth;
