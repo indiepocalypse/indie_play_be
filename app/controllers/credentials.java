@@ -10,8 +10,8 @@ import java.util.Base64;
  * Created by skariel on 25/09/15.
  */
 public class credentials {
-    static final String username = "theindiepocalypse";
-    static final String pssw = "lets do it 2";
+    public static final String username = "theindiepocalypse";
+    public static final String pssw = "lets do it 2";
     String auth = null;
 
     public credentials() throws FileNotFoundException {
