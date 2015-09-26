@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/indie_play_be -Dhttp.port=$PORT -DapplyEvolutions.default=true -Ddb.default.driver=org.postgresql.Driver -Ddb.default.url=$DATABASE_URL
+web: target/universal/stage/bin/indie_play_be -Dhttp.port=$PORT -DapplyEvolutions.default=true -Ddb.default.driver=org.postgresql.Driver -Ddb.default.url=$DATABASE_URL -Dplay.crypto.secret=f/0hUsTs`5lo;e6MQh28_VPiQ8YLDcxDItn4`wS2cI98]UAjohUu^k[6hcHNJ6eY
