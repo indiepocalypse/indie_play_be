@@ -15,7 +15,5 @@ public class user {
     @Id
     public String name;
     public String email;
-    public Formats.DateTime joined_datetime;
-    public Formats.DateTime updated_datetime;
     public ArrayList<String> repos;
 }
