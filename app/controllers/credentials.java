@@ -18,7 +18,7 @@ public class credentials {
 
     public credentials() {
         String tmp_name = ConfigFactory.load().getString("credentials.indie.github.username");
-        String tmp_pssw = ConfigFactory.load().getString("credentials.indie.github.username");
+        String tmp_pssw = ConfigFactory.load().getString("credentials.indie.github.pssw");
         client_id = ConfigFactory.load().getString("credentials.indie.github.client_id");
         client_secret = ConfigFactory.load().getString("credentials.indie.github.client_secret");
         try {
