@@ -1,6 +1,5 @@
 package controllers;
 
-import models.repo;
 import play.libs.F;
 import play.libs.Json;
 import play.libs.ws.WSClient;
@@ -45,13 +44,7 @@ public class ApplicationRoutes extends Controller {
 
     public F.Promise<Result> explore() {
         // TODO: do this on initialization, see upper level todo...
-        credentials credentials = null;
-        try {
-            credentials = new credentials();
-        }
-        catch (FileNotFoundException e) {
-            return F.Promise.promise(()->ok(main.render("explore", "problem loading credentials!", this)));
-        }
+        final credentials credentials = new credentials();
         F.Promise<WSResponse> pres = github_access.get_indie_repositories(ws, credentials).execute();
         return F.Promise.promise(()-> {
             String reps = pres.get(60, TimeUnit.SECONDS).getBody();
@@ -90,7 +83,7 @@ public class ApplicationRoutes extends Controller {
                 //if (repo.find.findRowCount()>0) return ok("123!");
                 WSResponse res_rep;
                 WSResponse res_user;
-                try {
+                //try {
                     WSRequest req_rep = ws.url("https://api.github.com/user/repos")
                             .setHeader("Authorization", "token " + session().get("token"))
                             .setHeader("Accept", "application/vnd.github.v3 + json")
@@ -113,9 +106,9 @@ public class ApplicationRoutes extends Controller {
                     session().put("user_name", user_name);
                     //repo.sync(res_rep.getBody());
 
-                } catch (Exception e) {
-                    return ok(main.render("1111111", Html.apply(e.toString()), this));
-                }
+//                } catch (Exception e) {
+//                    return ok(main.render("1111111", Html.apply(e.toString()), this));
+//                }
                 // TODO: return a SPA (React, etc.) This should be the whole FE
                 return ok(main.render("title!", Html.apply("Your repos: " + res_rep.getBody()), this));
             });
