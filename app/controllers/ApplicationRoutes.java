@@ -83,14 +83,10 @@ public class ApplicationRoutes extends Controller {
                 //if (repo.find.findRowCount()>0) return ok("123!");
                 WSResponse res_rep;
                 WSResponse res_user;
-                WSRequest req_rep = ws.url("https://api.github.com/user/repos")
-                        .setHeader("Authorization", "token " + session().get("token"))
-                        .setHeader("Accept", "application/vnd.github.v3 + json")
+                WSRequest req_rep = github_access.user_auth_request(ws, session().get("token"), "/user/repos")
                         .setMethod("GET");
                 F.Promise<WSResponse> pres_rep = req_rep.execute();
-                WSRequest req_user = ws.url("https://api.github.com/user")
-                        .setHeader("Authorization", "token " + session().get("token"))
-                        .setHeader("Accept", "application/vnd.github.v3 + json")
+                WSRequest req_user = github_access.user_auth_request(ws, session().get("token"), "/user")
                         .setMethod("GET");
                 F.Promise<WSResponse> pres_user = req_user.execute();
                 res_rep = pres_rep.get(60, TimeUnit.SECONDS);

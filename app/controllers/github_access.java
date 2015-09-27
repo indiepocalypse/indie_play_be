@@ -25,7 +25,7 @@ public class github_access {
 
         return ws.url("https://github.com/login/oauth/access_token")
                 .setMethod("POST")
-                .setQueryParameter("client_id",client_id)
+                .setQueryParameter("client_id", client_id)
                 .setQueryParameter("client_secret", client_secret)
                 .setQueryParameter("code", code)
                 .setQueryParameter("state", state);
@@ -36,7 +36,13 @@ public class github_access {
 
     public static final WSRequest indie_auth_request(WSClient ws, credentials credentials, String path) {
         return ws.url("https://api.github.com"+path)
-                .setHeader("Authorization", "Basic "+credentials.getAuth());
+                .setHeader("Authorization", "Basic "+credentials.getAuth())
+                .setHeader("Accept", "application/vnd.github.v3 + json");
+    }
+    public static final WSRequest user_auth_request(WSClient ws, String token, String path) {
+        return ws.url("https://api.github.com"+path)
+                .setHeader("Authorization", "token " + token)
+                .setHeader("Accept", "application/vnd.github.v3 + json");
     }
     public static final WSRequest get_indie_repositories(WSClient ws, credentials credentials) {
         return indie_auth_request(ws, credentials, "/user")
