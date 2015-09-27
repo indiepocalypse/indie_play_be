@@ -83,32 +83,28 @@ public class ApplicationRoutes extends Controller {
                 //if (repo.find.findRowCount()>0) return ok("123!");
                 WSResponse res_rep;
                 WSResponse res_user;
-                //try {
-                    WSRequest req_rep = ws.url("https://api.github.com/user/repos")
-                            .setHeader("Authorization", "token " + session().get("token"))
-                            .setHeader("Accept", "application/vnd.github.v3 + json")
-                            .setMethod("GET");
-                    F.Promise<WSResponse> pres_rep = req_rep.execute();
-                    WSRequest req_user = ws.url("https://api.github.com/user")
-                            .setHeader("Authorization", "token " + session().get("token"))
-                            .setHeader("Accept", "application/vnd.github.v3 + json")
-                            .setMethod("GET");
-                    F.Promise<WSResponse> pres_user = req_user.execute();
-                    res_rep = pres_rep.get(60, TimeUnit.SECONDS);
-                    res_user = pres_user.get(60, TimeUnit.SECONDS);
-                    String avatar_url = Json.parse(res_user.getBody())
-                            .get("avatar_url")
-                            .asText();
-                    session().put("avatar_url", avatar_url);
-                    String user_name = Json.parse(res_user.getBody())
-                            .get("login")
-                            .asText();
-                    session().put("user_name", user_name);
-                    //repo.sync(res_rep.getBody());
+                WSRequest req_rep = ws.url("https://api.github.com/user/repos")
+                        .setHeader("Authorization", "token " + session().get("token"))
+                        .setHeader("Accept", "application/vnd.github.v3 + json")
+                        .setMethod("GET");
+                F.Promise<WSResponse> pres_rep = req_rep.execute();
+                WSRequest req_user = ws.url("https://api.github.com/user")
+                        .setHeader("Authorization", "token " + session().get("token"))
+                        .setHeader("Accept", "application/vnd.github.v3 + json")
+                        .setMethod("GET");
+                F.Promise<WSResponse> pres_user = req_user.execute();
+                res_rep = pres_rep.get(60, TimeUnit.SECONDS);
+                res_user = pres_user.get(60, TimeUnit.SECONDS);
+                String avatar_url = Json.parse(res_user.getBody())
+                        .get("avatar_url")
+                        .asText();
+                session().put("avatar_url", avatar_url);
+                String user_name = Json.parse(res_user.getBody())
+                        .get("login")
+                        .asText();
+                session().put("user_name", user_name);
+                //repo.sync(res_rep.getBody());
 
-//                } catch (Exception e) {
-//                    return ok(main.render("1111111", Html.apply(e.toString()), this));
-//                }
                 // TODO: return a SPA (React, etc.) This should be the whole FE
                 return ok(main.render("title!", Html.apply("Your repos: " + res_rep.getBody()), this));
             });
