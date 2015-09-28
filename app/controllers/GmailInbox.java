@@ -19,6 +19,7 @@ public class GmailInbox {
 
 
         // TODO: use IMAP IDLE for polling!
+        // TODO: run this in background thread...
         String tmp_name = ConfigFactory.load().getString("credentials.indie.gmail.username");
         String tmp_pssw = ConfigFactory.load().getString("credentials.indie.gmail.pssw");
 
