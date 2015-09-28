@@ -14,12 +14,34 @@ import javax.mail.Message;
 import javax.mail.Store;
 
 public class GmailInbox {
+    // TODO: se this for using idle: http://stackoverflow.com/questions/4155412/javamail-keeping-imapfolder-idle-alive
+    static IMAPFolder inbox = null;
+    static Store store = null;
 
-    public static String read() {
+    public void start() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                reload_folder();
+                inbox.idle(true);
 
+            }
+        }).start();
+    }
 
-        // TODO: use IMAP IDLE for polling!
-        // TODO: run this in background thread...
+    public static void reload_folder() {
+        try {
+            if (inbox != null) {
+                inbox.close(true);
+            }
+            if (store != null) {
+                store.close();
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
         String tmp_name = ConfigFactory.load().getString("credentials.indie.gmail.username");
         String tmp_pssw = ConfigFactory.load().getString("credentials.indie.gmail.pssw");
 
@@ -41,17 +63,28 @@ public class GmailInbox {
         properties.setProperty("mail.imap.connectiontimeout", "5000");
         properties.setProperty("mail.imap.timeout", "5000");
 
+        Session imap_session = Session.getDefaultInstance(properties, null);
+        imap_session.setDebug(false);
+
+        try {
+            store = imap_session.getStore("imaps");
+            store.connect("imap.gmail.com", tmp_name, tmp_pssw);
+            inbox = (IMAPFolder) store.getFolder("inbox");
+            inbox.open(Folder.READ_ONLY);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String read() {
+
+
+        // TODO: use IMAP IDLE for polling!
+        // TODO: run this in background thread...
+        reload_folder();
         String subject = null;
         try {
-            Session imap_session = Session.getDefaultInstance(properties, null);
-            imap_session.setDebug(false);
-
-            Store store = imap_session.getStore("imaps");
-
-            store.connect("imap.gmail.com", tmp_name, tmp_pssw);
-
-            IMAPFolder inbox = (IMAPFolder)store.getFolder("inbox");
-            inbox.open(Folder.READ_ONLY);
             int messageCount = inbox.getMessageCount();
 
             System.out.println("Total Messages:- " + messageCount);
@@ -62,10 +95,8 @@ public class GmailInbox {
                 System.out.println("Mail Subject:- " + messages[i].getSubject());
                 subject += messages[i].getSubject();
             }
-            inbox.close(true);
-            store.close();
-
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
         return subject;
