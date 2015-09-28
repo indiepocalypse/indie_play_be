@@ -19,7 +19,7 @@ public class ApplicationRoutes extends Controller {
     // TODO: initialization, for e.g. load credentials when class is constructed
 
     @Inject
-    WSClient ws;
+    private WSClient ws;
 
     public boolean user_is_logged() {
         return session().get("token")!=null;
@@ -34,7 +34,7 @@ public class ApplicationRoutes extends Controller {
         return session().get("state");
     }
 
-    boolean is_redirected_from_github_login() {
+    private boolean is_redirected_from_github_login() {
         return request().getQueryString("code") != null;
     }
 
@@ -53,7 +53,8 @@ public class ApplicationRoutes extends Controller {
     }
 
     public Result blog() {
-        return ok(main.render("blog", "This is the blog!", this));
+        return ok(main.render("blog", GmailInbox.read(), this));
+        //return ok(main.render("blog", "This is the blog!", this));
     }
 
     public Result settings() {

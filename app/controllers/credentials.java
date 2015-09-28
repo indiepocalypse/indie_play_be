@@ -12,9 +12,9 @@ import java.util.Base64;
  * Created by skariel on 25/09/15.
  */
 public class credentials {
-    String auth = null;
-    String client_id = null;
-    String client_secret = null;
+    private String auth = null;
+    private String client_id = null;
+    private String client_secret = null;
 
     public credentials() {
         String tmp_name = ConfigFactory.load().getString("credentials.indie.github.username");
@@ -28,7 +28,7 @@ public class credentials {
             client_id = json.get("client_id").asText();
             client_secret = json.get("client_secret").asText();
         }
-        catch (FileNotFoundException e) {
+        catch (FileNotFoundException ignored) {
         }
         InputStream f = getClass().getResourceAsStream(".github_indie_credentials_local_secret");
         Base64.Encoder encoder = Base64.getMimeEncoder();
