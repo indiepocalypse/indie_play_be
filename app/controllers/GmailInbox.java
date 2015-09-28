@@ -1,6 +1,7 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.sun.mail.imap.IMAPFolder;
 import com.typesafe.config.ConfigFactory;
 
 import java.io.FileInputStream;
@@ -17,10 +18,9 @@ public class GmailInbox {
     public static String read() {
 
 
+        // TODO: use IMAP IDLE for polling!
         String tmp_name = ConfigFactory.load().getString("credentials.indie.gmail.username");
         String tmp_pssw = ConfigFactory.load().getString("credentials.indie.gmail.pssw");
-        System.out.println("tmp_name="+tmp_name);
-        System.out.println("tmp_pssw="+tmp_pssw);
 
         try {
             JsonNode json = play.libs.Json.parse(new FileInputStream("app/controllers/.gmail_indie_credentials_local_secret"));
@@ -29,8 +29,6 @@ public class GmailInbox {
         }
         catch (FileNotFoundException ignored) {
         }
-        System.out.println("tmp_name="+tmp_name);
-        System.out.println("tmp_pssw="+tmp_pssw);
 
         final Properties properties = System.getProperties();
         properties.put("mail.imap.ssl.enable", "true");
@@ -51,7 +49,7 @@ public class GmailInbox {
 
             store.connect("imap.gmail.com", tmp_name, tmp_pssw);
 
-            Folder inbox = store.getFolder("inbox");
+            IMAPFolder inbox = (IMAPFolder)store.getFolder("inbox");
             inbox.open(Folder.READ_ONLY);
             int messageCount = inbox.getMessageCount();
 
