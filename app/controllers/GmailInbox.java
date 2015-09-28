@@ -19,6 +19,8 @@ public class GmailInbox {
 
         String tmp_name = ConfigFactory.load().getString("credentials.indie.gmail.username");
         String tmp_pssw = ConfigFactory.load().getString("credentials.indie.gmail.pssw");
+        System.out.println("tmp_name="+tmp_name);
+        System.out.println("tmp_pssw="+tmp_pssw);
 
         try {
             JsonNode json = play.libs.Json.parse(new FileInputStream("app/controllers/.gmail_indie_credentials_local_secret"));
