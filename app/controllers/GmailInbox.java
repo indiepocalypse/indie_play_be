@@ -32,7 +32,7 @@ public class GmailInbox {
         System.out.println("tmp_name="+tmp_name);
         System.out.println("tmp_pssw="+tmp_pssw);
 
-        final Properties properties = new Properties();
+        final Properties properties = System.getProperties();
         properties.put("mail.imap.ssl.enable", "true");
         properties.put("mail.imap.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         properties.put("mail.imap.socketFactory.fallback", "false");
