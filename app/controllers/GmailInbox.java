@@ -29,11 +29,19 @@ public class GmailInbox {
         }
         catch (FileNotFoundException ignored) {
         }
+        System.out.println("tmp_name="+tmp_name);
+        System.out.println("tmp_pssw="+tmp_pssw);
 
         final Properties properties = new Properties();
         properties.put("mail.imap.ssl.enable", "true");
         properties.put("mail.imap.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         properties.put("mail.imap.socketFactory.fallback", "false");
+
+        properties.setProperty("mail.imap.host", "imap.gmail.com");
+        properties.setProperty("mail.imap.port", "993");
+        properties.setProperty("mail.imap.connectiontimeout", "5000");
+        properties.setProperty("mail.imap.timeout", "5000");
+
         String subject = null;
         try {
             Session imap_session = Session.getDefaultInstance(properties, null);
