@@ -28,7 +28,8 @@ public class credentials {
             client_id = json.get("client_id").asText();
             client_secret = json.get("client_secret").asText();
         }
-        catch (FileNotFoundException ignored) {
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
         InputStream f = getClass().getResourceAsStream(".github_indie_credentials_local_secret");
         Base64.Encoder encoder = Base64.getMimeEncoder();

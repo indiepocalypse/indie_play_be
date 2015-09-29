@@ -23,5 +23,5 @@ libraryDependencies += "org.postgresql" % "postgresql" % "9.4-1201-jdbc41"
 routesGenerator := InjectedRoutesGenerator
 
 
-fork in run := true
+fork in run := false
 

@@ -3,31 +3,74 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.sun.mail.imap.IMAPFolder;
 import com.typesafe.config.ConfigFactory;
+import play.Logger;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Date;
 import java.util.Properties;
 
+import javax.mail.Message;
 import javax.mail.Session;
 import javax.mail.Folder;
-import javax.mail.Message;
 import javax.mail.Store;
+import javax.mail.event.MessageCountEvent;
+import javax.mail.event.MessageCountListener;
+
+import models.gmail_last_date_read;
 
 public class GmailInbox {
     // TODO: se this for using idle: http://stackoverflow.com/questions/4155412/javamail-keeping-imapfolder-idle-alive
     static IMAPFolder inbox = null;
     static Store store = null;
+    static final long delta_milis_reload = 60*1000*17; // 17 minutes
+    static final String gmail_last_date_read_id = "gmail_last_date_read_id";
+    public static int mail_count = 0;
 
-    public void start() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                reload_folder();
-                inbox.idle(true);
+    public static void start() {
+        new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(delta_milis_reload);
+                    reload_folder();
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
 
+        reload_folder();
+        new Thread(() -> {
+            while (true) {
+                // TODO: accept repo transfer...
+                try {
+                    if (inbox!=null) {
+                        inbox.idle(true);
+                    }
+                } catch (Exception e) {
+                    Logger.error("Error in gmail_inbox!",e);
+                }
             }
         }).start();
     }
+
+
+    public static void handle_messages(Message[] ms) {
+        try {
+
+
+            gmail_last_date_read last_date_read_model = gmail_last_date_read.find.byId(gmail_last_date_read_id);
+            if (last_date_read_model==null) {
+                //
+            }
+
+        }
+        catch (Exception e) {
+            Logger.error("while handling gmail message... ", e);
+        }
+    }
+
 
     public static void reload_folder() {
         try {
@@ -50,7 +93,8 @@ public class GmailInbox {
             tmp_name = json.get("username").asText();
             tmp_pssw = json.get("pssw").asText();
         }
-        catch (FileNotFoundException ignored) {
+        catch (FileNotFoundException e) {
+            Logger.warn("While loading gmail credentials... ", e);
         }
 
         final Properties properties = System.getProperties();
@@ -70,36 +114,25 @@ public class GmailInbox {
             store = imap_session.getStore("imaps");
             store.connect("imap.gmail.com", tmp_name, tmp_pssw);
             inbox = (IMAPFolder) store.getFolder("inbox");
-            inbox.open(Folder.READ_ONLY);
+            inbox.open(Folder.READ_WRITE);
+            mail_count = inbox.getMessageCount();
+            inbox.addMessageCountListener(new MessageCountListener() {
+                @Override
+                public void messagesAdded(MessageCountEvent messageCountEvent) {
+                    mail_count += 1;
+                    for (Message m: messageCountEvent.getMessages()) {
+                        handle_message(m);
+                    }
+                }
+
+                @Override
+                public void messagesRemoved(MessageCountEvent messageCountEvent) {
+                    mail_count -= 1;
+                }
+            });
         }
         catch (Exception e) {
-            e.printStackTrace();
+            Logger.error("While reloading gmail inbox... ", e);
         }
     }
-
-    public static String read() {
-
-
-        // TODO: use IMAP IDLE for polling!
-        // TODO: run this in background thread...
-        reload_folder();
-        String subject = null;
-        try {
-            int messageCount = inbox.getMessageCount();
-
-            System.out.println("Total Messages:- " + messageCount);
-
-            Message[] messages = inbox.getMessages();
-            System.out.println("------------------------------");
-            for (int i = 0; i < 10; i++) {
-                System.out.println("Mail Subject:- " + messages[i].getSubject());
-                subject += messages[i].getSubject();
-            }
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return subject;
-    }
-
 }

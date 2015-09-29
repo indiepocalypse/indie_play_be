@@ -4,8 +4,6 @@ package models;
  * Created by skariel on 22/09/15.
  */
 
-import play.data.format.Formats;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.ArrayList;

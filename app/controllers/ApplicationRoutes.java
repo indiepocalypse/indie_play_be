@@ -53,7 +53,7 @@ public class ApplicationRoutes extends Controller {
     }
 
     public Result blog() {
-        return ok(main.render("blog", GmailInbox.read(), this));
+        return ok(main.render("blog", "there are "+Integer.toString(GmailInbox.mail_count)+" messages in inbox!", this));
         //return ok(main.render("blog", "This is the blog!", this));
     }
 
