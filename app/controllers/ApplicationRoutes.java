@@ -1,5 +1,6 @@
 package controllers;
 
+import models.repo;
 import play.libs.F;
 import play.libs.Json;
 import play.libs.ws.WSClient;
