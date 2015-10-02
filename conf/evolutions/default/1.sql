@@ -3,6 +3,12 @@
 
 # --- !Ups
 
+create table user (
+  username                  varchar(255) not null,
+  email                     varchar(255),
+  constraint pk_user primary key (username))
+;
+
 create table gmail_last_date_read (
   id                        varchar(255) not null,
   date                      timestamp,
@@ -17,11 +23,6 @@ create table repo (
   constraint pk_repo primary key (reponame))
 ;
 
-create table user (
-  username                  varchar(255) not null,
-  email                     varchar(255),
-  constraint pk_user primary key (username))
-;
 
 create sequence gmail_last_date_read_seq;
 
