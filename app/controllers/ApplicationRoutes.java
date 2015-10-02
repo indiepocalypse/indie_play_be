@@ -1,6 +1,5 @@
 package controllers;
 
-import models.repo;
 import play.libs.F;
 import play.libs.Json;
 import play.libs.ws.WSClient;
@@ -12,7 +11,6 @@ import play.twirl.api.Html;
 import views.html.*;
 
 import javax.inject.Inject;
-import java.io.FileNotFoundException;
 import java.util.concurrent.TimeUnit;
 
 public class ApplicationRoutes extends Controller {
