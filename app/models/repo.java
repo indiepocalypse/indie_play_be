@@ -21,7 +21,7 @@ public class repo extends Model {
     public String github_url;
     public int stars;
     public String description;
-    public HashMap<String, Float> programming_languages_and_shares;
-    public HashMap<String, BigDecimal> owners_and_shares;
+    //public HashMap<String, Float> programming_languages_and_shares;
+    //public HashMap<String, BigDecimal> owners_and_shares;
     public static Finder<String, repo> find = new Finder<String,repo>(repo.class);
 }

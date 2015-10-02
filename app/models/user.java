@@ -13,5 +13,5 @@ public class user {
     @Id
     public String name;
     public String email;
-    public ArrayList<String> repos;
+    //public ArrayList<String> repos;
 }
