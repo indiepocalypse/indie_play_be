@@ -1,5 +1,6 @@
 logs
 target
 .*
+*.sql
 !.gitignore
 local_secrets.java
