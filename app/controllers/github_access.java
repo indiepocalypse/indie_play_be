@@ -45,7 +45,7 @@ public class github_access {
                 .setHeader("Accept", "application/vnd.github.v3 + json");
     }
     public static WSRequest get_indie_repositories(WSClient ws, credentials credentials) {
-        return indie_auth_request(ws, credentials, "/user")
+        return indie_auth_request(ws, credentials, "/user/repos")
                 .setMethod("GET");
         // TODO: this is just a stub, getting the user details for testing basic auth
     }

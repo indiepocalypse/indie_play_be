@@ -15,6 +15,8 @@ public class credentials {
     private String auth = null;
     private String client_id = null;
     private String client_secret = null;
+    public String name = null;
+    public String pssw = null;
 
     public credentials() {
         String tmp_name = ConfigFactory.load().getString("credentials.indie.github.username");
@@ -31,6 +33,8 @@ public class credentials {
         catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        name = tmp_name;
+        pssw = tmp_pssw;
         InputStream f = getClass().getResourceAsStream(".github_indie_credentials_local_secret");
         Base64.Encoder encoder = Base64.getMimeEncoder();
         String str = tmp_name+":"+tmp_pssw;

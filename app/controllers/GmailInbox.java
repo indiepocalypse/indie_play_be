@@ -144,14 +144,8 @@ public class GmailInbox {
                             String lt = l.trim();
                             if (lt.startsWith("https")) {
                                 // accept the repo!
-                                Logger.info("QQQQ:"+lt);
-                                play.libs.ws.WS ws = new play.libs.ws.WS();
-                                credentials credentials = new credentials();
-                                WSResponse wr = ws.url(lt)
-                                        .setMethod("GET")
-                                        .setHeader("cookie", "_ga=GA1.2.218485437.1414436120; _octo=GH1.1.90527613.1414436122; _gat=1; tz=Asia%2FJerusalem")
-                                        .execute().get(60, TimeUnit.SECONDS);
-                                Logger.info(wr.getBody());
+                                Logger.info("The repo transfer url: "+lt);
+                                github_iojs.accept_trasfer_repo(lt);
                             }
                         }
                     }
@@ -159,7 +153,7 @@ public class GmailInbox {
             }
 
             Logger.info("handling message with title: "+m_subject);
-            Logger.info("and body:"+m_body);
+            //Logger.info("and body:"+m_body);
             Logger.info("From:"+m_from);
         }
         if (last_date_read_model!=null) {
