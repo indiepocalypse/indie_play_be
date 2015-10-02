@@ -17,7 +17,7 @@ import java.util.HashMap;
 @Entity
 public class repo extends Model {
     @Id
-    public String reponame;
+    public String repoame;
     public String github_url;
     public int stars;
     public String description;
