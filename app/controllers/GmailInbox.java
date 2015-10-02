@@ -130,8 +130,8 @@ public class GmailInbox {
                 last_date_read_model = new gmail_last_date_read(m_date);
             }
             else {
-                if (last_date_read_model.date.before(m_date)) {
-                    last_date_read_model.date = m_date;
+                if (last_date_read_model.lastdate.before(m_date)) {
+                    last_date_read_model.lastdate = m_date;
                 }
             }
 
@@ -217,7 +217,7 @@ public class GmailInbox {
                 public boolean match(Message message) {
                     try {
                         if (last_date_model_f!=null) {
-                            return message.getReceivedDate().after(last_date_model_f.date);
+                            return message.getReceivedDate().after(last_date_model_f.lastdate);
                         }
                         return true;
                     }
