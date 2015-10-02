@@ -134,6 +134,7 @@ public class GmailInbox {
                     last_date_read_model.date = m_date;
                 }
             }
+
             // TODO: actually handle the message....
             if ((m_from!=null)&&(m_from.equals("GitHub <support@github.com>"))) {
                 if ((m_subject!=null)&&(m_subject.contains("Repository transfer from"))) {
