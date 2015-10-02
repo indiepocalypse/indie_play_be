@@ -24,3 +24,4 @@ SET REFERENTIAL_INTEGRITY TRUE;
 
 drop sequence if exists gmail_last_date_read_seq;
 
+
