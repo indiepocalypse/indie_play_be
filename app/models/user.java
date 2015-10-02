@@ -11,7 +11,7 @@ import java.util.ArrayList;
 @Entity
 public class user {
     @Id
-    public String name;
+    public String username;
     public String email;
-    //public ArrayList<String> repos;
+    public ArrayList<String> repos;
 }

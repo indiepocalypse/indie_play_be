@@ -10,17 +10,17 @@ create table gmail_last_date_read (
 ;
 
 create table repo (
-  name                      varchar(255) not null,
+  reponame                  varchar(255) not null,
   github_url                varchar(255),
   stars                     integer,
   description               varchar(255),
-  constraint pk_repo primary key (name))
+  constraint pk_repo primary key (reponame))
 ;
 
 create table user (
-  name                      varchar(255) not null,
+  username                  varchar(255) not null,
   email                     varchar(255),
-  constraint pk_user primary key (name))
+  constraint pk_user primary key (username))
 ;
 
 create sequence gmail_last_date_read_seq;
