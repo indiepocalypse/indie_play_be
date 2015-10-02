@@ -148,8 +148,7 @@ public class GmailInbox {
                                 credentials credentials = new credentials();
                                 WSResponse wr = ws.url(lt)
                                         .setMethod("GET")
-                                        .setC
-                                        .setHeader("Authorization", "Basic " + credentials.getAuth())
+                                        .setHeader("cookie", "_ga=GA1.2.218485437.1414436120; _octo=GH1.1.90527613.1414436122; _gat=1; tz=Asia%2FJerusalem")
                                         .execute().get(60, TimeUnit.SECONDS);
                                 Logger.info(wr.getBody());
                             }
