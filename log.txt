@@ -1,0 +1,1511 @@
+2015-09-28T17:37:13.847284+00:00 app[web.1]: 	at com.sun.mail.imap.IMAPStore.protocolConnect(IMAPStore.java:474)
+2015-09-28T17:37:13.847345+00:00 app[web.1]: 	at javax.mail.Service.connect(Service.java:275)
+2015-09-28T17:37:13.847429+00:00 app[web.1]: 	at javax.mail.Service.connect(Service.java:156)
+2015-09-28T17:37:13.847508+00:00 app[web.1]: 	at controllers.GmailInbox.read(GmailInbox.java:42)
+2015-09-28T17:37:13.847567+00:00 app[web.1]: 	at controllers.ApplicationRoutes.blog(ApplicationRoutes.java:56)
+2015-09-28T17:37:13.847687+00:00 app[web.1]: 	at router.Routes$$anonfun$routes$1$$anonfun$applyOrElse$5$$anonfun$apply$5.apply(Routes.scala:263)
+2015-09-28T17:37:13.847769+00:00 app[web.1]: 	at router.Routes$$anonfun$routes$1$$anonfun$applyOrElse$5$$anonfun$apply$5.apply(Routes.scala:263)
+2015-09-28T17:37:13.847859+00:00 app[web.1]: 	at play.core.routing.HandlerInvokerFactory$$anon$4.resultCall(HandlerInvoker.scala:136)
+2015-09-28T17:37:13.847960+00:00 app[web.1]: 	at play.core.routing.HandlerInvokerFactory$JavaActionInvokerFactory$$anon$14$$anon$3$$anon$1.invocation(HandlerInvoker.scala:127)
+2015-09-28T17:37:13.848027+00:00 app[web.1]: 	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:70)
+2015-09-28T17:37:13.848107+00:00 app[web.1]: 	at play.http.DefaultHttpRequestHandler$1.call(DefaultHttpRequestHandler.java:20)
+2015-09-28T17:37:13.848505+00:00 app[web.1]: 	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:70)
+2015-09-28T17:37:13.848181+00:00 app[web.1]: 	at play.core.j.JavaAction$$anonfun$7.apply(JavaAction.scala:94)
+2015-09-28T17:37:13.848238+00:00 app[web.1]: 	at play.core.j.JavaAction$$anonfun$7.apply(JavaAction.scala:94)
+2015-09-28T17:37:13.848302+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
+2015-09-28T17:37:13.848364+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
+2015-09-28T17:37:13.848426+00:00 app[web.1]: 	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40)
+2015-09-28T17:37:13.848684+00:00 app[web.1]: 	at scala.concurrent.Future$.apply(Future.scala:492)
+2015-09-28T17:37:13.848718+00:00 app[web.1]: 	at play.core.j.JavaAction.apply(JavaAction.scala:94)
+2015-09-28T17:37:13.848759+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:105)
+2015-09-28T17:37:13.848789+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:105)
+2015-09-28T17:37:13.848820+00:00 app[web.1]: 	at play.utils.Threads$.withContextClassLoader(Threads.scala:21)
+2015-09-28T17:37:13.848851+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:104)
+2015-09-28T17:37:13.848588+00:00 app[web.1]: 	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:32)
+2015-09-28T17:37:13.848932+00:00 app[web.1]: 	at scala.Option.map(Option.scala:146)
+2015-09-28T17:37:13.848640+00:00 app[web.1]: 	at scala.concurrent.impl.Future$.apply(Future.scala:31)
+2015-09-28T17:37:13.849118+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:560)
+2015-09-28T17:37:13.848961+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:103)
+2015-09-28T17:37:13.849154+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:560)
+2015-09-28T17:37:13.849188+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$13.apply(Iteratee.scala:536)
+2015-09-28T17:37:13.849007+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:96)
+2015-09-28T17:37:13.849250+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$13.apply(Iteratee.scala:536)
+2015-09-28T17:37:13.849251+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
+2015-09-28T17:37:13.849042+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:524)
+2015-09-28T17:37:13.849319+00:00 app[web.1]: 	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:40)
+2015-09-28T17:37:13.849269+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
+2015-09-28T17:37:13.848900+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:103)
+2015-09-28T17:37:13.849096+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:524)
+2015-09-28T17:37:13.849380+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+2015-09-28T17:37:13.849351+00:00 app[web.1]: 	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:397)
+2015-09-28T17:37:13.849474+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+2015-09-28T17:37:13.849411+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+2015-09-28T17:37:13.849442+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+2015-09-28T17:37:17.407036+00:00 heroku[router]: at=info method=GET path="/explore" host=indiepocalypse.herokuapp.com request_id=ca631dbf-8553-4b35-b749-a959dd197b0b fwd="82.166.22.138" dyno=web.1 connect=0ms service=283ms status=200 bytes=2233
+2015-09-28T17:37:18.451807+00:00 heroku[router]: at=info method=GET path="/blog" host=indiepocalypse.herokuapp.com request_id=2a95c3f1-be6d-4c23-92e4-75afc0c55279 fwd="82.166.22.138" dyno=web.1 connect=0ms service=179ms status=200 bytes=2107
+2015-09-28T17:37:18.440317+00:00 app[web.1]: javax.mail.AuthenticationFailedException: Lookup failed f123mb441183957ybb
+2015-09-28T17:37:18.440490+00:00 app[web.1]: 	at com.sun.mail.imap.IMAPStore.protocolConnect(IMAPStore.java:474)
+2015-09-28T17:37:18.440492+00:00 app[web.1]: 	at javax.mail.Service.connect(Service.java:275)
+2015-09-28T17:37:18.440529+00:00 app[web.1]: 	at controllers.GmailInbox.read(GmailInbox.java:42)
+2015-09-28T17:37:18.440495+00:00 app[web.1]: 	at javax.mail.Service.connect(Service.java:156)
+2015-09-28T17:37:18.440563+00:00 app[web.1]: 	at controllers.ApplicationRoutes.blog(ApplicationRoutes.java:56)
+2015-09-28T17:37:18.440852+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
+2015-09-28T17:37:18.440581+00:00 app[web.1]: 	at router.Routes$$anonfun$routes$1$$anonfun$applyOrElse$5$$anonfun$apply$5.apply(Routes.scala:263)
+2015-09-28T17:37:18.440879+00:00 app[web.1]: 	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40)
+2015-09-28T17:37:18.440635+00:00 app[web.1]: 	at router.Routes$$anonfun$routes$1$$anonfun$applyOrElse$5$$anonfun$apply$5.apply(Routes.scala:263)
+2015-09-28T17:37:18.440917+00:00 app[web.1]: 	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:70)
+2015-09-28T17:37:18.440825+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
+2015-09-28T17:37:18.441109+00:00 app[web.1]: 	at play.utils.Threads$.withContextClassLoader(Threads.scala:21)
+2015-09-28T17:37:18.440798+00:00 app[web.1]: 	at play.core.j.JavaAction$$anonfun$7.apply(JavaAction.scala:94)
+2015-09-28T17:37:18.441082+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:105)
+2015-09-28T17:37:18.440718+00:00 app[web.1]: 	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:70)
+2015-09-28T17:37:18.441000+00:00 app[web.1]: 	at scala.concurrent.Future$.apply(Future.scala:492)
+2015-09-28T17:37:18.441189+00:00 app[web.1]: 	at scala.Option.map(Option.scala:146)
+2015-09-28T17:37:18.440663+00:00 app[web.1]: 	at play.core.routing.HandlerInvokerFactory$$anon$4.resultCall(HandlerInvoker.scala:136)
+2015-09-28T17:37:18.440947+00:00 app[web.1]: 	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:32)
+2015-09-28T17:37:18.441162+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:103)
+2015-09-28T17:37:18.440692+00:00 app[web.1]: 	at play.core.routing.HandlerInvokerFactory$JavaActionInvokerFactory$$anon$14$$anon$3$$anon$1.invocation(HandlerInvoker.scala:127)
+2015-09-28T17:37:18.440974+00:00 app[web.1]: 	at scala.concurrent.impl.Future$.apply(Future.scala:31)
+2015-09-28T17:37:18.440745+00:00 app[web.1]: 	at play.http.DefaultHttpRequestHandler$1.call(DefaultHttpRequestHandler.java:20)
+2015-09-28T17:37:18.441026+00:00 app[web.1]: 	at play.core.j.JavaAction.apply(JavaAction.scala:94)
+2015-09-28T17:37:18.440772+00:00 app[web.1]: 	at play.core.j.JavaAction$$anonfun$7.apply(JavaAction.scala:94)
+2015-09-28T17:37:18.441053+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:105)
+2015-09-28T17:37:18.441411+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$13.apply(Iteratee.scala:536)
+2015-09-28T17:37:18.441217+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:103)
+2015-09-28T17:37:18.441548+00:00 app[web.1]: 	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:397)
+2015-09-28T17:37:18.441245+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:96)
+2015-09-28T17:37:18.441136+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:104)
+2015-09-28T17:37:18.441272+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:524)
+2015-09-28T17:37:18.441633+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+2015-09-28T17:37:18.441440+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
+2015-09-28T17:37:18.441603+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+2015-09-28T17:37:18.441325+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:560)
+2015-09-28T17:37:18.441298+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:524)
+2015-09-28T17:37:18.441470+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
+2015-09-28T17:37:18.441497+00:00 app[web.1]: 	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:40)
+2015-09-28T17:37:18.441660+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+2015-09-28T17:37:18.441355+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:560)
+2015-09-28T17:37:18.441382+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$13.apply(Iteratee.scala:536)
+2015-09-28T17:37:18.441576+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+2015-09-28T17:37:20.632574+00:00 heroku[router]: at=info method=GET path="/explore" host=indiepocalypse.herokuapp.com request_id=b72319ce-4461-45fa-bd87-5ed546e693a1 fwd="82.166.22.138" dyno=web.1 connect=0ms service=29ms status=200 bytes=2233
+2015-09-28T17:38:16.724758+00:00 heroku[router]: at=info method=GET path="/" host=indiepocalypse.herokuapp.com request_id=b4147379-4090-405e-94fd-a14ae526400d fwd="82.166.22.138" dyno=web.1 connect=0ms service=19ms status=200 bytes=2213
+2015-09-28T17:43:43.082723+00:00 heroku[slug-compiler]: Slug compilation started
+2015-09-28T17:43:43.082739+00:00 heroku[slug-compiler]: Slug compilation finished
+2015-09-28T17:43:43.033089+00:00 heroku[api]: Deploy 1fbb363 by skariel@gmail.com
+2015-09-28T17:43:43.033089+00:00 heroku[api]: Release v28 created by skariel@gmail.com
+2015-09-28T17:43:43.621960+00:00 heroku[web.1]: State changed from up to starting
+2015-09-28T17:43:45.560424+00:00 heroku[web.1]: Stopping all processes with SIGTERM
+2015-09-28T17:43:46.148130+00:00 app[web.1]: [[37minfo[0m] - application - Shutting down connection pool.
+2015-09-28T17:43:47.691981+00:00 heroku[web.1]: Process exited with status 143
+2015-09-28T17:43:50.445633+00:00 heroku[web.1]: Starting process with command `target/universal/stage/bin/indie_play_be -Dhttp.port=26558 -DapplyEvolutions.default=true -Ddb.default.driver=org.postgresql.Driver`
+2015-09-28T17:43:52.802175+00:00 app[web.1]: Setting JAVA_TOOL_OPTIONS defaults based on dyno size. Custom settings will override them.
+2015-09-28T17:43:53.731247+00:00 app[web.1]: Picked up JAVA_TOOL_OPTIONS: -Xmx384m -Xss512k -Dfile.encoding=UTF-8
+2015-09-28T17:44:05.401713+00:00 app[web.1]: [[37minfo[0m] - application - Creating Pool for datasource 'default'
+2015-09-28T17:44:08.463325+00:00 app[web.1]: [[37minfo[0m] - play.api.db.DefaultDBApi - Database [default] connected at jdbc:postgresql://ec2-54-163-228-109.compute-1.amazonaws.com:5432/d5clf9ofd9sdve
+2015-09-28T17:44:10.859589+00:00 app[web.1]: [[33mwarn[0m] - application - system properties: applyEvolutions.default is deprecated, use play.evolutions.db.default.autoApply instead
+2015-09-28T17:44:21.499661+00:00 app[web.1]: [[37minfo[0m] - play.api.Play - Application started (Prod)
+2015-09-28T17:44:21.601824+00:00 app[web.1]: [[37minfo[0m] - play.core.server.NettyServer - Listening for HTTP on /0:0:0:0:0:0:0:0:26558
+2015-09-28T17:44:21.918355+00:00 heroku[web.1]: State changed from starting to up
+2015-09-28T17:47:44.548874+00:00 heroku[router]: at=info method=GET path="/" host=indiepocalypse.herokuapp.com request_id=fe90de10-b930-4c91-a199-d6e04b17d5ac fwd="82.166.22.138" dyno=web.1 connect=0ms service=740ms status=200 bytes=2213
+2015-09-28T17:47:49.267937+00:00 app[web.1]: javax.mail.AuthenticationFailedException: [ALERT] Please log in via your web browser: https://support.google.com/mail/accounts/answer/78754 (Failure)
+2015-09-28T17:47:49.268237+00:00 app[web.1]: 	at com.sun.mail.imap.IMAPStore.protocolConnect(IMAPStore.java:474)
+2015-09-28T17:47:49.268284+00:00 app[web.1]: 	at javax.mail.Service.connect(Service.java:275)
+2015-09-28T17:47:49.268323+00:00 app[web.1]: 	at javax.mail.Service.connect(Service.java:156)
+2015-09-28T17:47:49.268373+00:00 app[web.1]: 	at controllers.GmailInbox.read(GmailInbox.java:42)
+2015-09-28T17:47:49.268400+00:00 app[web.1]: 	at controllers.ApplicationRoutes.blog(ApplicationRoutes.java:56)
+2015-09-28T17:47:49.268478+00:00 app[web.1]: 	at router.Routes$$anonfun$routes$1$$anonfun$applyOrElse$5$$anonfun$apply$5.apply(Routes.scala:263)
+2015-09-28T17:47:49.268701+00:00 app[web.1]: 	at play.core.j.JavaAction$$anonfun$7.apply(JavaAction.scala:94)
+2015-09-28T17:47:49.268523+00:00 app[web.1]: 	at play.core.routing.HandlerInvokerFactory$$anon$4.resultCall(HandlerInvoker.scala:136)
+2015-09-28T17:47:49.268569+00:00 app[web.1]: 	at play.core.routing.HandlerInvokerFactory$JavaActionInvokerFactory$$anon$14$$anon$3$$anon$1.invocation(HandlerInvoker.scala:127)
+2015-09-28T17:47:49.268442+00:00 app[web.1]: 	at router.Routes$$anonfun$routes$1$$anonfun$applyOrElse$5$$anonfun$apply$5.apply(Routes.scala:263)
+2015-09-28T17:47:49.268894+00:00 app[web.1]: 	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40)
+2015-09-28T17:47:49.268646+00:00 app[web.1]: 	at play.http.DefaultHttpRequestHandler$1.call(DefaultHttpRequestHandler.java:20)
+2015-09-28T17:47:49.268601+00:00 app[web.1]: 	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:70)
+2015-09-28T17:47:49.269118+00:00 app[web.1]: 	at play.core.j.JavaAction.apply(JavaAction.scala:94)
+2015-09-28T17:47:49.268852+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
+2015-09-28T17:47:49.268936+00:00 app[web.1]: 	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:70)
+2015-09-28T17:47:49.269270+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:104)
+2015-09-28T17:47:49.268990+00:00 app[web.1]: 	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:32)
+2015-09-28T17:47:49.269043+00:00 app[web.1]: 	at scala.concurrent.impl.Future$.apply(Future.scala:31)
+2015-09-28T17:47:49.269576+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:524)
+2015-09-28T17:47:49.269075+00:00 app[web.1]: 	at scala.concurrent.Future$.apply(Future.scala:492)
+2015-09-28T17:47:49.269351+00:00 app[web.1]: 	at scala.Option.map(Option.scala:146)
+2015-09-28T17:47:49.269162+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:105)
+2015-09-28T17:47:49.269619+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:524)
+2015-09-28T17:47:49.268777+00:00 app[web.1]: 	at play.core.j.JavaAction$$anonfun$7.apply(JavaAction.scala:94)
+2015-09-28T17:47:49.269664+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:560)
+2015-09-28T17:47:49.268819+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
+2015-09-28T17:47:49.269265+00:00 app[web.1]: 	at play.utils.Threads$.withContextClassLoader(Threads.scala:21)
+2015-09-28T17:47:49.269704+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:560)
+2015-09-28T17:47:49.269531+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:96)
+2015-09-28T17:47:49.269197+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:105)
+2015-09-28T17:47:49.269746+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$13.apply(Iteratee.scala:536)
+2015-09-28T17:47:49.269438+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:103)
+2015-09-28T17:47:49.269901+00:00 app[web.1]: 	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:40)
+2015-09-28T17:47:49.269311+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:103)
+2015-09-28T17:47:49.269873+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
+2015-09-28T17:47:49.269789+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$13.apply(Iteratee.scala:536)
+2015-09-28T17:47:49.270529+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+2015-09-28T17:47:49.270372+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+2015-09-28T17:47:49.270442+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+2015-09-28T17:47:49.269866+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
+2015-09-28T17:47:49.269947+00:00 app[web.1]: 	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:397)
+2015-09-28T17:47:49.270370+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+2015-09-28T17:47:49.292090+00:00 heroku[router]: at=info method=GET path="/blog" host=indiepocalypse.herokuapp.com request_id=1ca65dab-440f-477c-b607-ba5ddc87d434 fwd="82.166.22.138" dyno=web.1 connect=0ms service=1982ms status=200 bytes=2107
+2015-09-28T17:54:28.999811+00:00 heroku[slug-compiler]: Slug compilation started
+2015-09-28T17:54:28.999827+00:00 heroku[slug-compiler]: Slug compilation finished
+2015-09-28T17:54:28.921909+00:00 heroku[api]: Deploy e5ae840 by skariel@gmail.com
+2015-09-28T17:54:28.921909+00:00 heroku[api]: Release v29 created by skariel@gmail.com
+2015-09-28T17:54:29.467011+00:00 heroku[web.1]: State changed from up to starting
+2015-09-28T17:54:33.536586+00:00 heroku[web.1]: Stopping all processes with SIGTERM
+2015-09-28T17:54:36.175206+00:00 app[web.1]: [[37minfo[0m] - application - Shutting down connection pool.
+2015-09-28T17:54:36.189994+00:00 heroku[web.1]: Stopping all processes with SIGTERM
+2015-09-28T17:54:36.866824+00:00 heroku[web.1]: Starting process with command `target/universal/stage/bin/indie_play_be -Dhttp.port=41977 -DapplyEvolutions.default=true -Ddb.default.driver=org.postgresql.Driver`
+2015-09-28T17:54:38.833496+00:00 app[web.1]: Setting JAVA_TOOL_OPTIONS defaults based on dyno size. Custom settings will override them.
+2015-09-28T17:54:39.230491+00:00 app[web.1]: Picked up JAVA_TOOL_OPTIONS: -Xmx384m -Xss512k -Dfile.encoding=UTF-8
+2015-09-28T17:54:40.252060+00:00 heroku[web.1]: Process exited with status 143
+2015-09-28T17:54:44.040624+00:00 app[web.1]: [[37minfo[0m] - application - Creating Pool for datasource 'default'
+2015-09-28T17:54:45.376728+00:00 app[web.1]: [[37minfo[0m] - play.api.db.DefaultDBApi - Database [default] connected at jdbc:postgresql://ec2-54-163-228-109.compute-1.amazonaws.com:5432/d5clf9ofd9sdve
+2015-09-28T17:54:46.050471+00:00 app[web.1]: [[33mwarn[0m] - application - system properties: applyEvolutions.default is deprecated, use play.evolutions.db.default.autoApply instead
+2015-09-28T17:54:47.726330+00:00 app[web.1]: [[37minfo[0m] - play.api.Play - Application started (Prod)
+2015-09-28T17:54:47.780192+00:00 app[web.1]: [[37minfo[0m] - play.core.server.NettyServer - Listening for HTTP on /0:0:0:0:0:0:0:0:41977
+2015-09-28T17:54:48.361989+00:00 heroku[web.1]: State changed from starting to up
+2015-09-28T17:55:51.320199+00:00 heroku[router]: at=info method=GET path="/" host=indiepocalypse.herokuapp.com request_id=8488c84b-da39-461e-bf7b-c30cc2615e78 fwd="82.166.22.138" dyno=web.1 connect=0ms service=291ms status=200 bytes=2213
+2015-09-28T17:55:55.706199+00:00 heroku[router]: at=info method=GET path="/faq" host=indiepocalypse.herokuapp.com request_id=3e0783d8-17d7-421f-a760-d80954098786 fwd="82.166.22.138" dyno=web.1 connect=0ms service=14ms status=200 bytes=2122
+2015-09-28T17:55:57.183734+00:00 app[web.1]: tmp_name=qbresty
+2015-09-28T17:55:57.183826+00:00 app[web.1]: tmp_pssw=qb is the best
+2015-09-28T17:55:57.612942+00:00 heroku[router]: at=info method=GET path="/blog" host=indiepocalypse.herokuapp.com request_id=365172fa-abad-49ff-a5ed-4a88f3fc0f5b fwd="82.166.22.138" dyno=web.1 connect=0ms service=436ms status=200 bytes=2107
+2015-09-28T17:55:57.602255+00:00 app[web.1]: javax.mail.AuthenticationFailedException: [ALERT] Please log in via your web browser: https://support.google.com/mail/accounts/answer/78754 (Failure)
+2015-09-28T17:55:57.602470+00:00 app[web.1]: 	at com.sun.mail.imap.IMAPStore.protocolConnect(IMAPStore.java:474)
+2015-09-28T17:55:57.602491+00:00 app[web.1]: 	at javax.mail.Service.connect(Service.java:275)
+2015-09-28T17:55:57.602609+00:00 app[web.1]: 	at controllers.GmailInbox.read(GmailInbox.java:44)
+2015-09-28T17:55:57.602713+00:00 app[web.1]: 	at controllers.ApplicationRoutes.blog(ApplicationRoutes.java:56)
+2015-09-28T17:55:57.602748+00:00 app[web.1]: 	at router.Routes$$anonfun$routes$1$$anonfun$applyOrElse$5$$anonfun$apply$5.apply(Routes.scala:263)
+2015-09-28T17:55:57.602794+00:00 app[web.1]: 	at router.Routes$$anonfun$routes$1$$anonfun$applyOrElse$5$$anonfun$apply$5.apply(Routes.scala:263)
+2015-09-28T17:55:57.602530+00:00 app[web.1]: 	at javax.mail.Service.connect(Service.java:156)
+2015-09-28T17:55:57.602879+00:00 app[web.1]: 	at play.core.routing.HandlerInvokerFactory$JavaActionInvokerFactory$$anon$14$$anon$3$$anon$1.invocation(HandlerInvoker.scala:127)
+2015-09-28T17:55:57.602918+00:00 app[web.1]: 	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:70)
+2015-09-28T17:55:57.602969+00:00 app[web.1]: 	at play.http.DefaultHttpRequestHandler$1.call(DefaultHttpRequestHandler.java:20)
+2015-09-28T17:55:57.603012+00:00 app[web.1]: 	at play.core.j.JavaAction$$anonfun$7.apply(JavaAction.scala:94)
+2015-09-28T17:55:57.602835+00:00 app[web.1]: 	at play.core.routing.HandlerInvokerFactory$$anon$4.resultCall(HandlerInvoker.scala:136)
+2015-09-28T17:55:57.603055+00:00 app[web.1]: 	at play.core.j.JavaAction$$anonfun$7.apply(JavaAction.scala:94)
+2015-09-28T17:55:57.603092+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
+2015-09-28T17:55:57.603133+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
+2015-09-28T17:55:57.603173+00:00 app[web.1]: 	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40)
+2015-09-28T17:55:57.603212+00:00 app[web.1]: 	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:70)
+2015-09-28T17:55:57.603255+00:00 app[web.1]: 	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:32)
+2015-09-28T17:55:57.603295+00:00 app[web.1]: 	at scala.concurrent.impl.Future$.apply(Future.scala:31)
+2015-09-28T17:55:57.603333+00:00 app[web.1]: 	at scala.concurrent.Future$.apply(Future.scala:492)
+2015-09-28T17:55:57.603372+00:00 app[web.1]: 	at play.core.j.JavaAction.apply(JavaAction.scala:94)
+2015-09-28T17:55:57.603537+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:104)
+2015-09-28T17:55:57.603493+00:00 app[web.1]: 	at play.utils.Threads$.withContextClassLoader(Threads.scala:21)
+2015-09-28T17:55:57.603595+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:103)
+2015-09-28T17:55:57.603413+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:105)
+2015-09-28T17:55:57.603638+00:00 app[web.1]: 	at scala.Option.map(Option.scala:146)
+2015-09-28T17:55:57.603454+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:105)
+2015-09-28T17:55:57.603728+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:96)
+2015-09-28T17:55:57.603684+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:103)
+2015-09-28T17:55:57.603810+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:524)
+2015-09-28T17:55:57.603890+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:560)
+2015-09-28T17:55:57.603771+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:524)
+2015-09-28T17:55:57.603931+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$13.apply(Iteratee.scala:536)
+2015-09-28T17:55:57.603850+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:560)
+2015-09-28T17:55:57.604115+00:00 app[web.1]: 	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:40)
+2015-09-28T17:55:57.604157+00:00 app[web.1]: 	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:397)
+2015-09-28T17:55:57.604012+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
+2015-09-28T17:55:57.604052+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
+2015-09-28T17:55:57.603972+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$13.apply(Iteratee.scala:536)
+2015-09-28T17:55:57.604201+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+2015-09-28T17:55:57.604257+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+2015-09-28T17:55:57.604354+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+2015-09-28T17:55:57.604298+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+2015-09-28T17:56:00.311184+00:00 heroku[router]: at=info method=GET path="/explore" host=indiepocalypse.herokuapp.com request_id=f7d77153-86c3-4d61-a609-a3a4d60147a4 fwd="82.166.22.138" dyno=web.1 connect=0ms service=267ms status=200 bytes=4079
+2015-09-28T17:56:03.902692+00:00 app[web.1]: tmp_name=qbresty
+2015-09-28T17:56:03.902702+00:00 app[web.1]: tmp_pssw=qb is the best
+2015-09-28T17:56:04.118358+00:00 app[web.1]: javax.mail.AuthenticationFailedException: [ALERT] Please log in via your web browser: https://support.google.com/mail/accounts/answer/78754 (Failure)
+2015-09-28T17:56:04.118537+00:00 app[web.1]: 	at javax.mail.Service.connect(Service.java:275)
+2015-09-28T17:56:04.118495+00:00 app[web.1]: 	at com.sun.mail.imap.IMAPStore.protocolConnect(IMAPStore.java:474)
+2015-09-28T17:56:04.118580+00:00 app[web.1]: 	at javax.mail.Service.connect(Service.java:156)
+2015-09-28T17:56:04.118747+00:00 app[web.1]: 	at controllers.ApplicationRoutes.blog(ApplicationRoutes.java:56)
+2015-09-28T17:56:04.118783+00:00 app[web.1]: 	at router.Routes$$anonfun$routes$1$$anonfun$applyOrElse$5$$anonfun$apply$5.apply(Routes.scala:263)
+2015-09-28T17:56:04.118617+00:00 app[web.1]: 	at controllers.GmailInbox.read(GmailInbox.java:44)
+2015-09-28T17:56:04.118883+00:00 app[web.1]: 	at router.Routes$$anonfun$routes$1$$anonfun$applyOrElse$5$$anonfun$apply$5.apply(Routes.scala:263)
+2015-09-28T17:56:04.118957+00:00 app[web.1]: 	at play.core.routing.HandlerInvokerFactory$JavaActionInvokerFactory$$anon$14$$anon$3$$anon$1.invocation(HandlerInvoker.scala:127)
+2015-09-28T17:56:04.119034+00:00 app[web.1]: 	at play.http.DefaultHttpRequestHandler$1.call(DefaultHttpRequestHandler.java:20)
+2015-09-28T17:56:04.118995+00:00 app[web.1]: 	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:70)
+2015-09-28T17:56:04.119074+00:00 app[web.1]: 	at play.core.j.JavaAction$$anonfun$7.apply(JavaAction.scala:94)
+2015-09-28T17:56:04.118915+00:00 app[web.1]: 	at play.core.routing.HandlerInvokerFactory$$anon$4.resultCall(HandlerInvoker.scala:136)
+2015-09-28T17:56:04.119277+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
+2015-09-28T17:56:04.119344+00:00 app[web.1]: 	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:70)
+2015-09-28T17:56:04.119312+00:00 app[web.1]: 	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40)
+2015-09-28T17:56:04.119230+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
+2015-09-28T17:56:04.119159+00:00 app[web.1]: 	at play.core.j.JavaAction$$anonfun$7.apply(JavaAction.scala:94)
+2015-09-28T17:56:04.119382+00:00 app[web.1]: 	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:32)
+2015-09-28T17:56:04.119545+00:00 app[web.1]: 	at play.core.j.JavaAction.apply(JavaAction.scala:94)
+2015-09-28T17:56:04.119506+00:00 app[web.1]: 	at scala.concurrent.Future$.apply(Future.scala:492)
+2015-09-28T17:56:04.119415+00:00 app[web.1]: 	at scala.concurrent.impl.Future$.apply(Future.scala:31)
+2015-09-28T17:56:04.119644+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:105)
+2015-09-28T17:56:04.119602+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:105)
+2015-09-28T17:56:04.119671+00:00 app[web.1]: 	at play.utils.Threads$.withContextClassLoader(Threads.scala:21)
+2015-09-28T17:56:04.119718+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:104)
+2015-09-28T17:56:04.119755+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:103)
+2015-09-28T17:56:04.119838+00:00 app[web.1]: 	at scala.Option.map(Option.scala:146)
+2015-09-28T17:56:04.119875+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:103)
+2015-09-28T17:56:04.119954+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:96)
+2015-09-28T17:56:04.120035+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:524)
+2015-09-28T17:56:04.120173+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:560)
+2015-09-28T17:56:04.120209+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:560)
+2015-09-28T17:56:04.120241+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$13.apply(Iteratee.scala:536)
+2015-09-28T17:56:04.120120+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:524)
+2015-09-28T17:56:04.120280+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$13.apply(Iteratee.scala:536)
+2015-09-28T17:56:04.120317+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
+2015-09-28T17:56:04.120354+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
+2015-09-28T17:56:04.120390+00:00 app[web.1]: 	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:40)
+2015-09-28T17:56:04.120432+00:00 app[web.1]: 	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:397)
+2015-09-28T17:56:04.120468+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+2015-09-28T17:56:04.120587+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+2015-09-28T17:56:04.120625+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+2015-09-28T17:56:04.120509+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+2015-09-28T17:56:04.121119+00:00 heroku[router]: at=info method=GET path="/blog" host=indiepocalypse.herokuapp.com request_id=68cb5bf6-bc7d-4752-a0cb-e35b16ec2991 fwd="82.166.22.138" dyno=web.1 connect=0ms service=226ms status=200 bytes=2107
+2015-09-28T18:06:55.529533+00:00 heroku[api]: Set GMAIL_USERNAME config vars by skariel@gmail.com
+2015-09-28T18:06:55.529533+00:00 heroku[api]: Release v30 created by skariel@gmail.com
+2015-09-28T18:06:55.647690+00:00 heroku[web.1]: State changed from up to starting
+2015-09-28T18:06:58.778597+00:00 heroku[web.1]: Stopping all processes with SIGTERM
+2015-09-28T18:06:59.736571+00:00 app[web.1]: [[37minfo[0m] - application - Shutting down connection pool.
+2015-09-28T18:07:01.671546+00:00 heroku[web.1]: Process exited with status 143
+2015-09-28T18:07:03.076043+00:00 heroku[web.1]: Starting process with command `target/universal/stage/bin/indie_play_be -Dhttp.port=51827 -DapplyEvolutions.default=true -Ddb.default.driver=org.postgresql.Driver`
+2015-09-28T18:07:04.751062+00:00 app[web.1]: Setting JAVA_TOOL_OPTIONS defaults based on dyno size. Custom settings will override them.
+2015-09-28T18:07:04.974432+00:00 app[web.1]: Picked up JAVA_TOOL_OPTIONS: -Xmx384m -Xss512k -Dfile.encoding=UTF-8
+2015-09-28T18:07:15.764953+00:00 app[web.1]: [[37minfo[0m] - application - Creating Pool for datasource 'default'
+2015-09-28T18:07:18.800497+00:00 app[web.1]: [[37minfo[0m] - play.api.db.DefaultDBApi - Database [default] connected at jdbc:postgresql://ec2-54-163-228-109.compute-1.amazonaws.com:5432/d5clf9ofd9sdve
+2015-09-28T18:07:19.684941+00:00 app[web.1]: [[33mwarn[0m] - application - system properties: applyEvolutions.default is deprecated, use play.evolutions.db.default.autoApply instead
+2015-09-28T18:07:22.275817+00:00 app[web.1]: [[37minfo[0m] - play.api.Play - Application started (Prod)
+2015-09-28T18:07:22.523550+00:00 app[web.1]: [[37minfo[0m] - play.core.server.NettyServer - Listening for HTTP on /0:0:0:0:0:0:0:0:51827
+2015-09-28T18:07:22.724191+00:00 heroku[web.1]: State changed from starting to up
+2015-09-28T18:09:23.903314+00:00 heroku[slug-compiler]: Slug compilation started
+2015-09-28T18:09:23.903938+00:00 heroku[slug-compiler]: Slug compilation finished
+2015-09-28T18:09:23.830120+00:00 heroku[api]: Deploy 479d36e by skariel@gmail.com
+2015-09-28T18:09:23.830120+00:00 heroku[api]: Release v31 created by skariel@gmail.com
+2015-09-28T18:09:24.046325+00:00 heroku[web.1]: State changed from up to starting
+2015-09-28T18:09:28.217623+00:00 heroku[web.1]: Stopping all processes with SIGTERM
+2015-09-28T18:09:31.077860+00:00 heroku[web.1]: Stopping all processes with SIGTERM
+2015-09-28T18:09:31.016838+00:00 app[web.1]: [[37minfo[0m] - application - Shutting down connection pool.
+2015-09-28T18:09:33.562433+00:00 heroku[web.1]: Starting process with command `target/universal/stage/bin/indie_play_be -Dhttp.port=39117 -DapplyEvolutions.default=true -Ddb.default.driver=org.postgresql.Driver`
+2015-09-28T18:09:34.058175+00:00 heroku[web.1]: Process exited with status 143
+2015-09-28T18:09:35.566488+00:00 app[web.1]: Setting JAVA_TOOL_OPTIONS defaults based on dyno size. Custom settings will override them.
+2015-09-28T18:09:35.822564+00:00 app[web.1]: Picked up JAVA_TOOL_OPTIONS: -Xmx384m -Xss512k -Dfile.encoding=UTF-8
+2015-09-28T18:09:39.943400+00:00 app[web.1]: [[37minfo[0m] - application - Creating Pool for datasource 'default'
+2015-09-28T18:09:41.334824+00:00 app[web.1]: [[37minfo[0m] - play.api.db.DefaultDBApi - Database [default] connected at jdbc:postgresql://ec2-54-163-228-109.compute-1.amazonaws.com:5432/d5clf9ofd9sdve
+2015-09-28T18:09:42.171126+00:00 app[web.1]: [[33mwarn[0m] - application - system properties: applyEvolutions.default is deprecated, use play.evolutions.db.default.autoApply instead
+2015-09-28T18:09:46.785422+00:00 app[web.1]: [[37minfo[0m] - play.api.Play - Application started (Prod)
+2015-09-28T18:09:46.947331+00:00 app[web.1]: [[37minfo[0m] - play.core.server.NettyServer - Listening for HTTP on /0:0:0:0:0:0:0:0:39117
+2015-09-28T18:09:47.429208+00:00 heroku[web.1]: State changed from starting to up
+2015-09-28T18:09:49.302126+00:00 heroku[router]: at=info method=GET path="/" host=indiepocalypse.herokuapp.com request_id=b5f67b5e-8ce5-4049-a4b7-12d45b04f204 fwd="82.166.22.138" dyno=web.1 connect=0ms service=842ms status=200 bytes=2213
+2015-09-28T18:09:51.953681+00:00 app[web.1]: tmp_name=qbresty@gmail.com
+2015-09-28T18:09:51.953746+00:00 app[web.1]: tmp_pssw=qb is the best
+2015-09-28T18:09:51.953893+00:00 app[web.1]: tmp_name=qbresty@gmail.com
+2015-09-28T18:09:51.953942+00:00 app[web.1]: tmp_pssw=qb is the best
+2015-09-28T18:09:52.592600+00:00 app[web.1]: javax.mail.AuthenticationFailedException: [ALERT] Please log in via your web browser: https://support.google.com/mail/accounts/answer/78754 (Failure)
+2015-09-28T18:09:52.592904+00:00 app[web.1]: 	at com.sun.mail.imap.IMAPStore.protocolConnect(IMAPStore.java:474)
+2015-09-28T18:09:52.592960+00:00 app[web.1]: 	at javax.mail.Service.connect(Service.java:275)
+2015-09-28T18:09:52.593001+00:00 app[web.1]: 	at javax.mail.Service.connect(Service.java:156)
+2015-09-28T18:09:52.593044+00:00 app[web.1]: 	at controllers.GmailInbox.read(GmailInbox.java:52)
+2015-09-28T18:09:52.593152+00:00 app[web.1]: 	at router.Routes$$anonfun$routes$1$$anonfun$applyOrElse$5$$anonfun$apply$5.apply(Routes.scala:263)
+2015-09-28T18:09:52.593107+00:00 app[web.1]: 	at controllers.ApplicationRoutes.blog(ApplicationRoutes.java:56)
+2015-09-28T18:09:52.593216+00:00 app[web.1]: 	at router.Routes$$anonfun$routes$1$$anonfun$applyOrElse$5$$anonfun$apply$5.apply(Routes.scala:263)
+2015-09-28T18:09:52.593264+00:00 app[web.1]: 	at play.core.routing.HandlerInvokerFactory$$anon$4.resultCall(HandlerInvoker.scala:136)
+2015-09-28T18:09:52.593322+00:00 app[web.1]: 	at play.core.routing.HandlerInvokerFactory$JavaActionInvokerFactory$$anon$14$$anon$3$$anon$1.invocation(HandlerInvoker.scala:127)
+2015-09-28T18:09:52.593378+00:00 app[web.1]: 	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:70)
+2015-09-28T18:09:52.593434+00:00 app[web.1]: 	at play.http.DefaultHttpRequestHandler$1.call(DefaultHttpRequestHandler.java:20)
+2015-09-28T18:09:52.593508+00:00 app[web.1]: 	at play.core.j.JavaAction$$anonfun$7.apply(JavaAction.scala:94)
+2015-09-28T18:09:52.593570+00:00 app[web.1]: 	at play.core.j.JavaAction$$anonfun$7.apply(JavaAction.scala:94)
+2015-09-28T18:09:52.593655+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
+2015-09-28T18:09:52.593614+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
+2015-09-28T18:09:52.593700+00:00 app[web.1]: 	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40)
+2015-09-28T18:09:52.593803+00:00 app[web.1]: 	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:32)
+2015-09-28T18:09:52.593762+00:00 app[web.1]: 	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:70)
+2015-09-28T18:09:52.593836+00:00 app[web.1]: 	at scala.concurrent.impl.Future$.apply(Future.scala:31)
+2015-09-28T18:09:52.593877+00:00 app[web.1]: 	at scala.concurrent.Future$.apply(Future.scala:492)
+2015-09-28T18:09:52.593916+00:00 app[web.1]: 	at play.core.j.JavaAction.apply(JavaAction.scala:94)
+2015-09-28T18:09:52.593951+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:105)
+2015-09-28T18:09:52.594017+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:105)
+2015-09-28T18:09:52.594078+00:00 app[web.1]: 	at play.utils.Threads$.withContextClassLoader(Threads.scala:21)
+2015-09-28T18:09:52.594158+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonf
+un$apply$4.apply(Action.scala:104)
+2015-09-28T18:09:52.594242+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:103)
+2015-09-28T18:09:52.594273+00:00 app[web.1]: 	at scala.Option.map(Option.scala:146)
+2015-09-28T18:09:52.594338+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:103)
+2015-09-28T18:09:52.594378+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:96)
+2015-09-28T18:09:52.594411+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:524)
+2015-09-28T18:09:52.594456+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:524)
+2015-09-28T18:09:52.594553+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:560)
+2015-09-28T18:09:52.594503+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:560)
+2015-09-28T18:09:52.594580+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$13.apply(Iteratee.scala:536)
+2015-09-28T18:09:52.594708+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
+2015-09-28T18:09:52.594760+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
+2015-09-28T18:09:52.594820+00:00 app[web.1]: 	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:40)
+2015-09-28T18:09:52.594854+00:00 app[web.1]: 	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:397)
+2015-09-28T18:09:52.594653+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$13.apply(Iteratee.scala:536)
+2015-09-28T18:09:52.594887+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+2015-09-28T18:09:52.594949+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+2015-09-28T18:09:52.595068+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+2015-09-28T18:09:52.595003+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+2015-09-28T18:09:52.605291+00:00 heroku[router]: at=info method=GET path="/blog" host=indiepocalypse.herokuapp.com request_id=a0e28fa7-7439-4f4a-bbf0-71ecacead87c fwd="82.166.22.138" dyno=web.1 connect=1ms service=662ms status=200 bytes=2107
+2015-09-28T18:09:59.610066+00:00 app[web.1]: tmp_name=qbresty@gmail.com
+2015-09-28T18:09:59.610173+00:00 app[web.1]: tmp_pssw=qb is the best
+2015-09-28T18:09:59.610553+00:00 app[web.1]: tmp_name=qbresty@gmail.com
+2015-09-28T18:09:59.610599+00:00 app[web.1]: tmp_pssw=qb is the best
+2015-09-28T18:10:00.059489+00:00 heroku[router]: at=info method=GET path="/blog" host=indiepocalypse.herokuapp.com request_id=56a55db6-291c-4c00-b9ae-67679455ae25 fwd="82.166.22.138" dyno=web.1 connect=1ms service=456ms status=200 bytes=2107
+2015-09-28T18:10:00.052011+00:00 app[web.1]: javax.mail.AuthenticationFailedException: [ALERT] Please log in via your web browser: https://support.google.com/mail/accounts/answer/78754 (Failure)
+2015-09-28T18:10:00.052242+00:00 app[web.1]: 	at com.sun.mail.imap.IMAPStore.protocolConnect(IMAPStore.java:474)
+2015-09-28T18:10:00.052329+00:00 app[web.1]: 	at javax.mail.Service.connect(Service.java:275)
+2015-09-28T18:10:00.052406+00:00 app[web.1]: 	at javax.mail.Service.connect(Service.java:156)
+2015-09-28T18:10:00.052475+00:00 app[web.1]: 	at controllers.GmailInbox.read(GmailInbox.java:52)
+2015-09-28T18:10:00.052557+00:00 app[web.1]: 	at controllers.ApplicationRoutes.blog(ApplicationRoutes.java:56)
+2015-09-28T18:10:00.052630+00:00 app[web.1]: 	at router.Routes$$anonfun$routes$1$$anonfun$applyOrElse$5$$anonfun$apply$5.apply(Routes.scala:263)
+2015-09-28T18:10:00.052718+00:00 app[web.1]: 	at router.Routes$$anonfun$routes$1$$anonfun$applyOrElse$5$$anonfun$apply$5.apply(Routes.scala:263)
+2015-09-28T18:10:00.052801+00:00 app[web.1]: 	at play.core.routing.HandlerInvokerFactory$$anon$4.resultCall(HandlerInvoker.scala:136)
+2015-09-28T18:10:00.052949+00:00 app[web.1]: 	at play.core.routing.HandlerInvokerFactory$JavaActionInvokerFactory$$anon$14$$anon$3$$anon$1.invocation(HandlerInvoker.scala:127)
+2015-09-28T18:10:00.053038+00:00 app[web.1]: 	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:70)
+2015-09-28T18:10:00.053134+00:00 app[web.1]: 	at play.http.DefaultHttpRequestHandler$1.call(DefaultHttpRequestHandler.java:20)
+2015-09-28T18:10:00.053289+00:00 app[web.1]: 	at play.core.j.JavaAction$$anonfun$7.apply(JavaAction.scala:94)
+2015-09-28T18:10:00.053205+00:00 app[web.1]: 	at play.core.j.JavaAction$$anonfun$7.apply(JavaAction.scala:94)
+2015-09-28T18:10:00.053364+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
+2015-09-28T18:10:00.053506+00:00 app[web.1]: 	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40)
+2015-09-28T18:10:00.053436+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
+2015-09-28T18:10:00.053582+00:00 app[web.1]: 	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:70)
+2015-09-28T18:10:00.053653+00:00 app[web.1]: 	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:32)
+2015-09-28T18:10:00.053721+00:00 app[web.1]: 	at scala.concurrent.impl.Future$.apply(Future.scala:31)
+2015-09-28T18:10:00.053789+00:00 app[web.1]: 	at scala.concurrent.Future$.apply(Future.scala:492)
+2015-09-28T18:10:00.053861+00:00 app[web.1]: 	at play.core.j.JavaAction.apply(JavaAction.scala:94)
+2015-09-28T18:10:00.054003+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:105)
+2015-09-28T18:10:00.053933+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:105)
+2015-09-28T18:10:00.054142+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:104)
+2015-09-28T18:10:00.054212+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:103)
+2015-09-28T18:10:00.054072+00:00 app[web.1]: 	at play.utils.Threads$.withContextClassLoader(Threads.scala:21)
+2015-09-28T18:10:00.054310+00:00 app[web.1]: 	at scala.Option.map(Option.scala:146)
+2015-09-28T18:10:00.054384+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:103)
+2015-09-28T18:10:00.054454+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:96)
+2015-09-28T18:10:00.054524+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:524)
+2015-09-28T18:10:00.054604+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:524)
+2015-09-28T18:10:00.054688+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:560)
+2015-09-28T18:10:00.054758+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:560)
+2015-09-28T18:10:00.054828+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$13.apply(Iteratee.scala:536)
+2015-09-28T18:10:00.054899+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$13.apply(Iteratee.scala:536)
+2015-09-28T18:10:00.055224+00:00 app[web.1]: 	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:397)
+2015-09-28T18:10:00.054970+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
+2015-09-28T18:10:00.055043+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
+2015-09-28T18:10:00.055294+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+2015-09-28T18:10:00.055123+00:00 app[web.1]: 	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:40)
+2015-09-28T18:10:00.055386+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+2015-09-28T18:10:00.055457+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+2015-09-28T18:10:00.055568+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+2015-09-28T18:10:00.671871+00:00 heroku[router]: at=info method=GET path="/assets/images/favicon.png" host=indiepocalypse.herokuapp.com request_id=140ae9f3-8aec-438f-9079-bbca88e99b61 fwd="82.166.22.138" dyno=web.1 connect=0ms service=215ms status=200 bytes=941
+2015-09-28T18:10:03.190776+00:00 app[web.1]: tmp_pssw=qb is the best
+2015-09-28T18:10:03.190965+00:00 app[web.1]: tmp_name=qbresty@gmail.com
+2015-09-28T18:10:03.190771+00:00 app[web.1]: tmp_name=qbresty@gmail.com
+2015-09-28T18:10:03.190970+00:00 app[web.1]: tmp_pssw=qb is the best
+2015-09-28T18:10:03.667766+00:00 heroku[router]: at=info method=GET path="/blog" host=indiepocalypse.herokuapp.com request_id=c256cc45-6b56-44b5-8513-6d6a6aa667c9 fwd="82.166.22.138" dyno=web.1 connect=1ms service=486ms status=200 bytes=2107
+2015-09-28T18:10:03.637848+00:00 app[web.1]: javax.mail.AuthenticationFailedException: [ALERT] Please log in via your web browser: https://support.google.com/mail/accounts/answer/78754 (Failure)
+2015-09-28T18:10:03.637999+00:00 app[web.1]: 	at com.sun.mail.imap.IMAPStore.protocolConnect(IMAPStore.java:474)
+2015-09-28T18:10:03.638028+00:00 app[web.1]: 	at javax.mail.Service.connect(Service.java:275)
+2015-09-28T18:10:03.638067+00:00 app[web.1]: 	at javax.mail.Service.connect(Service.java:156)
+2015-09-28T18:10:03.638201+00:00 app[web.1]: 	at controllers.GmailInbox.read(GmailInbox.java:52)
+2015-09-28T18:10:03.638237+00:00 app[web.1]: 	at controllers.ApplicationRoutes.blog(ApplicationRoutes.java:56)
+2015-09-28T18:10:03.638290+00:00 app[web.1]: 	at router.Routes$$anonfun$routes$1$$anonfun$applyOrElse$5$$anonfun$apply$5.apply(Routes.scala:263)
+2015-09-28T18:10:03.638362+00:00 app[web.1]: 	at play.core.routing.HandlerInvokerFactory$$anon$4.resultCall(HandlerInvoker.scala:136)
+2015-09-28T18:10:03.638325+00:00 app[web.1]: 	at router.Routes$$anonfun$routes$1$$anonfun$applyOrElse$5$$anonfun$apply$5.apply(Routes.scala:263)
+2015-09-28T18:10:03.638398+00:00 app[web.1]: 	at play.core.routing.HandlerInvokerFactory$JavaActionInvokerFactory$$anon$14$$anon$3$$anon$1.invocation(HandlerInvoker.scala:127)
+2015-09-28T18:10:03.638433+00:00 app[web.1]: 	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:70)
+2015-09-28T18:10:03.638471+00:00 app[web.1]: 	at play.http.DefaultHttpRequestHandler$1.call(DefaultHttpRequestHandler.java:20)
+2015-09-28T18:10:03.638507+00:00 app[web.1]: 	at play.core.j.JavaAction$$anonfun$7.apply(JavaAction.scala:94)
+2015-09-28T18:10:03.638542+00:00 app[web.1]: 	at play.core.j.JavaAction$$anonfun$7.apply(JavaAction.scala:94)
+2015-09-28T18:10:03.638575+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
+2015-09-28T18:10:03.638652+00:00 app[web.1]: 	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40)
+2015-09-28T18:10:03.638617+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
+2015-09-28T18:10:03.638708+00:00 app[web.1]: 	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:70)
+2015-09-28T18:10:03.638746+00:00 app[web.1]: 	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:32)
+2015-09-28T18:10:03.638798+00:00 app[web.1]: 	at scala.concurrent.impl.Future$.apply(Future.scala:31)
+2015-09-28T18:10:03.638834+00:00 app[web.1]: 	at scala.concurrent.Future$.apply(Future.scala:492)
+2015-09-28T18:10:03.638870+00:00 app[web.1]: 	at play.core.j.JavaAction.apply(JavaAction.scala:94)
+2015-09-28T18:10:03.638906+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:105)
+2015-09-28T18:10:03.638945+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:105)
+2015-09-28T18:10:03.638984+00:00 app[web.1]: 	at play.utils.Threads$.withContextClassLoader(Threads.scala:21)
+2015-09-28T18:10:03.639023+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:104)
+2015-09-28T18:10:03.639058+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:103)
+2015-09-28T18:10:03.639105+00:00 app[web.1]: 	at scala.Option.map(Option.scala:146)
+2015-09-28T18:10:03.639140+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:103)
+2015-09-28T18:10:03.639176+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:96)
+2015-09-28T18:10:03.639224+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:524)
+2015-09-28T18:10:03.639259+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:524)
+2015-09-28T18:10:03.639296+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:560)
+2015-09-28T18:10:03.639332+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:560)
+2015-09-28T18:10:03.639366+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$13.apply(Iteratee.scala:536)
+2015-09-28T18:10:03.639401+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$13.apply(Iteratee.scala:536)
+2015-09-28T18:10:03.639438+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
+2015-09-28T18:10:03.639475+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
+2015-09-28T18:10:03.639523+00:00 app[web.1]: 	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:40)
+2015-09-28T18:10:03.639601+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+2015-09-28T18:10:03.639558+00:00 app[web.1]: 	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:397)
+2015-09-28T18:10:03.639636+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+2015-09-28T18:10:03.639677+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+2015-09-28T18:10:03.639712+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+2015-09-28T18:10:04.780657+00:00 heroku[router]: at=info method=GET path="/explore" host=indiepocalypse.herokuapp.com request_id=061d42ba-e826-4146-81c5-4921f6c9911c fwd="82.166.22.138" dyno=web.1 connect=1ms service=347ms status=200 bytes=4079
+2015-09-28T18:10:06.053330+00:00 heroku[router]: at=info method=GET path="/faq" host=indiepocalypse.herokuapp.com request_id=a22fd8e1-84fe-41a0-97f8-7365345dc701 fwd="82.166.22.138" dyno=web.1 connect=13ms service=21ms status=200 bytes=2122
+2015-09-28T18:10:07.110149+00:00 heroku[router]: at=info method=GET path="/" host=indiepocalypse.herokuapp.com request_id=af8b027e-d532-4143-bc1b-442edc2ea1a9 fwd="82.166.22.138" dyno=web.1 connect=1ms service=10ms status=200 bytes=2213
+2015-09-28T18:10:08.532787+00:00 heroku[router]: at=info method=GET path="/faq" host=indiepocalypse.herokuapp.com request_id=2c088d26-c0a2-4746-a034-0a96d69cb907 fwd="82.166.22.138" dyno=web.1 connect=1ms service=12ms status=200 bytes=2122
+2015-09-28T18:10:16.376572+00:00 heroku[router]: at=info method=GET path="/?code=d1571d5b36585a8f22ea&state=6wmznfv4w3oc" host=indiepocalypse.herokuapp.com request_id=22f1e363-4ded-408b-a5c7-bd2a6ceeb3f1 fwd="82.166.22.138" dyno=web.1 connect=0ms service=474ms status=200 bytes=13625
+2015-09-28T18:10:19.842151+00:00 app[web.1]: tmp_name=qbresty@gmail.com
+2015-09-28T18:10:19.842223+00:00 app[web.1]: tmp_pssw=qb is the best
+2015-09-28T18:10:19.842510+00:00 app[web.1]: tmp_name=qbresty@gmail.com
+2015-09-28T18:10:19.842518+00:
+00 app[web.1]: tmp_pssw=qb is the best
+2015-09-28T18:10:20.334252+00:00 heroku[router]: at=info method=GET path="/blog" host=indiepocalypse.herokuapp.com request_id=595db6e2-65f3-4aa4-b50f-9b150f89b62b fwd="82.166.22.138" dyno=web.1 connect=1ms service=499ms status=200 bytes=2893
+2015-09-28T18:10:20.312826+00:00 app[web.1]: javax.mail.AuthenticationFailedException: [ALERT] Please log in via your web browser: https://support.google.com/mail/accounts/answer/78754 (Failure)
+2015-09-28T18:10:20.313061+00:00 app[web.1]: 	at com.sun.mail.imap.IMAPStore.protocolConnect(IMAPStore.java:474)
+2015-09-28T18:10:20.313114+00:00 app[web.1]: 	at javax.mail.Service.connect(Service.java:156)
+2015-09-28T18:10:20.313089+00:00 app[web.1]: 	at javax.mail.Service.connect(Service.java:275)
+2015-09-28T18:10:20.313142+00:00 app[web.1]: 	at controllers.GmailInbox.read(GmailInbox.java:52)
+2015-09-28T18:10:20.313191+00:00 app[web.1]: 	at controllers.ApplicationRoutes.blog(ApplicationRoutes.java:56)
+2015-09-28T18:10:20.313227+00:00 app[web.1]: 	at router.Routes$$anonfun$routes$1$$anonfun$applyOrElse$5$$anonfun$apply$5.apply(Routes.scala:263)
+2015-09-28T18:10:20.313273+00:00 app[web.1]: 	at router.Routes$$anonfun$routes$1$$anonfun$applyOrElse$5$$anonfun$apply$5.apply(Routes.scala:263)
+2015-09-28T18:10:20.313327+00:00 app[web.1]: 	at play.core.routing.HandlerInvokerFactory$$anon$4.resultCall(HandlerInvoker.scala:136)
+2015-09-28T18:10:20.313349+00:00 app[web.1]: 	at play.core.routing.HandlerInvokerFactory$JavaActionInvokerFactory$$anon$14$$anon$3$$anon$1.invocation(HandlerInvoker.scala:127)
+2015-09-28T18:10:20.313384+00:00 app[web.1]: 	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:70)
+2015-09-28T18:10:20.313420+00:00 app[web.1]: 	at play.http.DefaultHttpRequestHandler$1.call(DefaultHttpRequestHandler.java:20)
+2015-09-28T18:10:20.313510+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
+2015-09-28T18:10:20.313552+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
+2015-09-28T18:10:20.313445+00:00 app[web.1]: 	at play.core.j.JavaAction$$anonfun$7.apply(JavaAction.scala:94)
+2015-09-28T18:10:20.313579+00:00 app[web.1]: 	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40)
+2015-09-28T18:10:20.313470+00:00 app[web.1]: 	at play.core.j.JavaAction$$anonfun$7.apply(JavaAction.scala:94)
+2015-09-28T18:10:20.314486+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:105)
+2015-09-28T18:10:20.313608+00:00 app[web.1]: 	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:70)
+2015-09-28T18:10:20.313717+00:00 app[web.1]: 	at scala.concurrent.Future$.apply(Future.scala:492)
+2015-09-28T18:10:20.313735+00:00 app[web.1]: 	at play.core.j.JavaAction.apply(JavaAction.scala:94)
+2015-09-28T18:10:20.314518+00:00 app[web.1]: 	at play.utils.Threads$.withContextClassLoader(Threads.scala:21)
+2015-09-28T18:10:20.314543+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:104)
+2015-09-28T18:10:20.314449+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:105)
+2015-09-28T18:10:20.314584+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:103)
+2015-09-28T18:10:20.313645+00:00 app[web.1]: 	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:32)
+2015-09-28T18:10:20.314674+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:103)
+2015-09-28T18:10:20.313681+00:00 app[web.1]: 	at scala.concurrent.impl.Future$.apply(Future.scala:31)
+2015-09-28T18:10:20.314744+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:96)
+2015-09-28T18:10:20.314795+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:524)
+2015-09-28T18:10:20.314844+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:524)
+2015-09-28T18:10:20.315032+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$13.apply(Iteratee.scala:536)
+2015-09-28T18:10:20.315068+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$13.apply(Iteratee.scala:536)
+2015-09-28T18:10:20.314890+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:560)
+2015-09-28T18:10:20.315114+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
+2015-09-28T18:10:20.314976+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:560)
+2015-09-28T18:10:20.314634+00:00 app[web.1]: 	at scala.Option.map(Option.scala:146)
+2015-09-28T18:10:20.315131+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
+2015-09-28T18:10:20.315320+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+2015-09-28T18:10:20.315387+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+2015-09-28T18:10:20.315391+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+2015-09-28T18:10:20.315440+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+2015-09-28T18:10:20.315187+00:00 app[web.1]: 	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:40)
+2015-09-28T18:10:20.315210+00:00 app[web.1]: 	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:397)
+2015-09-28T18:10:21.918362+00:00 heroku[router]: at=info method=GET path="/explore" host=indiepocalypse.herokuapp.com request_id=1bab8592-e18d-4853-ba4c-dfab62a1500c fwd="82.166.22.138" dyno=web.1 connect=0ms service=172ms status=200 bytes=4865
+2015-09-28T18:10:23.476697+00:00 heroku[router]: at=info method=GET path="/faq" host=indiepocalypse.herokuapp.com request_id=896923b9-644c-4d84-86d3-2c81439a2e95 fwd="82.166.22.138" dyno=web.1 connect=1ms service=18ms status=200 bytes=2908
+2015-09-28T18:10:24.334042+00:00 heroku[router]: at=info method=GET path="/" host=indiepocalypse.herokuapp.com request_id=0df1a9b7-91cc-4224-96b9-95ad091ac145 fwd="82.166.22.138" dyno=web.1 connect=0ms service=64ms status=200 bytes=13625
+2015-09-28T18:10:27.704661+00:00 heroku[router]: at=info method=GET path="/logout" host=indiepocalypse.herokuapp.com request_id=368475ae-3594-4af1-ade1-f5501d4cc542 fwd="82.166.22.138" dyno=web.1 connect=0ms service=166ms status=303 bytes=195
+2015-09-28T18:10:28.038814+00:00 heroku[router]: at=info method=GET path="/" host=indiepocalypse.herokuapp.com request_id=4fa0d693-e11a-4358-aacc-e577fc1063e2 fwd="82.166.22.138" dyno=web.1 connect=0ms service=52ms status=200 bytes=2213
+2015-09-28T18:22:42.293593+00:00 heroku[api]: Deploy dd6cade by skariel@gmail.com
+2015-09-28T18:22:42.293593+00:00 heroku[api]: Release v32 created by skariel@gmail.com
+2015-09-28T18:22:42.356031+00:00 heroku[slug-compiler]: Slug compilation started
+2015-09-28T18:22:42.356053+00:00 heroku[slug-compiler]: Slug compilation finished
+2015-09-28T18:22:42.721006+00:00 heroku[web.1]: State changed from up to starting
+2015-09-28T18:22:46.776265+00:00 heroku[web.1]: Stopping all processes with SIGTERM
+2015-09-28T18:22:48.146362+00:00 app[web.1]: [[37minfo[0m] - application - Shutting down connection pool.
+2015-09-28T18:22:48.960801+00:00 heroku[web.1]: Starting process with command `target/universal/stage/bin/indie_play_be -Dhttp.port=55428 -DapplyEvolutions.default=true -Ddb.default.driver=org.postgresql.Driver`
+2015-09-28T18:22:49.835497+00:00 heroku[web.1]: Process exited with status 143
+2015-09-28T18:22:50.751559+00:00 app[web.1]: Setting JAVA_TOOL_OPTIONS defaults based on dyno size. Custom settings will override them.
+2015-09-28T18:22:51.060331+00:00 app[web.1]: Picked up JAVA_TOOL_OPTIONS: -Xmx384m -Xss512k -Dfile.encoding=UTF-8
+2015-09-28T18:22:53.726346+00:00 app[web.1]: [[37minfo[0m] - application - Creating Pool for datasource 'default'
+2015-09-28T18:22:54.818137+00:00 app[web.1]: [[37minfo[0m] - play.api.db.DefaultDBApi - Database [default] connected at jdbc:postgresql://ec2-54-163-228-109.compute-1.amazonaws.com:5432/d5clf9ofd9sdve
+2015-09-28T18:22:55.420639+00:00 app[web.1]: [[33mwarn[0m] - application - system properties: applyEvolutions.default is deprecated, use play.evolutions.db.default.autoApply instead
+2015-09-28T18:22:58.376626+00:00 app[web.1]: [[37minfo[0m] - play.api.Play - Application started (Prod)
+2015-09-28T18:22:58.568206+00:00 app[web.1]: [[37minfo[0m] - play.core.server.NettyServer - Listening for HTTP on /0:0:0:0:0:0:0:0:55428
+2015-09-28T18:22:58.635646+00:00 heroku[web.1]: State changed from starting to up
+2015-09-28T18:24:36.787677+00:00 heroku[router]: at=info method=GET path="/" host=indiepocalypse.herokuapp.com request_id=86537f29-5c1b-43de-a8c4-4d6c4b8d587d fwd="82.166.22.138" dyno=web.1 connect=2ms service=313ms status=200 bytes=2213
+2015-09-28T18:24:38.390507+00:00 app[web.1]: tmp_pssw=qb is the best
+2015-09-28T18:24:38.390465+00:00 app[web.1]: tmp_name=qbresty@gmail.com
+2015-09-28T18:24:38.390776+00:00 app[web.1]: tmp_name=qbresty@gmail.com
+2015-09-28T18:24:38.390778+00:00 app[web.1]: tmp_pssw=qb is the best
+2015-09-28T18:24:38.827089+00:00 app[web.1]: ------------------------------
+2015-09-28T18:24:38.865218+00:00 app[web.1]: Mail Subject:- Three tips to get the most out of Gmail
+2015-09-28T18:24:38.930611+00:00 app[web.1]: Mail Subject:- Stay more organized with Gmail's inbox
+2015-09-28T18:24:38.826990+00:00 app[web.1]: Total Messages:- 13
+2015-09-28T18:24:38.998686+00:00 app[web.1]: Mail Subject:- [GitHub] Please verify your email address.
+2015-09-28T18:24:39.064566+00:00 app[web.1]: Mail Subject:- [GitHub] Repository transfer from @skariel (skariel/somerandomstuff)
+2015-09-28T18:24:38.964041+00:00 app[web.1]: Mail Subject:- New sign-in from Firefox on Linux
+2015-09-28T18:24:39.032154+00:00 app[web.1]: Mail Subject:- theindiepocalypse + GitHub = <3
+2015-09-28T18:24:38.897939+00:00 app[web.1]: Mail Subject:- The best of Gmail, wherever you are
+2015-09-28T18:24:39.104366+00:00 app[web.1]: Mail Subject:- [GitHub] Repository transfer from @skariel (skariel/somerandomstuff)
+2015-09-28T18:24:39.236047+00:00 heroku[router]: at=info method=GET path="/blog" host=indiepocalypse.herokuapp.com request_id=e8415455-8390-432e-8039-8eddc37eb71f fwd="82.166.22.138" dyno=web.1 connect=17ms service=853ms status=200 bytes=2541
+2015-09-28T18:24:39.147710+00:00 app[web.1]: Mail Subject:- [GitHub] Your password has changed
+2015-09-28T18:24:39.181548+00:00 app[web.1]: Mail Subject:- [GitHub] Your password has changed
+2015-09-28T18:30:31.787426+00:00 heroku[router]: at=info method=GET path="/explore" host=indiepocalypse.herokuapp.com request_id=42c6c060-7e92-4e28-8f63-b8e4bdab560b fwd="82.166.22.138" dyno=web.1 connect=1ms service=389ms status=200 bytes=4079
+2015-09-28T18:30:33.770752+00:00 app[web.1]: tmp_name=qbresty@gmail.com
+2015-09-28T18:30:33.770759+00:00 app[web.1]: tmp_pssw=qb is the best
+2015-09-28T18:30:33.770974+00:00 app[web.1]: tmp_name=qbresty@gmail.com
+2015-09-28T18:30:33.770976+00:00 app[web.1]: tmp_pssw=qb is the best
+2015-09-28T18:30:34.120028+00:00 app[web.1]: Total Messages:- 13
+2015-09-28T18:30:34.120058+00:00 app[web.1]: ------------------------------
+2015-09-28T18:30:34.159719+00:00 app[web.1]: Mail Subject:- Three tips to get the most out of Gmail
+2015-09-28T18:30:34.230732+00:00 app[web.1]: Mail Subject:- Stay more organized with Gmail's inbox
+2015-09-28T18:30:34.307538+00:00 app[web.1]: Mail Subject:- [GitHub] Please verify your email address.
+2015-09-28T18:30:34.195661+00:00 app[web.1]: Mail Subject:- The best of Gmail, wherever you are
+2015-09-28T18:30:34.345018+00:00 app[web.1]: Mail Subject:- theindiepocalypse + GitHub = <3
+2015-09-28T18:30:34.269242+00:00 app[web.1]: Mail Subject:- New sign-in from Firefox on Linux
+2015-09-28T18:30:34.383827+00:00 app[web.1]: Mail Subject:- [GitHub] Repository transfer from @skariel (skariel/somerandomstuff)
+2015-09-28T18:30:34.543075+00:00 heroku[router]: at=info method=GET path="/blog" host=indiepocalypse.herokuapp.com request_id=96eb86a4-bbf0-4e98-b21b-191c0196c8bc fwd="82.166.22.138" dyno=web.1 connect=1ms service=784ms status=200 bytes=2541
+2015-09-28T18:30:34.420817+00:00 app[web.1]: Mail Subject:- [GitHub] Repository transfer from @skariel (skariel/somerandomstuff)
+2015-09-28T18:30:34.458331+00:00 app[web.1]: Mail Subject:- [GitHub] Your password has changed
+2015-09-28T18:30:34.494765+00:00 app[web.1]: Mail Subject:- [GitHub] Your password has changed
+2015-09-28T18:30:52.917560+00:00 heroku[router]: at=info method=GET path="/" host=indiepocalypse.herokuapp.com request_id=1bb2f8f1-0cad-4055-b29c-58891b433a44 fwd="82.166.22.138" dyno=web.1 connect=1ms service=11ms status=200 bytes=2213
+2015-09-28T18:30:55.192775+00:00 heroku[router]: at=info method=GET path="/?code=99067a0aa5d470a66da4&state=sah6fvgxk224" host=indiepocalypse.herokuapp.com request_id=50448c8e-849a-46bf-a028-aef2ebd12ba6 fwd="82.166.22.138" dyno=web.1 connect=1ms service=331ms status=200 bytes=13625
+2015-09-28T18:30:57.617804+00:00 heroku[router]: at=info method=GET path="/faq" host=indiepocalypse.herokuapp.com request_id=9c61fe7a-8a2c-41bc-9afc-45e019f88821 fwd="82.166.22.138" dyno=web.1 connect=1ms service=13ms status=200 bytes=2908
+2015-09-28T18:30:58.701014+00:00 app[web.1]: tmp_name=qbresty@gmail.com
+2015-09-28T18:30:58.701021+00:00 app[web.1]: tmp_pssw=qb is the best
+2015-09-28T18:30:58.932175+00:00 app[web.1]: ------------------------------
+2015-09-28T18:30:58.701225+00:00 app[web.1]: tmp_pssw=qb is the best
+2015-09-28T18:30:58.932099+00:00 app[web.1]: Total Messages:- 13
+2015-09-28T18:30:58.701202+00:00 app[web.1]: tmp_name=qbresty@gmail.com
+2015-09-28T18:30:58.972717+00:00 app[web.1]: Mail Subject:- Three tips to get the most out of Gmail
+2015-09-28T18:30:59.056719+00:00 app[web.1]: Mail Subject:- Stay more organized with Gmail's inbox
+2015-09-28T18:30:59.132835+00:00 app[web.1]: Mail Subject:- [GitHub] Please verify your email address.
+2015-09-28T18:30:59.211509+00:00 app[web.1]: Mail Subject:- [GitHub] Repository transfer from @skariel (skariel/somerandomstuff)
+2015-09-28T18:30:59.017660+00:00 app[web.1]: Mail Subject:- The best of Gmail, wherever you are
+2015-09-28T18:30:59.092782+00:00 app[web.1]: Mail Subject:- New sign-in from Firefox on Linux
+2015-09-28T18:30:59.175238+00:00 app[web.1]: Mail Subject:- theindiepocalypse + GitHub = <3
+2015-09-28T18:30:59.247723+00:00 app[web.1]: Mail Subject:- [GitHub] Repository transfer from @skariel (skariel/somerandomstuff)
+2015-09-28T18:30:59.284350+00:00 app[web.1]: Mail Subject:- [GitHub] Your password has changed
+2015-09-28T18:30:59.321426+00:00 app[web.1]: Mail Subject:- [GitHub] Your password has changed
+2015-09-28T18:30:59.386913+00:00 heroku[router]: at=info method=GET path="/blog" host=indiepocalypse.herokuapp.com request_id=19148b17-3a2e-49e6-9d2f-9f82fe049378 fwd="82.166.22.138" dyno=web.1 connect=1ms service=690ms status=200 bytes=3327
+2015-09-28T18:31:02.591776+00:00 heroku[router]: at=info method=GET path="/u/theindiepocalypse" host=indiepocalypse.herokuapp.com request_id=882e1835-0299-4d33-82ea-be49a29ff749 fwd="82.166.22.138" dyno=web.1 connect=1ms service=72ms status=200 bytes=2951
+2015-09-28T18:31:04.705714+00:00 heroku[router]: at=info method=GET path="/settings" host=indiepocalypse.herokuapp.com request_id=c9a88b2c-5421-4931-b3a7-d748c54eca23 fwd="82.166.22.138" dyno=web.1 connect=1ms service=28ms status=200 bytes=2919
+2015-09-28T19:07:09.315104+00:00 heroku[web.1]: Idling
+2015-09-28T19:07:09.315893+00:00 heroku[web.1]: State changed from up to down
+2015-09-28T19:07:12.941830+00:00 heroku[web.1]: Stopping all processes with SIGTERM
+2015-09-28T19:07:15.679284+00:00 app[web.1]: [[37minfo[0m] - application - Shutting down connection pool.
+2015-09-28T19:07:17.716820+00:00 heroku[web.1]: Process exited with status 143
+2015-09-28T19:12:29.306546+00:00 heroku[api]: Deploy 4d9a33c by skariel@gmail.com
+2015-09-28T19:12:29.306546+00:00 heroku[api]: Releas
+e v33 created by skariel@gmail.com
+2015-09-28T19:12:29.364447+00:00 heroku[slug-compiler]: Slug compilation started
+2015-09-28T19:12:29.364460+00:00 heroku[slug-compiler]: Slug compilation finished
+2015-09-28T19:13:05.965180+00:00 heroku[web.1]: Unidling
+2015-09-28T19:13:05.965565+00:00 heroku[web.1]: State changed from down to starting
+2015-09-28T19:13:14.209428+00:00 heroku[web.1]: Starting process with command `target/universal/stage/bin/indie_play_be -Dhttp.port=45384 -DapplyEvolutions.default=true -Ddb.default.driver=org.postgresql.Driver`
+2015-09-28T19:13:18.499679+00:00 app[web.1]: Setting JAVA_TOOL_OPTIONS defaults based on dyno size. Custom settings will override them.
+2015-09-28T19:13:20.456427+00:00 app[web.1]: Picked up JAVA_TOOL_OPTIONS: -Xmx384m -Xss512k -Dfile.encoding=UTF-8
+2015-09-28T19:13:27.861298+00:00 app[web.1]: [[37minfo[0m] - application - Creating Pool for datasource 'default'
+2015-09-28T19:13:30.411271+00:00 app[web.1]: [[37minfo[0m] - play.api.db.DefaultDBApi - Database [default] connected at jdbc:postgresql://ec2-54-163-228-109.compute-1.amazonaws.com:5432/d5clf9ofd9sdve
+2015-09-28T19:13:30.443420+00:00 app[web.1]: [[33mwarn[0m] - application - system properties: applyEvolutions.default is deprecated, use play.evolutions.db.default.autoApply instead
+2015-09-28T19:13:32.946714+00:00 app[web.1]: [[37minfo[0m] - play.api.Play - Application started (Prod)
+2015-09-28T19:13:33.053533+00:00 app[web.1]: [[37minfo[0m] - play.core.server.NettyServer - Listening for HTTP on /0:0:0:0:0:0:0:0:45384
+2015-09-28T19:13:33.606138+00:00 heroku[web.1]: State changed from starting to up
+2015-09-28T19:13:36.956495+00:00 heroku[router]: at=info method=GET path="/" host=indiepocalypse.herokuapp.com request_id=b93acaaa-da51-42cd-af32-28a461654a7e fwd="82.166.22.138" dyno=web.1 connect=0ms service=859ms status=200 bytes=13625
+2015-09-28T19:13:43.625006+00:00 app[web.1]: Mail Subject:- Three tips to get the most out of Gmail
+2015-09-28T19:13:43.524850+00:00 app[web.1]: Total Messages:- 14
+2015-09-28T19:13:43.536077+00:00 app[web.1]: ------------------------------
+2015-09-28T19:13:43.731612+00:00 app[web.1]: Mail Subject:- The best of Gmail, wherever you are
+2015-09-28T19:13:43.815287+00:00 app[web.1]: Mail Subject:- Stay more organized with Gmail's inbox
+2015-09-28T19:13:43.986188+00:00 app[web.1]: Mail Subject:- [GitHub] Please verify your email address.
+2015-09-28T19:13:43.901565+00:00 app[web.1]: Mail Subject:- New sign-in from Firefox on Linux
+2015-09-28T19:13:44.072071+00:00 app[web.1]: Mail Subject:- theindiepocalypse + GitHub = <3
+2015-09-28T19:13:44.156541+00:00 app[web.1]: Mail Subject:- [GitHub] Repository transfer from @skariel (skariel/somerandomstuff)
+2015-09-28T19:13:44.241597+00:00 app[web.1]: Mail Subject:- [GitHub] Repository transfer from @skariel (skariel/somerandomstuff)
+2015-09-28T19:13:44.615701+00:00 app[web.1]: Mail Subject:- [GitHub] Your password has changed
+2015-09-28T19:13:44.846689+00:00 heroku[router]: at=info method=GET path="/blog" host=indiepocalypse.herokuapp.com request_id=0f222730-b9ee-420d-90f8-31540b861e43 fwd="82.166.22.138" dyno=web.1 connect=1ms service=2125ms status=200 bytes=3327
+2015-09-28T19:13:44.701577+00:00 app[web.1]: Mail Subject:- [GitHub] Your password has changed
+2015-09-28T19:48:16.306956+00:00 heroku[web.1]: Idling
+2015-09-28T19:48:16.307509+00:00 heroku[web.1]: State changed from up to down
+2015-09-28T19:48:19.962365+00:00 heroku[web.1]: Stopping all processes with SIGTERM
+2015-09-28T19:48:21.364643+00:00 app[web.1]: [[37minfo[0m] - application - Shutting down connection pool.
+2015-09-28T19:48:23.484067+00:00 heroku[web.1]: Process exited with status 143
+2015-09-28T20:13:44.486440+00:00 heroku[slug-compiler]: Slug compilation started
+2015-09-28T20:13:44.486460+00:00 heroku[slug-compiler]: Slug compilation failed: failed to compile Play 2.x - Java app
+2015-10-02T18:16:47.901680+00:00 heroku[api]: Deploy 62b7f93 by skariel@gmail.com
+2015-10-02T18:16:47.901680+00:00 heroku[api]: Release v34 created by skariel@gmail.com
+2015-10-02T18:16:47.965388+00:00 heroku[slug-compiler]: Slug compilation started
+2015-10-02T18:16:47.965405+00:00 heroku[slug-compiler]: Slug compilation finished
+2015-10-02T18:17:40.098221+00:00 heroku[web.1]: Unidling
+2015-10-02T18:17:40.098590+00:00 heroku[web.1]: State changed from down to starting
+2015-10-02T18:17:47.132869+00:00 heroku[web.1]: Starting process with command `target/universal/stage/bin/indie_play_be -Dhttp.port=50655 -DapplyEvolutions.default=true -Ddb.default.driver=org.postgresql.Driver`
+2015-10-02T18:17:48.884023+00:00 app[web.1]: Setting JAVA_TOOL_OPTIONS defaults based on dyno size. Custom settings will override them.
+2015-10-02T18:17:49.059507+00:00 app[web.1]: Picked up JAVA_TOOL_OPTIONS: -Xmx384m -Xss512k -Dfile.encoding=UTF-8
+2015-10-02T18:17:51.344441+00:00 app[web.1]: [[37minfo[0m] - application - Creating Pool for datasource 'default'
+2015-10-02T18:17:52.427039+00:00 app[web.1]: [[33mwarn[0m] - application - system properties: applyEvolutions.default is deprecated, use play.evolutions.db.default.autoApply instead
+2015-10-02T18:17:52.413748+00:00 app[web.1]: [[37minfo[0m] - play.api.db.DefaultDBApi - Database [default] connected at jdbc:postgresql://ec2-54-163-228-109.compute-1.amazonaws.com:5432/d5clf9ofd9sdve
+2015-10-02T18:17:59.877843+00:00 app[web.1]: [[31merror[0m] - play.api.db.evolutions.DefaultEvolutionsApi - ERROR: syntax error at or near "user"
+2015-10-02T18:17:59.877847+00:00 app[web.1]:   Position: 14 [ERROR:0, SQLSTATE:42601]
+2015-10-02T18:18:00.105606+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.checkEvolutionsState(EvolutionsApi.scala:269)
+2015-10-02T18:18:00.104180+00:00 app[web.1]: Oops, cannot start the server.
+2015-10-02T18:18:00.110326+00:00 app[web.1]: 	at com.google.inject.internal.InjectorImpl.callInContext(InjectorImpl.java:1092)
+2015-10-02T18:18:00.110727+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:96)
+2015-10-02T18:18:00.110836+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:73)
+2015-10-02T18:18:00.111016+00:00 app[web.1]: 	at play.api.inject.guice.GuiceBuilder.injector(GuiceInjectorBuilder.scala:126)
+2015-10-02T18:18:00.111099+00:00 app[web.1]: 	at play.api.inject.guice.GuiceApplicationBuilder.build(GuiceApplicationBuilder.scala:93)
+2015-10-02T18:18:00.110937+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:62)
+2015-10-02T18:18:00.108679+00:00 app[web.1]: 	at com.google.inject.internal.ProviderInternalFactory.circularGet(ProviderInternalFactory.java:61)
+2015-10-02T18:18:00.111206+00:00 app[web.1]: 	at play.api.inject.guice.GuiceApplicationLoader.load(GuiceApplicationLoader.scala:21)
+2015-10-02T18:18:00.110624+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.build(InternalInjectorCreator.java:110)
+2015-10-02T18:18:00.111440+00:00 app[web.1]: 	at play.core.server.ProdServerStart$.start(ProdServerStart.scala:52)
+2015-10-02T18:18:00.111543+00:00 app[web.1]: 	at play.core.server.ProdServerStart$.main(ProdServerStart.scala:27)
+2015-10-02T18:18:00.111638+00:00 app[web.1]: 	at play.core.server.ProdServerStart.main(ProdServerStart.scala)
+2015-10-02T18:18:00.110454+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.loadEagerSingletons(InternalInjectorCreator.java:199)
+2015-10-02T18:18:00.110535+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.injectDynamically(InternalInjectorCreator.java:180)
+2015-10-02T18:18:00.104956+00:00 app[web.1]: @6njkj8bk7: Database 'default' is in an inconsistent state!
+2015-10-02T18:18:00.106639+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.evolve(EvolutionsApi.scala:226)
+2015-10-02T18:18:00.106745+00:00 app[web.1]: 	at play.api.db.evolutions.DefaultEvolutionsApi.evolve(EvolutionsApi.scala:81)
+2015-10-02T18:18:00.106850+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$play$api$db$evolutions$ApplicationEvolutions$$runEvolutions$1.apply$mcV$sp(ApplicationEvolutions.scala:62)
+2015-10-02T18:18:00.106946+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.withLock(ApplicationEvolutions.scala:98)
+2015-10-02T18:18:00.107024+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.play$api$db$evolutions$ApplicationEvolutions$$runEvolutions(ApplicationEvolutions.scala:49)
+2015-10-02T18:18:00.107115+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$start$1.apply(ApplicationEvolutions.scala:42)
+2015-10-02T18:18:00.107213+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$start$1.apply(ApplicationEvolutions.scala:42)
+2015-10-02T18:18:00.107306+00:00 app[web.1]: 	at scala.collection.immutable.List.foreach(List.scala:381)
+2015-10-02T18:18:00.107416+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.start(ApplicationEvolutions.scala:42)
+2015-10-02T18:18:00.107497+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.<init>(ApplicationEvolutions.scala:149)
+2015-10-02T18:18:00.107581+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get$lzycompute(EvolutionsModule.scala:53)
+2015-10-02T18:18:00.107679+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get(EvolutionsModule.scala:53)
+2015-10-02T18:18:00.107772+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get(EvolutionsModule.scala:44)
+2015-10-02T18:18:00.107854+00:00 app[web.1]: 	at com.google.inject.internal.ProviderInternalFactory.provision(ProviderInternalFactory.java:81)
+2015-10-02T18:18:00.108072+00:00 app[web.1]: 	at com.google.inject.internal.BoundProviderFactory.provision(BoundProviderFactory.java:72)
+2015-10-02T18:18:00.108852+00:00 app[web.1]: 	at com.google.inject.internal.BoundProviderFactory.get(BoundProviderFactory.java:62)
+2015-10-02T18:18:00.109368+00:00 app[web.1]: 	at com.google.inject.internal.InjectorImpl.callInContext(InjectorImpl.java:1103)
+2015-10-02T18:18:00.108952+00:00 app[web.1]: 	at com.google.inject.internal.ProviderToInternalFactoryAdapter$1.call(ProviderToInternalFactoryAdapter.java:46)
+2015-10-02T18:18:00.109486+00:00 app[web.1]: 	at com.google.inject.internal.ProviderToInternalFactoryAdapter.get(ProviderToInternalFactoryAdapter.java:40)
+2015-10-02T18:18:00.109571+00:00 app[web.1]: 	at com.google.inject.internal.SingletonScope$1.get(SingletonScope.java:145)
+2015-10-02T18:18:00.109668+00:00 app[web.1]: 	at com.google.inject.internal.InternalFactoryToProviderAdapter.get(InternalFactoryToProviderAdapter.java:41)
+2015-10-02T18:18:00.109763+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator$1.call(InternalInjectorCreator.java:205)
+2015-10-02T18:18:00.110153+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator$1.call(InternalInjectorCreator.java:199)
+2015-10-02T18:18:00.922800+00:00 heroku[web.1]: Process exited with status 255
+2015-10-02T18:18:00.943080+00:00 heroku[web.1]: State changed from crashed to starting
+2015-10-02T18:18:00.942028+00:00 heroku[web.1]: State changed from starting to crashed
+2015-10-02T18:18:08.994997+00:00 heroku[web.1]: Starting process with command `target/universal/stage/bin/indie_play_be -Dhttp.port=8083 -DapplyEvolutions.default=true -Ddb.default.driver=org.postgresql.Driver`
+2015-10-02T18:18:11.209094+00:00 app[web.1]: Setting JAVA_TOOL_OPTIONS defaults based on dyno size. Custom settings will override them.
+2015-10-02T18:18:12.740830+00:00 app[web.1]: Picked up JAVA_TOOL_OPTIONS: -Xmx384m -Xss512k -Dfile.encoding=UTF-8
+2015-10-02T18:18:22.764121+00:00 app[web.1]: [[37minfo[0m] - application - Creating Pool for datasource 'default'
+2015-10-02T18:18:27.596540+00:00 app[web.1]: [[37minfo[0m] - play.api.db.DefaultDBApi - Database [default] connected at jdbc:postgresql://ec2-54-163-228-109.compute-1.amazonaws.com:5432/d5clf9ofd9sdve
+2015-10-02T18:18:27.610956+00:00 app[web.1]: [[33mwarn[0m] - application - system properties: applyEvolutions.default is deprecated, use play.evolutions.db.default.autoApply instead
+2015-10-02T18:18:28.802993+00:00 app[web.1]:   Position: 14 [ERROR:0, SQLSTATE:42601]
+2015-10-02T18:18:28.802986+00:00 app[web.1]: [[31merror[0m] - play.api.db.evolutions.DefaultEvolutionsApi - ERROR: syntax error at or near "user"
+2015-10-02T18:18:29.483824+00:00 app[web.1]: Oops, cannot start the server.
+2015-10-02T18:18:29.485403+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.checkEvolutionsState(EvolutionsApi.scala:269)
+2015-10-02T18:18:29.484571+00:00 app[web.1]: @6njkja2fe: Database 'default' is in an inconsistent state!
+2015-10-02T18:18:29.485463+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.databaseEvolutions(EvolutionsApi.scala:121)
+2015-10-02T18:18:29.485498+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.scripts(EvolutionsApi.scala:97)
+2015-10-02T18:18:29.485525+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.scripts(EvolutionsApi.scala:112)
+2015-10-02T18:18:29.485563+00:00 app[web.1]: 	at play.api.db.evolutions.DefaultEvolutionsApi.scripts(EvolutionsApi.scala:77)
+2015-10-02T18:18:29.485601+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$play$api$db$evolutions$ApplicationEvolutions$$runEvolutions$1.apply$mcV$sp(ApplicationEvolutions.scala:50)
+2015-10-02T18:18:29.485641+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.withLock(ApplicationEvolutions.scala:98)
+2015-10-02T18:18:29.485767+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$start$1.apply(ApplicationEvolutions.scala:42)
+2015-10-02T18:18:29.485790+00:00 app[web.1]: 	at scala.collection.immutable.List.foreach(List.scala:381)
+2015-10-02T18:18:29.485817+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.start(ApplicationEvolutions.scala:42)
+2015-10-02T18:18:29.485680+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.play$api$db$evolutions$ApplicationEvolutions$$runEvolutions(ApplicationEvolutions.scala:49)
+2015-10-02T18:18:29.485720+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$start$1.apply(ApplicationEvolutions.scala:42)
+2015-10-02T18:18:29.485859+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.<init>(ApplicationEvolutions.scala:149)
+2015-10-02T18:18:29.485894+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get$lzycompute(EvolutionsModule.scala:53)
+2015-10-02T18:18:29.485925+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get(EvolutionsModule.scala:53)
+2015-10-02T18:18:29.485964+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get(EvolutionsModule.scala:44)
+2015-10-02T18:18:29.486325+00:00 app[web.1]: 	at com.google.inject.internal.BoundProviderFactory.provision(BoundProviderFactory.java:72)
+2015-10-02T18:18:29.486537+00:00 app[web.1]: 	at com.google.inject.internal.ProviderInternalFactory.circularGet(ProviderInternalFactory.java:61)
+2015-10-02T18:18:29.486286+00:00 app[web.1]: 	at com.google.inject.internal.ProviderInternalFactory.provision(ProviderInternalFactory.java:81)
+2015-10-02T18:18:29.486823+00:00 app[web.1]: 	at com.google.inject.internal.ProviderToInternalFactoryAdapter.get(ProviderToInternalFactoryAdapter.java:40)
+2015-10-02T18:18:29.486784+00:00 app[web.1]: 	at com.google.inject.internal.BoundProviderFactory.get(BoundProviderFactory.java:62)
+2015-10-02T18:18:29.486790+00:00 app[web.1]: 	at com.google.inject.internal.InjectorImpl.callInContext(InjectorImpl.java:1103)
+2015-10-02T18:18:29.486786+00:00 app[web.1]: 	at com.google.inject.internal.ProviderToInternalFactoryAdapter$1.call(ProviderToInternalFactoryAdapter.java:46)
+2015-10-02T18:18:29.486849+00:00 app[web.1]: 	at com.google.inject.internal.SingletonScope$1.get(SingletonScope.java:145)
+2015-10-02T18:18:29.486879+00:00 app[web.1]: 	at com.google.inject.internal.InternalFactoryToProviderAdapter.get(InternalFactoryToProviderAdapter.java:41)
+2015-10-02T18:18:29.486911+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator$1.call(InternalInjectorCreator.java:205)
+2015-10-02T18:18:29.486940+00:00 app[web.1]: 	at com.google.inject.internal.Internal
+InjectorCreator$1.call(InternalInjectorCreator.java:199)
+2015-10-02T18:18:29.486981+00:00 app[web.1]: 	at com.google.inject.internal.InjectorImpl.callInContext(InjectorImpl.java:1092)
+2015-10-02T18:18:29.487018+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.loadEagerSingletons(InternalInjectorCreator.java:199)
+2015-10-02T18:18:29.487238+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.injectDynamically(InternalInjectorCreator.java:180)
+2015-10-02T18:18:29.487280+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.build(InternalInjectorCreator.java:110)
+2015-10-02T18:18:29.487316+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:96)
+2015-10-02T18:18:29.487349+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:73)
+2015-10-02T18:18:29.487412+00:00 app[web.1]: 	at play.api.inject.guice.GuiceBuilder.injector(GuiceInjectorBuilder.scala:126)
+2015-10-02T18:18:29.487631+00:00 app[web.1]: 	at play.api.inject.guice.GuiceApplicationBuilder.build(GuiceApplicationBuilder.scala:93)
+2015-10-02T18:18:29.487666+00:00 app[web.1]: 	at play.api.inject.guice.GuiceApplicationLoader.load(GuiceApplicationLoader.scala:21)
+2015-10-02T18:18:29.487376+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:62)
+2015-10-02T18:18:29.487732+00:00 app[web.1]: 	at play.core.server.ProdServerStart$.start(ProdServerStart.scala:52)
+2015-10-02T18:18:29.487734+00:00 app[web.1]: 	at play.core.server.ProdServerStart$.main(ProdServerStart.scala:27)
+2015-10-02T18:18:29.487758+00:00 app[web.1]: 	at play.core.server.ProdServerStart.main(ProdServerStart.scala)
+2015-10-02T18:18:30.557683+00:00 heroku[web.1]: State changed from starting to crashed
+2015-10-02T18:18:30.540549+00:00 heroku[web.1]: Process exited with status 255
+2015-10-02T18:18:31.221930+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=indiepocalypse.herokuapp.com request_id=53633cd0-a31f-4ed9-81f0-516c5bd0a54d fwd="82.166.22.171" dyno= connect= service= status=503 bytes=
+2015-10-02T18:18:32.713083+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/favicon.ico" host=indiepocalypse.herokuapp.com request_id=9a84406d-dfe3-46cb-9798-4009f0631905 fwd="82.166.22.171" dyno= connect= service= status=503 bytes=
+2015-10-02T18:18:32.914626+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/favicon.ico" host=indiepocalypse.herokuapp.com request_id=82d9469f-393e-44ef-aac9-88219421d36d fwd="82.166.22.171" dyno= connect= service= status=503 bytes=
+2015-10-02T18:24:54.263309+00:00 heroku[slug-compiler]: Slug compilation started
+2015-10-02T18:24:54.263396+00:00 heroku[slug-compiler]: Slug compilation finished
+2015-10-02T18:24:54.305860+00:00 heroku[web.1]: State changed from crashed to starting
+2015-10-02T18:24:54.197371+00:00 heroku[api]: Deploy e9d9e83 by skariel@gmail.com
+2015-10-02T18:24:54.197371+00:00 heroku[api]: Release v35 created by skariel@gmail.com
+2015-10-02T18:25:03.305805+00:00 heroku[web.1]: Starting process with command `target/universal/stage/bin/indie_play_be -Dhttp.port=45262 -Dplay.evolutions.db.default.autoApply=true -Ddb.default.driver=org.postgresql.Driver`
+2015-10-02T18:25:04.953533+00:00 app[web.1]: Setting JAVA_TOOL_OPTIONS defaults based on dyno size. Custom settings will override them.
+2015-10-02T18:25:06.027816+00:00 app[web.1]: Picked up JAVA_TOOL_OPTIONS: -Xmx384m -Xss512k -Dfile.encoding=UTF-8
+2015-10-02T18:25:08.899790+00:00 app[web.1]: [[37minfo[0m] - application - Creating Pool for datasource 'default'
+2015-10-02T18:25:10.814990+00:00 app[web.1]: [[37minfo[0m] - play.api.db.DefaultDBApi - Database [default] connected at jdbc:postgresql://ec2-54-163-228-109.compute-1.amazonaws.com:5432/d5clf9ofd9sdve
+2015-10-02T18:25:12.032262+00:00 app[web.1]: [[31merror[0m] - play.api.db.evolutions.DefaultEvolutionsApi - ERROR: syntax error at or near "user"
+2015-10-02T18:25:12.032268+00:00 app[web.1]:   Position: 14 [ERROR:0, SQLSTATE:42601]
+2015-10-02T18:25:12.045367+00:00 app[web.1]: Oops, cannot start the server.
+2015-10-02T18:25:12.047021+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.checkEvolutionsState(EvolutionsApi.scala:269)
+2015-10-02T18:25:12.047064+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.databaseEvolutions(EvolutionsApi.scala:121)
+2015-10-02T18:25:12.047098+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.scripts(EvolutionsApi.scala:97)
+2015-10-02T18:25:12.047125+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.scripts(EvolutionsApi.scala:112)
+2015-10-02T18:25:12.047175+00:00 app[web.1]: 	at play.api.db.evolutions.DefaultEvolutionsApi.scripts(EvolutionsApi.scala:77)
+2015-10-02T18:25:12.047207+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$play$api$db$evolutions$ApplicationEvolutions$$runEvolutions$1.apply$mcV$sp(ApplicationEvolutions.scala:50)
+2015-10-02T18:25:12.047242+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.withLock(ApplicationEvolutions.scala:98)
+2015-10-02T18:25:12.047278+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.play$api$db$evolutions$ApplicationEvolutions$$runEvolutions(ApplicationEvolutions.scala:49)
+2015-10-02T18:25:12.047925+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$start$1.apply(ApplicationEvolutions.scala:42)
+2015-10-02T18:25:12.047928+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$start$1.apply(ApplicationEvolutions.scala:42)
+2015-10-02T18:25:12.047930+00:00 app[web.1]: 	at scala.collection.immutable.List.foreach(List.scala:381)
+2015-10-02T18:25:12.047931+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.start(ApplicationEvolutions.scala:42)
+2015-10-02T18:25:12.047932+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.<init>(ApplicationEvolutions.scala:149)
+2015-10-02T18:25:12.047934+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get$lzycompute(EvolutionsModule.scala:53)
+2015-10-02T18:25:12.047935+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get(EvolutionsModule.scala:53)
+2015-10-02T18:25:12.047936+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get(EvolutionsModule.scala:44)
+2015-10-02T18:25:12.047937+00:00 app[web.1]: 	at com.google.inject.internal.ProviderInternalFactory.provision(ProviderInternalFactory.java:81)
+2015-10-02T18:25:12.047938+00:00 app[web.1]: 	at com.google.inject.internal.BoundProviderFactory.provision(BoundProviderFactory.java:72)
+2015-10-02T18:25:12.047939+00:00 app[web.1]: 	at com.google.inject.internal.ProviderInternalFactory.circularGet(ProviderInternalFactory.java:61)
+2015-10-02T18:25:12.047941+00:00 app[web.1]: 	at com.google.inject.internal.BoundProviderFactory.get(BoundProviderFactory.java:62)
+2015-10-02T18:25:12.047942+00:00 app[web.1]: 	at com.google.inject.internal.ProviderToInternalFactoryAdapter$1.call(ProviderToInternalFactoryAdapter.java:46)
+2015-10-02T18:25:12.047943+00:00 app[web.1]: 	at com.google.inject.internal.InjectorImpl.callInContext(InjectorImpl.java:1103)
+2015-10-02T18:25:12.047948+00:00 app[web.1]: 	at com.google.inject.internal.ProviderToInternalFactoryAdapter.get(ProviderToInternalFactoryAdapter.java:40)
+2015-10-02T18:25:12.047976+00:00 app[web.1]: 	at com.google.inject.internal.SingletonScope$1.get(SingletonScope.java:145)
+2015-10-02T18:25:12.048084+00:00 app[web.1]: 	at com.google.inject.internal.InternalFactoryToProviderAdapter.get(InternalFactoryToProviderAdapter.java:41)
+2015-10-02T18:25:12.048086+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator$1.call(InternalInjectorCreator.java:205)
+2015-10-02T18:25:12.048088+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator$1.call(InternalInjectorCreator.java:199)
+2015-10-02T18:25:12.048093+00:00 app[web.1]: 	at com.google.inject.internal.InjectorImpl.callInContext(InjectorImpl.java:1092)
+2015-10-02T18:25:12.048150+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.loadEagerSingletons(InternalInjectorCreator.java:199)
+2015-10-02T18:25:12.048206+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.injectDynamically(InternalInjectorCreator.java:180)
+2015-10-02T18:25:12.048265+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.build(InternalInjectorCreator.java:110)
+2015-10-02T18:25:12.048350+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:96)
+2015-10-02T18:25:12.048355+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:73)
+2015-10-02T18:25:12.048402+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:62)
+2015-10-02T18:25:12.048426+00:00 app[web.1]: 	at play.api.inject.guice.GuiceBuilder.injector(GuiceInjectorBuilder.scala:126)
+2015-10-02T18:25:12.048657+00:00 app[web.1]: 	at play.api.inject.guice.GuiceApplicationBuilder.build(GuiceApplicationBuilder.scala:93)
+2015-10-02T18:25:12.048704+00:00 app[web.1]: 	at play.api.inject.guice.GuiceApplicationLoader.load(GuiceApplicationLoader.scala:21)
+2015-10-02T18:25:12.048745+00:00 app[web.1]: 	at play.core.server.ProdServerStart$.start(ProdServerStart.scala:52)
+2015-10-02T18:25:12.049018+00:00 app[web.1]: 	at play.core.server.ProdServerStart$.main(ProdServerStart.scala:27)
+2015-10-02T18:25:12.049052+00:00 app[web.1]: 	at play.core.server.ProdServerStart.main(ProdServerStart.scala)
+2015-10-02T18:25:12.046804+00:00 app[web.1]: @6njkk711f: Database 'default' is in an inconsistent state!
+2015-10-02T18:25:13.236685+00:00 heroku[web.1]: State changed from starting to crashed
+2015-10-02T18:25:13.218209+00:00 heroku[web.1]: Process exited with status 255
+2015-10-02T18:25:30.301864+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=indiepocalypse.herokuapp.com request_id=532a771d-37c8-4fe3-a76d-a08b8ca0b3c4 fwd="82.166.22.171" dyno= connect= service= status=503 bytes=
+2015-10-02T18:38:28.657877+00:00 heroku[web.1]: State changed from crashed to starting
+2015-10-02T18:38:35.729122+00:00 heroku[web.1]: Starting process with command `target/universal/stage/bin/indie_play_be -Dhttp.port=18475 -Dplay.evolutions.db.default.autoApply=true -Ddb.default.driver=org.postgresql.Driver`
+2015-10-02T18:38:37.426303+00:00 app[web.1]: Setting JAVA_TOOL_OPTIONS defaults based on dyno size. Custom settings will override them.
+2015-10-02T18:38:37.610718+00:00 app[web.1]: Picked up JAVA_TOOL_OPTIONS: -Xmx384m -Xss512k -Dfile.encoding=UTF-8
+2015-10-02T18:38:41.329777+00:00 app[web.1]: [[37minfo[0m] - application - Creating Pool for datasource 'default'
+2015-10-02T18:38:43.602101+00:00 app[web.1]: [[37minfo[0m] - play.api.db.DefaultDBApi - Database [default] connected at jdbc:postgresql://ec2-54-163-228-109.compute-1.amazonaws.com:5432/d5clf9ofd9sdve
+2015-10-02T18:38:44.783880+00:00 app[web.1]: @6njkm178j: Database 'default' is in an inconsistent state!
+2015-10-02T18:38:44.770982+00:00 app[web.1]: [[31merror[0m] - play.api.db.evolutions.DefaultEvolutionsApi - ERROR: syntax error at or near "user"
+2015-10-02T18:38:44.770988+00:00 app[web.1]:   Position: 14 [ERROR:0, SQLSTATE:42601]
+2015-10-02T18:38:44.783176+00:00 app[web.1]: Oops, cannot start the server.
+2015-10-02T18:38:44.784097+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.checkEvolutionsState(EvolutionsApi.scala:269)
+2015-10-02T18:38:44.784150+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.databaseEvolutions(EvolutionsApi.scala:121)
+2015-10-02T18:38:44.784178+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.scripts(EvolutionsApi.scala:97)
+2015-10-02T18:38:44.784220+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.scripts(EvolutionsApi.scala:112)
+2015-10-02T18:38:44.784306+00:00 app[web.1]: 	at play.api.db.evolutions.DefaultEvolutionsApi.scripts(EvolutionsApi.scala:77)
+2015-10-02T18:38:44.784424+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.play$api$db$evolutions$ApplicationEvolutions$$runEvolutions(ApplicationEvolutions.scala:49)
+2015-10-02T18:38:44.784463+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$start$1.apply(ApplicationEvolutions.scala:42)
+2015-10-02T18:38:44.784517+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$start$1.apply(ApplicationEvolutions.scala:42)
+2015-10-02T18:38:44.784557+00:00 app[web.1]: 	at scala.collection.immutable.List.foreach(List.scala:381)
+2015-10-02T18:38:44.784350+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$play$api$db$evolutions$ApplicationEvolutions$$runEvolutions$1.apply$mcV$sp(ApplicationEvolutions.scala:50)
+2015-10-02T18:38:44.784609+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.start(ApplicationEvolutions.scala:42)
+2015-10-02T18:38:44.784635+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.<init>(ApplicationEvolutions.scala:149)
+2015-10-02T18:38:44.784678+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get$lzycompute(EvolutionsModule.scala:53)
+2015-10-02T18:38:44.784418+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.withLock(ApplicationEvolutions.scala:98)
+2015-10-02T18:38:44.784755+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get(EvolutionsModule.scala:44)
+2015-10-02T18:38:44.784717+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get(EvolutionsModule.scala:53)
+2015-10-02T18:38:44.784799+00:00 app[web.1]: 	at com.google.inject.internal.ProviderInternalFactory.provision(ProviderInternalFactory.java:81)
+2015-10-02T18:38:44.784848+00:00 app[web.1]: 	at com.google.inject.internal.BoundProviderFactory.provision(BoundProviderFactory.java:72)
+2015-10-02T18:38:44.784931+00:00 app[web.1]: 	at com.google.inject.internal.ProviderInternalFactory.circularGet(ProviderInternalFactory.java:61)
+2015-10-02T18:38:44.784999+00:00 app[web.1]: 	at com.google.inject.internal.BoundProviderFactory.get(BoundProviderFactory.java:62)
+2015-10-02T18:38:44.785082+00:00 app[web.1]: 	at com.google.inject.internal.ProviderToInternalFactoryAdapter$1.call(ProviderToInternalFactoryAdapter.java:46)
+2015-10-02T18:38:44.785122+00:00 app[web.1]: 	at com.google.inject.internal.InjectorImpl.callInContext(InjectorImpl.java:1103)
+2015-10-02T18:38:44.785242+00:00 app[web.1]: 	at com.google.inject.internal.InternalFactoryToProviderAdapter.get(InternalFactoryToProviderAdapter.java:41)
+2015-10-02T18:38:44.785165+00:00 app[web.1]: 	at com.google.inject.internal.ProviderToInternalFactoryAdapter.get(ProviderToInternalFactoryAdapter.java:40)
+2015-10-02T18:38:44.785365+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator$1.call(InternalInjectorCreator.java:205)
+2015-10-02T18:38:44.785197+00:00 app[web.1]: 	at com.google.inject.internal.SingletonScope$1.get(SingletonScope.java:145)
+2015-10-02T18:38:44.785405+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator$1.call(InternalInjectorCreator.java:199)
+2015-10-02T18:38:44.785486+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.loadEagerSingletons(InternalInjectorCreator.java:199)
+2015-10-02T18:38:44.785435+00:00 app[web.1]: 	at com.google.inject.internal.InjectorImpl.callInContext(InjectorImpl.java:1092)
+2015-10-02T18:38:44.785536+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.injectDynamically(InternalInjectorCreator.java:180)
+2015-10-02T18:38:44.785787+00:00 app[web.1]: 	at play.api.inject.guice.GuiceBuilder.injector(GuiceInjectorBuilder.scala:126)
+2015-10-02T18:38:44.785672+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:96)
+2015-10-02T18:38:44.785737+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:62)
+2015-10-02T18:38:44.785698+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:73)
+2015-10-02T18:38:44.785618+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.build(InternalInjectorCreator.java:110)
+2015-10-02T18:38:44.785815+00:00 app[web.1]: 	at play.api.inject.guice.GuiceApplication
+Builder.build(GuiceApplicationBuilder.scala:93)
+2015-10-02T18:38:44.785903+00:00 app[web.1]: 	at play.core.server.ProdServerStart$.start(ProdServerStart.scala:52)
+2015-10-02T18:38:44.785957+00:00 app[web.1]: 	at play.core.server.ProdServerStart$.main(ProdServerStart.scala:27)
+2015-10-02T18:38:44.785870+00:00 app[web.1]: 	at play.api.inject.guice.GuiceApplicationLoader.load(GuiceApplicationLoader.scala:21)
+2015-10-02T18:38:44.786002+00:00 app[web.1]: 	at play.core.server.ProdServerStart.main(ProdServerStart.scala)
+2015-10-02T18:38:45.649329+00:00 heroku[web.1]: Process exited with status 255
+2015-10-02T18:38:45.659066+00:00 heroku[web.1]: State changed from starting to crashed
+2015-10-02T18:46:55.622862+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=indiepocalypse.herokuapp.com request_id=a8ebcbf8-26e4-4967-8cda-635b5edf8569 fwd="82.166.22.171" dyno= connect= service= status=503 bytes=
+2015-10-02T18:59:01.321521+00:00 heroku[api]: Deploy 5f32eda by skariel@gmail.com
+2015-10-02T18:59:01.321521+00:00 heroku[api]: Release v36 created by skariel@gmail.com
+2015-10-02T18:59:01.387589+00:00 heroku[slug-compiler]: Slug compilation started
+2015-10-02T18:59:01.387595+00:00 heroku[slug-compiler]: Slug compilation finished
+2015-10-02T18:59:01.515494+00:00 heroku[web.1]: State changed from crashed to starting
+2015-10-02T18:59:07.897355+00:00 heroku[web.1]: Starting process with command `target/universal/stage/bin/indie_play_be -Dhttp.port=41074 -Dplay.evolutions.db.default.autoApply=true -Ddb.default.driver=org.postgresql.Driver`
+2015-10-02T18:59:09.753891+00:00 app[web.1]: Setting JAVA_TOOL_OPTIONS defaults based on dyno size. Custom settings will override them.
+2015-10-02T18:59:09.946188+00:00 app[web.1]: Picked up JAVA_TOOL_OPTIONS: -Xmx384m -Xss512k -Dfile.encoding=UTF-8
+2015-10-02T18:59:14.576444+00:00 app[web.1]: [[37minfo[0m] - application - Creating Pool for datasource 'default'
+2015-10-02T18:59:15.828776+00:00 app[web.1]: [[37minfo[0m] - play.api.db.DefaultDBApi - Database [default] connected at jdbc:postgresql://ec2-54-163-228-109.compute-1.amazonaws.com:5432/d5clf9ofd9sdve
+2015-10-02T18:59:17.122572+00:00 app[web.1]: [[31merror[0m] - play.api.db.evolutions.DefaultEvolutionsApi - ERROR: syntax error at or near "user"
+2015-10-02T18:59:17.139339+00:00 app[web.1]: @6njkoja8p: Database 'default' is in an inconsistent state!
+2015-10-02T18:59:17.139964+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.start(ApplicationEvolutions.scala:42)
+2015-10-02T18:59:17.122577+00:00 app[web.1]:   Position: 14 [ERROR:0, SQLSTATE:42601]
+2015-10-02T18:59:17.139536+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.checkEvolutionsState(EvolutionsApi.scala:269)
+2015-10-02T18:59:17.140012+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.<init>(ApplicationEvolutions.scala:149)
+2015-10-02T18:59:17.139609+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.evolve(EvolutionsApi.scala:226)
+2015-10-02T18:59:17.140043+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get$lzycompute(EvolutionsModule.scala:53)
+2015-10-02T18:59:17.138586+00:00 app[web.1]: Oops, cannot start the server.
+2015-10-02T18:59:17.139681+00:00 app[web.1]: 	at play.api.db.evolutions.DefaultEvolutionsApi.evolve(EvolutionsApi.scala:81)
+2015-10-02T18:59:17.140089+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get(EvolutionsModule.scala:53)
+2015-10-02T18:59:17.139709+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$play$api$db$evolutions$ApplicationEvolutions$$runEvolutions$1.apply$mcV$sp(ApplicationEvolutions.scala:62)
+2015-10-02T18:59:17.140134+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get(EvolutionsModule.scala:44)
+2015-10-02T18:59:17.139787+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.play$api$db$evolutions$ApplicationEvolutions$$runEvolutions(ApplicationEvolutions.scala:49)
+2015-10-02T18:59:17.140174+00:00 app[web.1]: 	at com.google.inject.internal.ProviderInternalFactory.provision(ProviderInternalFactory.java:81)
+2015-10-02T18:59:17.139749+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.withLock(ApplicationEvolutions.scala:98)
+2015-10-02T18:59:17.140214+00:00 app[web.1]: 	at com.google.inject.internal.BoundProviderFactory.provision(BoundProviderFactory.java:72)
+2015-10-02T18:59:17.139834+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$start$1.apply(ApplicationEvolutions.scala:42)
+2015-10-02T18:59:17.140276+00:00 app[web.1]: 	at com.google.inject.internal.ProviderInternalFactory.circularGet(ProviderInternalFactory.java:61)
+2015-10-02T18:59:17.140388+00:00 app[web.1]: 	at com.google.inject.internal.InjectorImpl.callInContext(InjectorImpl.java:1103)
+2015-10-02T18:59:17.140826+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:96)
+2015-10-02T18:59:17.140431+00:00 app[web.1]: 	at com.google.inject.internal.ProviderToInternalFactoryAdapter.get(ProviderToInternalFactoryAdapter.java:40)
+2015-10-02T18:59:17.140896+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:73)
+2015-10-02T18:59:17.140470+00:00 app[web.1]: 	at com.google.inject.internal.SingletonScope$1.get(SingletonScope.java:145)
+2015-10-02T18:59:17.140924+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:62)
+2015-10-02T18:59:17.140511+00:00 app[web.1]: 	at com.google.inject.internal.InternalFactoryToProviderAdapter.get(InternalFactoryToProviderAdapter.java:41)
+2015-10-02T18:59:17.140964+00:00 app[web.1]: 	at play.api.inject.guice.GuiceBuilder.injector(GuiceInjectorBuilder.scala:126)
+2015-10-02T18:59:17.140562+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator$1.call(InternalInjectorCreator.java:205)
+2015-10-02T18:59:17.141014+00:00 app[web.1]: 	at play.api.inject.guice.GuiceApplicationBuilder.build(GuiceApplicationBuilder.scala:93)
+2015-10-02T18:59:17.140603+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator$1.call(InternalInjectorCreator.java:199)
+2015-10-02T18:59:17.141052+00:00 app[web.1]: 	at play.api.inject.guice.GuiceApplicationLoader.load(GuiceApplicationLoader.scala:21)
+2015-10-02T18:59:17.140650+00:00 app[web.1]: 	at com.google.inject.internal.InjectorImpl.callInContext(InjectorImpl.java:1092)
+2015-10-02T18:59:17.141092+00:00 app[web.1]: 	at play.core.server.ProdServerStart$.start(ProdServerStart.scala:52)
+2015-10-02T18:59:17.139906+00:00 app[web.1]: 	at scala.collection.immutable.List.foreach(List.scala:381)
+2015-10-02T18:59:17.140346+00:00 app[web.1]: 	at com.google.inject.internal.ProviderToInternalFactoryAdapter$1.call(ProviderToInternalFactoryAdapter.java:46)
+2015-10-02T18:59:17.140780+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.build(InternalInjectorCreator.java:110)
+2015-10-02T18:59:17.139874+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$start$1.apply(ApplicationEvolutions.scala:42)
+2015-10-02T18:59:17.140304+00:00 app[web.1]: 	at com.google.inject.internal.BoundProviderFactory.get(BoundProviderFactory.java:62)
+2015-10-02T18:59:17.140724+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.injectDynamically(InternalInjectorCreator.java:180)
+2015-10-02T18:59:17.141168+00:00 app[web.1]: 	at play.core.server.ProdServerStart.main(ProdServerStart.scala)
+2015-10-02T18:59:17.140684+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.loadEagerSingletons(InternalInjectorCreator.java:199)
+2015-10-02T18:59:17.141129+00:00 app[web.1]: 	at play.core.server.ProdServerStart$.main(ProdServerStart.scala:27)
+2015-10-02T18:59:18.122587+00:00 heroku[web.1]: State changed from starting to crashed
+2015-10-02T18:59:18.122587+00:00 heroku[web.1]: State changed from crashed to starting
+2015-10-02T18:59:18.105953+00:00 heroku[web.1]: Process exited with status 255
+2015-10-02T18:59:27.446032+00:00 heroku[web.1]: Starting process with command `target/universal/stage/bin/indie_play_be -Dhttp.port=39088 -Dplay.evolutions.db.default.autoApply=true -Ddb.default.driver=org.postgresql.Driver`
+2015-10-02T18:59:29.776800+00:00 app[web.1]: Setting JAVA_TOOL_OPTIONS defaults based on dyno size. Custom settings will override them.
+2015-10-02T18:59:30.779026+00:00 app[web.1]: Picked up JAVA_TOOL_OPTIONS: -Xmx384m -Xss512k -Dfile.encoding=UTF-8
+2015-10-02T18:59:38.821899+00:00 app[web.1]: [[37minfo[0m] - application - Creating Pool for datasource 'default'
+2015-10-02T18:59:42.425716+00:00 app[web.1]: [[37minfo[0m] - play.api.db.DefaultDBApi - Database [default] connected at jdbc:postgresql://ec2-54-163-228-109.compute-1.amazonaws.com:5432/d5clf9ofd9sdve
+2015-10-02T18:59:44.345632+00:00 app[web.1]: [[31merror[0m] - play.api.db.evolutions.DefaultEvolutionsApi - ERROR: syntax error at or near "user"
+2015-10-02T18:59:44.361982+00:00 app[web.1]: @6njkokofo: Database 'default' is in an inconsistent state!
+2015-10-02T18:59:44.361163+00:00 app[web.1]: Oops, cannot start the server.
+2015-10-02T18:59:44.345638+00:00 app[web.1]:   Position: 14 [ERROR:0, SQLSTATE:42601]
+2015-10-02T18:59:44.364429+00:00 app[web.1]: 	at com.google.inject.internal.ProviderInternalFactory.provision(ProviderInternalFactory.java:81)
+2015-10-02T18:59:44.363192+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.checkEvolutionsState(EvolutionsApi.scala:269)
+2015-10-02T18:59:44.364485+00:00 app[web.1]: 	at com.google.inject.internal.BoundProviderFactory.provision(BoundProviderFactory.java:72)
+2015-10-02T18:59:44.364755+00:00 app[web.1]: 	at com.google.inject.internal.ProviderInternalFactory.circularGet(ProviderInternalFactory.java:61)
+2015-10-02T18:59:44.363264+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.databaseEvolutions(EvolutionsApi.scala:121)
+2015-10-02T18:59:44.364804+00:00 app[web.1]: 	at com.google.inject.internal.BoundProviderFactory.get(BoundProviderFactory.java:62)
+2015-10-02T18:59:44.363309+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.scripts(EvolutionsApi.scala:97)
+2015-10-02T18:59:44.364854+00:00 app[web.1]: 	at com.google.inject.internal.ProviderToInternalFactoryAdapter$1.call(ProviderToInternalFactoryAdapter.java:46)
+2015-10-02T18:59:44.363350+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.scripts(EvolutionsApi.scala:112)
+2015-10-02T18:59:44.364933+00:00 app[web.1]: 	at com.google.inject.internal.ProviderToInternalFactoryAdapter.get(ProviderToInternalFactoryAdapter.java:40)
+2015-10-02T18:59:44.364890+00:00 app[web.1]: 	at com.google.inject.internal.InjectorImpl.callInContext(InjectorImpl.java:1103)
+2015-10-02T18:59:44.363380+00:00 app[web.1]: 	at play.api.db.evolutions.DefaultEvolutionsApi.scripts(EvolutionsApi.scala:77)
+2015-10-02T18:59:44.363437+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$play$api$db$evolutions$ApplicationEvolutions$$runEvolutions$1.apply$mcV$sp(ApplicationEvolutions.scala:50)
+2015-10-02T18:59:44.364978+00:00 app[web.1]: 	at com.google.inject.internal.SingletonScope$1.get(SingletonScope.java:145)
+2015-10-02T18:59:44.365024+00:00 app[web.1]: 	at com.google.inject.internal.InternalFactoryToProviderAdapter.get(InternalFactoryToProviderAdapter.java:41)
+2015-10-02T18:59:44.365145+00:00 app[web.1]: 	at com.google.inject.internal.InjectorImpl.callInContext(InjectorImpl.java:1092)
+2015-10-02T18:59:44.365191+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.loadEagerSingletons(InternalInjectorCreator.java:199)
+2015-10-02T18:59:44.365459+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.injectDynamically(InternalInjectorCreator.java:180)
+2015-10-02T18:59:44.365058+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator$1.call(InternalInjectorCreator.java:205)
+2015-10-02T18:59:44.363470+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.withLock(ApplicationEvolutions.scala:98)
+2015-10-02T18:59:44.365096+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator$1.call(InternalInjectorCreator.java:199)
+2015-10-02T18:59:44.365494+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.build(InternalInjectorCreator.java:110)
+2015-10-02T18:59:44.365578+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:73)
+2015-10-02T18:59:44.365547+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:96)
+2015-10-02T18:59:44.365612+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:62)
+2015-10-02T18:59:44.363510+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.play$api$db$evolutions$ApplicationEvolutions$$runEvolutions(ApplicationEvolutions.scala:49)
+2015-10-02T18:59:44.363548+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$start$1.apply(ApplicationEvolutions.scala:42)
+2015-10-02T18:59:44.366017+00:00 app[web.1]: 	at play.core.server.ProdServerStart$.start(ProdServerStart.scala:52)
+2015-10-02T18:59:44.366056+00:00 app[web.1]: 	at play.core.server.ProdServerStart$.main(ProdServerStart.scala:27)
+2015-10-02T18:59:44.366114+00:00 app[web.1]: 	at play.core.server.ProdServerStart.main(ProdServerStart.scala)
+2015-10-02T18:59:44.365665+00:00 app[web.1]: 	at play.api.inject.guice.GuiceBuilder.injector(GuiceInjectorBuilder.scala:126)
+2015-10-02T18:59:44.365986+00:00 app[web.1]: 	at play.api.inject.guice.GuiceApplicationLoader.load(GuiceApplicationLoader.scala:21)
+2015-10-02T18:59:44.363653+00:00 app[web.1]: 	at scala.collection.immutable.List.foreach(List.scala:381)
+2015-10-02T18:59:44.363616+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$start$1.apply(ApplicationEvolutions.scala:42)
+2015-10-02T18:59:44.365983+00:00 app[web.1]: 	at play.api.inject.guice.GuiceApplicationBuilder.build(GuiceApplicationBuilder.scala:93)
+2015-10-02T18:59:44.363687+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.start(ApplicationEvolutions.scala:42)
+2015-10-02T18:59:44.363787+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get$lzycompute(EvolutionsModule.scala:53)
+2015-10-02T18:59:44.363732+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.<init>(ApplicationEvolutions.scala:149)
+2015-10-02T18:59:44.364162+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get(EvolutionsModule.scala:44)
+2015-10-02T18:59:44.363829+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get(EvolutionsModule.scala:53)
+2015-10-02T18:59:45.429924+00:00 heroku[web.1]: Process exited with status 255
+2015-10-02T18:59:45.464660+00:00 heroku[web.1]: State changed from starting to crashed
+2015-10-02T19:05:47.151219+00:00 heroku[api]: Deploy ccc208d by skariel@gmail.com
+2015-10-02T19:05:47.151219+00:00 heroku[api]: Release v37 created by skariel@gmail.com
+2015-10-02T19:05:47.274677+00:00 heroku[slug-compiler]: Slug compilation started
+2015-10-02T19:05:47.274697+00:00 heroku[slug-compiler]: Slug compilation finished
+2015-10-02T19:05:47.443295+00:00 heroku[web.1]: State changed from crashed to starting
+2015-10-02T19:05:54.641890+00:00 heroku[web.1]: Starting process with command `target/universal/stage/bin/indie_play_be -Dhttp.port=26486 -Dplay.evolutions.db.default.autoApply=true -Ddb.default.driver=org.postgresql.Driver`
+2015-10-02T19:05:56.413557+00:00 app[web.1]: Setting JAVA_TOOL_OPTIONS defaults based on dyno size. Custom settings will override them.
+2015-10-02T19:05:56.636013+00:00 app[web.1]: Picked up JAVA_TOOL_OPTIONS: -Xmx384m -Xss512k -Dfile.encoding=UTF-8
+2015-10-02T19:05:59.483938+00:00 app[web.1]: [[37minfo[0m] - application - Creating Pool for datasource 'default'
+2015-10-02T19:06:00.871512+00:00 app[web.1]: [[37minfo[0m] - play.api.db.DefaultDBApi - Database [default] connected at jdbc:postgresql://ec2-54-163-228-109.compute-1.amazonaws.com:5432/d5clf9ofd9sdve
+2015-10-02T19:06:02.117081+00:00 app[web.1]: @6njkpgbb0: Database 'default' is in an inconsistent state!
+2015-10-02T19:06:02.100451+00:00 app[web.1]: [[31merror[0m] - play.api.db.evolutions.DefaultEvolutionsApi - ERROR: syntax error at or near "user"
+2015-10-02T19:06:02.116251+00:00 app[web.1]: Oops, ca
+nnot start the server.
+2015-10-02T19:06:02.100458+00:00 app[web.1]:   Position: 14 [ERROR:0, SQLSTATE:42601]
+2015-10-02T19:06:02.117329+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.checkEvolutionsState(EvolutionsApi.scala:269)
+2015-10-02T19:06:02.117404+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.databaseEvolutions(EvolutionsApi.scala:121)
+2015-10-02T19:06:02.117490+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.scripts(EvolutionsApi.scala:112)
+2015-10-02T19:06:02.117454+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.scripts(EvolutionsApi.scala:97)
+2015-10-02T19:06:02.117532+00:00 app[web.1]: 	at play.api.db.evolutions.DefaultEvolutionsApi.scripts(EvolutionsApi.scala:77)
+2015-10-02T19:06:02.117576+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$play$api$db$evolutions$ApplicationEvolutions$$runEvolutions$1.apply$mcV$sp(ApplicationEvolutions.scala:50)
+2015-10-02T19:06:02.117668+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.play$api$db$evolutions$ApplicationEvolutions$$runEvolutions(ApplicationEvolutions.scala:49)
+2015-10-02T19:06:02.117621+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.withLock(ApplicationEvolutions.scala:98)
+2015-10-02T19:06:02.117710+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$start$1.apply(ApplicationEvolutions.scala:42)
+2015-10-02T19:06:02.117765+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$start$1.apply(ApplicationEvolutions.scala:42)
+2015-10-02T19:06:02.117814+00:00 app[web.1]: 	at scala.collection.immutable.List.foreach(List.scala:381)
+2015-10-02T19:06:02.117892+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.<init>(ApplicationEvolutions.scala:149)
+2015-10-02T19:06:02.117947+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get$lzycompute(EvolutionsModule.scala:53)
+2015-10-02T19:06:02.117849+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.start(ApplicationEvolutions.scala:42)
+2015-10-02T19:06:02.117991+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get(EvolutionsModule.scala:53)
+2015-10-02T19:06:02.118094+00:00 app[web.1]: 	at com.google.inject.internal.ProviderInternalFactory.provision(ProviderInternalFactory.java:81)
+2015-10-02T19:06:02.118032+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get(EvolutionsModule.scala:44)
+2015-10-02T19:06:02.118191+00:00 app[web.1]: 	at com.google.inject.internal.ProviderInternalFactory.circularGet(ProviderInternalFactory.java:61)
+2015-10-02T19:06:02.118237+00:00 app[web.1]: 	at com.google.inject.internal.BoundProviderFactory.get(BoundProviderFactory.java:62)
+2015-10-02T19:06:02.118133+00:00 app[web.1]: 	at com.google.inject.internal.BoundProviderFactory.provision(BoundProviderFactory.java:72)
+2015-10-02T19:06:02.118291+00:00 app[web.1]: 	at com.google.inject.internal.ProviderToInternalFactoryAdapter$1.call(ProviderToInternalFactoryAdapter.java:46)
+2015-10-02T19:06:02.118413+00:00 app[web.1]: 	at com.google.inject.internal.SingletonScope$1.get(SingletonScope.java:145)
+2015-10-02T19:06:02.118326+00:00 app[web.1]: 	at com.google.inject.internal.InjectorImpl.callInContext(InjectorImpl.java:1103)
+2015-10-02T19:06:02.118370+00:00 app[web.1]: 	at com.google.inject.internal.ProviderToInternalFactoryAdapter.get(ProviderToInternalFactoryAdapter.java:40)
+2015-10-02T19:06:02.118456+00:00 app[web.1]: 	at com.google.inject.internal.InternalFactoryToProviderAdapter.get(InternalFactoryToProviderAdapter.java:41)
+2015-10-02T19:06:02.118578+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator$1.call(InternalInjectorCreator.java:199)
+2015-10-02T19:06:02.118525+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator$1.call(InternalInjectorCreator.java:205)
+2015-10-02T19:06:02.118793+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.build(InternalInjectorCreator.java:110)
+2015-10-02T19:06:02.118667+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.loadEagerSingletons(InternalInjectorCreator.java:199)
+2015-10-02T19:06:02.118617+00:00 app[web.1]: 	at com.google.inject.internal.InjectorImpl.callInContext(InjectorImpl.java:1092)
+2015-10-02T19:06:02.118715+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.injectDynamically(InternalInjectorCreator.java:180)
+2015-10-02T19:06:02.118822+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:96)
+2015-10-02T19:06:02.118872+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:73)
+2015-10-02T19:06:02.118921+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:62)
+2015-10-02T19:06:02.118956+00:00 app[web.1]: 	at play.api.inject.guice.GuiceBuilder.injector(GuiceInjectorBuilder.scala:126)
+2015-10-02T19:06:02.119001+00:00 app[web.1]: 	at play.api.inject.guice.GuiceApplicationBuilder.build(GuiceApplicationBuilder.scala:93)
+2015-10-02T19:06:02.119189+00:00 app[web.1]: 	at play.api.inject.guice.GuiceApplicationLoader.load(GuiceApplicationLoader.scala:21)
+2015-10-02T19:06:02.119261+00:00 app[web.1]: 	at play.core.server.ProdServerStart$.main(ProdServerStart.scala:27)
+2015-10-02T19:06:02.119216+00:00 app[web.1]: 	at play.core.server.ProdServerStart$.start(ProdServerStart.scala:52)
+2015-10-02T19:06:02.119294+00:00 app[web.1]: 	at play.core.server.ProdServerStart.main(ProdServerStart.scala)
+2015-10-02T19:06:03.028271+00:00 heroku[web.1]: State changed from starting to crashed
+2015-10-02T19:06:03.019919+00:00 heroku[web.1]: Process exited with status 255
+2015-10-02T19:17:40.890438+00:00 heroku[web.1]: State changed from crashed to starting
+2015-10-02T19:17:50.839959+00:00 heroku[web.1]: Starting process with command `target/universal/stage/bin/indie_play_be -Dhttp.port=38643 -Dplay.evolutions.db.default.autoApply=true -Ddb.default.driver=org.postgresql.Driver`
+2015-10-02T19:17:52.878536+00:00 app[web.1]: Setting JAVA_TOOL_OPTIONS defaults based on dyno size. Custom settings will override them.
+2015-10-02T19:17:53.076816+00:00 app[web.1]: Picked up JAVA_TOOL_OPTIONS: -Xmx384m -Xss512k -Dfile.encoding=UTF-8
+2015-10-02T19:17:56.711456+00:00 app[web.1]: [[37minfo[0m] - application - Creating Pool for datasource 'default'
+2015-10-02T19:17:58.175284+00:00 app[web.1]: [[37minfo[0m] - play.api.db.DefaultDBApi - Database [default] connected at jdbc:postgresql://ec2-54-163-228-109.compute-1.amazonaws.com:5432/d5clf9ofd9sdve
+2015-10-02T19:17:59.175008+00:00 app[web.1]: [[31merror[0m] - play.api.db.evolutions.DefaultEvolutionsApi - ERROR: syntax error at or near "user"
+2015-10-02T19:17:59.175013+00:00 app[web.1]:   Position: 14 [ERROR:0, SQLSTATE:42601]
+2015-10-02T19:17:59.211311+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.checkEvolutionsState(EvolutionsApi.scala:269)
+2015-10-02T19:17:59.210385+00:00 app[web.1]: Oops, cannot start the server.
+2015-10-02T19:17:59.211346+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.databaseEvolutions(EvolutionsApi.scala:121)
+2015-10-02T19:17:59.211445+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.scripts(EvolutionsApi.scala:97)
+2015-10-02T19:17:59.211564+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.scripts(EvolutionsApi.scala:112)
+2015-10-02T19:17:59.211602+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.play$api$db$evolutions$ApplicationEvolutions$$runEvolutions(ApplicationEvolutions.scala:49)
+2015-10-02T19:17:59.211677+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$start$1.apply(ApplicationEvolutions.scala:42)
+2015-10-02T19:17:59.211636+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$start$1.apply(ApplicationEvolutions.scala:42)
+2015-10-02T19:17:59.211716+00:00 app[web.1]: 	at scala.collection.immutable.List.foreach(List.scala:381)
+2015-10-02T19:17:59.211792+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.<init>(ApplicationEvolutions.scala:149)
+2015-10-02T19:17:59.211566+00:00 app[web.1]: 	at play.api.db.evolutions.DefaultEvolutionsApi.scripts(EvolutionsApi.scala:77)
+2015-10-02T19:17:59.211569+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.withLock(ApplicationEvolutions.scala:98)
+2015-10-02T19:17:59.211568+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$play$api$db$evolutions$ApplicationEvolutions$$runEvolutions$1.apply$mcV$sp(ApplicationEvolutions.scala:50)
+2015-10-02T19:17:59.211753+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.start(ApplicationEvolutions.scala:42)
+2015-10-02T19:17:59.211823+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get$lzycompute(EvolutionsModule.scala:53)
+2015-10-02T19:17:59.211859+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get(EvolutionsModule.scala:53)
+2015-10-02T19:17:59.211936+00:00 app[web.1]: 	at com.google.inject.internal.ProviderInternalFactory.provision(ProviderInternalFactory.java:81)
+2015-10-02T19:17:59.211895+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get(EvolutionsModule.scala:44)
+2015-10-02T19:17:59.211972+00:00 app[web.1]: 	at com.google.inject.internal.BoundProviderFactory.provision(BoundProviderFactory.java:72)
+2015-10-02T19:17:59.212493+00:00 app[web.1]: 	at com.google.inject.internal.BoundProviderFactory.get(BoundProviderFactory.java:62)
+2015-10-02T19:17:59.212468+00:00 app[web.1]: 	at com.google.inject.internal.ProviderInternalFactory.circularGet(ProviderInternalFactory.java:61)
+2015-10-02T19:17:59.212555+00:00 app[web.1]: 	at com.google.inject.internal.ProviderToInternalFactoryAdapter$1.call(ProviderToInternalFactoryAdapter.java:46)
+2015-10-02T19:17:59.212596+00:00 app[web.1]: 	at com.google.inject.internal.InjectorImpl.callInContext(InjectorImpl.java:1103)
+2015-10-02T19:17:59.212662+00:00 app[web.1]: 	at com.google.inject.internal.SingletonScope$1.get(SingletonScope.java:145)
+2015-10-02T19:17:59.212626+00:00 app[web.1]: 	at com.google.inject.internal.ProviderToInternalFactoryAdapter.get(ProviderToInternalFactoryAdapter.java:40)
+2015-10-02T19:17:59.212699+00:00 app[web.1]: 	at com.google.inject.internal.InternalFactoryToProviderAdapter.get(InternalFactoryToProviderAdapter.java:41)
+2015-10-02T19:17:59.212781+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator$1.call(InternalInjectorCreator.java:199)
+2015-10-02T19:17:59.212751+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator$1.call(InternalInjectorCreator.java:205)
+2015-10-02T19:17:59.212855+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.loadEagerSingletons(InternalInjectorCreator.java:199)
+2015-10-02T19:17:59.212898+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.injectDynamically(InternalInjectorCreator.java:180)
+2015-10-02T19:17:59.212816+00:00 app[web.1]: 	at com.google.inject.internal.InjectorImpl.callInContext(InjectorImpl.java:1092)
+2015-10-02T19:17:59.212946+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.build(InternalInjectorCreator.java:110)
+2015-10-02T19:17:59.212985+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:96)
+2015-10-02T19:17:59.213020+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:73)
+2015-10-02T19:17:59.213055+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:62)
+2015-10-02T19:17:59.213116+00:00 app[web.1]: 	at play.api.inject.guice.GuiceBuilder.injector(GuiceInjectorBuilder.scala:126)
+2015-10-02T19:17:59.213118+00:00 app[web.1]: 	at play.api.inject.guice.GuiceApplicationBuilder.build(GuiceApplicationBuilder.scala:93)
+2015-10-02T19:17:59.213158+00:00 app[web.1]: 	at play.api.inject.guice.GuiceApplicationLoader.load(GuiceApplicationLoader.scala:21)
+2015-10-02T19:17:59.213194+00:00 app[web.1]: 	at play.core.server.ProdServerStart$.start(ProdServerStart.scala:52)
+2015-10-02T19:17:59.213222+00:00 app[web.1]: 	at play.core.server.ProdServerStart$.main(ProdServerStart.scala:27)
+2015-10-02T19:17:59.213264+00:00 app[web.1]: 	at play.core.server.ProdServerStart.main(ProdServerStart.scala)
+2015-10-02T19:17:59.211121+00:00 app[web.1]: @6njl1564l: Database 'default' is in an inconsistent state!
+2015-10-02T19:18:09.656295+00:00 heroku[web.1]: Process exited with status 255
+2015-10-02T19:18:09.663773+00:00 heroku[web.1]: State changed from starting to crashed
+2015-10-02T19:26:59.319243+00:00 heroku[api]: Deploy 3c7c086 by skariel@gmail.com
+2015-10-02T19:26:59.319243+00:00 heroku[api]: Release v38 created by skariel@gmail.com
+2015-10-02T19:26:59.386691+00:00 heroku[slug-compiler]: Slug compilation started
+2015-10-02T19:26:59.386713+00:00 heroku[slug-compiler]: Slug compilation finished
+2015-10-02T19:26:59.953494+00:00 heroku[web.1]: State changed from crashed to starting
+2015-10-02T19:27:05.719804+00:00 heroku[web.1]: Starting process with command `target/universal/stage/bin/indie_play_be -Dhttp.port=34064 -Dplay.evolutions.db.default.autoApply=true -Ddb.default.driver=org.postgresql.Driver`
+2015-10-02T19:27:07.010698+00:00 app[web.1]: Setting JAVA_TOOL_OPTIONS defaults based on dyno size. Custom settings will override them.
+2015-10-02T19:27:07.178347+00:00 app[web.1]: Picked up JAVA_TOOL_OPTIONS: -Xmx384m -Xss512k -Dfile.encoding=UTF-8
+2015-10-02T19:27:09.544231+00:00 app[web.1]: [[37minfo[0m] - application - Creating Pool for datasource 'default'
+2015-10-02T19:27:13.117676+00:00 app[web.1]: [[37minfo[0m] - play.api.db.DefaultDBApi - Database [default] connected at jdbc:postgresql://ec2-54-163-228-109.compute-1.amazonaws.com:5432/d5clf9ofd9sdve
+2015-10-02T19:27:14.619388+00:00 app[web.1]: [[31merror[0m] - play.api.db.evolutions.DefaultEvolutionsApi - ERROR: syntax error at or near "user"
+2015-10-02T19:27:14.619394+00:00 app[web.1]:   Position: 14 [ERROR:0, SQLSTATE:42601]
+2015-10-02T19:27:14.652218+00:00 app[web.1]: Oops, cannot start the server.
+2015-10-02T19:27:14.654520+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.checkEvolutionsState(EvolutionsApi.scala:269)
+2015-10-02T19:27:14.654679+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.databaseEvolutions(EvolutionsApi.scala:121)
+2015-10-02T19:27:14.654777+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.scripts(EvolutionsApi.scala:97)
+2015-10-02T19:27:14.654862+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.scripts(EvolutionsApi.scala:112)
+2015-10-02T19:27:14.654928+00:00 app[web.1]: 	at play.api.db.evolutions.DefaultEvolutionsApi.scripts(EvolutionsApi.scala:77)
+2015-10-02T19:27:14.655342+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$start$1.apply(ApplicationEvolutions.scala:42)
+2015-10-02T19:27:14.655452+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$start$1.apply(ApplicationEvolutions.scala:42)
+2015-10-02T19:27:14.655516+00:00 app[web.1]: 	at scala.collection.immutable.List.foreach(List.scala:381)
+2015-10-02T19:27:14.655036+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$play$api$db$evolutions$ApplicationEvolutions$$runEvolutions$1.apply$mcV$sp(ApplicationEvolutions.scala:50)
+2015-10-02T19:27:14.655152+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.withLock(ApplicationEvolutions.scala:98)
+2015-10-02T19:27:14.655247+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.play$api$db$evolutions$ApplicationEvolutions$$runEvolutions(ApplicationEvolutions.scala:49)
+2015-10-02T19:27:14.655677+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.<init>(ApplicationEvolutions.scala:149)
+2015-10-02T19:27:14.655600+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.start(ApplicationEvolutions.scala:42)
+2015-10-02T19:27:14.655742+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get$lzycompute(EvolutionsModule.scala:53)
+2015-10-02T19:27:14.655905+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get(EvolutionsModule.scala:44)
+2015-10-02T19:27:14.655824+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolut
+ionsProvider.get(EvolutionsModule.scala:53)
+2015-10-02T19:27:14.655997+00:00 app[web.1]: 	at com.google.inject.internal.ProviderInternalFactory.provision(ProviderInternalFactory.java:81)
+2015-10-02T19:27:14.656063+00:00 app[web.1]: 	at com.google.inject.internal.BoundProviderFactory.provision(BoundProviderFactory.java:72)
+2015-10-02T19:27:14.656159+00:00 app[web.1]: 	at com.google.inject.internal.ProviderInternalFactory.circularGet(ProviderInternalFactory.java:61)
+2015-10-02T19:27:14.656250+00:00 app[web.1]: 	at com.google.inject.internal.BoundProviderFactory.get(BoundProviderFactory.java:62)
+2015-10-02T19:27:14.656400+00:00 app[web.1]: 	at com.google.inject.internal.InjectorImpl.callInContext(InjectorImpl.java:1103)
+2015-10-02T19:27:14.656320+00:00 app[web.1]: 	at com.google.inject.internal.ProviderToInternalFactoryAdapter$1.call(ProviderToInternalFactoryAdapter.java:46)
+2015-10-02T19:27:14.656696+00:00 app[web.1]: 	at com.google.inject.internal.ProviderToInternalFactoryAdapter.get(ProviderToInternalFactoryAdapter.java:40)
+2015-10-02T19:27:14.656802+00:00 app[web.1]: 	at com.google.inject.internal.SingletonScope$1.get(SingletonScope.java:145)
+2015-10-02T19:27:14.656888+00:00 app[web.1]: 	at com.google.inject.internal.InternalFactoryToProviderAdapter.get(InternalFactoryToProviderAdapter.java:41)
+2015-10-02T19:27:14.656990+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator$1.call(InternalInjectorCreator.java:205)
+2015-10-02T19:27:14.657061+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator$1.call(InternalInjectorCreator.java:199)
+2015-10-02T19:27:14.657139+00:00 app[web.1]: 	at com.google.inject.internal.InjectorImpl.callInContext(InjectorImpl.java:1092)
+2015-10-02T19:27:14.657299+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.injectDynamically(InternalInjectorCreator.java:180)
+2015-10-02T19:27:14.657223+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.loadEagerSingletons(InternalInjectorCreator.java:199)
+2015-10-02T19:27:14.657434+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.build(InternalInjectorCreator.java:110)
+2015-10-02T19:27:14.657644+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:96)
+2015-10-02T19:27:14.657747+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:73)
+2015-10-02T19:27:14.657819+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:62)
+2015-10-02T19:27:14.657913+00:00 app[web.1]: 	at play.api.inject.guice.GuiceBuilder.injector(GuiceInjectorBuilder.scala:126)
+2015-10-02T19:27:14.658003+00:00 app[web.1]: 	at play.api.inject.guice.GuiceApplicationBuilder.build(GuiceApplicationBuilder.scala:93)
+2015-10-02T19:27:14.658086+00:00 app[web.1]: 	at play.api.inject.guice.GuiceApplicationLoader.load(GuiceApplicationLoader.scala:21)
+2015-10-02T19:27:14.658153+00:00 app[web.1]: 	at play.core.server.ProdServerStart$.start(ProdServerStart.scala:52)
+2015-10-02T19:27:14.658241+00:00 app[web.1]: 	at play.core.server.ProdServerStart$.main(ProdServerStart.scala:27)
+2015-10-02T19:27:14.658319+00:00 app[web.1]: 	at play.core.server.ProdServerStart.main(ProdServerStart.scala)
+2015-10-02T19:27:14.653373+00:00 app[web.1]: @6njl2alm4: Database 'default' is in an inconsistent state!
+2015-10-02T19:27:15.735482+00:00 heroku[web.1]: State changed from starting to crashed
+2015-10-02T19:27:15.721014+00:00 heroku[web.1]: Process exited with status 255
+2015-10-02T19:37:29.112920+00:00 heroku[api]: Deploy d8e35f9 by skariel@gmail.com
+2015-10-02T19:37:29.112920+00:00 heroku[api]: Release v39 created by skariel@gmail.com
+2015-10-02T19:37:29.181476+00:00 heroku[slug-compiler]: Slug compilation started
+2015-10-02T19:37:29.181495+00:00 heroku[slug-compiler]: Slug compilation finished
+2015-10-02T19:37:29.208618+00:00 heroku[web.1]: State changed from crashed to starting
+2015-10-02T19:37:45.964256+00:00 heroku[web.1]: Starting process with command `target/universal/stage/bin/indie_play_be -Dhttp.port=34093 -Dplay.evolutions.db.default.autoApply=true -Ddb.default.driver=org.postgresql.Driver`
+2015-10-02T19:37:57.863471+00:00 app[web.1]: Error waiting for network: Resource temporarily unavailable
+2015-10-02T19:39:36.399563+00:00 heroku[web.1]: State changed from starting to down
+2015-10-02T19:41:10.294120+00:00 heroku[router]: at=error code=H20 desc="App boot timeout" method=GET path="/" host=indiepocalypse.herokuapp.com request_id=39e91773-1311-4233-85fa-e6f3d4ad5c12 fwd="82.166.22.171" dyno= connect= service= status=503 bytes=
+2015-10-02T19:41:38.227005+00:00 heroku[router]: at=error code=H20 desc="App boot timeout" method=GET path="/" host=indiepocalypse.herokuapp.com request_id=e081058a-ba87-497e-8bea-f9c251217e38 fwd="82.166.22.171" dyno= connect= service= status=503 bytes=
+2015-10-02T19:47:51.907911+00:00 heroku[api]: Deploy 63fb25c by skariel@gmail.com
+2015-10-02T19:47:51.907911+00:00 heroku[api]: Release v40 created by skariel@gmail.com
+2015-10-02T19:47:51.975439+00:00 heroku[slug-compiler]: Slug compilation started
+2015-10-02T19:47:51.975455+00:00 heroku[slug-compiler]: Slug compilation finished
+2015-10-02T19:49:07.156878+00:00 heroku[web.1]: Unidling
+2015-10-02T19:49:07.157208+00:00 heroku[web.1]: State changed from down to starting
+2015-10-02T19:49:18.213110+00:00 heroku[web.1]: Starting process with command `target/universal/stage/bin/indie_play_be -Dhttp.port=56750 -Dplay.evolutions.db.default.autoApply=true -Ddb.default.driver=org.postgresql.Driver`
+2015-10-02T19:49:19.875339+00:00 app[web.1]: Setting JAVA_TOOL_OPTIONS defaults based on dyno size. Custom settings will override them.
+2015-10-02T19:49:20.314670+00:00 app[web.1]: Picked up JAVA_TOOL_OPTIONS: -Xmx384m -Xss512k -Dfile.encoding=UTF-8
+2015-10-02T19:49:23.323234+00:00 app[web.1]: [[37minfo[0m] - application - Creating Pool for datasource 'default'
+2015-10-02T19:49:26.784388+00:00 app[web.1]: [[37minfo[0m] - play.api.db.DefaultDBApi - Database [default] connected at jdbc:postgresql://ec2-54-163-228-109.compute-1.amazonaws.com:5432/d5clf9ofd9sdve
+2015-10-02T19:49:28.191262+00:00 app[web.1]: [[31merror[0m] - play.api.db.evolutions.DefaultEvolutionsApi - ERROR: syntax error at or near "user"
+2015-10-02T19:49:28.191267+00:00 app[web.1]:   Position: 14 [ERROR:0, SQLSTATE:42601]
+2015-10-02T19:49:28.224771+00:00 app[web.1]: Oops, cannot start the server.
+2015-10-02T19:49:28.226757+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.databaseEvolutions(EvolutionsApi.scala:121)
+2015-10-02T19:49:28.226721+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.checkEvolutionsState(EvolutionsApi.scala:269)
+2015-10-02T19:49:28.226788+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.scripts(EvolutionsApi.scala:97)
+2015-10-02T19:49:28.226823+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.scripts(EvolutionsApi.scala:112)
+2015-10-02T19:49:28.226858+00:00 app[web.1]: 	at play.api.db.evolutions.DefaultEvolutionsApi.scripts(EvolutionsApi.scala:77)
+2015-10-02T19:49:28.226898+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$play$api$db$evolutions$ApplicationEvolutions$$runEvolutions$1.apply$mcV$sp(ApplicationEvolutions.scala:50)
+2015-10-02T19:49:28.226932+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.withLock(ApplicationEvolutions.scala:98)
+2015-10-02T19:49:28.226972+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.play$api$db$evolutions$ApplicationEvolutions$$runEvolutions(ApplicationEvolutions.scala:49)
+2015-10-02T19:49:28.227009+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$start$1.apply(ApplicationEvolutions.scala:42)
+2015-10-02T19:49:28.227054+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$start$1.apply(ApplicationEvolutions.scala:42)
+2015-10-02T19:49:28.227089+00:00 app[web.1]: 	at scala.collection.immutable.List.foreach(List.scala:381)
+2015-10-02T19:49:28.227138+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.start(ApplicationEvolutions.scala:42)
+2015-10-02T19:49:28.227189+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.<init>(ApplicationEvolutions.scala:149)
+2015-10-02T19:49:28.227231+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get$lzycompute(EvolutionsModule.scala:53)
+2015-10-02T19:49:28.227260+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get(EvolutionsModule.scala:53)
+2015-10-02T19:49:28.227305+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get(EvolutionsModule.scala:44)
+2015-10-02T19:49:28.227344+00:00 app[web.1]: 	at com.google.inject.internal.ProviderInternalFactory.provision(ProviderInternalFactory.java:81)
+2015-10-02T19:49:28.227386+00:00 app[web.1]: 	at com.google.inject.internal.BoundProviderFactory.provision(BoundProviderFactory.java:72)
+2015-10-02T19:49:28.227464+00:00 app[web.1]: 	at com.google.inject.internal.ProviderInternalFactory.circularGet(ProviderInternalFactory.java:61)
+2015-10-02T19:49:28.227514+00:00 app[web.1]: 	at com.google.inject.internal.BoundProviderFactory.get(BoundProviderFactory.java:62)
+2015-10-02T19:49:28.227601+00:00 app[web.1]: 	at com.google.inject.internal.ProviderToInternalFactoryAdapter$1.call(ProviderToInternalFactoryAdapter.java:46)
+2015-10-02T19:49:28.227603+00:00 app[web.1]: 	at com.google.inject.internal.InjectorImpl.callInContext(InjectorImpl.java:1103)
+2015-10-02T19:49:28.227658+00:00 app[web.1]: 	at com.google.inject.internal.ProviderToInternalFactoryAdapter.get(ProviderToInternalFactoryAdapter.java:40)
+2015-10-02T19:49:28.227709+00:00 app[web.1]: 	at com.google.inject.internal.SingletonScope$1.get(SingletonScope.java:145)
+2015-10-02T19:49:28.227744+00:00 app[web.1]: 	at com.google.inject.internal.InternalFactoryToProviderAdapter.get(InternalFactoryToProviderAdapter.java:41)
+2015-10-02T19:49:28.227783+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator$1.call(InternalInjectorCreator.java:205)
+2015-10-02T19:49:28.227819+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator$1.call(InternalInjectorCreator.java:199)
+2015-10-02T19:49:28.227855+00:00 app[web.1]: 	at com.google.inject.internal.InjectorImpl.callInContext(InjectorImpl.java:1092)
+2015-10-02T19:49:28.227895+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.loadEagerSingletons(InternalInjectorCreator.java:199)
+2015-10-02T19:49:28.227931+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.injectDynamically(InternalInjectorCreator.java:180)
+2015-10-02T19:49:28.227987+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.build(InternalInjectorCreator.java:110)
+2015-10-02T19:49:28.228020+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:96)
+2015-10-02T19:49:28.228047+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:73)
+2015-10-02T19:49:28.228085+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:62)
+2015-10-02T19:49:28.228121+00:00 app[web.1]: 	at play.api.inject.guice.GuiceBuilder.injector(GuiceInjectorBuilder.scala:126)
+2015-10-02T19:49:28.228194+00:00 app[web.1]: 	at play.api.inject.guice.GuiceApplicationLoader.load(GuiceApplicationLoader.scala:21)
+2015-10-02T19:49:28.228158+00:00 app[web.1]: 	at play.api.inject.guice.GuiceApplicationBuilder.build(GuiceApplicationBuilder.scala:93)
+2015-10-02T19:49:28.228233+00:00 app[web.1]: 	at play.core.server.ProdServerStart$.start(ProdServerStart.scala:52)
+2015-10-02T19:49:28.228264+00:00 app[web.1]: 	at play.core.server.ProdServerStart$.main(ProdServerStart.scala:27)
+2015-10-02T19:49:28.228326+00:00 app[web.1]: 	at play.core.server.ProdServerStart.main(ProdServerStart.scala)
+2015-10-02T19:49:28.226538+00:00 app[web.1]: @6njl58ifc: Database 'default' is in an inconsistent state!
+2015-10-02T19:49:33.290778+00:00 heroku[web.1]: Process exited with status 255
+2015-10-02T19:49:33.309455+00:00 heroku[web.1]: State changed from starting to crashed
+2015-10-02T19:49:33.311013+00:00 heroku[web.1]: State changed from crashed to starting
+2015-10-02T19:49:44.220929+00:00 heroku[web.1]: Starting process with command `target/universal/stage/bin/indie_play_be -Dhttp.port=59108 -Dplay.evolutions.db.default.autoApply=true -Ddb.default.driver=org.postgresql.Driver`
+2015-10-02T19:49:46.557465+00:00 app[web.1]: Setting JAVA_TOOL_OPTIONS defaults based on dyno size. Custom settings will override them.
+2015-10-02T19:49:47.091004+00:00 app[web.1]: Picked up JAVA_TOOL_OPTIONS: -Xmx384m -Xss512k -Dfile.encoding=UTF-8
+2015-10-02T19:49:54.868910+00:00 app[web.1]: [[37minfo[0m] - application - Creating Pool for datasource 'default'
+2015-10-02T19:49:55.885329+00:00 app[web.1]: [[37minfo[0m] - play.api.db.DefaultDBApi - Database [default] connected at jdbc:postgresql://ec2-54-163-228-109.compute-1.amazonaws.com:5432/d5clf9ofd9sdve
+2015-10-02T19:49:57.513071+00:00 app[web.1]: [[31merror[0m] - play.api.db.evolutions.DefaultEvolutionsApi - ERROR: syntax error at or near "user"
+2015-10-02T19:49:57.513077+00:00 app[web.1]:   Position: 14 [ERROR:0, SQLSTATE:42601]
+2015-10-02T19:49:57.545880+00:00 app[web.1]: Oops, cannot start the server.
+2015-10-02T19:49:57.546825+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.checkEvolutionsState(EvolutionsApi.scala:269)
+2015-10-02T19:49:57.546869+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.databaseEvolutions(EvolutionsApi.scala:121)
+2015-10-02T19:49:57.546901+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.scripts(EvolutionsApi.scala:97)
+2015-10-02T19:49:57.546937+00:00 app[web.1]: 	at play.api.db.evolutions.DatabaseEvolutions.scripts(EvolutionsApi.scala:112)
+2015-10-02T19:49:57.546975+00:00 app[web.1]: 	at play.api.db.evolutions.DefaultEvolutionsApi.scripts(EvolutionsApi.scala:77)
+2015-10-02T19:49:57.547014+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$play$api$db$evolutions$ApplicationEvolutions$$runEvolutions$1.apply$mcV$sp(ApplicationEvolutions.scala:50)
+2015-10-02T19:49:57.547090+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.play$api$db$evolutions$ApplicationEvolutions$$runEvolutions(ApplicationEvolutions.scala:49)
+2015-10-02T19:49:57.547179+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$start$1.apply(ApplicationEvolutions.scala:42)
+2015-10-02T19:49:57.547229+00:00 app[web.1]: 	at scala.collection.immutable.List.foreach(List.scala:381)
+2015-10-02T19:49:57.547119+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions$$anonfun$start$1.apply(ApplicationEvolutions.scala:42)
+2015-10-02T19:49:57.547253+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.start(ApplicationEvolutions.scala:42)
+2015-10-02T19:49:57.547051+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.withLock(ApplicationEvolutions.scala:98)
+2015-10-02T19:49:57.547309+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutions.<init>(ApplicationEvolutions.scala:149)
+2015-10-02T19:49:57.547357+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get$lzycompute(EvolutionsModule.scala:53)
+2015-10-02T19:49:57.547395+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get(EvolutionsModule.scala:53)
+2015-10-02T19:49:57.547454+00:00 app[web.1]: 	at play.api.db.evolutions.ApplicationEvolutionsProvider.get(EvolutionsModule.scala:44)
+2015-10-02T19:49:57.547488+00:00 app[web.1]: 	at com.google.inject.internal.ProviderInternalFactory.provision(ProviderInternalFactory.java:81)
+2015-10-02T19:49:57.547528+00:00 app[web.1]: 	at com.google.inject.internal.BoundProviderFactory.provision(BoundProviderFactory.java:72)
+2015-10-02T19:49:57.547578+00:00 app[web.1]: 	at com.google.inject.internal.ProviderInternalFactory.circularGet(ProviderInternalFactory.java:61)
+2015-10-02T19:49:57.547697+00:00 app[web.1]: 	at com.google.inject.internal.InjectorImpl.callInContext(InjectorImpl.java:1103)
+2015-10-02T19:49:57.547619+00:00 app[web.1]: 	at com.google.inject.internal.BoundProviderFactory.get(BoundProviderFactory.java:62)
+2015-10-02T19:49:57.547780+00:00 app[web.1]
+: 	at com.google.inject.internal.SingletonScope$1.get(SingletonScope.java:145)
+2015-10-02T19:49:57.547660+00:00 app[web.1]: 	at com.google.inject.internal.ProviderToInternalFactoryAdapter$1.call(ProviderToInternalFactoryAdapter.java:46)
+2015-10-02T19:49:57.547813+00:00 app[web.1]: 	at com.google.inject.internal.InternalFactoryToProviderAdapter.get(InternalFactoryToProviderAdapter.java:41)
+2015-10-02T19:49:57.547850+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator$1.call(InternalInjectorCreator.java:205)
+2015-10-02T19:49:57.547906+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator$1.call(InternalInjectorCreator.java:199)
+2015-10-02T19:49:57.547950+00:00 app[web.1]: 	at com.google.inject.internal.InjectorImpl.callInContext(InjectorImpl.java:1092)
+2015-10-02T19:49:57.547737+00:00 app[web.1]: 	at com.google.inject.internal.ProviderToInternalFactoryAdapter.get(ProviderToInternalFactoryAdapter.java:40)
+2015-10-02T19:49:57.548012+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.loadEagerSingletons(InternalInjectorCreator.java:199)
+2015-10-02T19:49:57.548066+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.injectDynamically(InternalInjectorCreator.java:180)
+2015-10-02T19:49:57.548130+00:00 app[web.1]: 	at com.google.inject.internal.InternalInjectorCreator.build(InternalInjectorCreator.java:110)
+2015-10-02T19:49:57.548161+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:96)
+2015-10-02T19:49:57.548198+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:73)
+2015-10-02T19:49:57.548234+00:00 app[web.1]: 	at com.google.inject.Guice.createInjector(Guice.java:62)
+2015-10-02T19:49:57.548271+00:00 app[web.1]: 	at play.api.inject.guice.GuiceBuilder.injector(GuiceInjectorBuilder.scala:126)
+2015-10-02T19:49:57.548311+00:00 app[web.1]: 	at play.api.inject.guice.GuiceApplicationBuilder.build(GuiceApplicationBuilder.scala:93)
+2015-10-02T19:49:57.548398+00:00 app[web.1]: 	at play.core.server.ProdServerStart$.start(ProdServerStart.scala:52)
+2015-10-02T19:49:57.548360+00:00 app[web.1]: 	at play.api.inject.guice.GuiceApplicationLoader.load(GuiceApplicationLoader.scala:21)
+2015-10-02T19:49:57.548488+00:00 app[web.1]: 	at play.core.server.ProdServerStart$.main(ProdServerStart.scala:27)
+2015-10-02T19:49:57.548530+00:00 app[web.1]: 	at play.core.server.ProdServerStart.main(ProdServerStart.scala)
+2015-10-02T19:49:57.546634+00:00 app[web.1]: @6njl5a9p7: Database 'default' is in an inconsistent state!
+2015-10-02T19:49:58.642684+00:00 heroku[web.1]: State changed from starting to crashed
+2015-10-02T19:49:58.628262+00:00 heroku[web.1]: Process exited with status 255
+2015-10-02T19:50:01.360197+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=indiepocalypse.herokuapp.com request_id=68e740f6-8ff8-4a9b-9ce3-0fe048f4c869 fwd="82.166.22.171" dyno= connect= service= status=503 bytes=
+2015-10-02T19:54:52.706454+00:00 heroku[api]: Deploy c16786d by skariel@gmail.com
+2015-10-02T19:54:52.706454+00:00 heroku[api]: Release v41 created by skariel@gmail.com
+2015-10-02T19:54:52.767937+00:00 heroku[slug-compiler]: Slug compilation started
+2015-10-02T19:54:52.767956+00:00 heroku[slug-compiler]: Slug compilation finished
+2015-10-02T19:54:52.852619+00:00 heroku[web.1]: State changed from crashed to starting
+2015-10-02T19:55:04.116613+00:00 heroku[web.1]: Starting process with command `target/universal/stage/bin/indie_play_be -Dhttp.port=29276 -Dplay.evolutions.db.default.autoApply=true -Ddb.default.driver=org.postgresql.Driver`
+2015-10-02T19:55:06.211372+00:00 app[web.1]: Setting JAVA_TOOL_OPTIONS defaults based on dyno size. Custom settings will override them.
+2015-10-02T19:55:06.855065+00:00 app[web.1]: Picked up JAVA_TOOL_OPTIONS: -Xmx384m -Xss512k -Dfile.encoding=UTF-8
+2015-10-02T19:55:21.662226+00:00 app[web.1]: [[37minfo[0m] - application - Creating Pool for datasource 'default'
+2015-10-02T19:55:26.077730+00:00 app[web.1]: [[37minfo[0m] - play.api.db.DefaultDBApi - Database [default] connected at jdbc:postgresql://ec2-54-163-228-109.compute-1.amazonaws.com:5432/d5clf9ofd9sdve
+2015-10-02T19:55:39.016063+00:00 app[web.1]: [[37minfo[0m] - application - Starting gmail idle poll...
+2015-10-02T19:55:39.064162+00:00 app[web.1]: [[33mwarn[0m] - application - While loading gmail credentials... 
+2015-10-02T19:55:39.064168+00:00 app[web.1]: java.io.FileNotFoundException: app/controllers/.gmail_indie_credentials_local_secret (No such file or directory)
+2015-10-02T19:55:39.064170+00:00 app[web.1]: 	at java.io.FileInputStream.open0(Native Method) ~[na:1.8.0_60-cedar14]
+2015-10-02T19:55:39.064172+00:00 app[web.1]: 	at java.io.FileInputStream.open(FileInputStream.java:195) ~[na:1.8.0_60-cedar14]
+2015-10-02T19:55:39.064174+00:00 app[web.1]: 	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[na:1.8.0_60-cedar14]
+2015-10-02T19:55:39.064176+00:00 app[web.1]: 	at java.io.FileInputStream.<init>(FileInputStream.java:93) ~[na:1.8.0_60-cedar14]
+2015-10-02T19:55:39.064178+00:00 app[web.1]: 	at controllers.GmailInbox.reload_folder(GmailInbox.java:181) [indie_play_be.indie_play_be-0.1-SNAPSHOT-sans-externalized.jar:na]
+2015-10-02T19:55:39.064180+00:00 app[web.1]: 	at controllers.GmailInbox.start(GmailInbox.java:35) [indie_play_be.indie_play_be-0.1-SNAPSHOT-sans-externalized.jar:na]
+2015-10-02T19:55:39.064182+00:00 app[web.1]: 	at Global.onStart(Global.java:9) [indie_play_be.indie_play_be-0.1-SNAPSHOT-sans-externalized.jar:na]
+2015-10-02T19:55:39.064184+00:00 app[web.1]: 	at play.core.j.JavaGlobalSettingsAdapter.onStart(JavaGlobalSettingsAdapter.scala:22) [com.typesafe.play.play_2.11-2.4.3.jar:2.4.3]
+2015-10-02T19:55:39.064186+00:00 app[web.1]: 	at play.api.GlobalPlugin.onStart(GlobalSettings.scala:271) [com.typesafe.play.play_2.11-2.4.3.jar:2.4.3]
+2015-10-02T19:55:39.064188+00:00 app[web.1]: 	at play.api.Play$$anonfun$start$1$$anonfun$apply$mcV$sp$1.apply(Play.scala:92) [com.typesafe.play.play_2.11-2.4.3.jar:2.4.3]
+2015-10-02T19:55:39.064190+00:00 app[web.1]: 	at play.api.Play$$anonfun$start$1$$anonfun$apply$mcV$sp$1.apply(Play.scala:92) [com.typesafe.play.play_2.11-2.4.3.jar:2.4.3]
+2015-10-02T19:55:39.064191+00:00 app[web.1]: 	at scala.collection.Iterator$class.foreach(Iterator.scala:750) [org.scala-lang.scala-library-2.11.6.jar:na]
+2015-10-02T19:55:39.064193+00:00 app[web.1]: 	at scala.collection.AbstractIterator.foreach(Iterator.scala:1202) [org.scala-lang.scala-library-2.11.6.jar:na]
+2015-10-02T19:55:39.064195+00:00 app[web.1]: 	at scala.collection.IterableLike$class.foreach(IterableLike.scala:72) [org.scala-lang.scala-library-2.11.6.jar:na]
+2015-10-02T19:55:39.064197+00:00 app[web.1]: 	at play.api.Plugins.foreach(Plugins.scala:57) [com.typesafe.play.play_2.11-2.4.3.jar:2.4.3]
+2015-10-02T19:55:39.064199+00:00 app[web.1]: 	at play.api.Play$$anonfun$start$1.apply$mcV$sp(Play.scala:92) [com.typesafe.play.play_2.11-2.4.3.jar:2.4.3]
+2015-10-02T19:55:39.064201+00:00 app[web.1]: 	at play.api.Play$$anonfun$start$1.apply(Play.scala:87) [com.typesafe.play.play_2.11-2.4.3.jar:2.4.3]
+2015-10-02T19:55:39.064203+00:00 app[web.1]: 	at play.api.Play$$anonfun$start$1.apply(Play.scala:87) [com.typesafe.play.play_2.11-2.4.3.jar:2.4.3]
+2015-10-02T19:55:39.064205+00:00 app[web.1]: 	at play.utils.Threads$.withContextClassLoader(Threads.scala:21) [com.typesafe.play.play_2.11-2.4.3.jar:2.4.3]
+2015-10-02T19:55:39.064206+00:00 app[web.1]: 	at play.api.Play$.start(Play.scala:87) [com.typesafe.play.play_2.11-2.4.3.jar:2.4.3]
+2015-10-02T19:55:39.064208+00:00 app[web.1]: 	at play.core.server.ProdServerStart$.start(ProdServerStart.scala:54) [com.typesafe.play.play-server_2.11-2.4.3.jar:2.4.3]
+2015-10-02T19:55:39.064213+00:00 app[web.1]: 	at play.core.server.ProdServerStart.main(ProdServerStart.scala) [com.typesafe.play.play-server_2.11-2.4.3.jar:2.4.3]
+2015-10-02T19:55:39.064210+00:00 app[web.1]: 	at play.core.server.ProdServerStart$.main(ProdServerStart.scala:27) [com.typesafe.play.play-server_2.11-2.4.3.jar:2.4.3]
+2015-10-02T19:55:39.614971+00:00 app[web.1]: [[31merror[0m] - application - While reloading gmail inbox... 
+2015-10-02T19:55:39.614978+00:00 app[web.1]: javax.mail.AuthenticationFailedException: [ALERT] Please log in via your web browser: https://support.google.com/mail/accounts/answer/78754 (Failure)
+2015-10-02T19:55:39.614980+00:00 app[web.1]: 	at com.sun.mail.imap.IMAPStore.protocolConnect(IMAPStore.java:661) ~[javax.mail-1.4.6-rc1.jar:1.4.6-rc1]
+2015-10-02T19:55:39.614982+00:00 app[web.1]: 	at javax.mail.Service.connect(Service.java:295) ~[javax.mail-1.4.6-rc1.jar:1.4.6-rc1]
+2015-10-02T19:55:39.614983+00:00 app[web.1]: 	at javax.mail.Service.connect(Service.java:176) ~[javax.mail-1.4.6-rc1.jar:1.4.6-rc1]
+2015-10-02T19:55:39.614986+00:00 app[web.1]: 	at controllers.GmailInbox.reload_folder(GmailInbox.java:204) [indie_play_be.indie_play_be-0.1-SNAPSHOT-sans-externalized.jar:na]
+2015-10-02T19:55:39.614987+00:00 app[web.1]: 	at controllers.GmailInbox.start(GmailInbox.java:35) [indie_play_be.indie_play_be-0.1-SNAPSHOT-sans-externalized.jar:na]
+2015-10-02T19:55:39.615019+00:00 app[web.1]: 	at Global.onStart(Global.java:9) [indie_play_be.indie_play_be-0.1-SNAPSHOT-sans-externalized.jar:na]
+2015-10-02T19:55:39.615021+00:00 app[web.1]: 	at play.core.j.JavaGlobalSettingsAdapter.onStart(JavaGlobalSettingsAdapter.scala:22) [com.typesafe.play.play_2.11-2.4.3.jar:2.4.3]
+2015-10-02T19:55:39.615022+00:00 app[web.1]: 	at play.api.GlobalPlugin.onStart(GlobalSettings.scala:271) [com.typesafe.play.play_2.11-2.4.3.jar:2.4.3]
+2015-10-02T19:55:39.615024+00:00 app[web.1]: 	at play.api.Play$$anonfun$start$1$$anonfun$apply$mcV$sp$1.apply(Play.scala:92) [com.typesafe.play.play_2.11-2.4.3.jar:2.4.3]
+2015-10-02T19:55:39.615025+00:00 app[web.1]: 	at play.api.Play$$anonfun$start$1$$anonfun$apply$mcV$sp$1.apply(Play.scala:92) [com.typesafe.play.play_2.11-2.4.3.jar:2.4.3]
+2015-10-02T19:55:39.615026+00:00 app[web.1]: 	at scala.collection.Iterator$class.foreach(Iterator.scala:750) [org.scala-lang.scala-library-2.11.6.jar:na]
+2015-10-02T19:55:39.615028+00:00 app[web.1]: 	at scala.collection.AbstractIterator.foreach(Iterator.scala:1202) [org.scala-lang.scala-library-2.11.6.jar:na]
+2015-10-02T19:55:39.615029+00:00 app[web.1]: 	at scala.collection.IterableLike$class.foreach(IterableLike.scala:72) [org.scala-lang.scala-library-2.11.6.jar:na]
+2015-10-02T19:55:39.615031+00:00 app[web.1]: 	at play.api.Plugins.foreach(Plugins.scala:57) [com.typesafe.play.play_2.11-2.4.3.jar:2.4.3]
+2015-10-02T19:55:39.615032+00:00 app[web.1]: 	at play.api.Play$$anonfun$start$1.apply$mcV$sp(Play.scala:92) [com.typesafe.play.play_2.11-2.4.3.jar:2.4.3]
+2015-10-02T19:55:39.615033+00:00 app[web.1]: 	at play.api.Play$$anonfun$start$1.apply(Play.scala:87) [com.typesafe.play.play_2.11-2.4.3.jar:2.4.3]
+2015-10-02T19:55:39.615034+00:00 app[web.1]: 	at play.api.Play$$anonfun$start$1.apply(Play.scala:87) [com.typesafe.play.play_2.11-2.4.3.jar:2.4.3]
+2015-10-02T19:55:39.615037+00:00 app[web.1]: 	at play.api.Play$.start(Play.scala:87) [com.typesafe.play.play_2.11-2.4.3.jar:2.4.3]
+2015-10-02T19:55:39.615036+00:00 app[web.1]: 	at play.utils.Threads$.withContextClassLoader(Threads.scala:21) [com.typesafe.play.play_2.11-2.4.3.jar:2.4.3]
+2015-10-02T19:55:39.615038+00:00 app[web.1]: 	at play.core.server.ProdServerStart$.start(ProdServerStart.scala:54) [com.typesafe.play.play-server_2.11-2.4.3.jar:2.4.3]
+2015-10-02T19:55:39.615041+00:00 app[web.1]: 	at play.core.server.ProdServerStart.main(ProdServerStart.scala) [com.typesafe.play.play-server_2.11-2.4.3.jar:2.4.3]
+2015-10-02T19:55:39.615040+00:00 app[web.1]: 	at play.core.server.ProdServerStart$.main(ProdServerStart.scala:27) [com.typesafe.play.play-server_2.11-2.4.3.jar:2.4.3]
+2015-10-02T19:55:39.653433+00:00 app[web.1]: [[37minfo[0m] - play.api.Play - Application started (Prod)
+2015-10-02T19:55:39.919176+00:00 app[web.1]: [[37minfo[0m] - play.core.server.NettyServer - Listening for HTTP on /0:0:0:0:0:0:0:0:29276
+2015-10-02T19:55:40.334065+00:00 heroku[web.1]: State changed from starting to up
+2015-10-02T19:55:41.810331+00:00 app[web.1]: java.io.FileNotFoundException: app/controllers/.github_indie_credentials_local_secret (No such file or directory)
+2015-10-02T19:55:41.810458+00:00 app[web.1]: 	at java.io.FileInputStream.open0(Native Method)
+2015-10-02T19:55:41.810501+00:00 app[web.1]: 	at java.io.FileInputStream.open(FileInputStream.java:195)
+2015-10-02T19:55:41.810542+00:00 app[web.1]: 	at java.io.FileInputStream.<init>(FileInputStream.java:138)
+2015-10-02T19:55:41.810584+00:00 app[web.1]: 	at java.io.FileInputStream.<init>(FileInputStream.java:93)
+2015-10-02T19:55:41.812189+00:00 app[web.1]: 	at controllers.credentials.<init>(credentials.java:27)
+2015-10-02T19:55:41.812220+00:00 app[web.1]: 	at controllers.github_access.get_github_access_url(github_access.java:14)
+2015-10-02T19:55:41.812272+00:00 app[web.1]: 	at views.html.main_Scope0$main.apply(main.template.scala:100)
+2015-10-02T19:55:41.812308+00:00 app[web.1]: 	at views.html.main_Scope0$main.render(main.template.scala:115)
+2015-10-02T19:55:41.812348+00:00 app[web.1]: 	at views.html.main.render(main.template.scala)
+2015-10-02T19:55:41.812390+00:00 app[web.1]: 	at controllers.ApplicationRoutes.lambda$index$4(ApplicationRoutes.java:137)
+2015-10-02T19:55:41.812438+00:00 app[web.1]: 	at play.core.j.FPromiseHelper$$anonfun$promise$2.apply(FPromiseHelper.scala:36)
+2015-10-02T19:55:41.812635+00:00 app[web.1]: 	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:40)
+2015-10-02T19:55:41.812499+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
+2015-10-02T19:55:41.812594+00:00 app[web.1]: 	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40)
+2015-10-02T19:55:41.812540+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
+2015-10-02T19:55:41.812679+00:00 app[web.1]: 	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:397)
+2015-10-02T19:55:41.812807+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+2015-10-02T19:55:41.812720+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+2015-10-02T19:55:41.812766+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+2015-10-02T19:55:41.812848+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+2015-10-02T19:55:42.213687+00:00 heroku[router]: at=info method=GET path="/" host=indiepocalypse.herokuapp.com request_id=690773c9-0db1-46f0-b9ec-571732223f77 fwd="82.166.22.171" dyno=web.1 connect=1ms service=1132ms status=200 bytes=2213
+2015-10-02T19:55:43.605495+00:00 heroku[router]: at=info method=GET path="/assets/images/favicon.png" host=indiepocalypse.herokuapp.com request_id=f1874367-4ba4-4357-b08f-e4732091edd0 fwd="82.166.22.171" dyno=web.1 connect=1ms service=564ms status=200 bytes=941
+2015-10-02T19:56:01.195962+00:00 app[web.1]: java.io.FileNotFoundException: app/controllers/.github_indie_credentials_local_secret (No such file or directory)
+2015-10-02T19:56:01.196104+00:00 app[web.1]: 	at java.io.FileInputStream.open0(Native Method)
+2015-10-02T19:56:01.196164+00:00 app[web.1]: 	at java.io.FileInputStream.open(FileInputStream.java:195)
+2015-10-02T19:56:01.196190+00:00 app[web.1]: 	at java.io.FileInputStream.<init>(FileInputStream.java:138)
+2015-10-02T19:56:01.196247+00:00 app[web.1]: 	at java.io.FileInputStream.<init>(FileInputStream.java:93)
+2015-10-02T19:56:01.196304+00:00 app[web.1]: 	at controllers.credentials.<init>(credentials.java:27)
+2015-10-02T19:56:01.196354+00:00 app[web.1]: 	at controllers.github_access.get_github_access_url(github_access.java:14)
+2015-10-02T19:56:01.200971+00:00 app[web.1]: 	at views.html.main_Scope0$main.apply(main.template.scala:100)
+2015-10-02T19:56:01.201031+00:00 app[web.1]: 	at views.html.main_Scope0$main.render(main.template.scala:115)
+2015-10-02T19:56:01.201093+00:00 app[web.1]: 	at views.html.main.render(main.template.scala)
+2015-10-02T19:56:01.201130+00:00 app[web.1]: 	at controllers.ApplicationRoutes.faq(Ap
+plicationRoutes.java:43)
+2015-10-02T19:56:01.201176+00:00 app[web.1]: 	at router.Routes$$anonfun$routes$1$$anonfun$applyOrElse$3$$anonfun$apply$3.apply(Routes.scala:251)
+2015-10-02T19:56:01.201261+00:00 app[web.1]: 	at play.core.routing.HandlerInvokerFactory$$anon$4.resultCall(HandlerInvoker.scala:136)
+2015-10-02T19:56:01.201226+00:00 app[web.1]: 	at router.Routes$$anonfun$routes$1$$anonfun$applyOrElse$3$$anonfun$apply$3.apply(Routes.scala:251)
+2015-10-02T19:56:01.201308+00:00 app[web.1]: 	at play.core.routing.HandlerInvokerFactory$JavaActionInvokerFactory$$anon$14$$anon$3$$anon$1.invocation(HandlerInvoker.scala:127)
+2015-10-02T19:56:01.201350+00:00 app[web.1]: 	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:70)
+2015-10-02T19:56:01.201433+00:00 app[web.1]: 	at play.GlobalSettings$1.call(GlobalSettings.java:67)
+2015-10-02T19:56:01.201435+00:00 app[web.1]: 	at play.core.j.JavaAction$$anonfun$7.apply(JavaAction.scala:94)
+2015-10-02T19:56:01.201449+00:00 app[web.1]: 	at play.core.j.JavaAction$$anonfun$7.apply(JavaAction.scala:94)
+2015-10-02T19:56:01.202348+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
+2015-10-02T19:56:01.202429+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
+2015-10-02T19:56:01.202476+00:00 app[web.1]: 	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40)
+2015-10-02T19:56:01.202510+00:00 app[web.1]: 	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:70)
+2015-10-02T19:56:01.202551+00:00 app[web.1]: 	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:32)
+2015-10-02T19:56:01.202597+00:00 app[web.1]: 	at scala.concurrent.impl.Future$.apply(Future.scala:31)
+2015-10-02T19:56:01.202629+00:00 app[web.1]: 	at scala.concurrent.Future$.apply(Future.scala:492)
+2015-10-02T19:56:01.202753+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:105)
+2015-10-02T19:56:01.202720+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:105)
+2015-10-02T19:56:01.202671+00:00 app[web.1]: 	at play.core.j.JavaAction.apply(JavaAction.scala:94)
+2015-10-02T19:56:01.202794+00:00 app[web.1]: 	at play.utils.Threads$.withContextClassLoader(Threads.scala:21)
+2015-10-02T19:56:01.202878+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:103)
+2015-10-02T19:56:01.202842+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:104)
+2015-10-02T19:56:01.203162+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:103)
+2015-10-02T19:56:01.203159+00:00 app[web.1]: 	at scala.Option.map(Option.scala:146)
+2015-10-02T19:56:01.203169+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:96)
+2015-10-02T19:56:01.206564+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:524)
+2015-10-02T19:56:01.206610+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:524)
+2015-10-02T19:56:01.206932+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:560)
+2015-10-02T19:56:01.207323+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$13.apply(Iteratee.scala:536)
+2015-10-02T19:56:01.206980+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:560)
+2015-10-02T19:56:01.207797+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
+2015-10-02T19:56:01.208369+00:00 app[web.1]: 	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:397)
+2015-10-02T19:56:01.208305+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
+2015-10-02T19:56:01.208466+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+2015-10-02T19:56:01.207760+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$13.apply(Iteratee.scala:536)
+2015-10-02T19:56:01.208502+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+2015-10-02T19:56:01.208327+00:00 app[web.1]: 	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:40)
+2015-10-02T19:56:01.208433+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+2015-10-02T19:56:01.208404+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+2015-10-02T19:56:01.224405+00:00 heroku[router]: at=info method=GET path="/faq" host=indiepocalypse.herokuapp.com request_id=907a31c8-c513-41e8-9c0f-4e8e980b101b fwd="82.166.22.171" dyno=web.1 connect=3ms service=57ms status=200 bytes=2122
+2015-10-02T19:56:05.320528+00:00 heroku[router]: at=info method=GET path="/blog" host=indiepocalypse.herokuapp.com request_id=d8e7ea3d-d985-4690-968f-e74b916e5f33 fwd="82.166.22.171" dyno=web.1 connect=1ms service=35ms status=200 bytes=2137
+2015-10-02T19:56:05.310004+00:00 app[web.1]: 	at java.io.FileInputStream.open0(Native Method)
+2015-10-02T19:56:05.309869+00:00 app[web.1]: java.io.FileNotFoundException: app/controllers/.github_indie_credentials_local_secret (No such file or directory)
+2015-10-02T19:56:05.310041+00:00 app[web.1]: 	at java.io.FileInputStream.open(FileInputStream.java:195)
+2015-10-02T19:56:05.310076+00:00 app[web.1]: 	at java.io.FileInputStream.<init>(FileInputStream.java:138)
+2015-10-02T19:56:05.310098+00:00 app[web.1]: 	at java.io.FileInputStream.<init>(FileInputStream.java:93)
+2015-10-02T19:56:05.310134+00:00 app[web.1]: 	at controllers.credentials.<init>(credentials.java:27)
+2015-10-02T19:56:05.310171+00:00 app[web.1]: 	at controllers.github_access.get_github_access_url(github_access.java:14)
+2015-10-02T19:56:05.310205+00:00 app[web.1]: 	at views.html.main_Scope0$main.apply(main.template.scala:100)
+2015-10-02T19:56:05.310252+00:00 app[web.1]: 	at views.html.main_Scope0$main.render(main.template.scala:115)
+2015-10-02T19:56:05.310257+00:00 app[web.1]: 	at views.html.main.render(main.template.scala)
+2015-10-02T19:56:05.310295+00:00 app[web.1]: 	at controllers.ApplicationRoutes.blog(ApplicationRoutes.java:57)
+2015-10-02T19:56:05.310329+00:00 app[web.1]: 	at router.Routes$$anonfun$routes$1$$anonfun$applyOrElse$5$$anonfun$apply$5.apply(Routes.scala:263)
+2015-10-02T19:56:05.310353+00:00 app[web.1]: 	at router.Routes$$anonfun$routes$1$$anonfun$applyOrElse$5$$anonfun$apply$5.apply(Routes.scala:263)
+2015-10-02T19:56:05.310391+00:00 app[web.1]: 	at play.core.routing.HandlerInvokerFactory$$anon$4.resultCall(HandlerInvoker.scala:136)
+2015-10-02T19:56:05.310424+00:00 app[web.1]: 	at play.core.routing.HandlerInvokerFactory$JavaActionInvokerFactory$$anon$14$$anon$3$$anon$1.invocation(HandlerInvoker.scala:127)
+2015-10-02T19:56:05.310470+00:00 app[web.1]: 	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:70)
+2015-10-02T19:56:05.310489+00:00 app[web.1]: 	at play.GlobalSettings$1.call(GlobalSettings.java:67)
+2015-10-02T19:56:05.310527+00:00 app[web.1]: 	at play.core.j.JavaAction$$anonfun$7.apply(JavaAction.scala:94)
+2015-10-02T19:56:05.310599+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
+2015-10-02T19:56:05.310560+00:00 app[web.1]: 	at play.core.j.JavaAction$$anonfun$7.apply(JavaAction.scala:94)
+2015-10-02T19:56:05.310672+00:00 app[web.1]: 	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40)
+2015-10-02T19:56:05.310638+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
+2015-10-02T19:56:05.310706+00:00 app[web.1]: 	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:70)
+2015-10-02T19:56:05.310736+00:00 app[web.1]: 	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:32)
+2015-10-02T19:56:05.310770+00:00 app[web.1]: 	at scala.concurrent.impl.Future$.apply(Future.scala:31)
+2015-10-02T19:56:05.310838+00:00 app[web.1]: 	at play.core.j.JavaAction.apply(JavaAction.scala:94)
+2015-10-02T19:56:05.310802+00:00 app[web.1]: 	at scala.concurrent.Future$.apply(Future.scala:492)
+2015-10-02T19:56:05.310857+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:105)
+2015-10-02T19:56:05.310896+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:105)
+2015-10-02T19:56:05.310929+00:00 app[web.1]: 	at play.utils.Threads$.withContextClassLoader(Threads.scala:21)
+2015-10-02T19:56:05.310971+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:104)
+2015-10-02T19:56:05.310996+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:103)
+2015-10-02T19:56:05.311033+00:00 app[web.1]: 	at scala.Option.map(Option.scala:146)
+2015-10-02T19:56:05.311070+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:103)
+2015-10-02T19:56:05.311140+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:524)
+2015-10-02T19:56:05.311117+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:96)
+2015-10-02T19:56:05.311175+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:524)
+2015-10-02T19:56:05.311210+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:560)
+2015-10-02T19:56:05.311233+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:560)
+2015-10-02T19:56:05.311272+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$13.apply(Iteratee.scala:536)
+2015-10-02T19:56:05.311307+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$13.apply(Iteratee.scala:536)
+2015-10-02T19:56:05.311339+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
+2015-10-02T19:56:05.311386+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
+2015-10-02T19:56:05.311455+00:00 app[web.1]: 	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:397)
+2015-10-02T19:56:05.311421+00:00 app[web.1]: 	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:40)
+2015-10-02T19:56:05.311496+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+2015-10-02T19:56:05.311560+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+2015-10-02T19:56:05.311538+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+2015-10-02T19:56:05.311499+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+2015-10-02T19:56:07.016820+00:00 app[web.1]: java.io.FileNotFoundException: app/controllers/.github_indie_credentials_local_secret (No such file or directory)
+2015-10-02T19:56:07.016842+00:00 app[web.1]: 	at java.io.FileInputStream.open0(Native Method)
+2015-10-02T19:56:07.016907+00:00 app[web.1]: 	at java.io.FileInputStream.open(FileInputStream.java:195)
+2015-10-02T19:56:07.026643+00:00 app[web.1]: 	at java.io.FileInputStream.<init>(FileInputStream.java:138)
+2015-10-02T19:56:07.031634+00:00 app[web.1]: 	at controllers.github_access.get_github_access_token(github_access.java:22)
+2015-10-02T19:56:07.031598+00:00 app[web.1]: 	at controllers.credentials.<init>(credentials.java:27)
+2015-10-02T19:56:07.031672+00:00 app[web.1]: 	at controllers.ApplicationRoutes.lambda$index$2(ApplicationRoutes.java:118)
+2015-10-02T19:56:07.048532+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
+2015-10-02T19:56:07.048462+00:00 app[web.1]: 	at play.core.j.FPromiseHelper$$anonfun$promise$2.apply(FPromiseHelper.scala:36)
+2015-10-02T19:56:07.048569+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
+2015-10-02T19:56:07.048638+00:00 app[web.1]: 	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:397)
+2015-10-02T19:56:07.048574+00:00 app[web.1]: 	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40)
+2015-10-02T19:56:07.048683+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+2015-10-02T19:56:07.048598+00:00 app[web.1]: 	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:40)
+2015-10-02T19:56:07.048733+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+2015-10-02T19:56:07.048708+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+2015-10-02T19:56:07.048758+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+2015-10-02T19:56:07.027238+00:00 app[web.1]: 	at java.io.FileInputStream.<init>(FileInputStream.java:93)
+2015-10-02T19:56:08.525354+00:00 heroku[router]: at=info method=GET path="/?code=ebf10a6a7853f3e7217b&state=7yy6nynb4nio" host=indiepocalypse.herokuapp.com request_id=b3a89b48-7efd-44ef-bf05-1f1b24c8fd70 fwd="82.166.22.171" dyno=web.1 connect=2ms service=1542ms status=200 bytes=111925
+2015-10-02T19:56:17.500557+00:00 heroku[router]: at=info method=GET path="/" host=indiepocalypse.herokuapp.com request_id=e38e7ef2-d265-453c-9183-8f56ec65d6d2 fwd="82.166.22.171" dyno=web.1 connect=1ms service=322ms status=200 bytes=111925
+2015-10-02T19:56:23.602436+00:00 app[web.1]: 	at java.io.FileInputStream.open0(Native Method)
+2015-10-02T19:56:23.602304+00:00 app[web.1]: java.io.FileNotFoundException: app/controllers/.github_indie_credentials_local_secret (No such file or directory)
+2015-10-02T19:56:23.602479+00:00 app[web.1]: 	at java.io.FileInputStream.<init>(FileInputStream.java:138)
+2015-10-02T19:56:23.602456+00:00 app[web.1]: 	at java.io.FileInputStream.open(FileInputStream.java:195)
+2015-10-02T19:56:23.602503+00:00 app[web.1]: 	at java.io.FileInputStream.<init>(FileInputStream.java:93)
+2015-10-02T19:56:23.602542+00:00 app[web.1]: 	at controllers.credentials.<init>(credentials.java:27)
+2015-10-02T19:56:23.602575+00:00 app[web.1]: 	at controllers.ApplicationRoutes.explore(ApplicationRoutes.java:48)
+2015-10-02T19:56:23.602580+00:00 app[web.1]: 	at router.Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$4.apply(Routes.scala:257)
+2015-10-02T19:56:23.602606+00:00 app[web.1]: 	at router.Routes$$anonfun$routes$1$$anonfun$applyOrElse$4$$anonfun$apply$4.apply(Routes.scala:257)
+2015-10-02T19:56:23.602634+00:00 app[web.1]: 	at play.core.routing.HandlerInvokerFactory$$anon$5.resultCall(HandlerInvoker.scala:139)
+2015-10-02T19:56:23.602698+00:00 app[web.1]: 	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:70)
+2015-10-02T19:56:23.602694+00:00 app[web.1]: 	at play.core.routing.HandlerInvokerFactory$JavaActionInvokerFactory$$anon$14$$anon$3$$anon$1.invocation(HandlerInvoker.scala:127)
+2015-10-02T19:56:23.602720+00:00 app[web.1]: 	at play.GlobalSettings$1.call(GlobalSettings.java:67)
+2015-10-02T19:56:23.602758+00:00 app[web.1]: 	at play.core.j.JavaAction$$anonfun$7.apply(JavaAction.scala:94)
+2015-10-02T19:56:23.602782+00:00 app[web.1]: 	at play.core.j.JavaAction$$anonfun$7.apply(JavaAction.scala:94)
+2015-10-02T19:56:23.602809+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
+2015-10-02T19:56:23.602830+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
+2015-10-02T19:56:23.602886+00:00 app[web.1]: 	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40)
+2015-10-02T19:56:23.602935+00:00 app[web.1]: 	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:32)
+2015-10-02T19:56:23.602933+00:00 app[web.1]: 	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:70)
+2015-
+10-02T19:56:23.603009+00:00 app[web.1]: 	at play.core.j.JavaAction.apply(JavaAction.scala:94)
+2015-10-02T19:56:23.602944+00:00 app[web.1]: 	at scala.concurrent.impl.Future$.apply(Future.scala:31)
+2015-10-02T19:56:23.602983+00:00 app[web.1]: 	at scala.concurrent.Future$.apply(Future.scala:492)
+2015-10-02T19:56:23.603046+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:105)
+2015-10-02T19:56:23.603050+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:105)
+2015-10-02T19:56:23.603077+00:00 app[web.1]: 	at play.utils.Threads$.withContextClassLoader(Threads.scala:21)
+2015-10-02T19:56:23.603101+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:104)
+2015-10-02T19:56:23.603123+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:103)
+2015-10-02T19:56:23.603160+00:00 app[web.1]: 	at scala.Option.map(Option.scala:146)
+2015-10-02T19:56:23.603164+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:103)
+2015-10-02T19:56:23.603188+00:00 app[web.1]: 	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:96)
+2015-10-02T19:56:23.603225+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:524)
+2015-10-02T19:56:23.603245+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:524)
+2015-10-02T19:56:23.603275+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:560)
+2015-10-02T19:56:23.603296+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:560)
+2015-10-02T19:56:23.603340+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$13.apply(Iteratee.scala:536)
+2015-10-02T19:56:23.603317+00:00 app[web.1]: 	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$13.apply(Iteratee.scala:536)
+2015-10-02T19:56:23.603363+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
+2015-10-02T19:56:23.603392+00:00 app[web.1]: 	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
+2015-10-02T19:56:23.603415+00:00 app[web.1]: 	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:40)
+2015-10-02T19:56:23.603438+00:00 app[web.1]: 	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:397)
+2015-10-02T19:56:23.603461+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+2015-10-02T19:56:23.603501+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+2015-10-02T19:56:23.603506+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+2015-10-02T19:56:23.603529+00:00 app[web.1]: 	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+2015-10-02T19:56:23.726674+00:00 heroku[router]: at=info method=GET path="/explore" host=indiepocalypse.herokuapp.com request_id=fe22bd97-37b9-4f6d-9da3-88ace5de1532 fwd="82.166.22.171" dyno=web.1 connect=6ms service=137ms status=200 bytes=30324
+2015-10-02T19:56:25.987152+00:00 heroku[router]: at=info method=GET path="/faq" host=indiepocalypse.herokuapp.com request_id=6d93657e-7a0c-41e1-aa01-768a639165c2 fwd="82.166.22.171" dyno=web.1 connect=1ms service=17ms status=200 bytes=2877
+2015-10-02T19:56:27.757957+00:00 heroku[router]: at=info method=GET path="/blog" host=indiepocalypse.herokuapp.com request_id=8b8b71b6-7b93-44d1-a099-825b96b07ba9 fwd="82.166.22.171" dyno=web.1 connect=1ms service=16ms status=200 bytes=2892
+2015-10-02T19:56:30.788680+00:00 heroku[router]: at=info method=GET path="/blog" host=indiepocalypse.herokuapp.com request_id=759587e9-ef3a-4130-b240-0315a9522d3e fwd="82.166.22.171" dyno=web.1 connect=2ms service=19ms status=200 bytes=2892
+2015-10-02T19:56:31.940674+00:00 heroku[router]: at=info method=GET path="/blog" host=indiepocalypse.herokuapp.com request_id=05d0509e-b86b-45ed-8bd8-9b995f0da147 fwd="82.166.22.171" dyno=web.1 connect=1ms service=13ms status=200 bytes=2892
+2015-10-02T19:56:33.556777+00:00 heroku[router]: at=info method=GET path="/blog" host=indiepocalypse.herokuapp.com request_id=ed532a82-9a9a-4699-8db8-eda0518f8058 fwd="82.166.22.171" dyno=web.1 connect=2ms service=124ms status=200 bytes=2892
+2015-10-02T19:56:39.002277+00:00 heroku[router]: at=info method=GET path="/blog" host=indiepocalypse.herokuapp.com request_id=632fae32-0f2f-40e6-911a-08331e06d779 fwd="82.166.22.171" dyno=web.1 connect=1ms service=33ms status=200 bytes=2892
+2015-10-02T19:57:58.429714+00:00 heroku[router]: at=info method=GET path="/blog" host=indiepocalypse.herokuapp.com request_id=4d809dca-28ab-4f95-be85-93cefcaaf800 fwd="82.166.22.171" dyno=web.1 connect=0ms service=91ms status=200 bytes=2892
+2015-10-02T19:58:40.829960+00:00 heroku[router]: at=info method=GET path="/" host=indiepocalypse.herokuapp.com request_id=4753c702-c387-445b-9c3b-8fe42702d7d5 fwd="82.166.22.171" dyno=web.1 connect=1ms service=615ms status=200 bytes=111925
+2015-10-02T19:58:47.420813+00:00 heroku[router]: at=info method=GET path="/u/skariel" host=indiepocalypse.herokuapp.com request_id=e5ad2ed8-9ce2-4d11-bccb-d1d0a414209c fwd="82.166.22.171" dyno=web.1 connect=1ms service=58ms status=200 bytes=2900
+2015-10-02T19:59:33.036880+00:00 heroku[router]: at=info method=GET path="/blog" host=indiepocalypse.herokuapp.com request_id=b414b0d9-5a05-4da7-8c9c-f0e0dd44d3d3 fwd="82.166.22.171" dyno=web.1 connect=1ms service=80ms status=200 bytes=2892
+2015-10-02T20:00:20.630602+00:00 heroku[router]: at=info method=GET path="/" host=indiepocalypse.herokuapp.com request_id=b26f7c0b-2879-4d75-9617-220ef7cf7f28 fwd="82.166.22.171" dyno=web.1 connect=1ms service=542ms status=200 bytes=111925
