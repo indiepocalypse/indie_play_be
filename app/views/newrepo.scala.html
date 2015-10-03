@@ -1,0 +1,30 @@
+@(app: ApplicationRoutes)
+
+<div class="container col-md-6">
+
+    @if(app.user_is_logged()) {
+
+
+        <form method="get">
+            <div class="form-group has-feedback">
+                <label class="control-label" for="input_reponame">Repository name</label>
+                <input type="text" class="form-control" id="input_reponame" name="reponame" required>
+                <span class="glyphicon glyphicon-asterisk form-control-feedback" aria-hidden="true" style="color:red"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="input_homepage">Homepage</label>
+                <input type="text" class="form-control" id="input_homepage" name="repohomepage">
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="input_description">Description</label>
+                <textarea class="form-control" rows="3" id="input_description" name="repodesc"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    } else {
+        @app.set_return_to("/newrepo")
+        Please <a href="@github_access.get_github_access_url(app.get_state())">login</a> to create a new repository
+    }
+
+</div>

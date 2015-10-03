@@ -43,27 +43,24 @@
 
                 @if(app.user_is_logged()) {
 
-
-
-
-                    <div class="dropdown navbar-text navbar-right" title="settings, profile & more">
-                      <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                      <img src="@app.get_avatar_url()" alt="@app.get_user_name()" style="width:20px;height:20px;">
-                      <span class="caret" ></span>
-                      </span>
-                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li class="dropdown-header">logged in as <strong>@app.get_user_name()</strong></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="u/@app.get_user_name()">Profile</a></li>
-                        <li><a href="/settings">Settings</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="/logout">Logout</a></li>
-                      </ul>
+                    <div class="dropdown navbar-text navbar-right">
+                          <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" title="settings, profile & more">
+                          <img src="@app.get_avatar_url()" alt="@app.get_user_name()" style="width:20px;height:20px;">
+                          <span class="caret" ></span>
+                          </span>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li class="dropdown-header">logged in as <strong>@app.get_user_name()</strong></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="u/@app.get_user_name()">Profile</a></li>
+                            <li><a href="/settings">Settings</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/logout">Logout</a></li>
+                          </ul>
                     </div>
 
-
-
-
+                    <a class="navbar-link navbar-text navbar-right" href="/newrepo" title="new repo"">
+                        <small><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></small>
+                    </a>
 
                 }else {
                     <a class="navbar-text navbar-right" href=@github_access.get_github_access_url(app.get_state())>login with github</a>

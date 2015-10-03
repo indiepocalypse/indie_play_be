@@ -8,9 +8,10 @@ GET     /faq                                                   controllers.Appli
 GET     /explore                                               controllers.ApplicationRoutes.explore()
 GET     /blog                                                  controllers.ApplicationRoutes.blog()
 GET     /settings                                              controllers.ApplicationRoutes.settings()
+GET     /newrepo                                               controllers.ApplicationRoutes.newrepo()
 GET     /u/$user_name<[A-Za-z0-9_]+>                           controllers.ApplicationRoutes.user_profile(user_name: String)
 GET     /r/$repo_name<[A-Za-z0-9_]+>                           controllers.ApplicationRoutes.repo_profile(repo_name: String)
-GET     /r/$repo_name<[A-Za-z0-9_]+>/$pull_id<[0-9]+>          controllers.ApplicationRoutes.pull_profile(repo_name: String, pull_id: Long)
+GET     /r/$repo_name<[A-Za-z0-9_]+>/p/$pull_id<[0-9]+>        controllers.ApplicationRoutes.pull_profile(repo_name: String, pull_id: Long)
 
 # TODO: api routes
 

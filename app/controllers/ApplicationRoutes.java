@@ -1,5 +1,6 @@
 package controllers;
 
+import play.Logger;
 import play.libs.F;
 import play.libs.Json;
 import play.libs.ws.WSClient;
@@ -17,6 +18,7 @@ public class ApplicationRoutes extends Controller {
     // TODO: better organize routes, seems too much redirecting is going on...+
     // TODO: initialization, for e.g. load credentials when class is constructed
 
+    final static String main_title = "it's the Indiepocalypse!";
     @Inject
     private WSClient ws;
 
@@ -31,6 +33,9 @@ public class ApplicationRoutes extends Controller {
     }
     public String get_state() {
         return session().get("state");
+    }
+    public void set_return_to(String to) {
+        session().put("returnto", to);
     }
 
     private boolean is_redirected_from_github_login() {
@@ -49,6 +54,10 @@ public class ApplicationRoutes extends Controller {
             String reps = pres.get(60, TimeUnit.SECONDS).getBody();
             return ok(main.render("explore", reps, this));
         });
+    }
+
+    public Result newrepo() {
+        return ok(main.render("new repo", newrepo.render(this), this));
     }
 
     public Result blog() {
@@ -74,7 +83,6 @@ public class ApplicationRoutes extends Controller {
     }
 
     public F.Promise<Result> index() {
-        // TODO: return a nice, mostly static page
         if (user_is_logged()) {
             return F.Promise.promise(() -> {
                 // TODO: This is some (currently primitive) sync stuff. The user should eventually be able to trigger such
@@ -101,8 +109,14 @@ public class ApplicationRoutes extends Controller {
                 session().put("user_name", user_name);
                 //repo.sync(res_rep.getBody());
 
+                if (session().get("returnto") != null) {
+                    String to = session().get("returnto");
+                    session().remove("returnto");
+                    return redirect(to);
+                }
+
                 // TODO: return a SPA (React, etc.) This should be the whole FE
-                return ok(main.render("title!", Html.apply("Your repos: " + res_rep.getBody()), this));
+                return ok(main.render(main_title, Html.apply("Your repos: " + res_rep.getBody()), this));
             });
         }
 
@@ -130,9 +144,11 @@ public class ApplicationRoutes extends Controller {
         }
 
         // user is not in the proceess of logging in
-        String state = github_access.get_random_string();
-        session().put("state", state);
-        return F.Promise.promise(()->ok(main.render("title!", null, this)));
+        if (session().get("state")==null) {
+            String state = github_access.get_random_string();
+            session().put("state", state);
+        }
+        return F.Promise.promise(()->ok(main.render(main_title, null, this)));
     }
 
     public Result logout() {
