@@ -11,14 +11,14 @@ import java.util.Base64;
 /**
  * Created by skariel on 25/09/15.
  */
-public class credentials {
+public class github_credentials {
     private String auth = null;
     private String client_id = null;
     private String client_secret = null;
     public String name = null;
     public String pssw = null;
 
-    public credentials() {
+    public github_credentials() {
         String tmp_name = ConfigFactory.load().getString("credentials.indie.github.username");
         String tmp_pssw = ConfigFactory.load().getString("credentials.indie.github.pssw");
         client_id = ConfigFactory.load().getString("credentials.indie.github.client_id");
@@ -35,7 +35,6 @@ public class credentials {
         }
         name = tmp_name;
         pssw = tmp_pssw;
-        InputStream f = getClass().getResourceAsStream(".github_indie_credentials_local_secret");
         Base64.Encoder encoder = Base64.getMimeEncoder();
         String str = tmp_name+":"+tmp_pssw;
         auth = encoder.encodeToString(str.getBytes());

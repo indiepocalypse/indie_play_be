@@ -32,7 +32,6 @@ public class GmailInbox {
     public static int mail_count = 0;
 
     public static void start() {
-        reload_folder();
         t1 = new Thread() {
             public void run() {
                 while (!interrupted()) {
@@ -49,6 +48,7 @@ public class GmailInbox {
 
         t2 = new Thread() {
             public void run() {
+                reload_folder();
                 while (!interrupted()) {
                     // TODO: accept repo transfer...
                     try {

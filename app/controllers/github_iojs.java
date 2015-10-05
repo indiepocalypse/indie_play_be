@@ -5,14 +5,13 @@ import play.Logger;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 
 /**
  * Created by skariel on 02/10/15.
  */
 public class github_iojs {
     static public void accept_trasfer_repo(String url) {
-        credentials credentials = new credentials();
+        github_credentials credentials = new github_credentials();
         try {
             Process process = new ProcessBuilder(
                     "app/iojs/iojs", "app/iojs/accept_repo_transfer.js", credentials.name, credentials.pssw, url).start();
