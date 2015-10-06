@@ -98,7 +98,7 @@ public class GmailInbox {
     public static void handle_messages(Message[] ms) {
         // TODO: move last date stuff into the sotre!
         gmail_last_date_read last_date_read_model = null;
-        boolean should_save_date = true;
+        boolean should_save_date;
         try {
             last_date_read_model = gmail_last_date_read.find.byId(gmail_last_date_read.constid);
         }

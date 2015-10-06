@@ -50,7 +50,6 @@ public class github_access {
     public static WSRequest get_indie_repositories(WSClient ws) {
         return indie_auth_request(ws, "/user/repos")
                 .setMethod("GET");
-        // TODO: this is just a stub, getting the user details for testing basic auth
     }
 
     public static WSRequest post_indie_auth_request(WSClient ws, String path, JsonNode json) {

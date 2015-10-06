@@ -23,11 +23,26 @@ public class store {
     final static String returnto_session_key = "returnto";
     final static String token_session_key = "token";
     final static String github_code_session_key = "github_code";
+    final static String new_repo_session_key = "new_repo___";
     final static Github_Credentials github_credentials = new Github_Credentials();
 
     public static final String repo_name_name = "repo_name";
     public static final String repo_homepage_name = "repo_homepage";
     public static final String repo_description_name = "repo_description";
+
+    public static void set_new_repo(ApplicationRoutes app, String name) {
+        String key = new_repo_session_key+name;
+        app.session().put(key, "yep!");
+    }
+
+    public static boolean pop_new_repo(ApplicationRoutes app, String name) {
+        String key = new_repo_session_key+name;
+        boolean ret = app.session().containsKey(key);
+        if (ret) {
+            app.session().remove(key);
+        }
+        return ret;
+    }
 
     public static boolean user_is_logged(ApplicationRoutes app) {
         return get_token(app) != null;

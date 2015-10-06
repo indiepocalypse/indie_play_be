@@ -80,6 +80,8 @@ public class ApplicationRoutes extends Controller {
         return F.Promise.promise(()->{
                     WSResponse res = newreq.execute().get(60, TimeUnit.SECONDS);
                     if (res.getStatus() == 201) {
+                        // everything is good
+                        store.set_new_repo(this, f_repo_name);
                         return redirect("/r/"+f_repo_name);
                     }
                     String err = "Couldn't create the repo, sorry!\n"+
@@ -103,7 +105,7 @@ public class ApplicationRoutes extends Controller {
     }
 
     public Result repo_profile(String repo_name) {
-        return ok(main.render(repo_name, "This is the profile of repo " + repo_name, this));
+        return ok(main.render(repo_name, homerepo.render(this, repo_name), this));
     }
 
     public Result pull_profile(String repo_name, Long pull_id) {
