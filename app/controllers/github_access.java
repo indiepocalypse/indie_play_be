@@ -11,17 +11,15 @@ public class github_access {
     private static final String scope = ""; //"user,public_repo";
     public static String get_github_access_url(String state) {
         final String github_access = "https://github.com/login/oauth/authorize?client_id=__CLIENT_ID__&redirect_uri=__CALLBACK_URI__&scope="+scope+"&state=__STATE__";
-        final github_credentials credentials = new github_credentials();
-        final String client_id = credentials.getClient_id();
+        final String client_id = store.get_indie_github_client_id();
         final String callback_uri = ConfigFactory.load().getString("credentials.indie.github.login.callback");
         return github_access.replace("__STATE__", state)
                 .replace("__CLIENT_ID__", client_id)
                 .replace("__CALLBACK_URI__", callback_uri);
     }
     public static WSRequest get_github_access_token(WSClient ws, String state, String code) {
-        final github_credentials credentials = new github_credentials();
-        final String client_id = credentials.getClient_id();
-        final String client_secret = credentials.getClient_secret();
+        final String client_id = store.get_indie_github_client_id();
+        final String client_secret = store.get_indie_github_client_secret();
 
         return ws.url("https://github.com/login/oauth/access_token")
                 .setMethod("POST")
@@ -34,9 +32,9 @@ public class github_access {
         return new RandomString(12).nextString();
     }
 
-    public static WSRequest indie_auth_request(WSClient ws, github_credentials credentials, String path) {
+    public static WSRequest indie_auth_request(WSClient ws, String path) {
         return ws.url("https://api.github.com"+path)
-                .setHeader("Authorization", "Basic "+credentials.getAuth())
+                .setHeader("Authorization", "Basic "+store.get_indie_github_auth())
                 .setHeader("Accept", "application/vnd.github.v3 + json");
     }
     public static WSRequest user_auth_request(WSClient ws, String token, String path) {
@@ -44,9 +42,16 @@ public class github_access {
                 .setHeader("Authorization", "token " + token)
                 .setHeader("Accept", "application/vnd.github.v3 + json");
     }
-    public static WSRequest get_indie_repositories(WSClient ws, github_credentials credentials) {
-        return indie_auth_request(ws, credentials, "/user/repos")
+    public static WSRequest get_indie_repositories(WSClient ws) {
+        return indie_auth_request(ws, "/user/repos")
                 .setMethod("GET");
         // TODO: this is just a stub, getting the user details for testing basic auth
+    }
+    public static WSRequest create_new_repo(WSClient ws, String repo_name, String repo_homepage, String repo_description) {
+        return indie_auth_request(ws, "/user/repos")
+                .setMethod("POST")
+                .setQueryParameter("name", repo_name)
+                .setQueryParameter("description", repo_name)
+                .setQueryParameter("description", repo_name);
     }
 }

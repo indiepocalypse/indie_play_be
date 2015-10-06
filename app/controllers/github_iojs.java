@@ -11,10 +11,9 @@ import java.io.InputStreamReader;
  */
 public class github_iojs {
     static public void accept_trasfer_repo(String url) {
-        github_credentials credentials = new github_credentials();
         try {
             Process process = new ProcessBuilder(
-                    "app/iojs/iojs", "app/iojs/accept_repo_transfer.js", credentials.name, credentials.pssw, url).start();
+                    "app/iojs/iojs", "app/iojs/accept_repo_transfer.js", store.get_indie_github_name(), store.get_indie_github_pssw(), url).start();
             InputStream in = process.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 

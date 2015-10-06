@@ -1,10 +1,15 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.typesafe.config.ConfigFactory;
 import play.libs.F;
 import play.libs.Json;
 import play.libs.ws.WSRequest;
 import play.libs.ws.WSResponse;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Base64;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -18,6 +23,7 @@ public class store {
     final static String returnto_session_key = "returnto";
     final static String token_session_key = "token";
     final static String github_code_session_key = "github_code";
+    final static Github_Credentials github_credentials = new Github_Credentials();
 
     public static boolean user_is_logged(ApplicationRoutes app) {
         return get_token(app) != null;
@@ -107,4 +113,60 @@ public class store {
     public static void clear(ApplicationRoutes app) {
         app.session().clear();
     }
+
+    public static String get_indie_github_name() {
+        return github_credentials.name;
+    }
+    public static String get_indie_github_pssw() {
+        return github_credentials.pssw;
+    }
+    public static String get_indie_github_auth() {
+        return github_credentials.getAuth();
+    }
+    public static String get_indie_github_client_id() {
+        return github_credentials.getClient_id();
+    }
+    public static String get_indie_github_client_secret() {
+        return github_credentials.getClient_secret();
+    }
+
+    static class Github_Credentials {
+        private String auth = null;
+        private String client_id = null;
+        private String client_secret = null;
+        public String name = null;
+        public String pssw = null;
+
+        public Github_Credentials() {
+            String tmp_name = ConfigFactory.load().getString("credentials.indie.github.username");
+            String tmp_pssw = ConfigFactory.load().getString("credentials.indie.github.pssw");
+            client_id = ConfigFactory.load().getString("credentials.indie.github.client_id");
+            client_secret = ConfigFactory.load().getString("credentials.indie.github.client_secret");
+            try {
+                JsonNode json = play.libs.Json.parse(new FileInputStream("app/controllers/.github_indie_credentials_local_secret"));
+                tmp_name = json.get("username").asText();
+                tmp_pssw = json.get("pssw").asText();
+                client_id = json.get("client_id").asText();
+                client_secret = json.get("client_secret").asText();
+            }
+            catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            name = tmp_name;
+            pssw = tmp_pssw;
+            Base64.Encoder encoder = Base64.getMimeEncoder();
+            String str = tmp_name+":"+tmp_pssw;
+            auth = encoder.encodeToString(str.getBytes());
+        }
+        public String getAuth() {
+            return auth;
+        }
+        public String getClient_id() {
+            return client_id;
+        }
+        public String getClient_secret() {
+            return client_secret;
+        }
+    }
+
 }

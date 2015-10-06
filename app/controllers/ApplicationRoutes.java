@@ -30,8 +30,7 @@ public class ApplicationRoutes extends Controller {
 
     public F.Promise<Result> explore() {
         // TODO: do this on initialization, see upper level todo...
-        final github_credentials credentials = new github_credentials();
-        F.Promise<WSResponse> pres = github_access.get_indie_repositories(ws, credentials).execute();
+        F.Promise<WSResponse> pres = github_access.get_indie_repositories(ws).execute();
         return F.Promise.promise(()-> {
             String reps = pres.get(60, TimeUnit.SECONDS).getBody();
             return ok(main.render("explore", reps, this));
