@@ -1,4 +1,5 @@
 import controllers.GmailInbox;
+import controllers.github_repo_sync;
 import play.*;
 
 public class Global extends GlobalSettings {
@@ -7,11 +8,13 @@ public class Global extends GlobalSettings {
     public void onStart(Application app) {
         Logger.info("Starting gmail idle poll...");
         GmailInbox.start();
+        github_repo_sync.start();
     }
 
     @Override
     public void onStop(Application app) {
         Logger.info("Stopping gmail idle poll...");
         GmailInbox.stop();
+        github_repo_sync.stop();
     }
 }

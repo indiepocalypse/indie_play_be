@@ -2,6 +2,7 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.typesafe.config.ConfigFactory;
+import models.repo_model;
 import play.libs.F;
 import play.libs.Json;
 import play.libs.ws.WSRequest;
@@ -9,12 +10,17 @@ import play.libs.ws.WSResponse;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
  * Created by skariel on 05/10/15.
  */
+
+
+// store for inner stuff (ie doesnt call to github or gmail or whatever
 public class store {
 
     final static String user_name_session_key = "user_name";
@@ -113,6 +119,16 @@ public class store {
         return returnto;
     }
 
+    public static void clear(ApplicationRoutes app) {
+        app.session().clear();
+    }
+
+    /*************************************************************
+     *
+     * Github stuff!
+     *
+     ************************************************************/
+
     public static void set_token(ApplicationRoutes app, String token) {
         app.session().put(token_session_key, token);
     }
@@ -127,10 +143,6 @@ public class store {
 
     public static String get_github_code(ApplicationRoutes app) {
         return app.session().get(github_code_session_key);
-    }
-
-    public static void clear(ApplicationRoutes app) {
-        app.session().clear();
     }
 
     public static String get_indie_github_name() {
@@ -185,6 +197,39 @@ public class store {
         }
         public String getClient_secret() {
             return client_secret;
+        }
+    }
+
+    /********************************
+     *
+     *    REPOS!
+     *
+     ********************************/
+
+    public static void update_repo(repo_model repo) {
+        try {
+            repo.save();
+        }
+        catch (Exception ignore) {
+            repo.update();
+        }
+    }
+
+    public static repo_model get_repo_by_name(repo_model repo) {
+        try {
+            return repo.find.byId(repo.repo_name);
+        }
+        catch (Exception ignore) {
+            return null;
+        }
+    }
+
+    public static List<repo_model> get_all_repos() {
+        try {
+            return repo_model.find.all();
+        }
+        catch (Exception ignore) {
+            return new ArrayList<repo_model>();
         }
     }
 

@@ -9,7 +9,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Date;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
 import javax.mail.Message;
 import javax.mail.Session;
@@ -20,49 +19,54 @@ import javax.mail.event.MessageCountListener;
 import javax.mail.search.SearchTerm;
 
 import models.gmail_last_date_read;
-import play.libs.ws.WSResponse;
 
 public class GmailInbox {
     // TODO: se this for using idle: http://stackoverflow.com/questions/4155412/javamail-keeping-imapfolder-idle-alive
     static IMAPFolder inbox = null;
     static Store store = null;
+    // TODO: move this constant to store and conf
     static final long delta_milis_reload = 60*1000*17; // 17 minutes
     static Thread t1 = null;
     static Thread t2 = null;
+    static boolean reloading = false;
     public static int mail_count = 0;
 
     public static void start() {
-        t1 = new Thread() {
-            public void run() {
-                while (!interrupted()) {
-                    try {
-                        Thread.sleep(delta_milis_reload);
-                        reload_folder();
-                    } catch (Exception e) {
-                        Logger.error("while sleeping to reload inbox...", e);
-                    }
-                }
-            }
-        };
-        t1.start();
-
-        t2 = new Thread() {
-            public void run() {
-                reload_folder();
-                while (!interrupted()) {
-                    // TODO: accept repo transfer...
-                    try {
-                        Thread.sleep(50);
-                        if (inbox != null) {
-                            inbox.idle(true);
+        if (t1==null) {
+            t1 = new Thread() {
+                public void run() {
+                    while (!interrupted()) {
+                        try {
+                            Thread.sleep(delta_milis_reload);
+                            reload_folder();
+                        } catch (Exception e) {
+                            Logger.error("while sleeping to reload inbox...", e);
                         }
-                    } catch (Exception e) {
-                        Logger.error("Error in gmail idle...", e);
                     }
                 }
-            }
-        };
-        t2.start();
+            };
+            t1.start();
+        }
+
+        if (t2==null) {
+            t2 = new Thread() {
+                public void run() {
+                    reload_folder();
+                    while (!interrupted()) {
+                        // TODO: accept repo transfer...
+                        try {
+                            Thread.sleep(50);
+                            if (inbox != null) {
+                                inbox.idle(true);
+                            }
+                        } catch (Exception e) {
+                            Logger.error("Error in gmail idle...", e);
+                        }
+                    }
+                }
+            };
+            t2.start();
+        }
     }
 
     public static void stop() {
@@ -174,6 +178,11 @@ public class GmailInbox {
     }
 
     public static void reload_folder() {
+        if (reloading) {
+            return;
+        }
+        reloading = true;
+
         try {
             if (inbox != null) {
                 inbox.close(true);
@@ -256,5 +265,6 @@ public class GmailInbox {
         catch (Exception e) {
             Logger.error("While reloading gmail inbox... ", e);
         }
+        reloading = false;
     }
 }

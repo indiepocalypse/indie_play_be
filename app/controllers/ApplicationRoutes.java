@@ -2,6 +2,7 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import models.repo_model;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.F;
@@ -14,11 +15,11 @@ import play.mvc.*;
 import views.html.*;
 
 import javax.inject.Inject;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class ApplicationRoutes extends Controller {
-    // TODO: better organize routes, seems too much redirecting is going on...+
-    // TODO: initialization, for e.g. load credentials when class is constructed
+    // TODO: should login redirect to the current page always? currently only doing for create new repo page
 
     final static String main_title = "it's the Indiepocalypse!";
     @Inject
@@ -33,11 +34,9 @@ public class ApplicationRoutes extends Controller {
     }
 
     public F.Promise<Result> explore() {
-        // TODO: do this on initialization, see upper level todo...
-        F.Promise<WSResponse> pres = github_access.get_indie_repositories(ws).execute();
         return F.Promise.promise(()-> {
-            String reps = pres.get(60, TimeUnit.SECONDS).getBody();
-            return ok(main.render("explore", reps, this));
+            List<repo_model> repos = store.get_all_repos();
+            return ok(main.render("explore", repo_explore.render(repos), this));
         });
     }
 
@@ -82,6 +81,8 @@ public class ApplicationRoutes extends Controller {
                     if (res.getStatus() == 201) {
                         // everything is good
                         store.set_new_repo(this, f_repo_name);
+                        repo_model repo = new repo_model(f_repo_name, f_repo_description, f_repo_homepage, "https://github.com/theindiepocalypse/"+f_repo_name, 0, 0);
+                        store.update_repo(repo);
                         return redirect("/r/"+f_repo_name);
                     }
                     String err = "Couldn't create the repo, sorry!\n"+
