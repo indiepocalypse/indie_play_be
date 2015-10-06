@@ -25,6 +25,10 @@ public class store {
     final static String github_code_session_key = "github_code";
     final static Github_Credentials github_credentials = new Github_Credentials();
 
+    public static final String repo_name_name = "repo_name";
+    public static final String repo_homepage_name = "repo_homepage";
+    public static final String repo_description_name = "repo_description";
+
     public static boolean user_is_logged(ApplicationRoutes app) {
         return get_token(app) != null;
     }

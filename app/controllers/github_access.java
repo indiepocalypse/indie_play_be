@@ -1,5 +1,8 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.typesafe.config.ConfigFactory;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSRequest;
@@ -37,21 +40,39 @@ public class github_access {
                 .setHeader("Authorization", "Basic "+store.get_indie_github_auth())
                 .setHeader("Accept", "application/vnd.github.v3 + json");
     }
+
     public static WSRequest user_auth_request(WSClient ws, String token, String path) {
         return ws.url("https://api.github.com"+path)
                 .setHeader("Authorization", "token " + token)
                 .setHeader("Accept", "application/vnd.github.v3 + json");
     }
+
     public static WSRequest get_indie_repositories(WSClient ws) {
         return indie_auth_request(ws, "/user/repos")
                 .setMethod("GET");
         // TODO: this is just a stub, getting the user details for testing basic auth
     }
-    public static WSRequest create_new_repo(WSClient ws, String repo_name, String repo_homepage, String repo_description) {
+
+    public static WSRequest post_indie_auth_request(WSClient ws, String path, JsonNode json) {
         return indie_auth_request(ws, "/user/repos")
                 .setMethod("POST")
-                .setQueryParameter("name", repo_name)
-                .setQueryParameter("description", repo_name)
-                .setQueryParameter("description", repo_name);
+                .setContentType("application/json; charset=utf-8")
+                .setBody(json);
+    }
+
+    public static WSRequest create_new_repo(WSClient ws, String repo_name, String repo_homepage, String repo_description) {
+        ObjectNode json = JsonNodeFactory.instance.objectNode();
+        if (repo_name!=null) {
+            json.put("name", repo_name);
+        }
+        if (repo_description!=null) {
+            json.put("description", repo_description);
+        }
+        if (repo_homepage!=null) {
+            json.put("homepage", repo_homepage);
+        }
+        json.put("has_wiki", false);
+        json.put("has_downloads", false);
+        return post_indie_auth_request(ws, "/user/repos", json);
     }
 }

@@ -1,12 +1,16 @@
 package controllers;
 
-import play.Logger;
+import com.fasterxml.jackson.databind.JsonNode;
+
+import play.data.DynamicForm;
+import play.data.Form;
 import play.libs.F;
+import play.Logger;
+import play.libs.ws.WSRequest;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
 import play.mvc.*;
 
-import play.twirl.api.Html;
 import views.html.*;
 
 import javax.inject.Inject;
@@ -37,8 +41,52 @@ public class ApplicationRoutes extends Controller {
         });
     }
 
-    public Result newrepo() {
-        return ok(main.render("new repo", newrepo.render(this), this));
+    public Result newrepo_get() {
+        String def_repo_name = "";
+        String def_repo_homepage = "";
+        String def_repo_description = "";
+        String err = null;
+        return ok(main.render("new repo", newrepo.render(this, def_repo_name, def_repo_homepage, def_repo_description, err), this));
+    }
+
+    public F.Promise<Result> newrepo_post() {
+        DynamicForm data = Form.form().bindFromRequest();
+
+        String repo_name = "";
+        try {
+            repo_name = data.get(store.repo_name_name);
+        }
+        catch (Exception ignore) {
+        }
+
+        String repo_homepage = "";
+        try {
+            repo_homepage = data.get(store.repo_homepage_name);
+        }
+        catch (Exception ignore) {
+        }
+
+        String repo_description = "";
+        try {
+            repo_description = data.get(store.repo_description_name);
+        }
+        catch (Exception ignore) {
+        }
+        final WSRequest newreq = github_access.create_new_repo(ws, repo_name, repo_homepage, repo_description);
+
+        final String f_repo_name = repo_name;
+        final String f_repo_homepage = repo_homepage;
+        final String f_repo_description = repo_description;
+        return F.Promise.promise(()->{
+                    WSResponse res = newreq.execute().get(60, TimeUnit.SECONDS);
+                    if (res.getStatus() == 201) {
+                        return redirect("/r/"+f_repo_name);
+                    }
+                    String err = "Couldn't create the repo, sorry!\n"+
+                            "this is the reported result:\n\n"+res.getBody();
+                    // TODO: report a better arror, at least format it or whatever...
+                    return ok(main.render("new repo", newrepo.render(this, f_repo_name, f_repo_homepage, f_repo_description, err), this));
+                });
     }
 
     public Result blog() {

@@ -17,7 +17,7 @@ public class github_iojs {
             InputStream in = process.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
-            String line = null;
+            String line;
             while ((line = reader.readLine()) != null) {
                 Logger.info("iojs => "+line);
             }
