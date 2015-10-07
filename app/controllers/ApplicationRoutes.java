@@ -3,6 +3,7 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import models.repo_model;
+import models.user_model;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.F;
@@ -37,7 +38,8 @@ public class ApplicationRoutes extends Controller {
     public F.Promise<Result> explore() {
         return F.Promise.promise(()-> {
             List<repo_model> repos = store.get_all_repos();
-            return ok(main.render("explore", repo_explore.render(repos), this));
+            List<user_model> users = store.get_all_users();
+            return ok(main.render("explore", repo_explore.render(repos, users), this));
         });
     }
 
@@ -103,7 +105,7 @@ public class ApplicationRoutes extends Controller {
     }
 
     public Result user_profile(String user_name) {
-        return ok(main.render(user_name, "This is the user profile of " + user_name, this));
+        return ok(main.render(user_name, homeuser.render(this, store.get_user_by_name(user_name)), this));
     }
 
     public Result repo_profile(String repo_name) {
@@ -118,8 +120,6 @@ public class ApplicationRoutes extends Controller {
     public F.Promise<Result> index() {
         if (store.user_is_logged(this)) {
             return F.Promise.promise(() -> {
-                store.get_user_name(this);
-                store.get_avatar_url(this);
                 if (store.has_returnto(this)) {
                     Logger.info(store.pop_return_to(this));
                     Logger.info(store.pop_return_to(this));
@@ -142,8 +142,12 @@ public class ApplicationRoutes extends Controller {
                     if ((splitted.length != 3) || (!splitted[0].contains("=")) || (!splitted[1].contains("=")) || (!splitted[2].contains("="))) {
                         return unauthorized();
                     }
+                    // user has logged in!
                     String token = splitted[0].split("\\=")[1];
                     store.set_token(this, token);
+
+                    // this has to happen after we have the token in store...
+                    store.fetch_user(this);
                     return index().get(60, TimeUnit.SECONDS);
                 });
             }

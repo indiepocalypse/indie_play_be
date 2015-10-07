@@ -3,6 +3,7 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.typesafe.config.ConfigFactory;
 import models.repo_model;
+import models.user_model;
 import play.libs.F;
 import play.libs.Json;
 import play.libs.ws.WSRequest;
@@ -20,8 +21,9 @@ import java.util.concurrent.TimeUnit;
  */
 
 
-// store for inner stuff (ie doesnt call to github or gmail or whatever
+// store for inner db and session stuff (ie doesn't call to github, gmail or whatever
 public class store {
+    // TODO: refactor this class into its own package!
 
     final static String user_name_session_key = "user_name";
     final static String avatar_url_session_key = "avatar_url";
@@ -54,21 +56,51 @@ public class store {
         return get_token(app) != null;
     }
 
-    private static void fetch_user(ApplicationRoutes app) {
+    public static void fetch_user(ApplicationRoutes app) {
         WSResponse res_user;
         WSRequest req_user = github_access.user_auth_request(app.ws, app.session().get("token"), "/user")
                 .setMethod("GET");
         F.Promise<WSResponse> pres_user = req_user.execute();
         res_user = pres_user.get(60, TimeUnit.SECONDS);
-        String avatar_url = Json.parse(res_user.getBody())
+        String user_avatar_url = Json.parse(res_user.getBody())
                 .get("avatar_url")
                 .asText();
-        app.session().put(avatar_url_session_key, avatar_url);
+        app.session().put(avatar_url_session_key, user_avatar_url);
         String user_name = Json.parse(res_user.getBody())
                 .get("login")
                 .asText();
         app.session().put(user_name_session_key, user_name);
+
+        String user_blog_url = Json.parse(res_user.getBody())
+                .get("blog")
+                .asText();
+        String user_github_html_url = Json.parse(res_user.getBody())
+                .get("html_url")
+                .asText();
+        String user_mail = Json.parse(res_user.getBody())
+                .get("email")
+                .asText();
+        Integer user_public_repos = Json.parse(res_user.getBody())
+                .get("public_repos")
+                .asInt();
+        String user_github_repos_url = Json.parse(res_user.getBody())
+                .get("repos_url")
+                .asText();
+        Integer followers = Json.parse(res_user.getBody())
+                .get("followers")
+                .asInt();
+        Integer following = Json.parse(res_user.getBody())
+                .get("following")
+                .asInt();
+
+        user_model user = new user_model(
+                user_name, user_blog_url, user_github_html_url,
+                user_mail, user_avatar_url, user_public_repos,
+                user_github_repos_url, followers, following);
+
+        store.update_user(user);
     }
+
 
     public static String get_avatar_url(ApplicationRoutes app) {
         if (!user_is_logged(app)) {
@@ -215,9 +247,9 @@ public class store {
         }
     }
 
-    public static repo_model get_repo_by_name(repo_model repo) {
+    public static repo_model get_repo_by_name(String repo_name) {
         try {
-            return repo.find.byId(repo.repo_name);
+            return repo_model.find.byId(repo_name);
         }
         catch (Exception ignore) {
             return null;
@@ -231,6 +263,53 @@ public class store {
         catch (Exception ignore) {
             return new ArrayList<repo_model>();
         }
+    }
+
+    /********************************
+     *
+     *    USERS!
+     *
+     ********************************/
+
+    public static void update_user(user_model user) {
+        try {
+            user.save();
+        }
+        catch (Exception ignore) {
+            user.update();
+        }
+    }
+
+    public static user_model get_user_by_name(String user_name) {
+        try {
+            return user_model.find.byId(user_name);
+        }
+        catch (Exception ignore) {
+            return null;
+        }
+    }
+
+    public static List<user_model> get_all_users() {
+        try {
+            return user_model.find.all();
+        }
+        catch (Exception ignore) {
+            return new ArrayList<user_model>();
+        }
+    }
+
+    /********************************
+     *
+     *    SYNC STUFF!
+     *
+     ********************************/
+
+    public static long get_github_repo_sync_delta_milis() {
+        return ConfigFactory.load().getDuration("sync.github.repo.delta_milis", TimeUnit.MILLISECONDS);
+
+    }
+    public static long get_gmail_reload_sync_delta_milis() {
+        return ConfigFactory.load().getDuration("sync.gmail.reload.delta_milis", TimeUnit.MILLISECONDS);
     }
 
 }

@@ -21,11 +21,8 @@ import javax.mail.search.SearchTerm;
 import models.gmail_last_date_read;
 
 public class GmailInbox {
-    // TODO: se this for using idle: http://stackoverflow.com/questions/4155412/javamail-keeping-imapfolder-idle-alive
     static IMAPFolder inbox = null;
-    static Store store = null;
-    // TODO: move this constant to store and conf
-    static final long delta_milis_reload = 60*1000*17; // 17 minutes
+    static Store mail_store = null;
     static Thread t1 = null;
     static Thread t2 = null;
     static boolean reloading = false;
@@ -37,7 +34,7 @@ public class GmailInbox {
                 public void run() {
                     while (!interrupted()) {
                         try {
-                            Thread.sleep(delta_milis_reload);
+                            Thread.sleep(store.get_gmail_reload_sync_delta_milis());
                             reload_folder();
                         } catch (Exception e) {
                             Logger.error("while sleeping to reload inbox...", e);
@@ -87,14 +84,14 @@ public class GmailInbox {
             t2.interrupt();
             t2 = null;
         }
-        if (store!=null) {
+        if (mail_store!=null) {
             try {
-                store.close();
+                mail_store.close();
             }
             catch (Exception e) {
                 Logger.error("while closing inbox...", e);
             }
-            store = null;
+            mail_store = null;
         }
     }
 
@@ -187,8 +184,8 @@ public class GmailInbox {
             if (inbox != null) {
                 inbox.close(true);
             }
-            if (store != null) {
-                store.close();
+            if (mail_store != null) {
+                mail_store.close();
             }
         }
         catch (Exception e) {
@@ -221,9 +218,9 @@ public class GmailInbox {
         imap_session.setDebug(false);
 
         try {
-            store = imap_session.getStore("imaps");
-            store.connect("imap.gmail.com", tmp_name, tmp_pssw);
-            inbox = (IMAPFolder) store.getFolder("inbox");
+            mail_store = imap_session.getStore("imaps");
+            mail_store.connect("imap.gmail.com", tmp_name, tmp_pssw);
+            inbox = (IMAPFolder) mail_store.getFolder("inbox");
             inbox.open(Folder.READ_WRITE);
             gmail_last_date_read last_date_read_model = null;
             try {

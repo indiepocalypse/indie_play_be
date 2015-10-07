@@ -15,8 +15,6 @@ import java.util.concurrent.TimeUnit;
 public class github_repo_sync {
     static Thread t1 = null;
     static boolean syncing = false;
-    // TODO: move this constant to store and conf
-    static final int delta_milis_sync = 60*1000*5; // 5 minutes for testing only...
     static public void start() {
         if (t1==null) {
             t1 = new Thread() {
@@ -24,7 +22,7 @@ public class github_repo_sync {
                     while (!interrupted()) {
                         try {
                             sync();
-                            Thread.sleep(delta_milis_sync);
+                            Thread.sleep(store.get_github_repo_sync_delta_milis());
                         } catch (Exception e) {
                             Logger.error("while sleeping to sync with github...", e);
                         }
@@ -69,7 +67,6 @@ public class github_repo_sync {
             store.update_repo(repo);
         }
         Logger.info("SYNCSYNC SIZE=" + Integer.toString(json.size()));
-//XXXXXXXXXXXXXXXXXXXXX
 
         syncing = false;
 
