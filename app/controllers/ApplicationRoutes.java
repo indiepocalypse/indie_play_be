@@ -20,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ApplicationRoutes extends Controller {
     // TODO: should login redirect to the current page always? currently only doing for create new repo page
+    // TODO: add some jitter to Gmail and other syncing activities...
 
     final static String main_title = "it's the Indiepocalypse!";
     @Inject
