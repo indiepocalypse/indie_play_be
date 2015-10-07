@@ -69,6 +69,5 @@ public class github_repo_sync {
         Logger.info("SYNCSYNC SIZE=" + Integer.toString(json.size()));
 
         syncing = false;
-
     }
 }
