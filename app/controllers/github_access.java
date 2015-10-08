@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.typesafe.config.ConfigFactory;
 import models.repo_model;
 import models.user_model;
+import play.Logger;
 import play.libs.F;
 import play.libs.Json;
 import play.libs.ws.WS;
@@ -87,9 +88,11 @@ public class github_access {
     }
 
     public static repo_model get_repo_by_name(String user_name, String repo_name) {
-        WSRequest req = indie_auth_request(WS.client(), "/repos/" + user_name + "/" + repo_name);
+        String path = "/repos/" + user_name + "/" + repo_name;
+        WSRequest req = indie_auth_request(WS.client(), path);
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
-        return repo_model.from_json(play.libs.Json.parse(res.getBody()));
+        repo_model repo = repo_model.from_json(play.libs.Json.parse(res.getBody()));
+        return repo;
     }
 
     public static user_model get_user_by_token(String token) {

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.sun.mail.imap.IMAPFolder;
 import com.typesafe.config.ConfigFactory;
 import models.gmail_last_date_read;
+import models.repo_model;
+import models.user_model;
 import play.Logger;
 
 import javax.mail.Folder;
@@ -138,7 +140,7 @@ public class GmailInbox {
             if ((m_from != null) && (m_from.equals("GitHub <support@github.com>"))) {
                 if ((m_subject != null) && (m_subject.contains("Repository transfer from"))) {
                     if (m_body != null) {
-                        String from_user = m_subject.split("\\s+")[1].split("@")[0];
+                        String from_user = m_subject.split("@")[1].split("\\s+")[0];
                         String repo_name = m_subject.split("/")[1].split("\\)")[0];
                         Logger.info("transfering from user: " + from_user + "    repo name: " + repo_name);
                         String lines[] = m_body.split("\\r?\\n");
@@ -147,7 +149,14 @@ public class GmailInbox {
                             if (lt.startsWith("https")) {
                                 // accept the repo!
                                 Logger.info("The repo transfer url: " + lt);
-                                github_iojs.accept_trasfer_repo(lt, from_user, repo_name);
+                                if (github_iojs.accept_trasfer_repo(lt)) {
+                                    repo_model repo = github_access.get_repo_by_name(from_user, repo_name);
+                                    user_model user = github_access.get_user_by_name(from_user);
+                                    store.register_transfered_repo(user, repo);
+                                }
+                                else {
+                                    // TODO: handle unsuccesful transfer! or ignore ;)
+                                }
                             }
                         }
                     }

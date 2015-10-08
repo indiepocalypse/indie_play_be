@@ -171,17 +171,17 @@ public class store {
         }
     }
 
-    public static void register_transfered_repo(String user_name, repo_model repo) {
+    public static void register_transfered_repo(user_model user, repo_model repo) {
         update_repo(repo);
-        user_model user = store.get_user_by_name(user_name);
+        update_user(user);
         ownership_model ownership = new ownership_model(user, repo, new BigDecimal("100.0"));
         store.update_ownership(ownership);
-
     }
 
     public static void register_new_repo(ApplicationRoutes app, repo_model repo) {
         set_new_repo(app, repo.repo_name);
-        register_transfered_repo(get_user_name(app), repo);
+        user_model user = github_access.get_user_by_name(get_user_name(app));
+        register_transfered_repo(user, repo);
     }
 
     /********************************
