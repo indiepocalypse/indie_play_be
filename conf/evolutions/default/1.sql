@@ -14,8 +14,6 @@ create table ownership_model (
   user_user_name            varchar(255),
   repo_repo_name            varchar(255),
   percent                   decimal(38),
-  constraint uq_ownership_model_user_user_nam unique (user_user_name),
-  constraint uq_ownership_model_repo_repo_nam unique (repo_repo_name),
   constraint pk_ownership_model primary key (id))
 ;
 

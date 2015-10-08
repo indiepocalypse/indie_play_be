@@ -5,6 +5,7 @@ import com.typesafe.config.ConfigFactory;
 import models.ownership_model;
 import models.repo_model;
 import models.user_model;
+import play.Logger;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -218,8 +219,12 @@ public class store {
 
     public static void update_ownership(ownership_model ownership) {
         try {
+            Logger.info("============ownership id  : " + ownership.id);
+            Logger.info("============repo_name     : " + ownership.repo.repo_name);
+            Logger.info("============user_name     : " + ownership.user.user_name);
             ownership.save();
-        } catch (Exception ignore) {
+        } catch (Exception e) {
+            Logger.error("=-=-=-=-=-=-=-=-=-=" + e.toString());
             ownership.update();
         }
     }

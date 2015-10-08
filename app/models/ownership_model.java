@@ -4,6 +4,7 @@ import com.avaje.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import java.math.BigDecimal;
 
@@ -16,9 +17,9 @@ public class ownership_model extends Model {
     public static Finder<String, ownership_model> find = new Finder<String, ownership_model>(ownership_model.class);
     @Id
     public String id;
-    @OneToOne
+    @ManyToOne
     public user_model user;
-    @OneToOne
+    @ManyToOne
     public repo_model repo;
     public BigDecimal percent;
 
