@@ -316,7 +316,7 @@ public class store {
 
     public static List<ownership_model> get_ownerships_by_user_name(String user_name) {
         try {
-            return ownership_model.find.where().eq("user_name", user_name).findList();
+            return ownership_model.find.where().eq("user.user_name", user_name).findList();
         }
         catch (Exception ignore) {
             return new ArrayList<>(0);
@@ -325,7 +325,7 @@ public class store {
 
     public static List<ownership_model> get_ownerships_by_repo_name(String repo_name) {
         try {
-            return ownership_model.find.where().eq("repo_name", repo_name).findList();
+            return ownership_model.find.where().eq("repo.repo_name", repo_name).findList();
         }
         catch (Exception ignore) {
             return new ArrayList<>(0);
