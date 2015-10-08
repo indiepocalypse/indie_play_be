@@ -5,7 +5,8 @@
     @if(store.pop_new_repo(app, repo.repo_name)){
     <div class="alert alert-success alert-dismissible" role="alert">
         <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
         Repository @repo.repo_name was successfully created!
     </div>
     }
@@ -28,6 +29,7 @@
         <h3><a href="@indie_html_url">@owner.user.user_name</a></h3>
         <a href="@owner.user.github_html_url">see in github</a>
         <img src="@owner.user.avatar_url" width="50px">
+
         <h2>@owner.percent</h2>
     </div>
     }

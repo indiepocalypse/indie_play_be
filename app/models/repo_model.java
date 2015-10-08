@@ -1,10 +1,10 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.util.Date;
 
 /**
  * Created by skariel on 29/09/15.
@@ -12,6 +12,7 @@ import java.util.Date;
 
 @Entity
 public class repo_model extends Model {
+    public static Finder<String, repo_model> find = new Finder<String, repo_model>(repo_model.class);
     @Id
     public String repo_name;
     public String repo_description;
@@ -28,6 +29,19 @@ public class repo_model extends Model {
         this.stars_count = stars_count;
         this.forks_count = forks_count;
     }
-    public static Finder<String, repo_model> find = new Finder<String,repo_model>(repo_model.class);
+
+    public static repo_model from_json(JsonNode json_repo) {
+        String name = json_repo.get("name").asText("");
+        String description = json_repo.get("description").asText("");
+        String github_html_url = json_repo.get("html_url").asText("");
+        String homepage = json_repo.get("homepage").asText("");
+        Integer stars_count = json_repo.get("stargazers_count").asInt(0);
+        Integer forks_count = json_repo.get("forks_count").asInt(0);
+        return new repo_model(name, description, homepage, github_html_url, stars_count, forks_count);
+    }
+
+    public static repo_model from_name_desc_and_homepage(String name, String desc, String homepage) {
+        return new repo_model(name, desc, homepage, "https://github.com/theindiepocalypse/" + name, 0, 0);
+    }
 }
 

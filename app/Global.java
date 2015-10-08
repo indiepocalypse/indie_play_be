@@ -1,6 +1,8 @@
 import controllers.GmailInbox;
 import controllers.github_repo_sync;
-import play.*;
+import play.Application;
+import play.GlobalSettings;
+import play.Logger;
 
 public class Global extends GlobalSettings {
 

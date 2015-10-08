@@ -5,12 +5,12 @@
 <div class="container col-md-8">
     <h1>Explore repos!</h1>
     @repos.map{repo=>
-        @defining("/r/"+repo.repo_name) { indie_html_url =>
-            <div class="container col-md-6">
-                <h3><a href="@indie_html_url">@repo.repo_name</a></h3>
-                <a href="@repo.github_html_url">see in github</a>
-            </div>
-        }
+    @defining("/r/"+repo.repo_name) { indie_html_url =>
+    <div class="container col-md-6">
+        <h3><a href="@indie_html_url">@repo.repo_name</a></h3>
+        <a href="@repo.github_html_url">see in github</a>
+    </div>
+    }
     }
 </div>
 
@@ -18,12 +18,12 @@
 <div class="container col-md-8">
     <h1>Explore users!</h1>
     @users.map{user=>
-        @defining("/u/"+user.user_name) { indie_html_url =>
-            <div class="container col-md-6">
-                <h3><a href="@indie_html_url">@user.user_name</a></h3>
-                <a href="@user.github_html_url">see in github</a>
-                <img src="@user.avatar_url" width="50px">
-            </div>
-        }
+    @defining("/u/"+user.user_name) { indie_html_url =>
+    <div class="container col-md-6">
+        <h3><a href="@indie_html_url">@user.user_name</a></h3>
+        <a href="@user.github_html_url">see in github</a>
+        <img src="@user.avatar_url" width="50px">
+    </div>
+    }
     }
 </div>

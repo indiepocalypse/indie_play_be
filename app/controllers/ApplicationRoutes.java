@@ -1,24 +1,20 @@
 package controllers;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
 import models.ownership_model;
 import models.repo_model;
 import models.user_model;
+import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.F;
-import play.Logger;
-import play.libs.ws.WSRequest;
 import play.libs.ws.WSClient;
+import play.libs.ws.WSRequest;
 import play.libs.ws.WSResponse;
-import play.mvc.*;
-
-import scala.Int;
+import play.mvc.Controller;
+import play.mvc.Result;
 import views.html.*;
 
 import javax.inject.Inject;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -39,7 +35,7 @@ public class ApplicationRoutes extends Controller {
     }
 
     public F.Promise<Result> explore() {
-        return F.Promise.promise(()-> {
+        return F.Promise.promise(() -> {
             List<repo_model> repos = store.get_all_repos();
             List<user_model> users = store.get_all_users();
             return ok(main.render("explore", repo_explore.render(repos, users), this));
@@ -60,49 +56,41 @@ public class ApplicationRoutes extends Controller {
         String repo_name = "";
         try {
             repo_name = data.get(store.repo_name_name);
-        }
-        catch (Exception ignore) {
+        } catch (Exception ignore) {
         }
 
         String repo_homepage = "";
         try {
             repo_homepage = data.get(store.repo_homepage_name);
-        }
-        catch (Exception ignore) {
+        } catch (Exception ignore) {
         }
 
         String repo_description = "";
         try {
             repo_description = data.get(store.repo_description_name);
-        }
-        catch (Exception ignore) {
+        } catch (Exception ignore) {
         }
         final WSRequest newreq = github_access.create_new_repo(ws, repo_name, repo_homepage, repo_description);
 
         final String f_repo_name = repo_name;
         final String f_repo_homepage = repo_homepage;
         final String f_repo_description = repo_description;
-        return F.Promise.promise(()->{
-                    WSResponse res = newreq.execute().get(60, TimeUnit.SECONDS);
-                    if (res.getStatus() == 201) {
-                        // everything is good
-                        store.set_new_repo(this, f_repo_name);
-                        repo_model repo = new repo_model(f_repo_name, f_repo_description, f_repo_homepage, "https://github.com/theindiepocalypse/"+f_repo_name, 0, 0);
-                        store.update_repo(repo);
-                        user_model user = store.get_user_by_name(store.get_user_name(this));
-                        ownership_model ownership = new ownership_model(user, repo, new BigDecimal("100.0"));
-                        store.update_ownership(ownership);
-                        return redirect("/r/"+f_repo_name);
-                    }
-                    String err = "Couldn't create the repo, sorry!\n"+
-                            "this is the reported result:\n\n"+res.getBody();
-                    // TODO: report a better arror, at least format it or whatever...
-                    return ok(main.render("new repo", newrepo.render(this, f_repo_name, f_repo_homepage, f_repo_description, err), this));
-                });
+        return F.Promise.promise(() -> {
+            WSResponse res = newreq.execute().get(60, TimeUnit.SECONDS);
+            if (res.getStatus() == 201) {
+                // everything is good
+                store.register_new_repo(this, repo_model.from_name_desc_and_homepage(f_repo_name, f_repo_description, f_repo_homepage));
+                return redirect("/r/" + f_repo_name);
+            }
+            String err = "Couldn't create the repo, sorry!\n" +
+                    "this is the reported result:\n\n" + res.getBody();
+            // TODO: report a better arror, at least format it or whatever...
+            return ok(main.render("new repo", newrepo.render(this, f_repo_name, f_repo_homepage, f_repo_description, err), this));
+        });
     }
 
     public Result blog() {
-        return ok(main.render("blog", "there are "+Integer.toString(GmailInbox.mail_count)+" messages in inbox!", this));
+        return ok(main.render("blog", "there are " + Integer.toString(GmailInbox.mail_count) + " messages in inbox!", this));
         //return ok(main.render("blog", "This is the blog!", this));
     }
 
@@ -116,7 +104,6 @@ public class ApplicationRoutes extends Controller {
 
     public Result repo_profile(String repo_name) {
         List<ownership_model> owners = store.get_ownerships_by_repo_name(repo_name);
-        Logger.info("number of owners: ", Integer.toString(owners.size()));
         return ok(main.render(repo_name, homerepo.render(this, store.get_repo_by_name(repo_name), owners), this));
     }
 
@@ -153,9 +140,9 @@ public class ApplicationRoutes extends Controller {
                     // user has logged in!
                     String token = splitted[0].split("\\=")[1];
                     store.set_token(this, token);
-
-                    // this has to happen after we have the token in store...
-                    store.fetch_user(this);
+                    user_model user = github_access.get_user_by_token(token);
+                    store.set_current_user(this, user);
+                    store.update_user(user);
                     return index().get(60, TimeUnit.SECONDS);
                 });
             }
@@ -163,10 +150,10 @@ public class ApplicationRoutes extends Controller {
         }
 
         // user is not in the proceess of logging in
-        if (store.get_state(this)==null) {
+        if (store.get_state(this) == null) {
             store.set_state(this, github_access.get_random_string());
         }
-        return F.Promise.promise(()->ok(main.render(main_title, landing.render(), this)));
+        return F.Promise.promise(() -> ok(main.render(main_title, landing.render(), this)));
     }
 
     public Result logout() {

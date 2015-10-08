@@ -3,37 +3,42 @@
 <div class="container col-md-6">
 
     @if(err!=null){
-        <div class="alert alert-danger alert-dismissible" role="alert">
-            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-            <span class="sr-only">Error:</span>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            @err
-        </div>
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+        @err
+    </div>
     }
 
     @if(store.user_is_logged(app)) {
 
 
-        <form method="post">
-            <div class="form-group has-feedback">
-                <label class="control-label" for="input_reponame">Repository name</label>
-                <input type="text" class="form-control" id="input_reponame" name="@store.repo_name_name" value="@def_repo_name" required>
-                <span class="glyphicon glyphicon-asterisk form-control-feedback" aria-hidden="true" style="color:red"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label" for="input_homepage">Homepage</label>
-                <input type="text" class="form-control" id="input_homepage" name="@store.repo_homepage_name" value="@def_repo_homepage">
-            </div>
-            <div class="form-group">
-                <label class="control-label" for="input_description">Description</label>
-                <textarea class="form-control" rows="3" id="input_description" name="@store.repo_description_name" value="@def_repo_description">@def_repo_description</textarea>
-            </div>
+    <form method="post">
+        <div class="form-group has-feedback">
+            <label class="control-label" for="input_reponame">Repository name</label>
+            <input type="text" class="form-control" id="input_reponame" name="@store.repo_name_name"
+                   value="@def_repo_name" required>
+            <span class="glyphicon glyphicon-asterisk form-control-feedback" aria-hidden="true"
+                  style="color:red"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="input_homepage">Homepage</label>
+            <input type="text" class="form-control" id="input_homepage" name="@store.repo_homepage_name"
+                   value="@def_repo_homepage">
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="input_description">Description</label>
+            <textarea class="form-control" rows="3" id="input_description" name="@store.repo_description_name"
+                      value="@def_repo_description">@def_repo_description</textarea>
+        </div>
 
-            <button type="submit" class="btn btn-default">Create repo</button>
-        </form>
+        <button type="submit" class="btn btn-default">Create repo</button>
+    </form>
     } else {
-        @store.set_return_to(app, "/newrepo")
-        Please <a href="@github_access.get_github_access_url(store.get_state(app))">login</a> to create a new repository
+    @store.set_return_to(app, "/newrepo")
+    Please <a href="@github_access.get_github_access_url(store.get_state(app))">login</a> to create a new repository
     }
 
 </div>

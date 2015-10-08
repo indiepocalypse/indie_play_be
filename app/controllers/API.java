@@ -1,16 +1,6 @@
 package controllers;
 
-import play.libs.F;
-import play.libs.Json;
-import play.libs.ws.WS;
-import play.libs.ws.WSRequest;
-import play.libs.ws.WSResponse;
-import play.mvc.*;
-
-import play.twirl.api.Html;
-import views.html.*;
-
-import java.util.concurrent.TimeUnit;
+import play.mvc.Controller;
 
 /**
  * Created by skariel on 22/09/15.
