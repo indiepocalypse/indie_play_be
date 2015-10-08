@@ -2,6 +2,7 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.typesafe.config.ConfigFactory;
+import models.ownership_model;
 import models.repo_model;
 import models.user_model;
 import play.libs.F;
@@ -295,6 +296,39 @@ public class store {
         }
         catch (Exception ignore) {
             return new ArrayList<user_model>();
+        }
+    }
+
+    /********************************
+     *
+     *    OWNERSHIP!
+     *
+     ********************************/
+
+    public static void update_ownership(ownership_model ownership) {
+        try {
+            ownership.save();
+        }
+        catch (Exception ignore) {
+            ownership.update();
+        }
+    }
+
+    public static List<ownership_model> get_ownerships_by_user_name(String user_name) {
+        try {
+            return ownership_model.find.where().eq("user_name", user_name).findList();
+        }
+        catch (Exception ignore) {
+            return new ArrayList<>(0);
+        }
+    }
+
+    public static List<ownership_model> get_ownerships_by_repo_name(String repo_name) {
+        try {
+            return ownership_model.find.where().eq("repo_name", repo_name).findList();
+        }
+        catch (Exception ignore) {
+            return new ArrayList<>(0);
         }
     }
 

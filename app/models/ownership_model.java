@@ -2,9 +2,7 @@ package models;
 
 import com.avaje.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 /**
  * Created by skariel on 29/09/15.
@@ -16,8 +14,10 @@ public class ownership_model extends Model {
     public String id;
 
     @OneToOne
+    @JoinColumn(name="user_name")
     public user_model user;
     @OneToOne
+    @JoinColumn(name="repo_name")
     public repo_model repo;
 
     public double percent;

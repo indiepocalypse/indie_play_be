@@ -2,6 +2,7 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import models.ownership_model;
 import models.repo_model;
 import models.user_model;
 import play.data.DynamicForm;
@@ -13,6 +14,7 @@ import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
 import play.mvc.*;
 
+import scala.Int;
 import views.html.*;
 
 import javax.inject.Inject;
@@ -86,6 +88,9 @@ public class ApplicationRoutes extends Controller {
                         store.set_new_repo(this, f_repo_name);
                         repo_model repo = new repo_model(f_repo_name, f_repo_description, f_repo_homepage, "https://github.com/theindiepocalypse/"+f_repo_name, 0, 0);
                         store.update_repo(repo);
+                        user_model user = store.get_user_by_name(store.get_user_name(this));
+                        ownership_model ownership = new ownership_model(user, repo, 100.0);
+                        store.update_ownership(ownership);
                         return redirect("/r/"+f_repo_name);
                     }
                     String err = "Couldn't create the repo, sorry!\n"+
@@ -109,7 +114,9 @@ public class ApplicationRoutes extends Controller {
     }
 
     public Result repo_profile(String repo_name) {
-        return ok(main.render(repo_name, homerepo.render(this, repo_name), this));
+        List<ownership_model> owners = store.get_ownerships_by_repo_name(repo_name);
+        Logger.info("number of owners: ", Integer.toString(owners.size()));
+        return ok(main.render(repo_name, homerepo.render(this, store.get_repo_by_name(repo_name), owners), this));
     }
 
     public Result pull_profile(String repo_name, Long pull_id) {
