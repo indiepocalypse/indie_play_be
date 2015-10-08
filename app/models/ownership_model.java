@@ -3,6 +3,7 @@ package models;
 import com.avaje.ebean.Model;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 /**
  * Created by skariel on 29/09/15.
@@ -14,15 +15,13 @@ public class ownership_model extends Model {
     public String id;
 
     @OneToOne
-    @JoinColumn(name="user_name")
     public user_model user;
     @OneToOne
-    @JoinColumn(name="repo_name")
     public repo_model repo;
 
-    public double percent;
+    public BigDecimal percent;
 
-    public ownership_model(user_model p_user, repo_model p_repo, double p_percent) {
+    public ownership_model(user_model p_user, repo_model p_repo, BigDecimal p_percent) {
         id = p_user.user_name+"@"+p_repo.repo_name;
         user = p_user;
         repo = p_repo;

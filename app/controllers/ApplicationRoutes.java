@@ -18,6 +18,7 @@ import scala.Int;
 import views.html.*;
 
 import javax.inject.Inject;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -89,7 +90,7 @@ public class ApplicationRoutes extends Controller {
                         repo_model repo = new repo_model(f_repo_name, f_repo_description, f_repo_homepage, "https://github.com/theindiepocalypse/"+f_repo_name, 0, 0);
                         store.update_repo(repo);
                         user_model user = store.get_user_by_name(store.get_user_name(this));
-                        ownership_model ownership = new ownership_model(user, repo, 100.0);
+                        ownership_model ownership = new ownership_model(user, repo, new BigDecimal("100.0"));
                         store.update_ownership(ownership);
                         return redirect("/r/"+f_repo_name);
                     }

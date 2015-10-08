@@ -11,11 +11,11 @@ create table gmail_last_date_read (
 
 create table ownership_model (
   id                        varchar(255) not null,
-  user_name                 varchar(255),
-  repo_name                 varchar(255),
-  percent                   double,
-  constraint uq_ownership_model_user_name unique (user_name),
-  constraint uq_ownership_model_repo_name unique (repo_name),
+  user_user_name            varchar(255),
+  repo_repo_name            varchar(255),
+  percent                   decimal(38),
+  constraint uq_ownership_model_user_user_nam unique (user_user_name),
+  constraint uq_ownership_model_repo_repo_nam unique (repo_repo_name),
   constraint pk_ownership_model primary key (id))
 ;
 
@@ -50,10 +50,10 @@ create sequence repo_model_seq;
 
 create sequence user_model_seq;
 
-alter table ownership_model add constraint fk_ownership_model_user_1 foreign key (user_name) references user_model (user_name) on delete restrict on update restrict;
-create index ix_ownership_model_user_1 on ownership_model (user_name);
-alter table ownership_model add constraint fk_ownership_model_repo_2 foreign key (repo_name) references repo_model (repo_name) on delete restrict on update restrict;
-create index ix_ownership_model_repo_2 on ownership_model (repo_name);
+alter table ownership_model add constraint fk_ownership_model_user_1 foreign key (user_user_name) references user_model (user_name) on delete restrict on update restrict;
+create index ix_ownership_model_user_1 on ownership_model (user_user_name);
+alter table ownership_model add constraint fk_ownership_model_repo_2 foreign key (repo_repo_name) references repo_model (repo_name) on delete restrict on update restrict;
+create index ix_ownership_model_repo_2 on ownership_model (repo_repo_name);
 
 
 
