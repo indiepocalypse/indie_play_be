@@ -16,6 +16,7 @@ import javax.mail.event.MessageCountListener;
 import javax.mail.search.SearchTerm;
 import java.util.Date;
 import java.util.Properties;
+import java.util.Random;
 
 public class sync_gmail {
     public static int mail_count = 0;
@@ -32,6 +33,10 @@ public class sync_gmail {
                     while (!interrupted()) {
                         try {
                             Thread.sleep(store_conf.get_gmail_reload_sync_delta_milis());
+                            Random rand = new Random();
+                            int jitter = (int)(rand.nextFloat()*stores.store_conf.get_gmail_reload_sync_jitter_milis()+
+                                    store_conf.get_gmail_reload_sync_minimum_milis());
+                            Thread.sleep(jitter);
                             reload_folder();
                         } catch (Exception e) {
                             Logger.error("while sleeping to reload inbox...", e);
@@ -105,6 +110,11 @@ public class sync_gmail {
             should_save_date = false;
         }
         for (Message m : ms) {
+            try {
+                Thread.sleep(stores.store_conf.get_gmail_reload_sync_jitter_milis());
+            }
+            catch (Exception ignored) {
+            }
             Date m_date = null;
             String m_subject = null;
             String m_body = null;

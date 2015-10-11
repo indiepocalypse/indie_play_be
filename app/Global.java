@@ -2,6 +2,7 @@ import play.Application;
 import play.GlobalSettings;
 import play.Logger;
 import sync.sync_github_repos;
+import sync.sync_github_users;
 import sync.sync_gmail;
 
 public class Global extends GlobalSettings {
@@ -11,6 +12,7 @@ public class Global extends GlobalSettings {
         Logger.info("Starting gmail idle poll...");
         sync_gmail.start();
         sync_github_repos.start();
+        sync_github_users.start();
     }
 
     @Override
@@ -18,5 +20,6 @@ public class Global extends GlobalSettings {
         Logger.info("Stopping gmail idle poll...");
         sync_gmail.stop();
         sync_github_repos.stop();
+        sync_github_users.stop();
     }
 }
