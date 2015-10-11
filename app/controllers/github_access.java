@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.typesafe.config.ConfigFactory;
 import models.repo_model;
 import models.user_model;
-import play.Logger;
 import play.libs.F;
 import play.libs.Json;
 import play.libs.ws.WS;
@@ -14,13 +13,16 @@ import play.libs.ws.WSClient;
 import play.libs.ws.WSRequest;
 import play.libs.ws.WSResponse;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
  * Created by skariel on 21/09/15.
  */
 public class github_access {
-    private static final String scope = ""; //"user,public_repo";
+    // TODO: move this scope constant to conf
+    private static final String scope = "";
 
     public static String get_github_access_url(String state) {
         final String github_access = "https://github.com/login/oauth/authorize?client_id=__CLIENT_ID__&redirect_uri=__CALLBACK_URI__&scope=" + scope + "&state=__STATE__";
@@ -31,16 +33,24 @@ public class github_access {
                 .replace("__CALLBACK_URI__", callback_uri);
     }
 
-    public static WSRequest get_github_access_token(WSClient ws, String state, String code) {
+    public static String get_github_access_token(String state, String code) {
         final String client_id = store.get_indie_github_client_id();
         final String client_secret = store.get_indie_github_client_secret();
 
-        return ws.url("https://github.com/login/oauth/access_token")
+        WSResponse res = store.getwsclient().url("https://github.com/login/oauth/access_token")
                 .setMethod("POST")
                 .setQueryParameter("client_id", client_id)
                 .setQueryParameter("client_secret", client_secret)
                 .setQueryParameter("code", code)
-                .setQueryParameter("state", state);
+                .setQueryParameter("state", state)
+                .execute()
+                .get(60, TimeUnit.SECONDS);
+        String body = res.getBody();
+        String[] splitted = body.split("\\&");
+        if ((splitted.length != 3) || (!splitted[0].contains("=")) || (!splitted[1].contains("=")) || (!splitted[2].contains("="))) {
+            return null;
+        }
+        return splitted[0].split("\\=")[1];
     }
 
     public static String get_random_string() {
@@ -59,9 +69,18 @@ public class github_access {
                 .setHeader("Accept", "application/vnd.github.v3 + json");
     }
 
-    public static WSRequest get_indie_repositories(WSClient ws) {
-        return indie_auth_request(ws, "/user/repos")
-                .setMethod("GET");
+    public static List<repo_model> get_indie_repositories() {
+        WSResponse res =  indie_auth_request(store.getwsclient(), "/user/repos")
+                .setMethod("GET")
+                .execute()
+                .get(60, TimeUnit.SECONDS);
+        JsonNode json = play.libs.Json.parse(res.getBody());
+        ArrayList<repo_model> repos = new ArrayList<>(json.size());
+        for (int i = 0; i < json.size(); i++) {
+            JsonNode json_repo = json.get(i);
+            repos.add(repo_model.from_json(json_repo));
+        }
+        return repos;
     }
 
     public static WSRequest post_indie_auth_request(WSClient ws, String path, JsonNode json) {
@@ -71,7 +90,7 @@ public class github_access {
                 .setBody(json);
     }
 
-    public static WSRequest create_new_repo(WSClient ws, String repo_name, String repo_homepage, String repo_description) {
+    public static repo_model create_new_repo(WSClient ws, String repo_name, String repo_homepage, String repo_description) throws Exception {
         ObjectNode json = JsonNodeFactory.instance.objectNode();
         if (repo_name != null) {
             json.put("name", repo_name);
@@ -84,7 +103,11 @@ public class github_access {
         }
         json.put("has_wiki", false);
         json.put("has_downloads", false);
-        return post_indie_auth_request(ws, "/user/repos", json);
+        WSResponse res = post_indie_auth_request(ws, "/user/repos", json).execute().get(60, TimeUnit.SECONDS);
+        if (res.getStatus() == 201) {
+            return repo_model.from_name_desc_and_homepage(repo_name, repo_description, repo_homepage);
+        }
+        throw new Exception(res.getBody());
     }
 
     public static repo_model get_repo_by_name(String user_name, String repo_name) {

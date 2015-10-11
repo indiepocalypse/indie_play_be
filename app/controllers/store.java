@@ -6,6 +6,8 @@ import models.ownership_model;
 import models.repo_model;
 import models.user_model;
 import play.Logger;
+import play.libs.ws.WS;
+import play.libs.ws.WSClient;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -35,6 +37,16 @@ public class store {
     final static String github_code_session_key = "github_code";
     final static String new_repo_session_key = "new_repo___";
     final static Github_Credentials github_credentials = new Github_Credentials();
+
+    public static WSClient getwsclient() {
+        WSClient ws;
+        try {
+            ws = WS.client();
+        } catch (Exception ignored) {
+            ws = WS.newClient(1);
+        }
+        return ws;
+    }
 
     public static void set_new_repo(ApplicationRoutes app, String name) {
         String key = new_repo_session_key + name;

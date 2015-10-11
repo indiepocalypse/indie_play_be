@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 public class ApplicationRoutes extends Controller {
     // TODO: should login redirect to the current page always? currently only doing for create new repo page
     // TODO: add some jitter to Gmail and other syncing activities...
+    // TODO: cache the simple pages (e.g. the landing page)
 
     final static String main_title = "it's the Indiepocalypse!";
     @Inject
@@ -50,7 +51,7 @@ public class ApplicationRoutes extends Controller {
         return ok(main.render("new repo", newrepo.render(this, def_repo_name, def_repo_homepage, def_repo_description, err), this));
     }
 
-    public F.Promise<Result> newrepo_post() {
+    public Result newrepo_post() {
         DynamicForm data = Form.form().bindFromRequest();
 
         String repo_name = "";
@@ -70,23 +71,18 @@ public class ApplicationRoutes extends Controller {
             repo_description = data.get(store.repo_description_name);
         } catch (Exception ignore) {
         }
-        final WSRequest newreq = github_access.create_new_repo(ws, repo_name, repo_homepage, repo_description);
 
-        final String f_repo_name = repo_name;
-        final String f_repo_homepage = repo_homepage;
-        final String f_repo_description = repo_description;
-        return F.Promise.promise(() -> {
-            WSResponse res = newreq.execute().get(60, TimeUnit.SECONDS);
-            if (res.getStatus() == 201) {
-                // everything is good
-                store.register_new_repo(this, repo_model.from_name_desc_and_homepage(f_repo_name, f_repo_description, f_repo_homepage));
-                return redirect("/r/" + f_repo_name);
-            }
+        try {
+            repo_model repo = github_access.create_new_repo(ws, repo_name, repo_homepage, repo_description);
+            store.register_new_repo(this, repo);
+            return redirect("/r/" + repo_name);
+        }
+        catch (Exception e) {
             String err = "Couldn't create the repo, sorry!\n" +
-                    "this is the reported result:\n\n" + res.getBody();
+                    "this is the reported result:\n\n" + e.getMessage();
             // TODO: report a better arror, at least format it or whatever...
-            return ok(main.render("new repo", newrepo.render(this, f_repo_name, f_repo_homepage, f_repo_description, err), this));
-        });
+            return ok(main.render("new repo", newrepo.render(this, repo_name, repo_homepage, repo_description, err), this));
+        }
     }
 
     public Result blog() {
@@ -131,14 +127,11 @@ public class ApplicationRoutes extends Controller {
             if (state.equals(store.get_state(this))) {
                 store.set_github_code(this, code);
                 return F.Promise.promise(() -> {
-                    WSResponse res = github_access.get_github_access_token(this.ws, state, code).execute().get(60, TimeUnit.SECONDS);
-                    String body = res.getBody();
-                    String[] splitted = body.split("\\&");
-                    if ((splitted.length != 3) || (!splitted[0].contains("=")) || (!splitted[1].contains("=")) || (!splitted[2].contains("="))) {
+                    String token = github_access.get_github_access_token(state, code);
+                    if (token==null) {
                         return unauthorized();
                     }
                     // user has logged in!
-                    String token = splitted[0].split("\\=")[1];
                     store.set_token(this, token);
                     user_model user = github_access.get_user_by_token(token);
                     store.set_current_user(this, user);

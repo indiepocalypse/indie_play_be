@@ -7,6 +7,7 @@ import play.libs.ws.WS;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -47,19 +48,11 @@ public class github_repo_sync {
         }
         syncing = true;
 
-        WSClient ws;
-        try {
-            ws = WS.client();
-        } catch (Exception ignored) {
-            ws = WS.newClient(1);
+        List<repo_model> repos = github_access.get_indie_repositories();
+        for (repo_model repo: repos) {
+            store.update_repo(repo);
         }
-        WSResponse res = github_access.get_indie_repositories(ws).execute().get(60, TimeUnit.SECONDS);
-        JsonNode json = play.libs.Json.parse(res.getBody());
-        for (int i = 0; i < json.size(); i++) {
-            JsonNode json_repo = json.get(i);
-            store.update_repo(repo_model.from_json(json_repo));
-        }
-        Logger.info("SYNCSYNC SIZE=" + Integer.toString(json.size()));
+        Logger.info("SYNCSYNC SIZE=" + Integer.toString(repos.size()));
 
         syncing = false;
     }
