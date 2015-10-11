@@ -1,17 +1,17 @@
 package controllers;
 
-import models.ownership_model;
-import models.repo_model;
-import models.user_model;
+import models.model_ownership;
+import models.model_repo;
+import models.model_user;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.F;
 import play.libs.ws.WSClient;
-import play.libs.ws.WSRequest;
-import play.libs.ws.WSResponse;
 import play.mvc.Controller;
 import play.mvc.Result;
+import stores.store_local_db;
+import stores.store_github_api;
 import views.html.*;
 
 import javax.inject.Inject;
@@ -37,8 +37,8 @@ public class ApplicationRoutes extends Controller {
 
     public F.Promise<Result> explore() {
         return F.Promise.promise(() -> {
-            List<repo_model> repos = store.get_all_repos();
-            List<user_model> users = store.get_all_users();
+            List<model_repo> repos = store_local_db.get_all_repos();
+            List<model_user> users = store_local_db.get_all_users();
             return ok(main.render("explore", repo_explore.render(repos, users), this));
         });
     }
@@ -56,25 +56,25 @@ public class ApplicationRoutes extends Controller {
 
         String repo_name = "";
         try {
-            repo_name = data.get(store.repo_name_name);
+            repo_name = data.get(store_local_db.repo_name_name);
         } catch (Exception ignore) {
         }
 
         String repo_homepage = "";
         try {
-            repo_homepage = data.get(store.repo_homepage_name);
+            repo_homepage = data.get(store_local_db.repo_homepage_name);
         } catch (Exception ignore) {
         }
 
         String repo_description = "";
         try {
-            repo_description = data.get(store.repo_description_name);
+            repo_description = data.get(store_local_db.repo_description_name);
         } catch (Exception ignore) {
         }
 
         try {
-            repo_model repo = github_access.create_new_repo(ws, repo_name, repo_homepage, repo_description);
-            store.register_new_repo(this, repo);
+            model_repo repo = store_github_api.create_new_repo(ws, repo_name, repo_homepage, repo_description);
+            store_local_db.register_new_repo(this, repo);
             return redirect("/r/" + repo_name);
         }
         catch (Exception e) {
@@ -95,12 +95,12 @@ public class ApplicationRoutes extends Controller {
     }
 
     public Result user_profile(String user_name) {
-        return ok(main.render(user_name, homeuser.render(this, store.get_user_by_name(user_name)), this));
+        return ok(main.render(user_name, homeuser.render(this, store_local_db.get_user_by_name(user_name)), this));
     }
 
     public Result repo_profile(String repo_name) {
-        List<ownership_model> owners = store.get_ownerships_by_repo_name(repo_name);
-        return ok(main.render(repo_name, homerepo.render(this, store.get_repo_by_name(repo_name), owners), this));
+        List<model_ownership> owners = store_local_db.get_ownerships_by_repo_name(repo_name);
+        return ok(main.render(repo_name, homerepo.render(this, store_local_db.get_repo_by_name(repo_name), owners), this));
     }
 
     public Result pull_profile(String repo_name, Long pull_id) {
@@ -109,12 +109,12 @@ public class ApplicationRoutes extends Controller {
     }
 
     public F.Promise<Result> index() {
-        if (store.user_is_logged(this)) {
+        if (store_local_db.user_is_logged(this)) {
             return F.Promise.promise(() -> {
-                if (store.has_returnto(this)) {
-                    Logger.info(store.pop_return_to(this));
-                    Logger.info(store.pop_return_to(this));
-                    return redirect(store.pop_return_to(this));
+                if (store_local_db.has_returnto(this)) {
+                    Logger.info(store_local_db.pop_return_to(this));
+                    Logger.info(store_local_db.pop_return_to(this));
+                    return redirect(store_local_db.pop_return_to(this));
                 }
                 return ok(main.render(main_title, "Welcome!", this));
             });
@@ -124,18 +124,18 @@ public class ApplicationRoutes extends Controller {
             // ie use is in the  process of logging in
             String code = request().getQueryString("code");
             String state = request().getQueryString("state");
-            if (state.equals(store.get_state(this))) {
-                store.set_github_code(this, code);
+            if (state.equals(store_local_db.get_state(this))) {
+                store_local_db.set_github_code(this, code);
                 return F.Promise.promise(() -> {
-                    String token = github_access.get_github_access_token(state, code);
+                    String token = store_github_api.get_github_access_token(state, code);
                     if (token==null) {
                         return unauthorized();
                     }
                     // user has logged in!
-                    store.set_token(this, token);
-                    user_model user = github_access.get_user_by_token(token);
-                    store.set_current_user(this, user);
-                    store.update_user(user);
+                    store_local_db.set_token(this, token);
+                    model_user user = store_github_api.get_user_by_token(token);
+                    store_local_db.set_current_user(this, user);
+                    store_local_db.update_user(user);
                     return index().get(60, TimeUnit.SECONDS);
                 });
             }
@@ -143,14 +143,14 @@ public class ApplicationRoutes extends Controller {
         }
 
         // user is not in the proceess of logging in
-        if (store.get_state(this) == null) {
-            store.set_state(this, github_access.get_random_string());
+        if (store_local_db.get_state(this) == null) {
+            store_local_db.set_state(this, store_github_api.get_random_string());
         }
         return F.Promise.promise(() -> ok(main.render(main_title, landing.render(), this)));
     }
 
     public Result logout() {
-        store.clear(this);
+        store_local_db.clear(this);
         return redirect("/");
     }
 }

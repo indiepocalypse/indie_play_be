@@ -1,10 +1,11 @@
-package controllers;
+package stores;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.typesafe.config.ConfigFactory;
-import models.ownership_model;
-import models.repo_model;
-import models.user_model;
+import controllers.ApplicationRoutes;
+import models.model_ownership;
+import models.model_repo;
+import models.model_user;
 import play.Logger;
 import play.libs.ws.WS;
 import play.libs.ws.WSClient;
@@ -23,8 +24,8 @@ import java.util.concurrent.TimeUnit;
 
 
 // store for inner db and session stuff (ie doesn't call to github, gmail or whatever
-public class store {
-    // TODO: refactor this class into its own package!
+public class store_local_db {
+    // TODO: split a store_session
 
     public static final String repo_name_name = "repo_name";
     public static final String repo_homepage_name = "repo_homepage";
@@ -66,7 +67,7 @@ public class store {
         return get_token(app) != null;
     }
 
-    public static void set_current_user(ApplicationRoutes app, user_model user) {
+    public static void set_current_user(ApplicationRoutes app, model_user user) {
         app.session().put(avatar_url_session_key, user.avatar_url);
         app.session().put(user_name_session_key, user.user_name);
     }
@@ -160,7 +161,7 @@ public class store {
      ********************************/
 
     // this updates a repo in the db according to the repo given in the parameters
-    public static void update_repo(repo_model repo) {
+    public static void update_repo(model_repo repo) {
         try {
             repo.save();
         } catch (Exception ignore) {
@@ -168,32 +169,32 @@ public class store {
         }
     }
 
-    public static repo_model get_repo_by_name(String repo_name) {
+    public static model_repo get_repo_by_name(String repo_name) {
         try {
-            return repo_model.find.byId(repo_name);
+            return model_repo.find.byId(repo_name);
         } catch (Exception ignore) {
             return null;
         }
     }
 
-    public static List<repo_model> get_all_repos() {
+    public static List<model_repo> get_all_repos() {
         try {
-            return repo_model.find.all();
+            return model_repo.find.all();
         } catch (Exception ignore) {
-            return new ArrayList<repo_model>();
+            return new ArrayList<model_repo>();
         }
     }
 
-    public static void register_transfered_repo(user_model user, repo_model repo) {
+    public static void register_transfered_repo(model_user user, model_repo repo) {
         update_repo(repo);
         update_user(user);
-        ownership_model ownership = new ownership_model(user, repo, new BigDecimal("100.0"));
-        store.update_ownership(ownership);
+        model_ownership ownership = new model_ownership(user, repo, new BigDecimal("100.0"));
+        store_local_db.update_ownership(ownership);
     }
 
-    public static void register_new_repo(ApplicationRoutes app, repo_model repo) {
+    public static void register_new_repo(ApplicationRoutes app, model_repo repo) {
         set_new_repo(app, repo.repo_name);
-        user_model user = github_access.get_user_by_name(get_user_name(app));
+        model_user user = store_github_api.get_user_by_name(get_user_name(app));
         register_transfered_repo(user, repo);
     }
 
@@ -201,7 +202,7 @@ public class store {
      * USERS!
      ********************************/
 
-    public static void update_user(user_model user) {
+    public static void update_user(model_user user) {
         try {
             user.save();
         } catch (Exception ignore) {
@@ -209,19 +210,19 @@ public class store {
         }
     }
 
-    public static user_model get_user_by_name(String user_name) {
+    public static model_user get_user_by_name(String user_name) {
         try {
-            return user_model.find.byId(user_name);
+            return model_user.find.byId(user_name);
         } catch (Exception ignore) {
             return null;
         }
     }
 
-    public static List<user_model> get_all_users() {
+    public static List<model_user> get_all_users() {
         try {
-            return user_model.find.all();
+            return model_user.find.all();
         } catch (Exception ignore) {
-            return new ArrayList<user_model>();
+            return new ArrayList<model_user>();
         }
     }
 
@@ -229,7 +230,7 @@ public class store {
      * OWNERSHIP!
      ********************************/
 
-    public static void update_ownership(ownership_model ownership) {
+    public static void update_ownership(model_ownership ownership) {
         try {
             Logger.info("============ownership id  : " + ownership.id);
             Logger.info("============repo_name     : " + ownership.repo.repo_name);
@@ -241,17 +242,17 @@ public class store {
         }
     }
 
-    public static List<ownership_model> get_ownerships_by_user_name(String user_name) {
+    public static List<model_ownership> get_ownerships_by_user_name(String user_name) {
         try {
-            return ownership_model.find.where().eq("user.user_name", user_name).findList();
+            return model_ownership.find.where().eq("user.user_name", user_name).findList();
         } catch (Exception ignore) {
             return new ArrayList<>(0);
         }
     }
 
-    public static List<ownership_model> get_ownerships_by_repo_name(String repo_name) {
+    public static List<model_ownership> get_ownerships_by_repo_name(String repo_name) {
         try {
-            return ownership_model.find.where().eq("repo.repo_name", repo_name).findList();
+            return model_ownership.find.where().eq("repo.repo_name", repo_name).findList();
         } catch (Exception ignore) {
             return new ArrayList<>(0);
         }

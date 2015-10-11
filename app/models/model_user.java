@@ -11,8 +11,8 @@ import javax.persistence.Id;
  */
 
 @Entity
-public class user_model extends Model {
-    public static Finder<String, user_model> find = new Finder<String, user_model>(user_model.class);
+public class model_user extends Model {
+    public static Finder<String, model_user> find = new Finder<String, model_user>(model_user.class);
     @Id
     public String user_name;
     public String user_blog_url;
@@ -24,7 +24,7 @@ public class user_model extends Model {
     public Integer followers;
     public Integer following;
 
-    public user_model(String p_user_name, String p_user_blog_url, String p_github_html_url,
+    public model_user(String p_user_name, String p_user_blog_url, String p_github_html_url,
                       String p_email, String p_avatar_url, Integer p_public_repos,
                       String p_github_repos_url, Integer p_followers, Integer p_following) {
         this.user_name = p_user_name;
@@ -38,7 +38,7 @@ public class user_model extends Model {
         this.following = p_following;
     }
 
-    public static user_model from_json(JsonNode json_user) {
+    public static model_user from_json(JsonNode json_user) {
         String user_avatar_url = json_user.get("avatar_url").asText();
         String user_name = json_user.get("login").asText();
         String user_blog_url = json_user.get("blog").asText();
@@ -48,7 +48,7 @@ public class user_model extends Model {
         String user_github_repos_url = json_user.get("repos_url").asText();
         Integer followers = json_user.get("followers").asInt();
         Integer following = json_user.get("following").asInt();
-        return new user_model(
+        return new model_user(
                 user_name, user_blog_url, user_github_html_url,
                 user_mail, user_avatar_url, user_public_repos,
                 user_github_repos_url, followers, following);

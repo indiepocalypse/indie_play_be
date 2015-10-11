@@ -3,10 +3,13 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.sun.mail.imap.IMAPFolder;
 import com.typesafe.config.ConfigFactory;
-import models.gmail_last_date_read;
-import models.repo_model;
-import models.user_model;
+import models.model_gmail_last_date_read;
+import models.model_repo;
+import models.model_user;
 import play.Logger;
+import stores.store_local_db;
+import stores.store_github_iojs;
+import stores.store_github_api;
 
 import javax.mail.Folder;
 import javax.mail.Message;
@@ -34,7 +37,7 @@ public class GmailInbox {
                 public void run() {
                     while (!interrupted()) {
                         try {
-                            Thread.sleep(store.get_gmail_reload_sync_delta_milis());
+                            Thread.sleep(store_local_db.get_gmail_reload_sync_delta_milis());
                             reload_folder();
                         } catch (Exception e) {
                             Logger.error("while sleeping to reload inbox...", e);
@@ -96,10 +99,10 @@ public class GmailInbox {
 
     public static void handle_messages(Message[] ms) {
         // TODO: move last date stuff into the sotre!
-        gmail_last_date_read last_date_read_model = null;
+        model_gmail_last_date_read last_date_read_model = null;
         boolean should_save_date;
         try {
-            last_date_read_model = gmail_last_date_read.find.byId(gmail_last_date_read.constid);
+            last_date_read_model = model_gmail_last_date_read.find.byId(model_gmail_last_date_read.constid);
         } catch (Exception ignored) {
         }
         Logger.info("#messages=" + Integer.toString(ms.length));
@@ -129,7 +132,7 @@ public class GmailInbox {
                 continue;
             }
             if (last_date_read_model == null) {
-                last_date_read_model = new gmail_last_date_read(m_date);
+                last_date_read_model = new model_gmail_last_date_read(m_date);
             } else {
                 if (last_date_read_model.lastdate.before(m_date)) {
                     last_date_read_model.lastdate = m_date;
@@ -149,10 +152,10 @@ public class GmailInbox {
                             if (lt.startsWith("https")) {
                                 // accept the repo!
                                 Logger.info("The repo transfer url: " + lt);
-                                if (github_iojs.accept_trasfer_repo(lt)) {
-                                    repo_model repo = github_access.get_repo_by_name(from_user, repo_name);
-                                    user_model user = github_access.get_user_by_name(from_user);
-                                    store.register_transfered_repo(user, repo);
+                                if (store_github_iojs.accept_trasfer_repo(lt)) {
+                                    model_repo repo = store_github_api.get_repo_by_name(from_user, repo_name);
+                                    model_user user = store_github_api.get_user_by_name(from_user);
+                                    store_local_db.register_transfered_repo(user, repo);
                                 }
                                 else {
                                     // TODO: handle unsuccesful transfer! or ignore ;)
@@ -222,12 +225,12 @@ public class GmailInbox {
             mail_store.connect("imap.gmail.com", tmp_name, tmp_pssw);
             inbox = (IMAPFolder) mail_store.getFolder("inbox");
             inbox.open(Folder.READ_WRITE);
-            gmail_last_date_read last_date_read_model = null;
+            model_gmail_last_date_read last_date_read_model = null;
             try {
-                last_date_read_model = gmail_last_date_read.find.byId(gmail_last_date_read.constid);
+                last_date_read_model = model_gmail_last_date_read.find.byId(model_gmail_last_date_read.constid);
             } catch (Exception ignored) {
             }
-            final gmail_last_date_read last_date_model_f = last_date_read_model;
+            final model_gmail_last_date_read last_date_model_f = last_date_read_model;
 
             Message[] messages = inbox.search(new SearchTerm() {
                 @Override

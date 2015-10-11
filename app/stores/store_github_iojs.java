@@ -1,7 +1,5 @@
-package controllers;
+package stores;
 
-import models.repo_model;
-import models.user_model;
 import play.Logger;
 
 import java.io.BufferedReader;
@@ -11,12 +9,12 @@ import java.io.InputStreamReader;
 /**
  * Created by skariel on 02/10/15.
  */
-public class github_iojs {
+public class store_github_iojs {
     static public boolean accept_trasfer_repo(String url) {
         // returns success!
         try {
             Process process = new ProcessBuilder(
-                    "app/iojs/iojs", "app/iojs/accept_repo_transfer.js", store.get_indie_github_name(), store.get_indie_github_pssw(), url).start();
+                    "app/iojs/iojs", "app/iojs/accept_repo_transfer.js", store_local_db.get_indie_github_name(), store_local_db.get_indie_github_pssw(), url).start();
             InputStream in = process.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 

@@ -1,14 +1,11 @@
 package controllers;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import models.repo_model;
+import models.model_repo;
 import play.Logger;
-import play.libs.ws.WS;
-import play.libs.ws.WSClient;
-import play.libs.ws.WSResponse;
+import stores.store_local_db;
+import stores.store_github_api;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by skariel on 06/10/15.
@@ -24,7 +21,7 @@ public class github_repo_sync {
                     while (!interrupted()) {
                         try {
                             sync();
-                            Thread.sleep(store.get_github_repo_sync_delta_milis());
+                            Thread.sleep(store_local_db.get_github_repo_sync_delta_milis());
                         } catch (Exception e) {
                             Logger.error("while sleeping to sync with github...", e);
                         }
@@ -48,9 +45,9 @@ public class github_repo_sync {
         }
         syncing = true;
 
-        List<repo_model> repos = github_access.get_indie_repositories();
-        for (repo_model repo: repos) {
-            store.update_repo(repo);
+        List<model_repo> repos = store_github_api.get_indie_repositories();
+        for (model_repo repo: repos) {
+            store_local_db.update_repo(repo);
         }
         Logger.info("SYNCSYNC SIZE=" + Integer.toString(repos.size()));
 

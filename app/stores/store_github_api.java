@@ -1,11 +1,12 @@
-package controllers;
+package stores;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.typesafe.config.ConfigFactory;
-import models.repo_model;
-import models.user_model;
+import controllers.RandomString;
+import models.model_repo;
+import models.model_user;
 import play.libs.F;
 import play.libs.Json;
 import play.libs.ws.WS;
@@ -20,13 +21,13 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by skariel on 21/09/15.
  */
-public class github_access {
+public class store_github_api {
     // TODO: move this scope constant to conf
     private static final String scope = "";
 
     public static String get_github_access_url(String state) {
         final String github_access = "https://github.com/login/oauth/authorize?client_id=__CLIENT_ID__&redirect_uri=__CALLBACK_URI__&scope=" + scope + "&state=__STATE__";
-        final String client_id = store.get_indie_github_client_id();
+        final String client_id = store_local_db.get_indie_github_client_id();
         final String callback_uri = ConfigFactory.load().getString("credentials.indie.github.login.callback");
         return github_access.replace("__STATE__", state)
                 .replace("__CLIENT_ID__", client_id)
@@ -34,10 +35,10 @@ public class github_access {
     }
 
     public static String get_github_access_token(String state, String code) {
-        final String client_id = store.get_indie_github_client_id();
-        final String client_secret = store.get_indie_github_client_secret();
+        final String client_id = store_local_db.get_indie_github_client_id();
+        final String client_secret = store_local_db.get_indie_github_client_secret();
 
-        WSResponse res = store.getwsclient().url("https://github.com/login/oauth/access_token")
+        WSResponse res = store_local_db.getwsclient().url("https://github.com/login/oauth/access_token")
                 .setMethod("POST")
                 .setQueryParameter("client_id", client_id)
                 .setQueryParameter("client_secret", client_secret)
@@ -59,7 +60,7 @@ public class github_access {
 
     private static WSRequest indie_auth_request(WSClient ws, String path) {
         return ws.url("https://api.github.com" + path)
-                .setHeader("Authorization", "Basic " + store.get_indie_github_auth())
+                .setHeader("Authorization", "Basic " + store_local_db.get_indie_github_auth())
                 .setHeader("Accept", "application/vnd.github.v3 + json");
     }
 
@@ -69,16 +70,16 @@ public class github_access {
                 .setHeader("Accept", "application/vnd.github.v3 + json");
     }
 
-    public static List<repo_model> get_indie_repositories() {
-        WSResponse res =  indie_auth_request(store.getwsclient(), "/user/repos")
+    public static List<model_repo> get_indie_repositories() {
+        WSResponse res =  indie_auth_request(store_local_db.getwsclient(), "/user/repos")
                 .setMethod("GET")
                 .execute()
                 .get(60, TimeUnit.SECONDS);
         JsonNode json = play.libs.Json.parse(res.getBody());
-        ArrayList<repo_model> repos = new ArrayList<>(json.size());
+        ArrayList<model_repo> repos = new ArrayList<>(json.size());
         for (int i = 0; i < json.size(); i++) {
             JsonNode json_repo = json.get(i);
-            repos.add(repo_model.from_json(json_repo));
+            repos.add(model_repo.from_json(json_repo));
         }
         return repos;
     }
@@ -90,7 +91,7 @@ public class github_access {
                 .setBody(json);
     }
 
-    public static repo_model create_new_repo(WSClient ws, String repo_name, String repo_homepage, String repo_description) throws Exception {
+    public static model_repo create_new_repo(WSClient ws, String repo_name, String repo_homepage, String repo_description) throws Exception {
         ObjectNode json = JsonNodeFactory.instance.objectNode();
         if (repo_name != null) {
             json.put("name", repo_name);
@@ -105,34 +106,34 @@ public class github_access {
         json.put("has_downloads", false);
         WSResponse res = post_indie_auth_request(ws, "/user/repos", json).execute().get(60, TimeUnit.SECONDS);
         if (res.getStatus() == 201) {
-            return repo_model.from_name_desc_and_homepage(repo_name, repo_description, repo_homepage);
+            return model_repo.from_name_desc_and_homepage(repo_name, repo_description, repo_homepage);
         }
         throw new Exception(res.getBody());
     }
 
-    public static repo_model get_repo_by_name(String user_name, String repo_name) {
+    public static model_repo get_repo_by_name(String user_name, String repo_name) {
         String path = "/repos/" + user_name + "/" + repo_name;
         WSRequest req = indie_auth_request(WS.client(), path);
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
-        repo_model repo = repo_model.from_json(play.libs.Json.parse(res.getBody()));
+        model_repo repo = model_repo.from_json(play.libs.Json.parse(res.getBody()));
         return repo;
     }
 
-    public static user_model get_user_by_token(String token) {
+    public static model_user get_user_by_token(String token) {
         WSResponse res_user;
-        WSRequest req_user = github_access.user_auth_request(WS.client(), token, "/user")
+        WSRequest req_user = store_github_api.user_auth_request(WS.client(), token, "/user")
                 .setMethod("GET");
         F.Promise<WSResponse> pres_user = req_user.execute();
         res_user = pres_user.get(60, TimeUnit.SECONDS);
-        return user_model.from_json(Json.parse(res_user.getBody()));
+        return model_user.from_json(Json.parse(res_user.getBody()));
     }
 
-    public static user_model get_user_by_name(String name) {
+    public static model_user get_user_by_name(String name) {
         WSResponse res_user;
-        WSRequest req_user = github_access.indie_auth_request(WS.client(), "/users/" + name)
+        WSRequest req_user = store_github_api.indie_auth_request(WS.client(), "/users/" + name)
                 .setMethod("GET");
         F.Promise<WSResponse> pres_user = req_user.execute();
         res_user = pres_user.get(60, TimeUnit.SECONDS);
-        return user_model.from_json(Json.parse(res_user.getBody()));
+        return model_user.from_json(Json.parse(res_user.getBody()));
     }
 }
