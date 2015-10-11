@@ -27,7 +27,7 @@ public class store_github_api {
 
     public static String get_github_access_url(String state) {
         final String github_access = "https://github.com/login/oauth/authorize?client_id=__CLIENT_ID__&redirect_uri=__CALLBACK_URI__&scope=" + scope + "&state=__STATE__";
-        final String client_id = store_local_db.get_indie_github_client_id();
+        final String client_id = store_credentials.github.getClient_id();
         final String callback_uri = ConfigFactory.load().getString("credentials.indie.github.login.callback");
         return github_access.replace("__STATE__", state)
                 .replace("__CLIENT_ID__", client_id)
@@ -35,8 +35,8 @@ public class store_github_api {
     }
 
     public static String get_github_access_token(String state, String code) {
-        final String client_id = store_local_db.get_indie_github_client_id();
-        final String client_secret = store_local_db.get_indie_github_client_secret();
+        final String client_id = store_credentials.github.getClient_id();
+        final String client_secret = store_credentials.github.getClient_secret();
 
         WSResponse res = store_local_db.getwsclient().url("https://github.com/login/oauth/access_token")
                 .setMethod("POST")
@@ -60,7 +60,7 @@ public class store_github_api {
 
     private static WSRequest indie_auth_request(WSClient ws, String path) {
         return ws.url("https://api.github.com" + path)
-                .setHeader("Authorization", "Basic " + store_local_db.get_indie_github_auth())
+                .setHeader("Authorization", "Basic " + store_credentials.github.getAuth())
                 .setHeader("Accept", "application/vnd.github.v3 + json");
     }
 

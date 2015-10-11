@@ -11,6 +11,7 @@ import java.util.Base64;
  * Created by skariel on 11/10/15.
  */
 public class store_credentials {
+    public static credentials_github github = new credentials_github();
     public static class credentials_github {
         public String name = null;
         public String pssw = null;

@@ -24,8 +24,6 @@ public class store_local_db {
     // TODO: split a store_session
     // TODO: split a credentials store
 
-    final static store_credentials.credentials_github CREDENTIALSGITHUB = new store_credentials.credentials_github();
-
     public static WSClient getwsclient() {
         WSClient ws;
         try {
@@ -34,30 +32,6 @@ public class store_local_db {
             ws = WS.newClient(1);
         }
         return ws;
-    }
-
-    /*************************************************************
-     * Github stuff!
-     ************************************************************/
-
-    public static String get_indie_github_name() {
-        return CREDENTIALSGITHUB.name;
-    }
-
-    public static String get_indie_github_pssw() {
-        return CREDENTIALSGITHUB.pssw;
-    }
-
-    public static String get_indie_github_auth() {
-        return CREDENTIALSGITHUB.getAuth();
-    }
-
-    public static String get_indie_github_client_id() {
-        return CREDENTIALSGITHUB.getClient_id();
-    }
-
-    public static String get_indie_github_client_secret() {
-        return CREDENTIALSGITHUB.getClient_secret();
     }
 
     /********************************

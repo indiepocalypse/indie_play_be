@@ -14,7 +14,7 @@ public class store_github_iojs {
         // returns success!
         try {
             Process process = new ProcessBuilder(
-                    "app/iojs/iojs", "app/iojs/accept_repo_transfer.js", store_local_db.get_indie_github_name(), store_local_db.get_indie_github_pssw(), url).start();
+                    "app/iojs/iojs", "app/iojs/accept_repo_transfer.js", store_credentials.github.name, store_credentials.github.pssw, url).start();
             InputStream in = process.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
