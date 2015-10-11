@@ -52,7 +52,6 @@ public class sync_gmail {
                 public void run() {
                     reload_folder();
                     while (!interrupted()) {
-                        // TODO: accept repo transfer...
                         try {
                             Thread.sleep(50);
                             if (inbox != null) {
@@ -110,11 +109,12 @@ public class sync_gmail {
             should_save_date = false;
         }
         for (Message m : ms) {
-            try {
-                Thread.sleep(stores.store_conf.get_gmail_reload_sync_jitter_milis());
-            }
-            catch (Exception ignored) {
-            }
+// TODO: FIX: THIS JITTER SLEEP HERE CAUSES FLODER TO CLOSE.
+//            try {
+//                Thread.sleep(stores.store_conf.get_gmail_reload_sync_jitter_small_milis());
+//            }
+//            catch (Exception ignored) {
+//            }
             Date m_date = null;
             String m_subject = null;
             String m_body = null;
@@ -232,8 +232,9 @@ public class sync_gmail {
                     return false;
                 }
             });
-            handle_messages(messages);
             mail_count = inbox.getMessageCount();
+            handle_messages(messages);
+            Logger.info("mail_count"+Integer.toString(mail_count));
             inbox.addMessageCountListener(new MessageCountListener() {
                 @Override
                 public void messagesAdded(MessageCountEvent messageCountEvent) {
