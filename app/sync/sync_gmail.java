@@ -200,7 +200,7 @@ public class sync_gmail {
         String tmp_pssw = ConfigFactory.load().getString("credentials.indie.gmail.pssw");
 
         try {
-            JsonNode json = play.libs.Json.parse(new FileInputStream("app/stores/.gmail_indie_credentials_local_secret"));
+            JsonNode json = play.libs.Json.parse(new FileInputStream("app/stores/.local_secret_gmail_indie_credentials"));
             tmp_name = json.get("username").asText();
             tmp_pssw = json.get("pssw").asText();
         } catch (FileNotFoundException e) {
