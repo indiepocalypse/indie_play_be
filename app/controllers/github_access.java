@@ -57,13 +57,13 @@ public class github_access {
         return new RandomString(12).nextString();
     }
 
-    public static WSRequest indie_auth_request(WSClient ws, String path) {
+    private static WSRequest indie_auth_request(WSClient ws, String path) {
         return ws.url("https://api.github.com" + path)
                 .setHeader("Authorization", "Basic " + store.get_indie_github_auth())
                 .setHeader("Accept", "application/vnd.github.v3 + json");
     }
 
-    public static WSRequest user_auth_request(WSClient ws, String token, String path) {
+    private static WSRequest user_auth_request(WSClient ws, String token, String path) {
         return ws.url("https://api.github.com" + path)
                 .setHeader("Authorization", "token " + token)
                 .setHeader("Accept", "application/vnd.github.v3 + json");
@@ -83,7 +83,7 @@ public class github_access {
         return repos;
     }
 
-    public static WSRequest post_indie_auth_request(WSClient ws, String path, JsonNode json) {
+    private static WSRequest post_indie_auth_request(WSClient ws, String path, JsonNode json) {
         return indie_auth_request(ws, "/user/repos")
                 .setMethod("POST")
                 .setContentType("application/json; charset=utf-8")
