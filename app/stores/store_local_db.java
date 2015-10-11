@@ -2,7 +2,7 @@ package stores;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.typesafe.config.ConfigFactory;
-import controllers.ApplicationRoutes;
+import controllers.controller_main;
 import models.model_ownership;
 import models.model_repo;
 import models.model_user;
@@ -26,6 +26,7 @@ import java.util.concurrent.TimeUnit;
 // store for inner db and session stuff (ie doesn't call to github, gmail or whatever
 public class store_local_db {
     // TODO: split a store_session
+    // TODO: split a credentials store
 
     public static final String repo_name_name = "repo_name";
     public static final String repo_homepage_name = "repo_homepage";
@@ -49,12 +50,12 @@ public class store_local_db {
         return ws;
     }
 
-    public static void set_new_repo(ApplicationRoutes app, String name) {
+    public static void set_new_repo(controller_main app, String name) {
         String key = new_repo_session_key + name;
         app.session().put(key, "yep!");
     }
 
-    public static boolean pop_new_repo(ApplicationRoutes app, String name) {
+    public static boolean pop_new_repo(controller_main app, String name) {
         String key = new_repo_session_key + name;
         boolean ret = app.session().containsKey(key);
         if (ret) {
@@ -63,47 +64,47 @@ public class store_local_db {
         return ret;
     }
 
-    public static boolean user_is_logged(ApplicationRoutes app) {
+    public static boolean user_is_logged(controller_main app) {
         return get_token(app) != null;
     }
 
-    public static void set_current_user(ApplicationRoutes app, model_user user) {
+    public static void set_current_user(controller_main app, model_user user) {
         app.session().put(avatar_url_session_key, user.avatar_url);
         app.session().put(user_name_session_key, user.user_name);
     }
 
 
-    public static String get_avatar_url(ApplicationRoutes app) {
+    public static String get_avatar_url(controller_main app) {
         if (!user_is_logged(app)) {
             return null;
         }
         return app.session().get(avatar_url_session_key);
     }
 
-    public static String get_user_name(ApplicationRoutes app) {
+    public static String get_user_name(controller_main app) {
         if (!user_is_logged(app)) {
             return null;
         }
         return app.session().get(user_name_session_key);
     }
 
-    public static String get_state(ApplicationRoutes app) {
+    public static String get_state(controller_main app) {
         return app.session().get(state_session_key);
     }
 
-    public static void set_state(ApplicationRoutes app, String state) {
+    public static void set_state(controller_main app, String state) {
         app.session().put(state_session_key, state);
     }
 
-    public static boolean has_returnto(ApplicationRoutes app) {
+    public static boolean has_returnto(controller_main app) {
         return app.session().get(returnto_session_key) != null;
     }
 
-    public static void set_return_to(ApplicationRoutes app, String to) {
+    public static void set_return_to(controller_main app, String to) {
         app.session().put(returnto_session_key, to);
     }
 
-    public static String pop_return_to(ApplicationRoutes app) {
+    public static String pop_return_to(controller_main app) {
         if (!app.session().containsKey(returnto_session_key)) {
             return null;
         }
@@ -112,7 +113,7 @@ public class store_local_db {
         return returnto;
     }
 
-    public static void clear(ApplicationRoutes app) {
+    public static void clear(controller_main app) {
         app.session().clear();
     }
 
@@ -120,19 +121,19 @@ public class store_local_db {
      * Github stuff!
      ************************************************************/
 
-    public static void set_token(ApplicationRoutes app, String token) {
+    public static void set_token(controller_main app, String token) {
         app.session().put(token_session_key, token);
     }
 
-    public static String get_token(ApplicationRoutes app) {
+    public static String get_token(controller_main app) {
         return app.session().get(token_session_key);
     }
 
-    public static void set_github_code(ApplicationRoutes app, String code) {
+    public static void set_github_code(controller_main app, String code) {
         app.session().put(github_code_session_key, code);
     }
 
-    public static String get_github_code(ApplicationRoutes app) {
+    public static String get_github_code(controller_main app) {
         return app.session().get(github_code_session_key);
     }
 
@@ -192,7 +193,7 @@ public class store_local_db {
         store_local_db.update_ownership(ownership);
     }
 
-    public static void register_new_repo(ApplicationRoutes app, model_repo repo) {
+    public static void register_new_repo(controller_main app, model_repo repo) {
         set_new_repo(app, repo.repo_name);
         model_user user = store_github_api.get_user_by_name(get_user_name(app));
         register_transfered_repo(user, repo);

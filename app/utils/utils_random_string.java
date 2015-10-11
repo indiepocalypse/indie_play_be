@@ -1,11 +1,11 @@
-package controllers;
+package utils;
 
 import java.util.Random;
 
 /**
  * Created by skariel on 21/09/15.
  */
-public class RandomString {
+public class utils_random_string {
     private static final char[] symbols;
 
     static {
@@ -21,7 +21,7 @@ public class RandomString {
 
     private final char[] buf;
 
-    public RandomString(int length) {
+    public utils_random_string(int length) {
         if (length < 1)
             throw new IllegalArgumentException("length < 1: " + length);
         buf = new char[length];

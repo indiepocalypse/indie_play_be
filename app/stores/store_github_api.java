@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.typesafe.config.ConfigFactory;
-import controllers.RandomString;
+import utils.utils_random_string;
 import models.model_repo;
 import models.model_user;
 import play.libs.F;
@@ -55,7 +55,7 @@ public class store_github_api {
     }
 
     public static String get_random_string() {
-        return new RandomString(12).nextString();
+        return new utils_random_string(12).nextString();
     }
 
     private static WSRequest indie_auth_request(WSClient ws, String path) {

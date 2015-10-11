@@ -12,13 +12,14 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import stores.store_local_db;
 import stores.store_github_api;
+import sync.sync_gmail;
 import views.html.*;
 
 import javax.inject.Inject;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class ApplicationRoutes extends Controller {
+public class controller_main extends Controller {
     // TODO: should login redirect to the current page always? currently only doing for create new repo page
     // TODO: add some jitter to Gmail and other syncing activities...
     // TODO: cache the simple pages (e.g. the landing page)
@@ -86,7 +87,7 @@ public class ApplicationRoutes extends Controller {
     }
 
     public Result blog() {
-        return ok(main.render("blog", "there are " + Integer.toString(GmailInbox.mail_count) + " messages in inbox!", this));
+        return ok(main.render("blog", "there are " + Integer.toString(sync_gmail.mail_count) + " messages in inbox!", this));
         //return ok(main.render("blog", "This is the blog!", this));
     }
 

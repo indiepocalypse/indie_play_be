@@ -1,4 +1,4 @@
-package controllers;
+package sync;
 
 import models.model_repo;
 import play.Logger;
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by skariel on 06/10/15.
  */
-public class github_repo_sync {
+public class sync_github_repos {
     static Thread t1 = null;
     static boolean syncing = false;
 

@@ -1,4 +1,4 @@
-package controllers;
+package sync;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.sun.mail.imap.IMAPFolder;
@@ -23,7 +23,7 @@ import java.io.FileNotFoundException;
 import java.util.Date;
 import java.util.Properties;
 
-public class GmailInbox {
+public class sync_gmail {
     public static int mail_count = 0;
     static IMAPFolder inbox = null;
     static Store mail_store = null;
