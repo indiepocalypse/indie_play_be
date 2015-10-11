@@ -113,7 +113,7 @@ public class store_github_api {
 
     public static model_repo get_repo_by_name(String user_name, String repo_name) {
         String path = "/repos/" + user_name + "/" + repo_name;
-        WSRequest req = indie_auth_request(WS.client(), path);
+        WSRequest req = indie_auth_request(store_local_db.getwsclient(), path);
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
         model_repo repo = model_repo.from_json(play.libs.Json.parse(res.getBody()));
         return repo;
@@ -121,7 +121,7 @@ public class store_github_api {
 
     public static model_user get_user_by_token(String token) {
         WSResponse res_user;
-        WSRequest req_user = store_github_api.user_auth_request(WS.client(), token, "/user")
+        WSRequest req_user = store_github_api.user_auth_request(store_local_db.getwsclient(), token, "/user")
                 .setMethod("GET");
         F.Promise<WSResponse> pres_user = req_user.execute();
         res_user = pres_user.get(60, TimeUnit.SECONDS);
@@ -130,7 +130,7 @@ public class store_github_api {
 
     public static model_user get_user_by_name(String name) {
         WSResponse res_user;
-        WSRequest req_user = store_github_api.indie_auth_request(WS.client(), "/users/" + name)
+        WSRequest req_user = store_github_api.indie_auth_request(store_local_db.getwsclient(), "/users/" + name)
                 .setMethod("GET");
         F.Promise<WSResponse> pres_user = req_user.execute();
         res_user = pres_user.get(60, TimeUnit.SECONDS);

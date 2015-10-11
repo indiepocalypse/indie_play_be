@@ -12,6 +12,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import stores.store_local_db;
 import stores.store_github_api;
+import stores.store_session;
 import sync.sync_gmail;
 import views.html.*;
 
@@ -57,19 +58,19 @@ public class controller_main extends Controller {
 
         String repo_name = "";
         try {
-            repo_name = data.get(store_local_db.repo_name_name);
+            repo_name = data.get(store_session.repo_name_name);
         } catch (Exception ignore) {
         }
 
         String repo_homepage = "";
         try {
-            repo_homepage = data.get(store_local_db.repo_homepage_name);
+            repo_homepage = data.get(store_session.repo_homepage_name);
         } catch (Exception ignore) {
         }
 
         String repo_description = "";
         try {
-            repo_description = data.get(store_local_db.repo_description_name);
+            repo_description = data.get(store_session.repo_description_name);
         } catch (Exception ignore) {
         }
 
@@ -110,12 +111,12 @@ public class controller_main extends Controller {
     }
 
     public F.Promise<Result> index() {
-        if (store_local_db.user_is_logged(this)) {
+        if (store_session.user_is_logged(this)) {
             return F.Promise.promise(() -> {
-                if (store_local_db.has_returnto(this)) {
-                    Logger.info(store_local_db.pop_return_to(this));
-                    Logger.info(store_local_db.pop_return_to(this));
-                    return redirect(store_local_db.pop_return_to(this));
+                if (store_session.has_returnto(this)) {
+                    Logger.info(store_session.pop_return_to(this));
+                    Logger.info(store_session.pop_return_to(this));
+                    return redirect(store_session.pop_return_to(this));
                 }
                 return ok(main.render(main_title, "Welcome!", this));
             });
@@ -125,17 +126,17 @@ public class controller_main extends Controller {
             // ie use is in the  process of logging in
             String code = request().getQueryString("code");
             String state = request().getQueryString("state");
-            if (state.equals(store_local_db.get_state(this))) {
-                store_local_db.set_github_code(this, code);
+            if (state.equals(store_session.get_state(this))) {
+                store_session.set_github_code(this, code);
                 return F.Promise.promise(() -> {
                     String token = store_github_api.get_github_access_token(state, code);
                     if (token==null) {
                         return unauthorized();
                     }
                     // user has logged in!
-                    store_local_db.set_token(this, token);
+                    store_session.set_token(this, token);
                     model_user user = store_github_api.get_user_by_token(token);
-                    store_local_db.set_current_user(this, user);
+                    store_session.set_current_user(this, user);
                     store_local_db.update_user(user);
                     return index().get(60, TimeUnit.SECONDS);
                 });
@@ -144,14 +145,14 @@ public class controller_main extends Controller {
         }
 
         // user is not in the proceess of logging in
-        if (store_local_db.get_state(this) == null) {
-            store_local_db.set_state(this, store_github_api.get_random_string());
+        if (store_session.get_state(this) == null) {
+            store_session.set_state(this, store_github_api.get_random_string());
         }
         return F.Promise.promise(() -> ok(main.render(main_title, landing.render(), this)));
     }
 
     public Result logout() {
-        store_local_db.clear(this);
+        store_session.clear(this);
         return redirect("/");
     }
 }

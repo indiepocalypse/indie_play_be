@@ -1,4 +1,4 @@
-@(app: ApplicationRoutes)(def_repo_name: String)(def_repo_homepage: String)(def_repo_description: String)(err: String)
+@(app: controller_main)(def_repo_name: String)(def_repo_homepage: String)(def_repo_description: String)(err: String)
 
 <div class="container col-md-6">
 
@@ -12,33 +12,33 @@
     </div>
     }
 
-    @if(store.user_is_logged(app)) {
+    @if(stores.store_session.user_is_logged(app)) {
 
 
     <form method="post">
         <div class="form-group has-feedback">
             <label class="control-label" for="input_reponame">Repository name</label>
-            <input type="text" class="form-control" id="input_reponame" name="@store.repo_name_name"
+            <input type="text" class="form-control" id="input_reponame" name="@stores.store_session.repo_name_name"
                    value="@def_repo_name" required>
             <span class="glyphicon glyphicon-asterisk form-control-feedback" aria-hidden="true"
                   style="color:red"></span>
         </div>
         <div class="form-group">
             <label class="control-label" for="input_homepage">Homepage</label>
-            <input type="text" class="form-control" id="input_homepage" name="@store.repo_homepage_name"
+            <input type="text" class="form-control" id="input_homepage" name="@stores.store_session.repo_homepage_name"
                    value="@def_repo_homepage">
         </div>
         <div class="form-group">
             <label class="control-label" for="input_description">Description</label>
-            <textarea class="form-control" rows="3" id="input_description" name="@store.repo_description_name"
+            <textarea class="form-control" rows="3" id="input_description" name="@stores.store_session.repo_description_name"
                       value="@def_repo_description">@def_repo_description</textarea>
         </div>
 
         <button type="submit" class="btn btn-default">Create repo</button>
     </form>
     } else {
-    @store.set_return_to(app, "/newrepo")
-    Please <a href="@github_access.get_github_access_url(store.get_state(app))">login</a> to create a new repository
+    @stores.store_session.set_return_to(app, "/newrepo")
+    Please <a href="@stores.store_github_api.get_github_access_url(stores.store_session.get_state(app))">login</a> to create a new repository
     }
 
 </div>

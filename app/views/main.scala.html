@@ -1,4 +1,4 @@
-@(title: String)(content: Object)(app: ApplicationRoutes)
+@(title: String)(content: Object)(app: controller_main)
 
 <!DOCTYPE html>
 
@@ -54,19 +54,19 @@
             <small>Blog</small>
         </a>
 
-        @if(store.user_is_logged(app)) {
+        @if(stores.store_session.user_is_logged(app)) {
 
         <div class="dropdown navbar-text navbar-right">
                           <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"
                                 title="settings, profile & more">
-                          <img src="@store.get_avatar_url(app)" alt="@store.get_user_name(app)"
+                          <img src="@stores.store_session.get_avatar_url(app)" alt="@stores.store_session.get_user_name(app)"
                                style="width:20px;height:20px;">
                           <span class="caret"></span>
                           </span>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li class="dropdown-header">logged in as <strong>@store.get_user_name(app)</strong></li>
+                <li class="dropdown-header">logged in as <strong>@stores.store_session.get_user_name(app)</strong></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="u/@store.get_user_name(app)">Profile</a></li>
+                <li><a href="u/@stores.store_session.get_user_name(app)">Profile</a></li>
                 <li><a href="/settings">Settings</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="/logout">Logout</a></li>
@@ -78,7 +78,7 @@
         </a>
 
         }else {
-        <a class="navbar-text navbar-right" href=@github_access.get_github_access_url(store.get_state(app))>login with
+        <a class="navbar-text navbar-right" href=@stores.store_github_api.get_github_access_url(stores.store_session.get_state(app))>login with
             github</a>
         }
     </div>

@@ -1,8 +1,8 @@
-@(app: ApplicationRoutes)(repo: repo_model)(owners: List[ownership_model])
+@(app: controller_main)(repo: model_repo)(owners: List[model_ownership])
 
 <div class="container col-md-6">
 
-    @if(store.pop_new_repo(app, repo.repo_name)){
+    @if(stores.store_session.pop_new_repo(app, repo.repo_name)){
     <div class="alert alert-success alert-dismissible" role="alert">
         <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
