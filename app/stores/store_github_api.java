@@ -4,15 +4,14 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.typesafe.config.ConfigFactory;
-import utils.utils_random_string;
 import models.model_repo;
 import models.model_user;
 import play.libs.F;
 import play.libs.Json;
-import play.libs.ws.WS;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSRequest;
 import play.libs.ws.WSResponse;
+import utils.utils_random_string;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +70,7 @@ public class store_github_api {
     }
 
     public static List<model_repo> get_indie_repositories() {
-        WSResponse res =  indie_auth_request(store_local_db.getwsclient(), "/user/repos")
+        WSResponse res = indie_auth_request(store_local_db.getwsclient(), "/user/repos")
                 .setMethod("GET")
                 .execute()
                 .get(60, TimeUnit.SECONDS);

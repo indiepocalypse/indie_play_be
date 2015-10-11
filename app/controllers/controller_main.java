@@ -10,8 +10,8 @@ import play.libs.F;
 import play.libs.ws.WSClient;
 import play.mvc.Controller;
 import play.mvc.Result;
-import stores.store_local_db;
 import stores.store_github_api;
+import stores.store_local_db;
 import stores.store_session;
 import sync.sync_gmail;
 import views.html.*;
@@ -78,8 +78,7 @@ public class controller_main extends Controller {
             model_repo repo = store_github_api.create_new_repo(ws, repo_name, repo_homepage, repo_description);
             store_local_db.register_new_repo(this, repo);
             return redirect("/r/" + repo_name);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             String err = "Couldn't create the repo, sorry!\n" +
                     "this is the reported result:\n\n" + e.getMessage();
             // TODO: report a better arror, at least format it or whatever...
@@ -114,8 +113,6 @@ public class controller_main extends Controller {
         if (store_session.user_is_logged(this)) {
             return F.Promise.promise(() -> {
                 if (store_session.has_returnto(this)) {
-                    Logger.info(store_session.pop_return_to(this));
-                    Logger.info(store_session.pop_return_to(this));
                     return redirect(store_session.pop_return_to(this));
                 }
                 return ok(main.render(main_title, "Welcome!", this));
@@ -130,7 +127,7 @@ public class controller_main extends Controller {
                 store_session.set_github_code(this, code);
                 return F.Promise.promise(() -> {
                     String token = store_github_api.get_github_access_token(state, code);
-                    if (token==null) {
+                    if (token == null) {
                         return unauthorized();
                     }
                     // user has logged in!

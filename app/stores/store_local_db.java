@@ -1,18 +1,15 @@
 package stores;
 
-import com.typesafe.config.ConfigFactory;
 import controllers.controller_main;
 import models.model_ownership;
 import models.model_repo;
 import models.model_user;
-import play.Logger;
 import play.libs.ws.WS;
 import play.libs.ws.WSClient;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by skariel on 05/10/15.
@@ -110,12 +107,8 @@ public class store_local_db {
 
     public static void update_ownership(model_ownership ownership) {
         try {
-            Logger.info("============ownership id  : " + ownership.id);
-            Logger.info("============repo_name     : " + ownership.repo.repo_name);
-            Logger.info("============user_name     : " + ownership.user.user_name);
             ownership.save();
         } catch (Exception e) {
-            Logger.error("=-=-=-=-=-=-=-=-=-=" + e.toString());
             ownership.update();
         }
     }
@@ -134,18 +127,5 @@ public class store_local_db {
         } catch (Exception ignore) {
             return new ArrayList<>(0);
         }
-    }
-
-    /********************************
-     * SYNC STUFF!
-     ********************************/
-
-    public static long get_github_repo_sync_delta_milis() {
-        return ConfigFactory.load().getDuration("sync.github.repo.delta_milis", TimeUnit.MILLISECONDS);
-
-    }
-
-    public static long get_gmail_reload_sync_delta_milis() {
-        return ConfigFactory.load().getDuration("sync.gmail.reload.delta_milis", TimeUnit.MILLISECONDS);
     }
 }

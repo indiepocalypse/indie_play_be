@@ -1,16 +1,11 @@
 package sync;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.sun.mail.imap.IMAPFolder;
-import com.typesafe.config.ConfigFactory;
 import models.model_gmail_last_date_read;
 import models.model_repo;
 import models.model_user;
 import play.Logger;
-import stores.store_credentials;
-import stores.store_local_db;
-import stores.store_github_iojs;
-import stores.store_github_api;
+import stores.*;
 
 import javax.mail.Folder;
 import javax.mail.Message;
@@ -19,8 +14,6 @@ import javax.mail.Store;
 import javax.mail.event.MessageCountEvent;
 import javax.mail.event.MessageCountListener;
 import javax.mail.search.SearchTerm;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.Date;
 import java.util.Properties;
 
@@ -38,7 +31,7 @@ public class sync_gmail {
                 public void run() {
                     while (!interrupted()) {
                         try {
-                            Thread.sleep(store_local_db.get_gmail_reload_sync_delta_milis());
+                            Thread.sleep(store_conf.get_gmail_reload_sync_delta_milis());
                             reload_folder();
                         } catch (Exception e) {
                             Logger.error("while sleeping to reload inbox...", e);
@@ -106,7 +99,6 @@ public class sync_gmail {
             last_date_read_model = model_gmail_last_date_read.find.byId(model_gmail_last_date_read.constid);
         } catch (Exception ignored) {
         }
-        Logger.info("#messages=" + Integer.toString(ms.length));
         if (last_date_read_model == null) {
             should_save_date = true;
         } else {
@@ -152,13 +144,11 @@ public class sync_gmail {
                             String lt = l.trim();
                             if (lt.startsWith("https")) {
                                 // accept the repo!
-                                Logger.info("The repo transfer url: " + lt);
                                 if (store_github_iojs.accept_trasfer_repo(lt)) {
                                     model_repo repo = store_github_api.get_repo_by_name(from_user, repo_name);
                                     model_user user = store_github_api.get_user_by_name(from_user);
                                     store_local_db.register_transfered_repo(user, repo);
-                                }
-                                else {
+                                } else {
                                     // TODO: handle unsuccesful transfer! or ignore ;)
                                 }
                             }
@@ -166,10 +156,6 @@ public class sync_gmail {
                     }
                 }
             }
-
-            Logger.info("handling message with title: " + m_subject);
-            //Logger.info("and body:"+m_body);
-            Logger.info("From:" + m_from);
         }
         if (last_date_read_model != null) {
             if (should_save_date) {

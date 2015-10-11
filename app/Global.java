@@ -1,8 +1,8 @@
-import sync.sync_gmail;
-import sync.sync_github_repos;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
+import sync.sync_github_repos;
+import sync.sync_gmail;
 
 public class Global extends GlobalSettings {
 

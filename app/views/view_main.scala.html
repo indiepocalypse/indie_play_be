@@ -7,6 +7,7 @@
             window.history.replaceState('Object','Title','/');
         }
 
+
 </script>
 
 <html lang="en">
@@ -15,7 +16,8 @@
     <!--no need for custom js or css-->
     <!--<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">-->
     <!--<script src="@routes.Assets.versioned("javascripts/hello.js")" type="text/javascript"></script>-->
-    <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned(" images/favicon.png")">
+    <link rel="shortcut icon" type="image/png"
+          href="@routes.Assets.versioned(" images/favicon.png")">
     <!-- Bootstrap! -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <style>
@@ -59,7 +61,8 @@
         <div class="dropdown navbar-text navbar-right">
                           <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"
                                 title="settings, profile & more">
-                          <img src="@stores.store_session.get_avatar_url(app)" alt="@stores.store_session.get_user_name(app)"
+                          <img src="@stores.store_session.get_avatar_url(app)"
+                               alt="@stores.store_session.get_user_name(app)"
                                style="width:20px;height:20px;">
                           <span class="caret"></span>
                           </span>
@@ -78,7 +81,8 @@
         </a>
 
         }else {
-        <a class="navbar-text navbar-right" href=@stores.store_github_api.get_github_access_url(stores.store_session.get_state(app))>login with
+        <a class="navbar-text navbar-right"
+           href=@stores.store_github_api.get_github_access_url(stores.store_session.get_state(app))>login with
             github</a>
         }
     </div>

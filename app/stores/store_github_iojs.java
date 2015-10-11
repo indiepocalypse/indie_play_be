@@ -18,10 +18,11 @@ public class store_github_iojs {
             InputStream in = process.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
-            String line;
-            while ((line = reader.readLine()) != null) {
-                Logger.info("iojs => " + line);
-            }
+//            String line;
+//            while ((line = reader.readLine()) != null) {
+//                Logger.info("iojs => " + line);
+//            }
+            while (reader.readLine()!=null) {} // just read everuthing.
             return true;
         } catch (Exception e) {
             Logger.error("while executing iojs...", e);

@@ -7,6 +7,9 @@ import models.model_user;
  * Created by skariel on 11/10/15.
  */
 public class store_session {
+    public static final String repo_name_name = "repo_name";
+    public static final String repo_homepage_name = "repo_homepage";
+    public static final String repo_description_name = "repo_description";
     final static String user_name_session_key = "user_name";
     final static String avatar_url_session_key = "avatar_url";
     final static String state_session_key = "state";
@@ -14,9 +17,6 @@ public class store_session {
     final static String token_session_key = "token";
     final static String github_code_session_key = "github_code";
     final static String new_repo_session_key = "new_repo___";
-    public static final String repo_name_name = "repo_name";
-    public static final String repo_homepage_name = "repo_homepage";
-    public static final String repo_description_name = "repo_description";
 
     public static void set_new_repo(controller_main app, String name) {
         String key = new_repo_session_key + name;

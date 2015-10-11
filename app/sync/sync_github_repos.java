@@ -2,8 +2,9 @@ package sync;
 
 import models.model_repo;
 import play.Logger;
-import stores.store_local_db;
+import stores.store_conf;
 import stores.store_github_api;
+import stores.store_local_db;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class sync_github_repos {
                     while (!interrupted()) {
                         try {
                             sync();
-                            Thread.sleep(store_local_db.get_github_repo_sync_delta_milis());
+                            Thread.sleep(store_conf.get_github_repo_sync_delta_milis());
                         } catch (Exception e) {
                             Logger.error("while sleeping to sync with github...", e);
                         }
@@ -46,10 +47,10 @@ public class sync_github_repos {
         syncing = true;
 
         List<model_repo> repos = store_github_api.get_indie_repositories();
-        for (model_repo repo: repos) {
+        for (model_repo repo : repos) {
             store_local_db.update_repo(repo);
         }
-        Logger.info("SYNCSYNC SIZE=" + Integer.toString(repos.size()));
+        Logger.info("syncing " + Integer.toString(repos.size())+" github repos");
 
         syncing = false;
     }

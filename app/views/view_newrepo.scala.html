@@ -30,7 +30,8 @@
         </div>
         <div class="form-group">
             <label class="control-label" for="input_description">Description</label>
-            <textarea class="form-control" rows="3" id="input_description" name="@stores.store_session.repo_description_name"
+            <textarea class="form-control" rows="3" id="input_description"
+                      name="@stores.store_session.repo_description_name"
                       value="@def_repo_description">@def_repo_description</textarea>
         </div>
 
@@ -38,7 +39,8 @@
     </form>
     } else {
     @stores.store_session.set_return_to(app, "/newrepo")
-    Please <a href="@stores.store_github_api.get_github_access_url(stores.store_session.get_state(app))">login</a> to create a new repository
+    Please <a href="@stores.store_github_api.get_github_access_url(stores.store_session.get_state(app))">login</a> to
+    create a new repository
     }
 
 </div>

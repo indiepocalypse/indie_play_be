@@ -13,6 +13,8 @@ import java.util.Base64;
  */
 public class store_credentials {
     public static final credentials_github github = new credentials_github();
+    public static final credentials_gmail gmail = new credentials_gmail();
+
     public static class credentials_github {
         public String name = null;
         public String pssw = null;
@@ -54,10 +56,10 @@ public class store_credentials {
         }
     }
 
-    public static final credentials_gmail gmail = new credentials_gmail();
     public static class credentials_gmail {
         public String name = null;
         public String pssw = null;
+
         public credentials_gmail() {
             String tmp_name = ConfigFactory.load().getString("credentials.indie.gmail.username");
             String tmp_pssw = ConfigFactory.load().getString("credentials.indie.gmail.pssw");
