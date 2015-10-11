@@ -7,6 +7,7 @@ import models.model_gmail_last_date_read;
 import models.model_repo;
 import models.model_user;
 import play.Logger;
+import stores.store_credentials;
 import stores.store_local_db;
 import stores.store_github_iojs;
 import stores.store_github_api;
@@ -195,17 +196,6 @@ public class sync_gmail {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        // TODO: move this to store_local, like for github
-        String tmp_name = ConfigFactory.load().getString("credentials.indie.gmail.username");
-        String tmp_pssw = ConfigFactory.load().getString("credentials.indie.gmail.pssw");
-
-        try {
-            JsonNode json = play.libs.Json.parse(new FileInputStream("app/stores/.local_secret_gmail_indie_credentials"));
-            tmp_name = json.get("username").asText();
-            tmp_pssw = json.get("pssw").asText();
-        } catch (FileNotFoundException e) {
-            Logger.warn("While loading gmail credentials... ", e);
-        }
 
         final Properties properties = System.getProperties();
         properties.put("mail.imap.ssl.enable", "true");
@@ -222,7 +212,7 @@ public class sync_gmail {
 
         try {
             mail_store = imap_session.getStore("imaps");
-            mail_store.connect("imap.gmail.com", tmp_name, tmp_pssw);
+            mail_store.connect("imap.gmail.com", store_credentials.gmail.name, store_credentials.gmail.pssw);
             inbox = (IMAPFolder) mail_store.getFolder("inbox");
             inbox.open(Folder.READ_WRITE);
             model_gmail_last_date_read last_date_read_model = null;
@@ -261,7 +251,7 @@ public class sync_gmail {
                 }
             });
         } catch (Exception e) {
-            Logger.error("While reloading gmail inbox... ", e);
+            Logger.error("while reloading gmail inbox... ", e);
         }
         reloading = false;
     }

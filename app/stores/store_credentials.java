@@ -2,6 +2,7 @@ package stores;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.typesafe.config.ConfigFactory;
+import play.Logger;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -11,7 +12,7 @@ import java.util.Base64;
  * Created by skariel on 11/10/15.
  */
 public class store_credentials {
-    public static credentials_github github = new credentials_github();
+    public static final credentials_github github = new credentials_github();
     public static class credentials_github {
         public String name = null;
         public String pssw = null;
@@ -53,4 +54,23 @@ public class store_credentials {
         }
     }
 
+    public static final credentials_gmail gmail = new credentials_gmail();
+    public static class credentials_gmail {
+        public String name = null;
+        public String pssw = null;
+        public credentials_gmail() {
+            String tmp_name = ConfigFactory.load().getString("credentials.indie.gmail.username");
+            String tmp_pssw = ConfigFactory.load().getString("credentials.indie.gmail.pssw");
+            try {
+                JsonNode json = play.libs.Json.parse(new FileInputStream("app/stores/.local_secret_gmail_indie_credentials"));
+                tmp_name = json.get("username").asText();
+                tmp_pssw = json.get("pssw").asText();
+            } catch (FileNotFoundException e) {
+                Logger.warn("while loading gmail credentials... ", e);
+            }
+            name = tmp_name;
+            pssw = tmp_pssw;
+        }
+
+    }
 }
