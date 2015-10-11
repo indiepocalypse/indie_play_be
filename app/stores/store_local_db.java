@@ -285,7 +285,7 @@ public class store_local_db {
             client_id = ConfigFactory.load().getString("credentials.indie.github.client_id");
             client_secret = ConfigFactory.load().getString("credentials.indie.github.client_secret");
             try {
-                JsonNode json = play.libs.Json.parse(new FileInputStream("app/controllers/.github_indie_credentials_local_secret"));
+                JsonNode json = play.libs.Json.parse(new FileInputStream("app/stores/.github_indie_credentials_local_secret"));
                 tmp_name = json.get("username").asText();
                 tmp_pssw = json.get("pssw").asText();
                 client_id = json.get("client_id").asText();

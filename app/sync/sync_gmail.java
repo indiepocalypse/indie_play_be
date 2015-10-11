@@ -195,12 +195,12 @@ public class sync_gmail {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        // TODO: move this to store_local, like for github
         String tmp_name = ConfigFactory.load().getString("credentials.indie.gmail.username");
         String tmp_pssw = ConfigFactory.load().getString("credentials.indie.gmail.pssw");
 
         try {
-            JsonNode json = play.libs.Json.parse(new FileInputStream("app/controllers/.gmail_indie_credentials_local_secret"));
+            JsonNode json = play.libs.Json.parse(new FileInputStream("app/stores/.gmail_indie_credentials_local_secret"));
             tmp_name = json.get("username").asText();
             tmp_pssw = json.get("pssw").asText();
         } catch (FileNotFoundException e) {
