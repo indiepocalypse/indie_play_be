@@ -64,6 +64,20 @@ public class store_github_api {
                 .setHeader("Accept", "application/vnd.github.v3 + json");
     }
 
+    private static WSRequest post_indie_auth_request(String path, JsonNode json) {
+        return indie_auth_request(path)
+                .setMethod("POST")
+                .setContentType("application/json; charset=utf-8")
+                .setBody(json);
+    }
+
+    private static WSRequest post_indie_auth_request(String path, String json) {
+        return indie_auth_request(path)
+                .setMethod("POST")
+                .setContentType("application/json; charset=utf-8")
+                .setBody(json);
+    }
+
     private static WSRequest user_auth_request(String token, String path) {
         WSClient ws = store_local_db.getwsclient();
         return ws.url("https://api.github.com" + path)
@@ -83,13 +97,6 @@ public class store_github_api {
             repos.add(model_repo.from_json(json_repo));
         }
         return repos;
-    }
-
-    private static WSRequest post_indie_auth_request(String path, JsonNode json) {
-        return indie_auth_request(path)
-                .setMethod("POST")
-                .setContentType("application/json; charset=utf-8")
-                .setBody(json);
     }
 
     public static model_repo create_new_repo(String repo_name, String repo_homepage, String repo_description) throws Exception {
@@ -135,5 +142,27 @@ public class store_github_api {
         F.Promise<WSResponse> pres_user = req_user.execute();
         res_user = pres_user.get(60, TimeUnit.SECONDS);
         return model_user.from_json(Json.parse(res_user.getBody()));
+    }
+
+    public static boolean create_webhook(model_repo repo) {
+        // (returns success)
+        // see for reference: https://developer.github.com/v3/repos/hooks/
+        String json_payload_to_create = "{\n" +
+                "  \"name\": \"web\",\n" +
+                "  \"active\": true,\n" +
+                "  \"events\": [\n" +
+                "    \"*\",\n" +
+                "  ],\n" +
+                "  \"config\": {\n" +
+                "    \"url\": \"__GITHUB_WEBHOOK_URL__\",\n" +
+                "    \"content_type\": \"json\"\n" +
+                "  }\n" +
+                "}".replace("__GITHUB_WEBHOOK_URL__", store_conf.get_github_webhook_url());
+        String path = "/repos/__OWNER__/__REPO__/hooks"
+                .replace("__OWNER__", store_credentials.github.name)
+                .replace("__REPO__", repo.repo_name);
+        WSRequest req = post_indie_auth_request(path, json_payload_to_create);
+        WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
+        return res.getStatus() == 201;
     }
 }

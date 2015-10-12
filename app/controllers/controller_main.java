@@ -3,6 +3,7 @@ package controllers;
 import models.model_ownership;
 import models.model_repo;
 import models.model_user;
+import play.core.routing.Route;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.F;
@@ -20,6 +21,8 @@ import java.util.concurrent.TimeUnit;
 public class controller_main extends Controller {
     // TODO: should login redirect to the current page always? currently only doing for create new repo page
     // TODO: cache the simple pages (e.g. the landing page)
+    // TODO: remove original owner when repo is transferred
+    // TODO: use reverse routing so I don't repeat myself :)
     // TODO: enfore the following by structure: 1) only stores touch models, 2) only controller_main touche views (its already like this, but not enforced!)
 
     private final static String main_title = "it's the Indiepocalypse!";
