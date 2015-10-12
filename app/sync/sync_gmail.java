@@ -20,11 +20,11 @@ import java.util.Random;
 
 public class sync_gmail {
     public static int mail_count = 0;
-    static IMAPFolder inbox = null;
-    static Store mail_store = null;
-    static Thread t1 = null;
-    static Thread t2 = null;
-    static boolean reloading = false;
+    private static IMAPFolder inbox = null;
+    private static Store mail_store = null;
+    private static Thread t1 = null;
+    private static Thread t2 = null;
+    private static boolean reloading = false;
 
     public static void start() {
         if (t1 == null) {
@@ -95,14 +95,10 @@ public class sync_gmail {
     }
 
 
-    public static void handle_messages(Message[] ms) {
+    private static void handle_messages(Message[] ms) {
         // TODO: move last date stuff into the sotre!
-        model_gmail_last_date_read last_date_read_model = null;
+        model_gmail_last_date_read last_date_read_model = store_local_db.get_gmail_latest_sync_date();
         boolean should_save_date = false;
-        try {
-            last_date_read_model = model_gmail_last_date_read.find.byId(model_gmail_last_date_read.constid);
-        } catch (Exception ignored) {
-        }
         if (last_date_read_model == null) {
             should_save_date = true;
         }
@@ -142,24 +138,21 @@ public class sync_gmail {
 
             // TODO: actually handle the message....
             if ((m_from != null) && (m_from.equals("GitHub <support@github.com>"))) {
-                if ((m_subject != null) && (m_subject.contains("Repository transfer from"))) {
-                    if (m_body != null) {
-                        String from_user = m_subject.split("@")[1].split("\\s+")[0];
-                        String repo_name = m_subject.split("/")[1].split("\\)")[0];
-                        Logger.info("transfering from user: " + from_user + "    repo name: " + repo_name);
-                        String lines[] = m_body.split("\\r?\\n");
-                        for (String l : lines) {
-                            String lt = l.trim();
-                            if (lt.startsWith("https")) {
-                                // accept the repo!
-                                if (store_github_iojs.accept_trasfer_repo(lt)) {
-                                    model_repo repo = store_github_api.get_repo_by_name(from_user, repo_name);
-                                    model_user user = store_github_api.get_user_by_name(from_user);
-                                    store_local_db.register_transfered_repo(user, repo);
-                                } else {
-                                    // TODO: handle unsuccesful transfer! or ignore ;)
-                                }
+                if (m_subject.contains("Repository transfer from")) {
+                    String from_user = m_subject.split("@")[1].split("\\s+")[0];
+                    String repo_name = m_subject.split("/")[1].split("\\)")[0];
+                    Logger.info("transfering from user: " + from_user + "    repo name: " + repo_name);
+                    String lines[] = m_body.split("\\r?\\n");
+                    for (String l : lines) {
+                        String lt = l.trim();
+                        if (lt.startsWith("https")) {
+                            // accept the repo!
+                            if (store_github_iojs.accept_trasfer_repo(lt)) {
+                                model_repo repo = store_github_api.get_repo_by_name(from_user, repo_name);
+                                model_user user = store_github_api.get_user_by_name(from_user);
+                                store_local_db.register_transfered_repo(user, repo);
                             }
+                            // TODO: handle unsuccesful transfer! or ignore ;)
                         }
                     }
                 }
@@ -174,7 +167,7 @@ public class sync_gmail {
         }
     }
 
-    public static void reload_folder() {
+    private static void reload_folder() {
         if (reloading) {
             return;
         }
@@ -209,21 +202,13 @@ public class sync_gmail {
             mail_store.connect("imap.gmail.com", store_credentials.gmail.name, store_credentials.gmail.pssw);
             inbox = (IMAPFolder) mail_store.getFolder("inbox");
             inbox.open(Folder.READ_WRITE);
-            model_gmail_last_date_read last_date_read_model = null;
-            try {
-                last_date_read_model = model_gmail_last_date_read.find.byId(model_gmail_last_date_read.constid);
-            } catch (Exception ignored) {
-            }
-            final model_gmail_last_date_read last_date_model_f = last_date_read_model;
+            final model_gmail_last_date_read f_last_date_read_model = store_local_db.get_gmail_latest_sync_date();
 
             Message[] messages = inbox.search(new SearchTerm() {
                 @Override
                 public boolean match(Message message) {
                     try {
-                        if (last_date_model_f != null) {
-                            return message.getReceivedDate().after(last_date_model_f.lastdate);
-                        }
-                        return true;
+                        return f_last_date_read_model==null || message.getReceivedDate().after(f_last_date_read_model.lastdate);
                     } catch (Exception e) {
                         Logger.error("retreiving messages (initialli)...", e);
                     }

@@ -57,20 +57,22 @@ public class store_github_api {
         return new utils_random_string(12).nextString();
     }
 
-    private static WSRequest indie_auth_request(WSClient ws, String path) {
+    private static WSRequest indie_auth_request(String path) {
+        WSClient ws = store_local_db.getwsclient();
         return ws.url("https://api.github.com" + path)
                 .setHeader("Authorization", "Basic " + store_credentials.github.getAuth())
                 .setHeader("Accept", "application/vnd.github.v3 + json");
     }
 
-    private static WSRequest user_auth_request(WSClient ws, String token, String path) {
+    private static WSRequest user_auth_request(String token, String path) {
+        WSClient ws = store_local_db.getwsclient();
         return ws.url("https://api.github.com" + path)
                 .setHeader("Authorization", "token " + token)
                 .setHeader("Accept", "application/vnd.github.v3 + json");
     }
 
     public static List<model_repo> get_indie_repositories() {
-        WSResponse res = indie_auth_request(store_local_db.getwsclient(), "/user/repos")
+        WSResponse res = indie_auth_request("/user/repos")
                 .setMethod("GET")
                 .execute()
                 .get(60, TimeUnit.SECONDS);
@@ -83,14 +85,14 @@ public class store_github_api {
         return repos;
     }
 
-    private static WSRequest post_indie_auth_request(WSClient ws, String path, JsonNode json) {
-        return indie_auth_request(ws, "/user/repos")
+    private static WSRequest post_indie_auth_request(String path, JsonNode json) {
+        return indie_auth_request(path)
                 .setMethod("POST")
                 .setContentType("application/json; charset=utf-8")
                 .setBody(json);
     }
 
-    public static model_repo create_new_repo(WSClient ws, String repo_name, String repo_homepage, String repo_description) throws Exception {
+    public static model_repo create_new_repo(String repo_name, String repo_homepage, String repo_description) throws Exception {
         ObjectNode json = JsonNodeFactory.instance.objectNode();
         if (repo_name != null) {
             json.put("name", repo_name);
@@ -103,7 +105,7 @@ public class store_github_api {
         }
         json.put("has_wiki", false);
         json.put("has_downloads", false);
-        WSResponse res = post_indie_auth_request(ws, "/user/repos", json).execute().get(60, TimeUnit.SECONDS);
+        WSResponse res = post_indie_auth_request("/user/repos", json).execute().get(60, TimeUnit.SECONDS);
         if (res.getStatus() == 201) {
             return model_repo.from_name_desc_and_homepage(repo_name, repo_description, repo_homepage);
         }
@@ -112,14 +114,14 @@ public class store_github_api {
 
     public static model_repo get_repo_by_name(String user_name, String repo_name) {
         String path = "/repos/" + user_name + "/" + repo_name;
-        WSRequest req = indie_auth_request(store_local_db.getwsclient(), path);
+        WSRequest req = indie_auth_request(path);
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
         return model_repo.from_json(play.libs.Json.parse(res.getBody()));
     }
 
     public static model_user get_user_by_token(String token) {
         WSResponse res_user;
-        WSRequest req_user = store_github_api.user_auth_request(store_local_db.getwsclient(), token, "/user")
+        WSRequest req_user = store_github_api.user_auth_request(token, "/user")
                 .setMethod("GET");
         F.Promise<WSResponse> pres_user = req_user.execute();
         res_user = pres_user.get(60, TimeUnit.SECONDS);
@@ -128,7 +130,7 @@ public class store_github_api {
 
     public static model_user get_user_by_name(String name) {
         WSResponse res_user;
-        WSRequest req_user = store_github_api.indie_auth_request(store_local_db.getwsclient(), "/users/" + name)
+        WSRequest req_user = store_github_api.indie_auth_request("/users/" + name)
                 .setMethod("GET");
         F.Promise<WSResponse> pres_user = req_user.execute();
         res_user = pres_user.get(60, TimeUnit.SECONDS);

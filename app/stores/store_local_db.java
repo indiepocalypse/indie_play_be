@@ -1,6 +1,6 @@
 package stores;
 
-import controllers.controller_main;
+import models.model_gmail_last_date_read;
 import models.model_ownership;
 import models.model_repo;
 import models.model_user;
@@ -18,9 +18,7 @@ import java.util.List;
 
 // store for inner db and session stuff (ie doesn't call to github, gmail or whatever
 public class store_local_db {
-    // TODO: split a store_session
-    // TODO: split a credentials store
-
+    // TODO: move this one to a more appropriate pace...
     public static WSClient getwsclient() {
         WSClient ws;
         try {
@@ -56,7 +54,7 @@ public class store_local_db {
         try {
             return model_repo.find.all();
         } catch (Exception ignore) {
-            return new ArrayList<model_repo>();
+            return new ArrayList<>();
         }
     }
 
@@ -97,7 +95,7 @@ public class store_local_db {
         try {
             return model_user.find.all();
         } catch (Exception ignore) {
-            return new ArrayList<model_user>();
+            return new ArrayList<>();
         }
     }
 
@@ -128,4 +126,22 @@ public class store_local_db {
             return new ArrayList<>(0);
         }
     }
+
+    /********************************
+     * GMAIL!
+     ********************************/
+
+    public static void update_gmail_last_read_date(model_gmail_last_date_read gmail_sync_date) {
+        try {
+            gmail_sync_date.save();
+        } catch (Exception e) {
+            gmail_sync_date.update();
+        }
+    }
+
+    public static model_gmail_last_date_read get_gmail_latest_sync_date() {
+        return model_gmail_last_date_read.get_a_copy_of_the_singleton();
+
+    }
+
 }

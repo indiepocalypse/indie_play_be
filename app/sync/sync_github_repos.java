@@ -13,8 +13,8 @@ import java.util.Random;
  * Created by skariel on 06/10/15.
  */
 public class sync_github_repos {
-    static Thread t1 = null;
-    static boolean syncing = false;
+    private static Thread t1 = null;
+    private static boolean syncing = false;
 
     static public void start() {
         if (t1 == null) {
@@ -45,7 +45,7 @@ public class sync_github_repos {
         }
     }
 
-    static void sync() {
+    private static void sync() {
         if (syncing) {
             return;
         }

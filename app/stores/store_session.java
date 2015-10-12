@@ -10,13 +10,13 @@ public class store_session {
     public static final String repo_name_name = "repo_name";
     public static final String repo_homepage_name = "repo_homepage";
     public static final String repo_description_name = "repo_description";
-    final static String user_name_session_key = "user_name";
-    final static String avatar_url_session_key = "avatar_url";
-    final static String state_session_key = "state";
-    final static String returnto_session_key = "returnto";
-    final static String token_session_key = "token";
-    final static String github_code_session_key = "github_code";
-    final static String new_repo_session_key = "new_repo___";
+    private final static String user_name_session_key = "user_name";
+    private final static String avatar_url_session_key = "avatar_url";
+    private final static String state_session_key = "state";
+    private final static String returnto_session_key = "returnto";
+    private final static String token_session_key = "token";
+    private final static String github_code_session_key = "github_code";
+    private final static String new_repo_session_key = "new_repo___";
 
     public static void set_new_repo(String name) {
         String key = new_repo_session_key + name;
@@ -36,7 +36,7 @@ public class store_session {
         return get_token() != null;
     }
 
-    public static void set_current_user(controller_main app, model_user user) {
+    public static void set_current_user(model_user user) {
         controller_main.session().put(avatar_url_session_key, user.avatar_url);
         controller_main.session().put(user_name_session_key, user.user_name);
     }
@@ -85,7 +85,7 @@ public class store_session {
         controller_main.session().clear();
     }
 
-    public static void set_token(controller_main app, String token) {
+    public static void set_token(String token) {
         controller_main.session().put(token_session_key, token);
     }
 

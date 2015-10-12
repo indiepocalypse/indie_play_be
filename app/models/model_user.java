@@ -12,17 +12,17 @@ import javax.persistence.Id;
 
 @Entity
 public class model_user extends Model {
-    public static Finder<String, model_user> find = new Finder<String, model_user>(model_user.class);
+    public static final Finder<String, model_user> find = new Finder<>(model_user.class);
     @Id
-    public String user_name;
-    public String user_blog_url;
-    public String github_html_url;
-    public String email;
-    public String avatar_url;
-    public Integer public_repos;
-    public String github_repos_url;
-    public Integer followers;
-    public Integer following;
+    public final String user_name;
+    public final String user_blog_url;
+    public final String github_html_url;
+    public final String email;
+    public final String avatar_url;
+    public final Integer public_repos;
+    public final String github_repos_url;
+    public final Integer followers;
+    public final Integer following;
 
     public model_user(String p_user_name, String p_user_blog_url, String p_github_html_url,
                       String p_email, String p_avatar_url, Integer p_public_repos,

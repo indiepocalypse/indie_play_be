@@ -3,11 +3,9 @@ package controllers;
 import models.model_ownership;
 import models.model_repo;
 import models.model_user;
-import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.F;
-import play.libs.ws.WSClient;
 import play.mvc.Controller;
 import play.mvc.Result;
 import stores.store_github_api;
@@ -16,19 +14,15 @@ import stores.store_session;
 import sync.sync_gmail;
 import views.html.*;
 
-import javax.inject.Inject;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class controller_main extends Controller {
     // TODO: should login redirect to the current page always? currently only doing for create new repo page
-    // TODO: add some jitter to Gmail and other syncing activities...
     // TODO: cache the simple pages (e.g. the landing page)
+    // TODO: enfore the following by structure: 1) only stores touch models, 2) only controller_main touche views (its already like this, but not enforced!)
 
-    final static String main_title = "it's the Indiepocalypse!";
-    @Inject
-    public WSClient ws;
-
+    private final static String main_title = "it's the Indiepocalypse!";
     private boolean is_redirected_from_github_login() {
         return request().getQueryString("code") != null;
     }
@@ -49,8 +43,7 @@ public class controller_main extends Controller {
         String def_repo_name = "";
         String def_repo_homepage = "";
         String def_repo_description = "";
-        String err = null;
-        return ok(view_main.render("new repo", view_newrepo.render(def_repo_name, def_repo_homepage, def_repo_description, err)));
+        return ok(view_main.render("new repo", view_newrepo.render(def_repo_name, def_repo_homepage, def_repo_description, null)));
     }
 
     public Result newrepo_post() {
@@ -75,7 +68,7 @@ public class controller_main extends Controller {
         }
 
         try {
-            model_repo repo = store_github_api.create_new_repo(ws, repo_name, repo_homepage, repo_description);
+            model_repo repo = store_github_api.create_new_repo(repo_name, repo_homepage, repo_description);
             store_local_db.register_new_repo(repo);
             return redirect("/r/" + repo_name);
         } catch (Exception e) {
@@ -131,14 +124,14 @@ public class controller_main extends Controller {
                         return unauthorized();
                     }
                     // user has logged in!
-                    store_session.set_token(this, token);
+                    store_session.set_token(token);
                     model_user user = store_github_api.get_user_by_token(token);
-                    store_session.set_current_user(this, user);
+                    store_session.set_current_user(user);
                     store_local_db.update_user(user);
                     return index().get(60, TimeUnit.SECONDS);
                 });
             }
-            return F.Promise.promise(() -> unauthorized());
+            return F.Promise.promise(controller_main::unauthorized);
         }
 
         // user is not in the proceess of logging in

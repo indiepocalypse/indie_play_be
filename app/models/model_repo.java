@@ -12,14 +12,14 @@ import javax.persistence.Id;
 
 @Entity
 public class model_repo extends Model {
-    public static Finder<String, model_repo> find = new Finder<String, model_repo>(model_repo.class);
+    public static final Finder<String, model_repo> find = new Finder<>(model_repo.class);
     @Id
-    public String repo_name;
-    public String repo_description;
-    public String repo_homepage;
-    public String github_html_url;
-    public Integer stars_count;
-    public Integer forks_count;
+    public final String repo_name;
+    public final String repo_description;
+    public final String repo_homepage;
+    public final String github_html_url;
+    public final Integer stars_count;
+    public final Integer forks_count;
 
     public model_repo(String repo_name, String repo_description, String repo_homepage, String github_html_url, Integer stars_count, Integer forks_count) {
         this.repo_name = repo_name;
