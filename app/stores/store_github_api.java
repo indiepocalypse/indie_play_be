@@ -114,8 +114,7 @@ public class store_github_api {
         String path = "/repos/" + user_name + "/" + repo_name;
         WSRequest req = indie_auth_request(store_local_db.getwsclient(), path);
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
-        model_repo repo = model_repo.from_json(play.libs.Json.parse(res.getBody()));
-        return repo;
+        return model_repo.from_json(play.libs.Json.parse(res.getBody()));
     }
 
     public static model_user get_user_by_token(String token) {

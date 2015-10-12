@@ -18,87 +18,87 @@ public class store_session {
     final static String github_code_session_key = "github_code";
     final static String new_repo_session_key = "new_repo___";
 
-    public static void set_new_repo(controller_main app, String name) {
+    public static void set_new_repo(String name) {
         String key = new_repo_session_key + name;
-        app.session().put(key, "yep!");
+        controller_main.session().put(key, "yep!");
     }
 
-    public static boolean pop_new_repo(controller_main app, String name) {
+    public static boolean pop_new_repo(String name) {
         String key = new_repo_session_key + name;
-        boolean ret = app.session().containsKey(key);
+        boolean ret = controller_main.session().containsKey(key);
         if (ret) {
-            app.session().remove(key);
+            controller_main.session().remove(key);
         }
         return ret;
     }
 
-    public static boolean user_is_logged(controller_main app) {
-        return get_token(app) != null;
+    public static boolean user_is_logged() {
+        return get_token() != null;
     }
 
     public static void set_current_user(controller_main app, model_user user) {
-        app.session().put(avatar_url_session_key, user.avatar_url);
-        app.session().put(user_name_session_key, user.user_name);
+        controller_main.session().put(avatar_url_session_key, user.avatar_url);
+        controller_main.session().put(user_name_session_key, user.user_name);
     }
 
 
-    public static String get_avatar_url(controller_main app) {
-        if (!user_is_logged(app)) {
+    public static String get_avatar_url() {
+        if (!user_is_logged()) {
             return null;
         }
-        return app.session().get(avatar_url_session_key);
+        return controller_main.session().get(avatar_url_session_key);
     }
 
-    public static String get_user_name(controller_main app) {
-        if (!user_is_logged(app)) {
+    public static String get_user_name() {
+        if (!user_is_logged()) {
             return null;
         }
-        return app.session().get(user_name_session_key);
+        return controller_main.session().get(user_name_session_key);
     }
 
-    public static String get_state(controller_main app) {
-        return app.session().get(state_session_key);
+    public static String get_state() {
+        return controller_main.session().get(state_session_key);
     }
 
-    public static void set_state(controller_main app, String state) {
-        app.session().put(state_session_key, state);
+    public static void set_state(String state) {
+        controller_main.session().put(state_session_key, state);
     }
 
-    public static boolean has_returnto(controller_main app) {
-        return app.session().get(returnto_session_key) != null;
+    public static boolean has_returnto() {
+        return controller_main.session().get(returnto_session_key) != null;
     }
 
-    public static void set_return_to(controller_main app, String to) {
-        app.session().put(returnto_session_key, to);
+    public static void set_return_to(String to) {
+        controller_main.session().put(returnto_session_key, to);
     }
 
-    public static String pop_return_to(controller_main app) {
-        if (!app.session().containsKey(returnto_session_key)) {
+    public static String pop_return_to() {
+        if (!controller_main.session().containsKey(returnto_session_key)) {
             return null;
         }
-        String returnto = app.session().get(returnto_session_key);
-        app.session().remove(returnto_session_key);
+        String returnto = controller_main.session().get(returnto_session_key);
+        controller_main.session().remove(returnto_session_key);
         return returnto;
     }
 
-    public static void clear(controller_main app) {
-        app.session().clear();
+    public static void clear() {
+        controller_main.session().clear();
     }
 
     public static void set_token(controller_main app, String token) {
-        app.session().put(token_session_key, token);
+        controller_main.session().put(token_session_key, token);
     }
 
-    public static String get_token(controller_main app) {
-        return app.session().get(token_session_key);
+    public static String get_token() {
+        return controller_main.session().get(token_session_key);
     }
 
-    public static void set_github_code(controller_main app, String code) {
-        app.session().put(github_code_session_key, code);
+    public static void set_github_code(String code) {
+        controller_main.session().put(github_code_session_key, code);
     }
 
-    public static String get_github_code(controller_main app) {
-        return app.session().get(github_code_session_key);
+    public static String get_github_code() {
+        return controller_main.session().get(github_code_session_key);
     }
 
 

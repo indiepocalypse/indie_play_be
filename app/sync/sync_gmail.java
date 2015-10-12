@@ -98,15 +98,13 @@ public class sync_gmail {
     public static void handle_messages(Message[] ms) {
         // TODO: move last date stuff into the sotre!
         model_gmail_last_date_read last_date_read_model = null;
-        boolean should_save_date;
+        boolean should_save_date = false;
         try {
             last_date_read_model = model_gmail_last_date_read.find.byId(model_gmail_last_date_read.constid);
         } catch (Exception ignored) {
         }
         if (last_date_read_model == null) {
             should_save_date = true;
-        } else {
-            should_save_date = false;
         }
         for (Message m : ms) {
 // TODO: FIX: THIS JITTER SLEEP HERE CAUSES FLODER TO CLOSE.

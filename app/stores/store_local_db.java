@@ -67,9 +67,9 @@ public class store_local_db {
         update_ownership(ownership);
     }
 
-    public static void register_new_repo(controller_main app, model_repo repo) {
-        store_session.set_new_repo(app, repo.repo_name);
-        model_user user = store_github_api.get_user_by_name(store_session.get_user_name(app));
+    public static void register_new_repo(model_repo repo) {
+        store_session.set_new_repo(repo.repo_name);
+        model_user user = store_github_api.get_user_by_name(store_session.get_user_name());
         register_transfered_repo(user, repo);
     }
 
