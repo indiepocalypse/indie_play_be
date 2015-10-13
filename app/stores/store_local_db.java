@@ -59,17 +59,6 @@ public class store_local_db {
         }
     }
 
-    public static void register_transfered_repo(model_user user, model_repo repo) {
-        model_ownership ownership = new model_ownership(user, repo, new BigDecimal("100.0"));
-        update_ownership(ownership);
-    }
-
-    public static void register_new_repo(model_repo repo) {
-        store_session.set_new_repo(repo.repo_name);
-        model_user user = store_github_api.get_user_by_name(store_session.get_user_name());
-        register_transfered_repo(user, repo);
-    }
-
     /********************************
      * USERS!
      ********************************/

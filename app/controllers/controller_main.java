@@ -16,6 +16,7 @@ import stores.store_session;
 import sync.sync_gmail;
 import views.html.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -73,8 +74,11 @@ public class controller_main extends Controller {
 
         try {
             model_repo repo = store_github_api.create_new_repo(repo_name, repo_homepage, repo_description);
-            store_local_db.register_new_repo(repo);
-            return redirect("/r/" + repo_name);
+            store_session.set_new_repo(repo.repo_name);
+            model_user user = store_github_api.get_user_by_name(store_session.get_user_name());
+            model_ownership ownership = new model_ownership(user, repo, new BigDecimal("100.0"));
+            store_local_db.update_ownership(ownership);
+            return redirect(routes.controller_main.repo_profile(repo_name));
         } catch (Exception e) {
             String err = "Couldn't create the repo, sorry!\n" +
                     "this is the reported result:\n\n" + e.getMessage();

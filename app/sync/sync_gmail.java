@@ -2,6 +2,7 @@ package sync;
 
 import com.sun.mail.imap.IMAPFolder;
 import models.model_gmail_last_date_read;
+import models.model_ownership;
 import models.model_repo;
 import models.model_user;
 import play.Logger;
@@ -14,6 +15,7 @@ import javax.mail.Store;
 import javax.mail.event.MessageCountEvent;
 import javax.mail.event.MessageCountListener;
 import javax.mail.search.SearchTerm;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Properties;
 import java.util.Random;
@@ -181,7 +183,8 @@ public class sync_gmail {
                                     repo = store_github_api.get_repo_by_name(from_user, repo_name);
                                     store_local_db.update_repo(repo);
                                 }
-                                store_local_db.register_transfered_repo(user, repo);
+                                model_ownership ownership = new model_ownership(user, repo, new BigDecimal("100.0"));
+                                store_local_db.update_ownership(ownership);
                             }
                             // TODO: handle unsuccesful transfer! or ignore ;)
                         }
