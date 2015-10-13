@@ -1,0 +1,5 @@
+Current development principles:
+
+1) only store_local_db touches models
+2) stores can only read from other stores
+3) only controller main touches views
