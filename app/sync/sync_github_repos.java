@@ -17,6 +17,7 @@ public class sync_github_repos {
     private static boolean syncing = false;
 
     static public void start() {
+        // TODO: sync webhooks
         if (t1 == null) {
             t1 = new Thread() {
                 public void run() {

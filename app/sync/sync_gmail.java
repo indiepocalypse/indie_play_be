@@ -53,12 +53,30 @@ public class sync_gmail {
                     reload_folder();
                     while (!interrupted()) {
                         try {
-                            Thread.sleep(50);
                             if (inbox != null) {
                                 inbox.idle(true);
                             }
                         } catch (Exception e) {
                             Logger.error("Error in gmail idle...", e);
+                            if (e.toString().contains("closed folder")) {
+                                Logger.info("waiting for folder to open...");
+                                try {
+                                    Thread.sleep(1500);
+                                }
+                                catch (Exception ignored) {
+                                }
+                                if (inbox.isOpen()) {
+                                    Logger.info("folder is now open!");
+                                    continue;
+                                }
+                                Logger.info("trying to reconnect folder...");
+                                reload_folder();
+                                try {
+                                    Thread.sleep(1500);
+                                }
+                                catch (Exception ignored) {
+                                }
+                            }
                         }
                     }
                 }
