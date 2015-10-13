@@ -21,6 +21,7 @@ import java.util.Properties;
 import java.util.Random;
 
 public class sync_gmail {
+    // TODO: there seems to be an issue when interrupting threads. They don't really get interrupted?
     public static int mail_count = 0;
     private static IMAPFolder inbox = null;
     private static Store mail_store = null;
