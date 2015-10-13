@@ -60,9 +60,6 @@ public class store_conf {
     }
 
     public static String get_github_webhook_url() {
-        // problem here: https://github.com/playframework/playframework/issues/969
-        return get_url_heroku_root()+ routes.
-                controllers
-                control controller_webhooks_github();
+        return get_url_heroku_root()+ controllers.routes.controller_webhooks_github.handle_wildcard();
     }
 }
