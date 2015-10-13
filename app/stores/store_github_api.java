@@ -169,20 +169,27 @@ public class store_github_api {
         String json_payload_to_create = "{\n" +
                 "  \"name\": \"web\",\n" +
                 "  \"active\": true,\n" +
-                "  \"events\": [\n" +
-                "    \"*\",\n" +
-                "  ],\n" +
+                "  \"events\": \"*\",\n"+
                 "  \"config\": {\n" +
                 "    \"url\": \"__GITHUB_WEBHOOK_URL__\",\n" +
                 "    \"content_type\": \"json\"\n" +
                 "  }\n" +
-                "}".replace("__GITHUB_WEBHOOK_URL__", store_conf.get_github_webhook_url());
+                "}";
+        json_payload_to_create = json_payload_to_create.replace("__GITHUB_WEBHOOK_URL__", store_conf.get_github_webhook_url());
+        Logger.info("JJJJJJJ="+json_payload_to_create);
         String path = "/repos/__OWNER__/__REPO__/hooks"
                 .replace("__OWNER__", store_credentials.github.name)
                 .replace("__REPO__", repo.repo_name);
         WSRequest req = post_indie_auth_request(path, json_payload_to_create);
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
-        Logger.info("successfuly created a webhook for repo named "+repo.repo_name);
-        return res.getStatus() == 201;
+        boolean success = (res.getStatus() == 201)&&(res.getBody().contains("ping_url"));
+        if (success) {
+            Logger.info("successfuly created a webhook for repo named "+repo.repo_name);
+            return true;
+        }
+        else {
+            Logger.info("error during github webhook creation: "+res.getBody());
+            return false;
+        }
     }
 }
