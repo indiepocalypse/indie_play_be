@@ -19,16 +19,6 @@ import java.util.List;
 
 // store for inner db and session stuff (ie doesn't call to github, gmail or whatever
 public class store_local_db {
-    // TODO: move this one to a more appropriate pace...
-    public static WSClient getwsclient() {
-        WSClient ws;
-        try {
-            ws = WS.client();
-        } catch (Exception ignored) {
-            ws = WS.newClient(1);
-        }
-        return ws;
-    }
 
     /********************************
      * REPOS!

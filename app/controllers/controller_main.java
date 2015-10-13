@@ -3,8 +3,6 @@ package controllers;
 import models.model_ownership;
 import models.model_repo;
 import models.model_user;
-import play.Logger;
-import play.core.routing.Route;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.F;
@@ -18,14 +16,13 @@ import views.html.*;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class controller_main extends Controller {
     // TODO: should login redirect to the current page always? currently only doing for create new repo page
     // TODO: cache the simple pages (e.g. the landing page)
     // TODO: remove original owner when repo is transferred
-    // TODO: use reverse routing so I don't repeat myself :)
-    // TODO: enfore the following by structure: 1) only stores touch models, 2) only controller_main touche views (its already like this, but not enforced!)
+    // TODO: use reverse routing so I don't repeat myself :) (done?!)
+    // TODO: enforce the following by structure: 1) only stores touch models, 2) only controller_main touche views (its already like this, but not enforced!)
 
     private final static String main_title = "it's the Indiepocalypse!";
     private boolean is_redirected_from_github_login() {
@@ -88,8 +85,8 @@ public class controller_main extends Controller {
     }
 
     public Result blog() {
+        // TODO: an actual blog view!
         return ok(view_main.render("blog", "there are " + Integer.toString(sync_gmail.mail_count) + " messages in inbox!"));
-        //return ok(main.render("blog", "This is the blog!", this));
     }
 
     public Result settings() {
@@ -110,14 +107,12 @@ public class controller_main extends Controller {
         return ok(view_main.render(repo_name + "@" + pull_id_str, "This is the pull id " + pull_id_str + " in repo " + repo_name));
     }
 
-    public F.Promise<Result> index() {
+    public Result index() {
         if (store_session.user_is_logged()) {
-            return F.Promise.promise(() -> {
-                if (store_session.has_returnto()) {
-                    return redirect(store_session.pop_return_to());
-                }
-                return ok(view_main.render(main_title, "Welcome!"));
-            });
+            if (store_session.has_returnto()) {
+                return redirect(store_session.pop_return_to());
+            }
+            return ok(view_main.render(main_title, "Welcome!"));
         }
 
         if (is_redirected_from_github_login()) {
@@ -126,27 +121,25 @@ public class controller_main extends Controller {
             String state = request().getQueryString("state");
             if (state.equals(store_session.get_state())) {
                 store_session.set_github_code(code);
-                return F.Promise.promise(() -> {
-                    String token = store_github_api.get_github_access_token(state, code);
-                    if (token == null) {
-                        return unauthorized();
-                    }
-                    // user has logged in!
-                    store_session.set_token(token);
-                    model_user user = store_github_api.get_user_by_token(token);
-                    store_session.set_current_user(user);
-                    store_local_db.update_user(user);
-                    return index().get(60, TimeUnit.SECONDS);
-                });
+                String token = store_github_api.get_github_access_token(state, code);
+                if (token == null) {
+                    return unauthorized();
+                }
+                // user has logged in!
+                store_session.set_token(token);
+                model_user user = store_github_api.get_user_by_token(token);
+                store_session.set_current_user(user);
+                store_local_db.update_user(user);
+                return index();
             }
-            return F.Promise.promise(controller_main::unauthorized);
+            return unauthorized();
         }
 
         // user is not in the proceess of logging in
         if (store_session.get_state() == null) {
             store_session.set_state(store_github_api.get_random_string());
         }
-        return F.Promise.promise(() -> ok(view_main.render(main_title, view_landing.render())));
+        return ok(view_main.render(main_title, view_landing.render()));
     }
 
     public Result logout() {

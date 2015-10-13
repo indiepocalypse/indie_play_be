@@ -11,6 +11,7 @@ import play.libs.Json;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSRequest;
 import play.libs.ws.WSResponse;
+import utils.utils_general;
 import utils.utils_random_string;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class store_github_api {
         final String client_id = store_credentials.github.getClient_id();
         final String client_secret = store_credentials.github.getClient_secret();
 
-        WSResponse res = store_local_db.getwsclient().url("https://github.com/login/oauth/access_token")
+        WSResponse res = utils_general.getwsclient().url("https://github.com/login/oauth/access_token")
                 .setMethod("POST")
                 .setQueryParameter("client_id", client_id)
                 .setQueryParameter("client_secret", client_secret)
@@ -58,7 +59,7 @@ public class store_github_api {
     }
 
     private static WSRequest indie_auth_request(String path) {
-        WSClient ws = store_local_db.getwsclient();
+        WSClient ws = utils_general.getwsclient();
         return ws.url("https://api.github.com" + path)
                 .setHeader("Authorization", "Basic " + store_credentials.github.getAuth())
                 .setHeader("Accept", "application/vnd.github.v3 + json");
@@ -79,7 +80,7 @@ public class store_github_api {
     }
 
     private static WSRequest user_auth_request(String token, String path) {
-        WSClient ws = store_local_db.getwsclient();
+        WSClient ws = utils_general.getwsclient();
         return ws.url("https://api.github.com" + path)
                 .setHeader("Authorization", "token " + token)
                 .setHeader("Accept", "application/vnd.github.v3 + json");
@@ -128,7 +129,7 @@ public class store_github_api {
 
     public static model_user get_user_by_token(String token) {
         WSResponse res_user;
-        WSRequest req_user = store_github_api.user_auth_request(token, "/user")
+        WSRequest req_user = user_auth_request(token, "/user")
                 .setMethod("GET");
         F.Promise<WSResponse> pres_user = req_user.execute();
         res_user = pres_user.get(60, TimeUnit.SECONDS);
@@ -137,7 +138,7 @@ public class store_github_api {
 
     public static model_user get_user_by_name(String name) {
         WSResponse res_user;
-        WSRequest req_user = store_github_api.indie_auth_request("/users/" + name)
+        WSRequest req_user = indie_auth_request("/users/" + name)
                 .setMethod("GET");
         F.Promise<WSResponse> pres_user = req_user.execute();
         res_user = pres_user.get(60, TimeUnit.SECONDS);
