@@ -53,6 +53,11 @@ public class sync_gmail {
                     reload_folder();
                     while (!interrupted()) {
                         try {
+                            Thread.sleep(20);
+                        }
+                        catch (Exception ignored) {
+                        }
+                        try {
                             if (inbox != null) {
                                 inbox.idle(true);
                             }
@@ -62,19 +67,20 @@ public class sync_gmail {
                                 Logger.info("waiting for folder to open...");
                                 try {
                                     Thread.sleep(1500);
+                                    if (inbox.isOpen()) {
+                                        Logger.info("folder is now open!");
+                                        continue;
+                                    }
                                 }
                                 catch (Exception ignored) {
-                                }
-                                if (inbox.isOpen()) {
-                                    Logger.info("folder is now open!");
-                                    continue;
                                 }
                                 Logger.info("trying to reconnect folder...");
-                                reload_folder();
                                 try {
+                                    reload_folder();
                                     Thread.sleep(1500);
                                 }
-                                catch (Exception ignored) {
+                                catch (Exception ee) {
+                                    Logger.error("Error trying to reopen gmail inbox...", ee);
                                 }
                             }
                         }
@@ -116,10 +122,6 @@ public class sync_gmail {
     private static void handle_messages(Message[] ms) {
         // TODO: move last date stuff into the sotre!
         model_gmail_last_date_read last_date_read_model = store_local_db.get_gmail_latest_sync_date();
-        boolean should_save_date = false;
-        if (last_date_read_model == null) {
-            should_save_date = true;
-        }
         for (Message m : ms) {
 // TODO: FIX: THIS JITTER SLEEP HERE CAUSES FLODER TO CLOSE.
 //            try {
@@ -154,7 +156,6 @@ public class sync_gmail {
                 }
             }
 
-            // TODO: actually handle the message....
             if ((m_from != null) && (m_from.equals("GitHub <support@github.com>"))) {
                 if (m_subject.contains("Repository transfer from")) {
                     String from_user = m_subject.split("@")[1].split("\\s+")[0];
@@ -166,8 +167,20 @@ public class sync_gmail {
                         if (lt.startsWith("https")) {
                             // accept the repo!
                             if (store_github_iojs.accept_trasfer_repo(lt)) {
-                                model_repo repo = store_github_api.get_repo_by_name(from_user, repo_name);
-                                model_user user = store_github_api.get_user_by_name(from_user);
+                                // first search user in database...
+                                model_user user = store_local_db.get_user_by_name(from_user);
+                                if (user==null) {
+                                    // nor found, update from girtub
+                                    user = store_github_api.get_user_by_name(from_user);
+                                    store_local_db.update_user(user);
+                                }
+                                // search repo in db
+                                model_repo repo = store_local_db.get_repo_by_name(repo_name);
+                                if (repo==null) {
+                                    // not found, update from github
+                                    repo = store_github_api.get_repo_by_name(from_user, repo_name);
+                                    store_local_db.update_repo(repo);
+                                }
                                 store_local_db.register_transfered_repo(user, repo);
                             }
                             // TODO: handle unsuccesful transfer! or ignore ;)
@@ -177,11 +190,7 @@ public class sync_gmail {
             }
         }
         if (last_date_read_model != null) {
-            if (should_save_date) {
-                last_date_read_model.save();
-            } else {
-                last_date_read_model.update();
-            }
+            store_local_db.update_gmail_last_read_date(last_date_read_model);
         }
     }
 

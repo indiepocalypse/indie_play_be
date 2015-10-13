@@ -4,6 +4,7 @@ import models.model_gmail_last_date_read;
 import models.model_ownership;
 import models.model_repo;
 import models.model_user;
+import play.Logger;
 import play.libs.ws.WS;
 import play.libs.ws.WSClient;
 
@@ -59,8 +60,6 @@ public class store_local_db {
     }
 
     public static void register_transfered_repo(model_user user, model_repo repo) {
-        update_repo(repo);
-        update_user(user);
         model_ownership ownership = new model_ownership(user, repo, new BigDecimal("100.0"));
         update_ownership(ownership);
     }
@@ -121,11 +120,12 @@ public class store_local_db {
 
     public static List<model_ownership> get_ownerships_by_repo_name(String repo_name) {
         try {
-            return model_ownership.find.where().eq("repo.repo_name", repo_name).findList();
+            return model_ownership.find.fetch("user").fetch("repo").where().eq("repo.repo_name", repo_name).findList();
         } catch (Exception ignore) {
             return new ArrayList<>(0);
         }
     }
+
 
     /********************************
      * GMAIL!
@@ -136,12 +136,12 @@ public class store_local_db {
             gmail_sync_date.save();
         } catch (Exception e) {
             gmail_sync_date.update();
+            Logger.info("gamail sync date updated...");
         }
     }
 
     public static model_gmail_last_date_read get_gmail_latest_sync_date() {
         return model_gmail_last_date_read.get_a_copy_of_the_singleton();
-
     }
 
 }

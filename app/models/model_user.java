@@ -2,6 +2,7 @@ package models;
 
 import com.avaje.ebean.Model;
 import com.fasterxml.jackson.databind.JsonNode;
+import play.Logger;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
