@@ -145,6 +145,16 @@ public class store_github_api {
         return model_user.from_json(Json.parse(res_user.getBody()));
     }
 
+    public static boolean has_webhook(model_repo repo) {
+        String path = "/repos/__OWNER__/__REPO__/hooks"
+                .replace("__OWNER__", store_credentials.github.name)
+                .replace("__REPO__", repo.repo_name);
+        WSRequest req = indie_auth_request(path).setMethod("GET");
+        WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
+        JsonNode json = play.libs.Json.parse(res.getBody());
+        return json.size() > 0;
+    }
+
     public static boolean create_webhook(model_repo repo) {
         // (returns success)
         // see for reference: https://developer.github.com/v3/repos/hooks/

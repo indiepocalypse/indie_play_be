@@ -17,13 +17,14 @@ public class sync_github_repos {
     private static boolean syncing = false;
 
     static public void start() {
-        // TODO: sync webhooks
         if (t1 == null) {
             t1 = new Thread() {
                 public void run() {
+                    boolean first_time = true;
                     while (!interrupted()) {
                         try {
-                            sync();
+                            sync(first_time);
+                            first_time = false;
                             Thread.sleep(store_conf.get_github_repo_sync_delta_milis()+
                                     store_conf.get_github_repo_sync_minimum_milis());
                             Random rand = new Random();
@@ -46,7 +47,7 @@ public class sync_github_repos {
         }
     }
 
-    private static void sync() {
+    private static void sync(boolean first_time) {
         if (syncing) {
             return;
         }
@@ -60,6 +61,11 @@ public class sync_github_repos {
             catch (Exception ignored) {
             }
             store_local_db.update_repo(repo);
+            if (first_time) {
+                if (!store_github_api.has_webhook(repo)) {
+                    store_github_api.create_webhook(repo);
+                }
+            }
         }
         Logger.info("syncing " + Integer.toString(repos.size())+" github repos");
 
