@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.typesafe.config.ConfigFactory;
 import models.model_repo;
 import models.model_user;
+import play.Logger;
 import play.libs.F;
 import play.libs.Json;
 import play.libs.ws.WSClient;
@@ -152,10 +153,17 @@ public class store_github_api {
         WSRequest req = indie_auth_request(path).setMethod("GET");
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
         JsonNode json = play.libs.Json.parse(res.getBody());
+        if (json.size() > 0) {
+            Logger.info("repo "+repo.repo_name+" already has a webhook");
+        }
+        else {
+            Logger.info("repo "+repo.repo_name+" doesn't have a webhook");
+        }
         return json.size() > 0;
     }
 
     public static boolean create_webhook(model_repo repo) {
+        Logger.info("creating webhook for repo named "+repo.repo_name);
         // (returns success)
         // see for reference: https://developer.github.com/v3/repos/hooks/
         String json_payload_to_create = "{\n" +
@@ -174,6 +182,7 @@ public class store_github_api {
                 .replace("__REPO__", repo.repo_name);
         WSRequest req = post_indie_auth_request(path, json_payload_to_create);
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
+        Logger.info("successfuly created a webhook for repo named "+repo.repo_name);
         return res.getStatus() == 201;
     }
 }
