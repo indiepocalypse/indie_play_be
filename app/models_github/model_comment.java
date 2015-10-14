@@ -36,7 +36,7 @@ public class model_comment {
     public static model_comment from_json(JsonNode json) {
         String url = json.get("url").asText();
         String html_url = json.get("html_url").asText();
-        String issue_url = json.get("comments_url").asText();
+        String issue_url = json.get("issue_url").asText();
         Long id = json.get("id").asLong();
         model_user user = model_user.from_json(json.get("user"));
         String body = json.get("body").asText();
