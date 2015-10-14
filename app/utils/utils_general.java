@@ -18,7 +18,8 @@ public class utils_general {
         return ws;
     }
 
-    public static String get_or_null(JsonNode json, String key) {
+    // TODO: use these two getters everywhere...
+    public static String str_or_null(JsonNode json, String key) {
         JsonNode subnode = json.get(key);
         if (subnode==null) {
             return null;
@@ -27,12 +28,10 @@ public class utils_general {
             return subnode.asText();
         }
     }
-
-    public static int get_or_negative(JsonNode json, String key) {
-        // TODO: I am very aware this is ugly (inline missing value reporting). Fixing requires having optional types? or a different model_user with partial info?
+    public static Integer int_or_null(JsonNode json, String key) {
         JsonNode subnode = json.get(key);
         if (subnode==null) {
-            return -1;
+            return null;
         }
         else {
             return subnode.asInt();
