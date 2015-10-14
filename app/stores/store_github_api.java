@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.typesafe.config.ConfigFactory;
 import models.model_repo;
 import models.model_user;
+import models_github.model_issue;
 import play.Logger;
 import play.libs.F;
 import play.libs.Json;
@@ -191,5 +192,26 @@ public class store_github_api {
             Logger.info("error during github webhook creation: "+res.getBody());
             return false;
         }
+    }
+
+    public static boolean comment_on_issue(model_repo repo, model_issue issue, String comment_body) {
+        // returns success as usual...
+        String json_payload_to_create = "{\"body\": \"__COMMENT_BODY__\"}".replace("__COMMENT_BODY__", comment_body);
+        String path = "/repos/__OWNER__/__REPO__/issues/__NUMBER__/comments"
+                .replace("__OWNER__", store_credentials.github.name)
+                .replace("__REPO__", repo.repo_name)
+                .replace("__NUMBER__", Integer.toString(issue.number));
+        WSRequest req = post_indie_auth_request(path, json_payload_to_create);
+        WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
+        boolean success = (res.getStatus() == 201)&&(res.getBody().contains("created"));
+        if (success) {
+            Logger.info("successfuly created a comment for repo "+repo.repo_name+" for issue titled \""+issue.title+"\"");
+            return true;
+        }
+        else {
+            Logger.info("error during creating comment for repo \""+repo.repo_name+"\" for issue titled \""+issue.title+"\"");
+            return false;
+        }
+
     }
 }

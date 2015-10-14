@@ -1,9 +1,11 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import models_github.webhook_comment_created;
 import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import stores.store_github_api;
 
 /**
  * Created by skariel on 12/10/15.
@@ -11,11 +13,22 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 public class controller_webhooks_github extends Controller {
     public Result handle_wildcard() {
         // TODO: implement ;)
-        // TODO: store in github webhoos store
-        // TODO: create a github webhooks store
         // TODO: remember last webhook date, sync from last date on startup
+        // TODO: remove excessive logging.info and add datetime to log entries
+
         Logger.info("** incomming webhook! **");
-        Logger.info(request().body().asJson().toString());
+
+        JsonNode json =request().body().asJson();
+        Logger.info(json.toString());
+
+        if (webhook_comment_created.is_me(json)) {
+            Logger.info("we have a new comment on some issue! parsing and sending response!");
+            webhook_comment_created hook = webhook_comment_created.from_json(json);
+
+            store_github_api.comment_on_issue(hook.repo, hook.issue, "i'm on it!");
+        }
+
+
         return ok();
     }
 }

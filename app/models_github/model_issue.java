@@ -15,6 +15,7 @@ public class model_issue {
     public String body;
     public int number;
     public int comments;
+    public String title;
     // TODO: add created and updated dates, labels, milestone, etc.
 
     public model_issue(
@@ -25,7 +26,8 @@ public class model_issue {
             model_user p_user,
             String p_body,
             int p_number,
-            int p_comments
+            int p_comments,
+            String p_title
     ) {
         this.url = p_url;
         this.html_url = p_html_url;
@@ -35,6 +37,7 @@ public class model_issue {
         this.body = p_body;
         this.number = p_number;
         this.comments = p_comments;
+        this.title = p_title;
     }
 
     public static model_issue from_json(JsonNode json) {
@@ -46,6 +49,7 @@ public class model_issue {
         String body = json.get("body").asText();
         int number = json.get("number").asInt();
         int comments = json.get("comments").asInt();
+        String title = json.get("title").asText();
         return new model_issue(
                 url,
                 html_url,
@@ -54,7 +58,8 @@ public class model_issue {
                 user,
                 body,
                 number,
-                comments
+                comments,
+                title
         );
     }
 

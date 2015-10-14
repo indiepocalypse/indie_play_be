@@ -43,4 +43,11 @@ public class webhook_comment_created {
                 user
         );
     }
+
+    public static boolean is_me(JsonNode json) {
+        return json.get("action").asText().equals("created") &&
+                json.has("issue") && json.has("comment") &&
+                json.has("repository") && json.has("sender") &&
+                json.size()==5;
+    }
 }
