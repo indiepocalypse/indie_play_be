@@ -3,6 +3,7 @@ package models;
 import com.avaje.ebean.Model;
 import com.fasterxml.jackson.databind.JsonNode;
 import play.Logger;
+import utils.utils_general;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -40,15 +41,15 @@ public class model_user extends Model {
     }
 
     public static model_user from_json(JsonNode json_user) {
-        String user_avatar_url = json_user.get("avatar_url").asText();
-        String user_name = json_user.get("login").asText();
-        String user_blog_url = json_user.get("blog").asText();
-        String user_github_html_url = json_user.get("html_url").asText();
-        String user_mail = json_user.get("email").asText();
-        Integer user_public_repos = json_user.get("public_repos").asInt();
-        String user_github_repos_url = json_user.get("repos_url").asText();
-        Integer followers = json_user.get("followers").asInt();
-        Integer following = json_user.get("following").asInt();
+        String user_avatar_url = utils_general.get_or_null(json_user, "avatar_url");
+        String user_name = utils_general.get_or_null(json_user, "login");
+        String user_blog_url = utils_general.get_or_null(json_user, "blog");
+        String user_github_html_url = utils_general.get_or_null(json_user, "html_url");
+        String user_mail = utils_general.get_or_null(json_user, "email");
+        Integer user_public_repos = utils_general.get_or_negative(json_user, "public_repos");
+        String user_github_repos_url = utils_general.get_or_null(json_user, "repos_url");
+        Integer followers = utils_general.get_or_negative(json_user, "followers");
+        Integer following = utils_general.get_or_negative(json_user, "following");
         return new model_user(
                 user_name, user_blog_url, user_github_html_url,
                 user_mail, user_avatar_url, user_public_repos,
