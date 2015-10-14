@@ -26,7 +26,10 @@ public class controller_webhooks_github extends Controller {
             Logger.info("we have a new comment on some issue! parsing and sending response!");
             webhook_comment_created hook = webhook_comment_created.from_json(json);
 
-            store_github_api.comment_on_issue(hook.repo, hook.issue, "i'm on it!");
+            if (!hook.user.user_name.equals("theindiepocalypse")) {
+                // we don't want to respond to ourselves in a recursive manner, right? ;)
+                store_github_api.comment_on_issue(hook.repo, hook.issue, "i'm on it!");
+            }
         }
 
 
