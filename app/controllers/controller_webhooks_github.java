@@ -6,6 +6,7 @@ import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
 import stores.store_github_api;
+import stores.store_github_iojs;
 
 /**
  * Created by skariel on 12/10/15.
@@ -29,6 +30,11 @@ public class controller_webhooks_github extends Controller {
 
             if (!hook.user.user_name.equals("theindiepocalypse")) {
                 // we don't want to respond to ourselves in a recursive manner, right? ;)
+                if (hook.comment.body.contains("@theindiepocalypse create readme")) {
+                    store_github_iojs.create_readme(hook.repo, "I did this!");
+                    store_github_api.comment_on_issue(hook.repo, hook.issue, "@"+hook.user.user_name+
+                            " done, I created a README!");
+                }
                 store_github_api.comment_on_issue(hook.repo, hook.issue, "i'm on it!");
             }
         }
