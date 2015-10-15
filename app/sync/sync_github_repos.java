@@ -78,9 +78,7 @@ public class sync_github_repos {
             }
             store_local_db.update_repo(repo);
             if (first_time) {
-                if (!store_github_api.has_webhook(repo)) {
-                    store_github_api.create_webhook(repo);
-                }
+                store_github_api.create_webhook(repo);
             }
         }
         Logger.info("syncing " + Integer.toString(repos.size())+" github repos");

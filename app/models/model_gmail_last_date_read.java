@@ -1,9 +1,12 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.avaje.ebean.annotation.ConcurrencyMode;
+import com.avaje.ebean.annotation.EntityConcurrencyMode;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Version;
 import java.util.Date;
 
 /**

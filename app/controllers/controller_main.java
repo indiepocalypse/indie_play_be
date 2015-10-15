@@ -1,8 +1,10 @@
 package controllers;
 
+import handlers.handler_general;
 import models.model_ownership;
 import models.model_repo;
 import models.model_user;
+import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.F;
@@ -14,7 +16,6 @@ import stores.store_session;
 import sync.sync_gmail;
 import views.html.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public class controller_main extends Controller {
@@ -22,7 +23,7 @@ public class controller_main extends Controller {
     // TODO: cache the simple pages (e.g. the landing page)
     // TODO: remove original owner when repo is transferred
     // TODO: use reverse routing so I don't repeat myself :) (done?!)
-    // TODO: enforce the following by structure: 1) only stores touch models, 2) only controller_main touche views (its already like this, but not enforced!)
+    // TODO: limit the number of repos a user can have with 100% ownership
 
     private final static String main_title = "it's the Indiepocalypse!";
     private boolean is_redirected_from_github_login() {
@@ -72,12 +73,19 @@ public class controller_main extends Controller {
 
         try {
             model_repo repo = store_github_api.create_new_repo(repo_name, repo_homepage, repo_description);
+            store_local_db.update_repo(repo);
+            model_user user = store_local_db.get_user_by_name(store_session.get_user_name());
+            model_ownership ownership = handler_general.integrate_github_repo(repo, user);
+            if (ownership==null) {
+                // TODO: elaborate on error
+                String err = "Couldn't create the repo, sorry!";
+                return ok(view_main.render("new repo", view_newrepo.render(repo_name, repo_homepage, repo_description, err)));
+            }
+
             store_session.set_new_repo(repo.repo_name);
-            model_user user = store_github_api.get_user_by_name(store_session.get_user_name());
-            model_ownership ownership = new model_ownership(user, repo, new BigDecimal("100.0"));
-            store_local_db.update_ownership(ownership);
             return redirect(routes.controller_main.repo_profile(repo_name));
         } catch (Exception e) {
+            Logger.error("while creating repo...", e);
             String err = "Couldn't create the repo, sorry!\n" +
                     "this is the reported result:\n\n" + e.getMessage();
             // TODO: report a better arror, at least format it or whatever...

@@ -1,11 +1,14 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.avaje.ebean.annotation.ConcurrencyMode;
+import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import com.fasterxml.jackson.databind.JsonNode;
 import utils.utils_general;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Version;
 
 /**
  * Created by skariel on 29/09/15.

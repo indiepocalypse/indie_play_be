@@ -1,6 +1,7 @@
 package sync;
 
 import com.sun.mail.imap.IMAPFolder;
+import handlers.handler_general;
 import models.model_gmail_last_date_read;
 import models.model_ownership;
 import models.model_repo;
@@ -167,24 +168,17 @@ public class sync_gmail {
                     for (String l : lines) {
                         String lt = l.trim();
                         if (lt.startsWith("https")) {
-                            // accept the repo!
-                            if (store_github_iojs.accept_trasfer_repo(lt)) {
-                                // first search user in database...
-                                model_user user = store_local_db.get_user_by_name(from_user);
-                                if (user==null) {
-                                    // nor found, update from girtub
-                                    user = store_github_api.get_user_by_name(from_user);
-                                    store_local_db.update_user(user);
+                            // try to accept the repo!
+                            if ((!store_local_db.has_repo(repo_name))&&(store_github_iojs.accept_trasfer_repo(lt))) {
+                                model_ownership ownership = handler_general.integrate_github_repo(repo_name, from_user);
+                                if (ownership==null) {
+                                    // this should not happen! we try once more...
+                                    ownership = handler_general.integrate_github_repo(repo_name, from_user);
+                                    if (ownership==null) {
+                                        // just report...
+                                        Logger.error("Problem transferring repo!");
+                                    }
                                 }
-                                // search repo in db
-                                model_repo repo = store_local_db.get_repo_by_name(repo_name);
-                                if (repo==null) {
-                                    // not found, update from github
-                                    repo = store_github_api.get_repo_by_name(from_user, repo_name);
-                                    store_local_db.update_repo(repo);
-                                }
-                                model_ownership ownership = new model_ownership(user, repo, new BigDecimal("100.0"));
-                                store_local_db.update_ownership(ownership);
                             }
                             // TODO: handle unsuccesful transfer! or ignore ;)
                         }

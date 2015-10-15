@@ -126,7 +126,11 @@ public class store_github_api {
         String path = "/repos/" + user_name + "/" + repo_name;
         WSRequest req = indie_auth_request(path);
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
-        return model_repo.from_json(play.libs.Json.parse(res.getBody()));
+        JsonNode json = play.libs.Json.parse(res.getBody());
+        if ((json.has("message")) && (json.get("message").toString().contains("not found"))) {
+            throw new Error("repo \'"+path+"\" not found");
+        }
+        return model_repo.from_json(json);
     }
 
     public static model_user get_user_by_token(String token) {
@@ -147,23 +151,8 @@ public class store_github_api {
         return model_user.from_json(Json.parse(res_user.getBody()));
     }
 
-    public static boolean has_webhook(model_repo repo) {
-        String path = "/repos/__OWNER__/__REPO__/hooks"
-                .replace("__OWNER__", store_credentials.github.name)
-                .replace("__REPO__", repo.repo_name);
-        WSRequest req = indie_auth_request(path).setMethod("GET");
-        WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
-        JsonNode json = play.libs.Json.parse(res.getBody());
-        if (json.size() > 0) {
-            Logger.info("repo "+repo.repo_name+" already has a webhook");
-        }
-        else {
-            Logger.info("repo "+repo.repo_name+" doesn't have a webhook");
-        }
-        return json.size() > 0;
-    }
-
     public static boolean create_webhook(model_repo repo) {
+        // TODO: give some app id to the webhook?
         Logger.info("creating webhook for repo named "+repo.repo_name);
         // (returns success)
         // see for reference: https://developer.github.com/v3/repos/hooks/
@@ -177,7 +166,6 @@ public class store_github_api {
                 "  }\n" +
                 "}";
         json_payload_to_create = json_payload_to_create.replace("__GITHUB_WEBHOOK_URL__", store_conf.get_github_webhook_url());
-        Logger.info("JJJJJJJ="+json_payload_to_create);
         String path = "/repos/__OWNER__/__REPO__/hooks"
                 .replace("__OWNER__", store_credentials.github.name)
                 .replace("__REPO__", repo.repo_name);
@@ -189,6 +177,11 @@ public class store_github_api {
             return true;
         }
         else {
+            if (res.getBody().contains("already exists")) {
+                Logger.info("hook already exists for repo \""+repo.repo_name+"\"");
+                // TODO: what should we return?
+                return true;
+            }
             Logger.info("error during github webhook creation: "+res.getBody());
             return false;
         }

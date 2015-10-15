@@ -5,10 +5,7 @@ import models.model_ownership;
 import models.model_repo;
 import models.model_user;
 import play.Logger;
-import play.libs.ws.WS;
-import play.libs.ws.WSClient;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +44,11 @@ public class store_local_db {
         } catch (Exception ignore) {
             return new ArrayList<>();
         }
+    }
+
+    public static boolean has_repo(String repo_name) {
+        // TODO: is this the best way to check?!
+        return (get_repo_by_name(repo_name) != null);
     }
 
     /********************************
