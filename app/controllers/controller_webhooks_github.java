@@ -34,6 +34,7 @@ public class controller_webhooks_github extends Controller {
                     store_github_iojs.create_readme(hook.repo, "I did this!");
                     store_github_api.comment_on_issue(hook.repo, hook.issue, "@"+hook.user.user_name+
                             " done, I created a README!");
+                    return ok();
                 }
                 store_github_api.comment_on_issue(hook.repo, hook.issue, "i'm on it!");
             }
