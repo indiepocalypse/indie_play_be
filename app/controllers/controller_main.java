@@ -75,7 +75,7 @@ public class controller_main extends Controller {
             model_repo repo = store_github_api.create_new_repo(repo_name, repo_homepage, repo_description);
             store_local_db.update_repo(repo);
             model_user user = store_local_db.get_user_by_name(store_session.get_user_name());
-            model_ownership ownership = handler_general.integrate_github_repo(repo, user);
+            model_ownership ownership = handler_general.integrate_github_repo(repo, user, true);
             if (ownership==null) {
                 // TODO: elaborate on error
                 String err = "Couldn't create the repo, sorry!";

@@ -169,18 +169,33 @@ public class sync_gmail {
                         String lt = l.trim();
                         if (lt.startsWith("https")) {
                             // try to accept the repo!
-                            if ((!store_local_db.has_repo(repo_name))&&(store_github_iojs.accept_trasfer_repo(lt))) {
-                                model_ownership ownership = handler_general.integrate_github_repo(repo_name, from_user);
-                                if (ownership==null) {
-                                    // this should not happen! we try once more...
-                                    ownership = handler_general.integrate_github_repo(repo_name, from_user);
-                                    if (ownership==null) {
-                                        // just report...
-                                        Logger.error("Problem transferring repo!");
-                                    }
+
+                            if (store_local_db.has_repo(repo_name)) {
+                                continue;
+                            }
+                            model_ownership ownership = handler_general.integrate_github_repo(repo_name, from_user, false);
+                            if (ownership == null) {
+                                // we try once more...
+                                ownership = handler_general.integrate_github_repo(repo_name, from_user, false);
+                                if (ownership == null) {
+                                    // just report...
+                                    Logger.error("Problem transferring repo \"" + repo_name + "\" into DB");
+                                    continue;
                                 }
                             }
-                            // TODO: handle unsuccesful transfer! or ignore ;)
+                            if (!store_github_iojs.accept_trasfer_repo(lt)) {
+                                // unsuccesfull transfer, report
+                                Logger.error("Problem transferring repo \"" + repo_name + "\" from Github");
+                                continue;
+                            }
+                            // all seems ok!
+                            try {
+                                Thread.sleep(3100);
+                            }
+                            catch (Exception ignored) {
+                            }
+                            handler_general.robust_create_github_webhook(ownership.repo);
+                            Logger.info("Successfuly transferred repo \"" + repo_name + "\" from Github");
                         }
                     }
                 }

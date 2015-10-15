@@ -28,7 +28,7 @@ public class handler_general {
         return user;
     }
 
-    public static model_ownership integrate_github_repo(String repo_name, String user_name) {
+    public static model_ownership integrate_github_repo(String repo_name, String user_name, boolean create_webhook) {
         model_user user = get_integrate_github_user_by_name(user_name);
 
         // search repo in db
@@ -41,11 +41,29 @@ public class handler_general {
         // not found, update from github
         repo = store_github_api.get_repo_by_name(user_name, repo_name);
         store_local_db.update_repo(repo);
-        store_github_api.create_webhook(repo);
-        return integrate_github_repo(repo, user);
+        return integrate_github_repo(repo, user, create_webhook);
     }
 
-    public static model_ownership integrate_github_repo(model_repo repo,  model_user user) {
+    public static void robust_create_github_webhook(model_repo repo) {
+        // TODO: there shoud be here some async delay or something
+        boolean result = false;
+        int i = 0;
+        while ((!result)&&(i<5)) {
+            Logger.info("i="+Integer.toString(i));
+            result = store_github_api.create_webhook(repo);
+            i += 1;
+        }
+        if (result) {
+            Logger.info("Webhook for repo succesfully created!");
+        }
+        else {
+            Logger.error("couldn't create a webhook!");
+        }
+    }
+    public static model_ownership integrate_github_repo(model_repo repo,  model_user user, boolean create_webhook) {
+        if (create_webhook) {
+            robust_create_github_webhook(repo);
+        }
         model_ownership ownership = new model_ownership(user, repo, new BigDecimal("100.0"));
         store_local_db.update_ownership(ownership);
         return ownership;
