@@ -35,9 +35,10 @@ public class store_github_iojs {
     public static boolean create_readme(model_repo repo, String content) {
         // returns success!
         try {
-            String url = repo.github_html_url+"/new/master?readme";
+            String url = repo.github_html_url+"/new/master?";
+            String file_name = "README.md";
             Process process = new ProcessBuilder(
-                    "app/iojs/iojs", "app/iojs/create_file.js", store_credentials.github.name, store_credentials.github.pssw, url, content)
+                    "app/iojs/iojs", "app/iojs/create_file.js", store_credentials.github.name, store_credentials.github.pssw, url, file_name, content)
                     .start();
             // Reading the result... not used right now
 //            InputStream in = process.getInputStream();
