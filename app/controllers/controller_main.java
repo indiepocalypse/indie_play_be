@@ -67,6 +67,7 @@ public class controller_main extends Controller {
         try {
             repo_description = data.get(store_session.repo_description_name);
         } catch (Exception ignore) {
+
         }
 
         try {

@@ -14,55 +14,67 @@ import java.util.Random;
  */
 public class sync_github_users {
     private static Thread t1 = null;
-    private static boolean syncing = false;
+    private static boolean interrupted = false;
 
     static public void start() {
-        if (t1 == null) {
-            t1 = new Thread() {
-                public void run() {
-                    while (!interrupted()) {
-                        try {
-                            sync();
-                            Thread.sleep(store_conf.get_github_user_sync_delta_milis());
-                            Random rand = new Random();
-                            int jitter = (int)(rand.nextFloat()* store_conf.get_github_user_sync_jitter_milis()+
-                                    store_conf.get_github_user_sync_minimum_milis());
-                            Thread.sleep(jitter);
-                        } catch (Exception e) {
-                            Logger.error("while sleeping to sync with github...", e);
+        stop();
+
+        t1 = new Thread() {
+            public void run() {
+                while (!interrupted) {
+                    try {
+                        sync();
+                        Random rand = new Random();
+                        int jitter = (int)(store_conf.get_github_user_sync_minimum_milis() +
+                                rand.nextFloat()* store_conf.get_github_user_sync_jitter_milis());
+                        Thread.sleep(store_conf.get_github_user_sync_delta_milis() + jitter);
+                        if (interrupted) {
+                            return;
+                        }
+                    } catch (Exception e) {
+                        if (!interrupted) {
+                            Logger.error("while sleeping to sync users with github...", e);
                         }
                     }
                 }
-            };
-            t1.start();
-        }
+            }
+        };
+
+        interrupted = false;
+        t1.start();
     }
 
     static public void stop() {
+        interrupted = true;
         if (t1 != null) {
             t1.interrupt();
             t1 = null;
         }
     }
 
+    
     private static void sync() {
-        if (syncing) {
-            return;
-        }
-        syncing = true;
-
         List<model_user> users = store_local_db.get_all_users();
         Logger.info("syncing " + Integer.toString(users.size())+" users with github");
         for (model_user user: users) {
             try {
                 Thread.sleep(store_conf.get_github_user_sync_jitter_small_milis());
             }
-            catch (Exception ignored) {
+            catch (Exception e) {
+                if (!interrupted) {
+                    Logger.error("while syncing user with github...", e);
+                }
             }
-            user = store_github_api.get_user_by_name(user.user_name);
+            if (interrupted) {
+                return;
+            }
+            try {
+                user = store_github_api.get_user_by_name(user.user_name);
+            }
+            catch (Exception e) {
+                Logger.error("while getting user info from github during user sync...", e);
+            }
             store_local_db.update_user(user);
         }
-
-        syncing = false;
     }
 }

@@ -21,83 +21,88 @@ import java.util.Properties;
 import java.util.Random;
 
 public class sync_gmail {
-    // TODO: there seems to be an issue when interrupting threads. They don't really get interrupted?
     public static int mail_count = 0;
     private static IMAPFolder inbox = null;
     private static Store mail_store = null;
     private static Thread t1 = null;
     private static Thread t2 = null;
-    private static boolean reloading = false;
+    private static boolean interrupted = false;
 
     public static void start() {
-        if (t1 == null) {
-            t1 = new Thread() {
-                public void run() {
-                    while (!interrupted()) {
-                        try {
-                            Thread.sleep(store_conf.get_gmail_reload_sync_delta_milis());
-                            Random rand = new Random();
-                            int jitter = (int)(rand.nextFloat()*stores.store_conf.get_gmail_reload_sync_jitter_milis()+
-                                    store_conf.get_gmail_reload_sync_minimum_milis());
-                            Thread.sleep(jitter);
-                            reload_folder();
-                        } catch (Exception e) {
+        // some defensive shit here :)
+        stop();
+
+        t1 = new Thread() {
+            public void run() {
+                while (!interrupted) {
+                    try {
+                        Thread.sleep(store_conf.get_gmail_reload_sync_delta_milis());
+                        Random rand = new Random();
+                        int jitter = (int)(rand.nextFloat()*stores.store_conf.get_gmail_reload_sync_jitter_milis()+
+                                store_conf.get_gmail_reload_sync_minimum_milis());
+                        Thread.sleep(jitter);
+                        reload_folder();
+                    } catch (Exception e) {
+                        if (!interrupted) {
                             Logger.error("while sleeping to reload inbox...", e);
                         }
                     }
                 }
-            };
-            t1.start();
-        }
+            }
+        };
 
-        if (t2 == null) {
-            t2 = new Thread() {
-                public void run() {
-                    reload_folder();
-                    while (!interrupted()) {
-                        try {
-                            Thread.sleep(20);
-                        }
-                        catch (Exception ignored) {
-                        }
-                        try {
-                            if (inbox != null) {
+        t2 = new Thread() {
+            public void run() {
+                reload_folder();
+                while (!interrupted) {
+                    try {
+                        if (inbox != null) {
+                            if (inbox.isOpen()) {
                                 inbox.idle(true);
                             }
-                        } catch (Exception e) {
-                            Logger.error("Error in gmail idle...", e);
-                            if (e.toString().contains("closed folder")) {
-                                Logger.info("waiting for folder to open...");
-                                try {
-                                    Thread.sleep(1500);
-                                    if (inbox.isOpen()) {
-                                        Logger.info("folder is now open!");
-                                        continue;
-                                    }
+                            else {
+                                // try to reopen...
+                                Logger.info("gmail inbox appears closed, trying to reopen...");
+                                Thread.sleep(1500);
+                                if (inbox.isOpen()) {
+                                    Logger.info("folder is now open!");
+                                    continue;
                                 }
-                                catch (Exception ignored) {
-                                }
-                                Logger.info("trying to reconnect folder...");
-                                try {
-                                    reload_folder();
-                                    Thread.sleep(1500);
-                                }
-                                catch (Exception ee) {
-                                    Logger.error("Error trying to reopen gmail inbox...", ee);
-                                }
+                                reload_folder();
                             }
                         }
+                    } catch (Exception e) {
+                        if (!interrupted) {
+                            Logger.error("Error in gmail idle...", e);
+                        }
+                    }
+
+                    if (interrupted) {
+                        return;
+                    }
+                    try {
+                        Thread.sleep(50);
+                    }
+                    catch (Exception ignored) {
                     }
                 }
-            };
-            t2.start();
-        }
+            }
+        };
+
+        interrupted = false;
+        t2.start();
+        t1.start();
     }
 
     public static void stop() {
+        interrupted = true;
         if (t1 != null) {
             t1.interrupt();
             t1 = null;
+        }
+        if (t2 != null) {
+            t2.interrupt();
+            t2 = null;
         }
         if (inbox != null) {
             try {
@@ -106,10 +111,6 @@ public class sync_gmail {
                 Logger.error("while closing inbox...", e);
             }
             inbox = null;
-        }
-        if (t2 != null) {
-            t2.interrupt();
-            t2 = null;
         }
         if (mail_store != null) {
             try {
@@ -121,12 +122,10 @@ public class sync_gmail {
         }
     }
 
-
     private static void handle_messages(Message[] ms) {
-        // TODO: move last date stuff into the sotre!
         model_gmail_last_date_read last_date_read_model = store_local_db.get_gmail_latest_sync_date();
         for (Message m : ms) {
-// TODO: FIX: THIS JITTER SLEEP HERE CAUSES FLODER TO CLOSE.
+// TODO: FIX: THIS JITTER SLEEP HERE CAUSES FLODER TO CLOSE?
 //            try {
 //                Thread.sleep(stores.store_conf.get_gmail_reload_sync_jitter_small_milis());
 //            }
@@ -199,17 +198,14 @@ public class sync_gmail {
     }
 
     private static void reload_folder() {
-        if (reloading) {
-            return;
-        }
-        reloading = true;
-
         try {
             if (inbox != null) {
                 inbox.close(true);
+                inbox = null;
             }
             if (mail_store != null) {
                 mail_store.close();
+                mail_store = null;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -264,6 +260,5 @@ public class sync_gmail {
         } catch (Exception e) {
             Logger.error("while reloading gmail inbox... ", e);
         }
-        reloading = false;
     }
 }
