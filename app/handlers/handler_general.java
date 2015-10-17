@@ -15,10 +15,7 @@ import java.math.BigDecimal;
 public class handler_general {
 
     public static model_user get_integrate_github_user_by_name(String name) {
-        // firs
-        //
-        //
-        // t search user in database...
+        // search user in database...
         model_user user = store_local_db.get_user_by_name(name);
         if (user==null) {
             // not found, update from github
@@ -33,40 +30,21 @@ public class handler_general {
 
     public static model_ownership integrate_github_repo(String repo_name, String user_name, boolean create_webhook) {
         model_user user = get_integrate_github_user_by_name(user_name);
-
         // search repo in db
         model_repo repo = store_local_db.get_repo_by_name(repo_name);
         if (repo != null) {
             Logger.info("repo \"" + repo_name + "\" already in DB. Will not integrate...");
             return null;
         }
-
         // not found, update from github
         repo = store_github_api.get_repo_by_name(user_name, repo_name);
         store_local_db.update_repo(repo);
         return integrate_github_repo(repo, user, create_webhook);
     }
 
-    public static void robust_create_github_webhook(model_repo repo) {
-        // TODO: there shoud be here some async delay or something
-        // TODO: this should move to the github store
-        boolean result = false;
-        int i = 0;
-        while ((!result)&&(i<5)) {
-            Logger.info("i="+Integer.toString(i));
-            result = store_github_api.create_webhook(repo);
-            i += 1;
-        }
-        if (result) {
-            Logger.info("Webhook for repo succesfully created!");
-        }
-        else {
-            Logger.error("couldn't create a webhook!");
-        }
-    }
     public static model_ownership integrate_github_repo(model_repo repo,  model_user user, boolean create_webhook) {
         if (create_webhook) {
-            robust_create_github_webhook(repo);
+            store_github_api.create_webhook(repo);
         }
         model_ownership ownership = new model_ownership(user, repo, new BigDecimal("100.0"));
         store_local_db.update_ownership(ownership);

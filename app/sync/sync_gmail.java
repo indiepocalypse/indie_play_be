@@ -194,7 +194,7 @@ public class sync_gmail {
                             }
                             catch (Exception ignored) {
                             }
-                            handler_general.robust_create_github_webhook(ownership.repo);
+                            store_github_api.create_webhook(ownership.repo);
                             Logger.info("Successfuly transferred repo \"" + repo_name + "\" from Github");
                         }
                     }
