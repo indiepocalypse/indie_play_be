@@ -6,7 +6,8 @@ Current development principles:
 4) models are db-ebean models
 5) other models are not represented in the db. For e.g models_github
 6) business logic goes in the controllers
-7) shared logic goes in handlers
+7) shared controller logic and specialized logic goes in handlers
+8) 3rd party tools go in vendors
 
 Some useful info for immidiate dev:
 

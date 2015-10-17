@@ -39,10 +39,14 @@ public class store_github_iojs {
         return run_iojs("accept_repo_transfer.js", store_credentials.github.name, store_credentials.github.pssw, url);
     }
 
-    public static boolean create_readme(model_repo repo, String content) {
+
+    public static boolean create_file(model_repo repo, String file_name, String content) {
         String url = repo.github_html_url+"/new/master?";
-        String file_name = "README.md";
         return run_iojs("accept_repo_transfer.js", store_credentials.github.name,
                 store_credentials.github.pssw, url, file_name, content);
+    }
+    public static boolean create_readme(model_repo repo, String content) {
+        final String file_name = "README.me";
+        return create_file(repo, file_name, content);
     }
 }
