@@ -15,7 +15,10 @@ import java.math.BigDecimal;
 public class handler_general {
 
     public static model_user get_integrate_github_user_by_name(String name) {
-        // first search user in database...
+        // firs
+        //
+        //
+        // t search user in database...
         model_user user = store_local_db.get_user_by_name(name);
         if (user==null) {
             // not found, update from github
@@ -46,6 +49,7 @@ public class handler_general {
 
     public static void robust_create_github_webhook(model_repo repo) {
         // TODO: there shoud be here some async delay or something
+        // TODO: this should move to the github store
         boolean result = false;
         int i = 0;
         while ((!result)&&(i<5)) {

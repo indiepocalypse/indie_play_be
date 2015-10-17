@@ -18,6 +18,7 @@ public class controller_webhooks_github extends Controller {
         // TODO: remember last webhook date, sync from last date on startup
         // TODO: remove excessive logging.info and add datetime to log entries
         // TODO: consider using the github api package for java. See here: http://github-api.kohsuke.org/
+        // TODO: write a handler_commands
 
         Logger.info("** incomming webhook! **");
 
