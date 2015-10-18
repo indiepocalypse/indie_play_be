@@ -66,7 +66,7 @@ public class controller_webhooks_github extends Controller {
             model_webhook_pull_request_created hook = model_webhook_pull_request_created.from_json(json);
             if (!hook.user.user_name.equals("theindiepocalypse")) {
                 // we don't want to respond to ourselves in a recursive manner, right? ;)
-                model_command_pull_request_created command = new model_command_pull_request_created(hook.repo, hook.issue);
+                model_command_pull_request_created command = new model_command_pull_request_created(hook.repo, hook.pull_request);
                 handler_commands.handle_command(command);
             }
             return ok();

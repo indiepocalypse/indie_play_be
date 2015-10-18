@@ -14,18 +14,18 @@ public class handler_commands {
     // this classs will handle commands usually sent through github comments
 
     public static void handle_command(model_command_issue_comment command) {
-        store_github_api.comment_on_issue(command.repo, command.issue, command.comment_body);
+        store_github_api.comment_on_issue(command.repo, command.issue.number, command.comment_body);
     }
 
     public static void handle_command(model_command_pull_request_comment command) {
-        store_github_api.comment_on_issue(command.repo, command.issue, command.comment_body);
+        store_github_api.comment_on_issue(command.repo, command.issue.number, command.comment_body);
     }
 
     public static void handle_command(model_command_issue_created command) {
-        store_github_api.comment_on_issue(command.repo, command.issue, command.comment_body);
+        store_github_api.comment_on_issue(command.repo, command.issue.number, command.comment_body);
     }
 
     public static void handle_command(model_command_pull_request_created command) {
-        store_github_api.comment_on_issue(command.repo, command.issue, command.comment_body);
+        store_github_api.comment_on_issue(command.repo, command.pull_request.number, command.comment_body);
     }
 }

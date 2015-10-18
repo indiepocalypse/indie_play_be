@@ -12,7 +12,7 @@ public class store_github_iojs {
     static private boolean run_iojs(String script_file_name, String... params) {
         try {
             ArrayList<String> args = new ArrayList<>(11);
-            args.add("app/iojs/iojs");
+            args.add("app/vendors/iojs/iojs");
             args.add("app/vendors/iojs/"+script_file_name);
             for (String p: params) {
                 args.add(p);
