@@ -11,6 +11,7 @@ public class store_session {
     public static final String repo_homepage_name = "repo_homepage";
     public static final String repo_description_name = "repo_description";
     private final static String user_name_session_key = "user_name";
+    private final static String user_is_admin = "user_is_admin";
     private final static String avatar_url_session_key = "avatar_url";
     private final static String state_session_key = "state";
     private final static String returnto_session_key = "returnto";
@@ -102,4 +103,11 @@ public class store_session {
     }
 
 
+    public static void set_admin(boolean _admin) {
+        controller_main.session().put(user_is_admin, "true");
+    }
+
+    public static boolean user_is_admin() {
+        return (get_token()!=null) && (controller_main.session().containsKey(user_is_admin));
+    }
 }

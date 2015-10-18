@@ -3,6 +3,12 @@
 
 # --- !Ups
 
+create table model_admin (
+  id                        varchar(255) not null,
+  user_user_name            varchar(255),
+  constraint pk_model_admin primary key (id))
+;
+
 create table model_gmail_last_date_read (
   id                        varchar(255) not null,
   lastdate                  timestamp,
@@ -40,6 +46,8 @@ create table model_user (
   constraint pk_model_user primary key (user_name))
 ;
 
+create sequence model_admin_seq;
+
 create sequence model_gmail_last_date_read_seq;
 
 create sequence model_ownership_seq;
@@ -48,16 +56,20 @@ create sequence model_repo_seq;
 
 create sequence model_user_seq;
 
-alter table model_ownership add constraint fk_model_ownership_user_1 foreign key (user_user_name) references model_user (user_name) on delete restrict on update restrict;
-create index ix_model_ownership_user_1 on model_ownership (user_user_name);
-alter table model_ownership add constraint fk_model_ownership_repo_2 foreign key (repo_repo_name) references model_repo (repo_name) on delete restrict on update restrict;
-create index ix_model_ownership_repo_2 on model_ownership (repo_repo_name);
+alter table model_admin add constraint fk_model_admin_user_1 foreign key (user_user_name) references model_user (user_name) on delete restrict on update restrict;
+create index ix_model_admin_user_1 on model_admin (user_user_name);
+alter table model_ownership add constraint fk_model_ownership_user_2 foreign key (user_user_name) references model_user (user_name) on delete restrict on update restrict;
+create index ix_model_ownership_user_2 on model_ownership (user_user_name);
+alter table model_ownership add constraint fk_model_ownership_repo_3 foreign key (repo_repo_name) references model_repo (repo_name) on delete restrict on update restrict;
+create index ix_model_ownership_repo_3 on model_ownership (repo_repo_name);
 
 
 
 # --- !Downs
 
 SET REFERENTIAL_INTEGRITY FALSE;
+
+drop table if exists model_admin;
 
 drop table if exists model_gmail_last_date_read;
 
@@ -68,6 +80,8 @@ drop table if exists model_repo;
 drop table if exists model_user;
 
 SET REFERENTIAL_INTEGRITY TRUE;
+
+drop sequence if exists model_admin_seq;
 
 drop sequence if exists model_gmail_last_date_read_seq;
 

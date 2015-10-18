@@ -1,9 +1,6 @@
 package stores;
 
-import models.model_gmail_last_date_read;
-import models.model_ownership;
-import models.model_repo;
-import models.model_user;
+import models.*;
 import play.Logger;
 
 import java.util.ArrayList;
@@ -61,6 +58,26 @@ public class store_local_db {
         } catch (Exception ignore) {
             user.update();
         }
+    }
+
+    public static void update_admin(model_admin admin) {
+        try {
+            admin.save();
+        } catch (Exception ignore) {
+            admin.update();
+        }
+    }
+
+    public static model_admin get_admin_by_name(String name) {
+        try {
+            return model_admin.find.byId(name+"@admin");
+        } catch (Exception ignore) {
+            return null;
+        }
+    }
+
+    public static boolean is_admin(String user_name) {
+        return (get_admin_by_name(user_name) != null);
     }
 
     public static model_user get_user_by_name(String user_name) {

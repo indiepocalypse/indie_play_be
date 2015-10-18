@@ -12,7 +12,6 @@ public class Global extends GlobalSettings {
 
     @Override
     public void onStart(Application app) {
-        handler_general.get_integrate_github_user_by_name(store_credentials.github.name);
         Logger.info("Starting gmail idle poll...");
         sync_gmail.start();
         sync_github_repos.start();

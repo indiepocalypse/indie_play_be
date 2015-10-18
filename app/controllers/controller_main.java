@@ -148,6 +148,7 @@ public class controller_main extends Controller {
                 // user has logged in!
                 store_session.set_token(token);
                 model_user user = store_github_api.get_user_by_token(token);
+                store_session.set_admin(store_local_db.is_admin(user.user_name));
                 store_session.set_current_user(user);
                 store_local_db.update_user(user);
                 return index();
