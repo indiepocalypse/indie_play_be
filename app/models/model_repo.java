@@ -34,12 +34,12 @@ public class model_repo extends Model {
     }
 
     public static model_repo from_json(JsonNode json_repo) {
-        String name = utils.utils_general.str_or_null(json_repo, "name");
-        String description = utils.utils_general.str_or_null(json_repo, "description");
-        String github_html_url = utils.utils_general.str_or_null(json_repo, "html_url");
-        String homepage = utils.utils_general.str_or_null(json_repo, "homepage");
-        Integer stars_count = utils.utils_general.int_or_null(json_repo, "stargazers_count");
-        Integer forks_count = utils.utils_general.int_or_null(json_repo, "forks_count");
+        String name = utils.utils_json.str_or_null(json_repo, "name");
+        String description = utils.utils_json.str_or_null(json_repo, "description");
+        String github_html_url = utils.utils_json.str_or_null(json_repo, "html_url");
+        String homepage = utils.utils_json.str_or_null(json_repo, "homepage");
+        Integer stars_count = utils.utils_json.int_or_null(json_repo, "stargazers_count");
+        Integer forks_count = utils.utils_json.int_or_null(json_repo, "forks_count");
         return new model_repo(name, description, homepage, github_html_url, stars_count, forks_count);
     }
 

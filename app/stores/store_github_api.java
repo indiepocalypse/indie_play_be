@@ -7,6 +7,7 @@ import com.typesafe.config.ConfigFactory;
 import models.model_repo;
 import models.model_user;
 import models_github.model_issue;
+import models_github.model_pull_request;
 import play.Logger;
 import play.libs.F;
 import play.libs.Json;
@@ -205,6 +206,5 @@ public class store_github_api {
             Logger.info("error during creating comment for repo \""+repo.repo_name+"\" for issue titled \""+issue.title+"\"");
             return false;
         }
-
     }
 }

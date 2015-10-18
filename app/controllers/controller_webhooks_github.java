@@ -1,8 +1,15 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import models_github.webhook_issue_comment_created;
-import models_github.webhook_pull_request_comment_created;
+import handlers.handler_commands;
+import models_commands.model_command_issue_comment;
+import models_commands.model_command_issue_created;
+import models_commands.model_command_pull_request_comment;
+import models_commands.model_command_pull_request_created;
+import models_github.model_webhook_issue_comment_created;
+import models_github.model_webhook_issue_created;
+import models_github.model_webhook_pull_request_comment_created;
+import models_github.model_webhook_pull_request_created;
 import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -23,39 +30,83 @@ public class controller_webhooks_github extends Controller {
         JsonNode json = request().body().asJson();
         //Logger.info(json.toString());
 
-        if (webhook_issue_comment_created.is_me(json)) {
+
+        if (model_webhook_issue_comment_created.is_me(json)) {
             Logger.info("we have a new comment on some issue! parsing and sending response!");
-            webhook_issue_comment_created hook = webhook_issue_comment_created.from_json(json);
-
+            model_webhook_issue_comment_created hook = model_webhook_issue_comment_created.from_json(json);
             if (!hook.user.user_name.equals("theindiepocalypse")) {
                 // we don't want to respond to ourselves in a recursive manner, right? ;)
-                if (hook.comment.body.contains("@theindiepocalypse create readme")) {
-                    store_github_iojs.create_readme(hook.repo, "I did this!");
-                    store_github_api.comment_on_issue(hook.repo, hook.issue, "@"+hook.user.user_name+
-                            " done, I created a README!");
-                    return ok();
-                }
-
-                store_github_api.comment_on_issue(hook.repo, hook.issue, "i'm on it!");
+                model_command_issue_comment command = new model_command_issue_comment(hook.repo, hook.issue);
+                handler_commands.handle_command(command);
             }
+            return ok();
         }
-
-        if (webhook_pull_request_comment_created.is_me(json)) {
-            Logger.info("we have a new comment on some pull request! parsing and sending response!");
-            webhook_issue_comment_created hook = webhook_issue_comment_created.from_json(json);
-
+        if (model_webhook_pull_request_comment_created.is_me(json)) {
+            Logger.info("we have a new comment on some pull_request! parsing and sending response!");
+            model_webhook_pull_request_comment_created hook = model_webhook_pull_request_comment_created.from_json(json);
             if (!hook.user.user_name.equals("theindiepocalypse")) {
                 // we don't want to respond to ourselves in a recursive manner, right? ;)
-                if (hook.comment.body.contains("@theindiepocalypse create readme")) {
-                    store_github_iojs.create_readme(hook.repo, "I did this!");
-                    store_github_api.comment_on_issue(hook.repo, hook.issue, "@"+hook.user.user_name+
-                            " done, I created a README!");
-                    return ok();
-                }
-
-                store_github_api.comment_on_issue(hook.repo, hook.issue, "thanks for this pull request!");
+                model_command_pull_request_comment command = new model_command_pull_request_comment(hook.repo, hook.issue);
+                handler_commands.handle_command(command);
             }
+            return ok();
         }
+        if (model_webhook_issue_created.is_me(json)) {
+            Logger.info("we have a new issue! parsing and sending response!");
+            model_webhook_issue_created hook = model_webhook_issue_created.from_json(json);
+            if (!hook.user.user_name.equals("theindiepocalypse")) {
+                // we don't want to respond to ourselves in a recursive manner, right? ;)
+                model_command_issue_created command = new model_command_issue_created(hook.repo, hook.issue);
+                handler_commands.handle_command(command);
+            }
+            return ok();
+        }
+        if (model_webhook_pull_request_created.is_me(json)) {
+            Logger.info("we have a new pull_request! parsing and sending response!");
+            model_webhook_pull_request_created hook = model_webhook_pull_request_created.from_json(json);
+            if (!hook.user.user_name.equals("theindiepocalypse")) {
+                // we don't want to respond to ourselves in a recursive manner, right? ;)
+                model_command_pull_request_created command = new model_command_pull_request_created(hook.repo, hook.issue);
+                handler_commands.handle_command(command);
+            }
+            return ok();
+        }
+
+
+
+//        if (model_webhook_issue_comment_created.is_me(json)) {
+//            Logger.info("we have a new comment on some issue! parsing and sending response!");
+//            model_webhook_issue_comment_created hook = model_webhook_issue_comment_created.from_json(json);
+//
+//            if (!hook.user.user_name.equals("theindiepocalypse")) {
+//                // we don't want to respond to ourselves in a recursive manner, right? ;)
+//                if (hook.comment.body.contains("@theindiepocalypse create readme")) {
+//                    store_github_iojs.create_readme(hook.repo, "I did this!");
+//                    store_github_api.comment_on_issue(hook.repo, hook.issue, "@"+hook.user.user_name+
+//                            " done, I created a README!");
+//                    return ok();
+//                }
+//
+//                store_github_api.comment_on_issue(hook.repo, hook.issue, "i'm on it!");
+//            }
+//        }
+//
+//        if (model_webhook_pull_request_comment_created.is_me(json)) {
+//            Logger.info("we have a new comment on some pull request! parsing and sending response!");
+//            model_webhook_pull_request_comment_created hook = model_webhook_pull_request_comment_created.from_json(json);
+//
+//            if (!hook.user.user_name.equals("theindiepocalypse")) {
+//                // we don't want to respond to ourselves in a recursive manner, right? ;)
+//                if (hook.comment.body.contains("@theindiepocalypse create readme")) {
+//                    store_github_iojs.create_readme(hook.repo, "I did this!");
+//                    store_github_api.comment_on_issue(hook.repo, hook.issue, "@"+hook.user.user_name+
+//                            " done, I created a README!");
+//                    return ok();
+//                }
+//
+//                store_github_api.comment_on_issue(hook.repo, hook.issue, "thanks for this pull request!");
+//            }
+//        }
 
         return ok();
     }

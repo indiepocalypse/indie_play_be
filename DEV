@@ -8,6 +8,7 @@ Current development principles:
 6) business logic goes in the controllers
 7) shared controller logic and specialized logic goes in handlers
 8) 3rd party tools go in vendors
+9) models are basically data-holders maybe plus some simple logic
 
 Some useful info for immidiate dev:
 

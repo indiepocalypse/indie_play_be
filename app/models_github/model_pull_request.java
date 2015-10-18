@@ -59,21 +59,21 @@ public class model_pull_request {
     }
 
     public static model_pull_request from_json(JsonNode json) {
-        String url = utils.utils_general.str_or_null(json, "url");
-        Long id = utils.utils_general.long_or_null(json, "id");
-        String html_url = utils.utils_general.str_or_null(json, "html_url");
-        Integer number = utils.utils_general.int_or_null(json, "number");
-        String state = utils.utils_general.str_or_null(json, "state");
-        String title = utils.utils_general.str_or_null(json, "title");
+        String url = utils.utils_json.str_or_null(json, "url");
+        Long id = utils.utils_json.long_or_null(json, "id");
+        String html_url = utils.utils_json.str_or_null(json, "html_url");
+        Integer number = utils.utils_json.int_or_null(json, "number");
+        String state = utils.utils_json.str_or_null(json, "state");
+        String title = utils.utils_json.str_or_null(json, "title");
         model_user user = model_user.from_json(json.get("user"));
-        String body = utils.utils_general.str_or_null(json, "body");
-        Boolean merged = utils.utils_general.false_otherwise(json, "merged");
-        Boolean mergeable = utils.utils_general.false_otherwise(json, "mergeable");
-        String comments_url = utils.utils_general.str_or_null(json, "comments_url");
-        Integer comments = utils.utils_general.int_or_null(json, "comments");
-        Integer additions = utils.utils_general.int_or_null(json, "additions");
-        Integer deletions = utils.utils_general.int_or_null(json, "deletions");
-        Integer changed_files = utils.utils_general.int_or_null(json, "changed_files");
+        String body = utils.utils_json.str_or_null(json, "body");
+        Boolean merged = utils.utils_json.false_otherwise(json, "merged");
+        Boolean mergeable = utils.utils_json.false_otherwise(json, "mergeable");
+        String comments_url = utils.utils_json.str_or_null(json, "comments_url");
+        Integer comments = utils.utils_json.int_or_null(json, "comments");
+        Integer additions = utils.utils_json.int_or_null(json, "additions");
+        Integer deletions = utils.utils_json.int_or_null(json, "deletions");
+        Integer changed_files = utils.utils_json.int_or_null(json, "changed_files");
         return new model_pull_request(
             url,
             id,
