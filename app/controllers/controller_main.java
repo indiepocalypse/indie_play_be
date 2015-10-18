@@ -4,19 +4,21 @@ import handlers.handler_general;
 import models.model_ownership;
 import models.model_repo;
 import models.model_user;
+import org.markdown4j.Markdown4jProcessor;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.F;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.twirl.api.Html;
 import stores.store_github_api;
 import stores.store_github_iojs;
 import stores.store_local_db;
 import stores.store_session;
-import sync.sync_gmail;
 import views.html.*;
 
+import javax.swing.text.html.HTML;
 import java.util.List;
 
 public class controller_main extends Controller {
@@ -97,7 +99,15 @@ public class controller_main extends Controller {
 
     public Result blog() {
         // TODO: an actual blog view!
-        return ok(view_main.render("blog", "there are " + Integer.toString(sync_gmail.mail_count) + " messages in inbox!"));
+        String content = "error!"; //there are " + Integer.toString(sync_gmail.mail_count) + " messages in inbox!";
+        try {
+            content = new Markdown4jProcessor().process("This is a **bold** text");
+        }
+        catch (Exception e) {
+            Logger.error("while rendering the blog...", e);
+        }
+        view_main._display_(new Html(content));
+        return ok(view_main.render("blog", view_blog_entry.render(new Html(content))));
     }
 
     public Result settings() {

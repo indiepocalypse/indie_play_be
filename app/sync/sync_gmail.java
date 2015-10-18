@@ -190,7 +190,7 @@ public class sync_gmail {
                             }
                             // all seems ok!
                             try {
-                                Thread.sleep(3100);
+                                Thread.sleep(5100);
                             }
                             catch (Exception ignored) {
                             }
