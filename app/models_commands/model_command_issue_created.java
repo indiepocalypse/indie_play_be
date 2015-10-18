@@ -13,6 +13,6 @@ public class model_command_issue_created {
     public model_command_issue_created(model_repo p_repo, model_issue p_issue) {
         this.repo = p_repo;
         this.issue = p_issue;
-        this.comment_body = "Thanks for commenting on this issue!";
+        this.comment_body = "Thanks for creating this issue!";
     }
 }

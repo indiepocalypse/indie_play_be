@@ -14,6 +14,6 @@ public class model_command_pull_request_created {
     public model_command_pull_request_created(model_repo p_repo, model_pull_request p_pull_request) {
         this.repo = p_repo;
         this.pull_request = p_pull_request;
-        this.comment_body = "Thanks for commenting on this pull request!";
+        this.comment_body = "Thanks for creating this pull request!";
     }
 }
