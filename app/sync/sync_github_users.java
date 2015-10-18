@@ -62,7 +62,6 @@ public class sync_github_users {
             t1 = null;
         }
     }
-
     
     private static void sync() {
         List<model_user> users = store_local_db.get_all_users();

@@ -1,5 +1,8 @@
-@(content: Html)
+@(content: Html)(is_admin: Boolean)
 
 <div class="container col-md-6">
+    @if(is_admin){
+    <h1>Youre admiN!</h1>
+    }
     @content
 </div>

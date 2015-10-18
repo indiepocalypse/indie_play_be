@@ -105,8 +105,7 @@ public class controller_main extends Controller {
         catch (Exception e) {
             Logger.error("while rendering the blog...", e);
         }
-        view_main._display_(new Html(content));
-        return ok(view_main.render("blog", view_blog_entry.render(new Html(content))));
+        return ok(view_main.render("blog", view_blog_entry.render(new Html(content), store_session.user_is_admin())));
     }
 
     public Result settings() {
