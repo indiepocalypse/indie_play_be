@@ -62,5 +62,4 @@ public class model_issue {
                 title
         );
     }
-
 }
