@@ -8,10 +8,10 @@ import models.model_user;
  * Created by skariel on 14/10/15.
  */
 public class model_webhook_issue_created {
-    public String action;
-    public model_issue issue;
-    public model_repo repo;
-    public model_user user;
+    public final String action;
+    public final model_issue issue;
+    public final model_repo repo;
+    public final model_user user;
     // TODO: add created and updated dates, labels, milestone, etc.
 
     public model_webhook_issue_created(

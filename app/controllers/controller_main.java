@@ -101,7 +101,7 @@ public class controller_main extends Controller {
         // TODO: an actual blog view!
         String content = "error!"; //there are " + Integer.toString(sync_gmail.mail_count) + " messages in inbox!";
         try {
-            content = new Markdown4jProcessor().process("This is a **bold** text");
+            content = new Markdown4jProcessor().process("This is a **bold** text\n\n```\nsome code...\nfn main() {}\n```");
         }
         catch (Exception e) {
             Logger.error("while rendering the blog...", e);

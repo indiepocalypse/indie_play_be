@@ -7,21 +7,21 @@ import models.model_user;
  * Created by skariel on 17/10/15.
  */
 public class model_pull_request {
-    public String url;
-    public Long id;
-    public String html_url;
-    public int number;
-    public String state;
-    public String title;
-    public model_user user;
-    public String body;
-    public boolean merged;
-    public boolean mergeable;
-    public String comments_url;
-    public int comments;
-    public int additions;
-    public int deletions;
-    public int changed_files;
+    public final String url;
+    public final Long id;
+    public final String html_url;
+    public final int number;
+    public final String state;
+    public final String title;
+    public final model_user user;
+    public final String body;
+    public final boolean merged;
+    public final boolean mergeable;
+    public final String comments_url;
+    public final int comments;
+    public final int additions;
+    public final int deletions;
+    public final int changed_files;
     // TODO: add many missing fields
 
     public model_pull_request(

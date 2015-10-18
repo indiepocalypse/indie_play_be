@@ -9,12 +9,12 @@ import java.util.Date;
  * Created by skariel on 14/10/15.
  */
 public class model_comment {
-    public String url;
-    public String html_url;
-    public String issue_url;
-    public Long id;
-    public model_user user;
-    public String body;
+    public final String url;
+    public final String html_url;
+    public final String issue_url;
+    public final Long id;
+    public final model_user user;
+    public final String body;
     // TODO: add created and updated dates
 
     public model_comment(

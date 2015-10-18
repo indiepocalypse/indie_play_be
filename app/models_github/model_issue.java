@@ -7,15 +7,15 @@ import models.model_user;
  * Created by skariel on 14/10/15.
  */
 public class model_issue {
-    public String url;
-    public String html_url;
-    public String comments_url;
-    public Long id;
-    public model_user user;
-    public String body;
-    public int number;
-    public int comments;
-    public String title;
+    public final String url;
+    public final String html_url;
+    public final String comments_url;
+    public final Long id;
+    public final model_user user;
+    public final String body;
+    public final int number;
+    public final int comments;
+    public final String title;
     // TODO: add created and updated dates, labels, milestone, etc.
     // TODO: use the utils
 
