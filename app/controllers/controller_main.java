@@ -25,7 +25,9 @@ public class controller_main extends Controller {
     // TODO: cache the simple pages (e.g. the landing page)
     // TODO: remove original owner when repo is transferred
     // TODO: use reverse routing so I don't repeat myself :) (done?!)
-    // TODO: limit the number of repos a user can have with 100% ownership
+    // TODO: limit the number of repos a user can have with more than 50% ownership
+    // TODO: move pull request model to DB
+    // TODO: create a deal model
 
     private final static String main_title = "it's the Indiepocalypse!";
     private boolean is_redirected_from_github_login() {
