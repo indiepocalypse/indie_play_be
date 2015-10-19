@@ -1,8 +1,7 @@
 package models_commands;
 
 import models.model_repo;
-import models_github.model_issue;
-import models_github.model_pull_request;
+import models.model_pull_request;
 
 /**
  * Created by skariel on 18/10/15.

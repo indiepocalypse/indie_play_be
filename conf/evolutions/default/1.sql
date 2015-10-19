@@ -23,6 +23,27 @@ create table model_ownership (
   constraint pk_model_ownership primary key (id))
 ;
 
+create table model_pull_request (
+  id                        varchar(255) not null,
+  url                       varchar(255),
+  github_id                 bigint,
+  html_url                  varchar(255),
+  number                    integer,
+  state                     varchar(255),
+  title                     varchar(255),
+  body                      varchar(255),
+  merged                    boolean,
+  mergeable                 boolean,
+  comments_url              varchar(255),
+  comments                  integer,
+  additions                 integer,
+  deletions                 integer,
+  changed_files             integer,
+  sha                       varchar(255),
+  repo_name                 varchar(255),
+  constraint pk_model_pull_request primary key (id))
+;
+
 create table model_repo (
   repo_name                 varchar(255) not null,
   repo_description          varchar(255),
@@ -52,6 +73,8 @@ create sequence model_gmail_last_date_read_seq;
 
 create sequence model_ownership_seq;
 
+create sequence model_pull_request_seq;
+
 create sequence model_repo_seq;
 
 create sequence model_user_seq;
@@ -75,6 +98,8 @@ drop table if exists model_gmail_last_date_read;
 
 drop table if exists model_ownership;
 
+drop table if exists model_pull_request;
+
 drop table if exists model_repo;
 
 drop table if exists model_user;
@@ -86,6 +111,8 @@ drop sequence if exists model_admin_seq;
 drop sequence if exists model_gmail_last_date_read_seq;
 
 drop sequence if exists model_ownership_seq;
+
+drop sequence if exists model_pull_request_seq;
 
 drop sequence if exists model_repo_seq;
 

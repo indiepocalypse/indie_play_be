@@ -1,6 +1,7 @@
 package models_github;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import models.model_pull_request;
 import models.model_repo;
 import models.model_user;
 
