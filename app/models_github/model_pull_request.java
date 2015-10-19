@@ -10,18 +10,18 @@ public class model_pull_request {
     public final String url;
     public final Long id;
     public final String html_url;
-    public final int number;
+    public final Integer number;
     public final String state;
     public final String title;
     public final model_user user;
     public final String body;
-    public final boolean merged;
-    public final boolean mergeable;
+    public final Boolean merged;
+    public final Boolean mergeable;
     public final String comments_url;
-    public final int comments;
-    public final int additions;
-    public final int deletions;
-    public final int changed_files;
+    public final Integer comments;
+    public final Integer additions;
+    public final Integer deletions;
+    public final Integer changed_files;
     public final String SHA;
     // TODO: add many missing fields
 
@@ -78,7 +78,10 @@ public class model_pull_request {
         Integer deletions = utils.utils_json.int_or_null(json, "deletions");
         Integer changed_files = utils.utils_json.int_or_null(json, "changed_files");
         JsonNode head = json.get("head");
-        String SHA = head.get("label").asText() + "@" + head.get("sha");
+        String SHA = null;
+        if (head!=null) {
+            SHA = head.get("label").asText() + "@" + head.get("sha");
+        }
         return new model_pull_request(
             url,
             id,

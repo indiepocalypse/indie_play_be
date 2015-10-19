@@ -199,4 +199,10 @@ public class store_github_api {
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
         return (res.getStatus() == 201)&&(res.getBody().contains("created"));
     }
+
+    public static model_pull_request get_pull_request(String url) {
+        WSRequest req = indie_auth_request(url).setMethod("GET");
+        WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
+        return model_pull_request.from_json(res.asJson());
+    }
 }
