@@ -204,4 +204,18 @@ public class store_github_api {
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
         return model_pull_request.from_json(res.asJson());
     }
+
+    public static List<model_pull_request> get_all_pull_requests(model_repo repo) {
+        WSResponse res = indie_auth_request("/repos/theindiepocalypse/"+repo.repo_name+"/pulls")
+                .setMethod("GET")
+                .execute()
+                .get(60, TimeUnit.SECONDS);
+        JsonNode json = play.libs.Json.parse(res.getBody());
+        ArrayList<model_pull_request> pull_requests = new ArrayList<>(json.size());
+        for (int i = 0; i < json.size(); i++) {
+            JsonNode json_pull_request = json.get(i);
+            pull_requests.add(model_pull_request.from_json(json_pull_request));
+        }
+        return pull_requests;
+    }
 }

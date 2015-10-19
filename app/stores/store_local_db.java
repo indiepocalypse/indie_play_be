@@ -142,4 +142,16 @@ public class store_local_db {
         return model_gmail_last_date_read.get_a_copy_of_the_singleton();
     }
 
+    /********************************
+     * PULL REQUESTS!
+     ********************************/
+
+    public static void update_pull_request(model_pull_request pr) {
+        try {
+            pr.save();
+        }
+        catch (Exception ignored) {
+            pr.update();
+        }
+    }
 }
