@@ -22,6 +22,7 @@ public class model_pull_request {
     public final int additions;
     public final int deletions;
     public final int changed_files;
+    public final String SHA;
     // TODO: add many missing fields
 
     public model_pull_request(
@@ -39,7 +40,8 @@ public class model_pull_request {
             Integer p_comments,
             Integer p_additions,
             Integer p_deletions,
-            Integer p_changed_files
+            Integer p_changed_files,
+            String p_SHA
     ) {
         this.url = p_url;
         this.id = p_id;
@@ -56,6 +58,7 @@ public class model_pull_request {
         this.additions = p_additions;
         this.deletions = p_deletions;
         this.changed_files = p_changed_files;
+        this.SHA = p_SHA;
     }
 
     public static model_pull_request from_json(JsonNode json) {
@@ -74,6 +77,8 @@ public class model_pull_request {
         Integer additions = utils.utils_json.int_or_null(json, "additions");
         Integer deletions = utils.utils_json.int_or_null(json, "deletions");
         Integer changed_files = utils.utils_json.int_or_null(json, "changed_files");
+        JsonNode head = json.get("head");
+        String SHA = head.get("label").asText() + "@" + head.get("sha");
         return new model_pull_request(
             url,
             id,
@@ -89,7 +94,8 @@ public class model_pull_request {
             comments,
             additions,
             deletions,
-            changed_files
+            changed_files,
+            SHA
         );
     }
 

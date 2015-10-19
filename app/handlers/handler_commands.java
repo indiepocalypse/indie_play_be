@@ -3,7 +3,7 @@ package handlers;
 import models_commands.model_command_issue_comment;
 import models_commands.model_command_issue_created;
 import models_commands.model_command_pull_request_comment;
-import models_commands.model_command_pull_request_created;
+import models_commands.model_command_pull_request_created_or_updated;
 import stores.store_github_api;
 
 /**
@@ -25,7 +25,7 @@ public class handler_commands {
         store_github_api.comment_on_issue(command.repo, command.issue.number, command.comment_body);
     }
 
-    public static void handle_command(model_command_pull_request_created command) {
+    public static void handle_command(model_command_pull_request_created_or_updated command) {
         store_github_api.comment_on_issue(command.repo, command.pull_request.number, command.comment_body);
     }
 }
