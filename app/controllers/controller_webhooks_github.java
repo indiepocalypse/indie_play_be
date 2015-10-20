@@ -61,7 +61,7 @@ public class controller_webhooks_github extends Controller {
         for (String command_response: command_responses) {
             response += command_response+"\n\n";
         }
-
+    response ="123";
         Logger.info("repo_name="+hook.get_repo().repo_name);
         Logger.info("issue_num="+Integer.toString(hook.get_issue_num()));
         if (!store_github_api.comment_on_issue(hook.get_repo(), hook.get_issue_num(), response)) {
