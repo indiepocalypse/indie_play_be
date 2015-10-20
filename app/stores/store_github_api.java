@@ -198,7 +198,11 @@ public class store_github_api {
         Logger.info("payload="+json_payload_to_create);
         WSRequest req = post_indie_auth_request(path, json_payload_to_create);
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
-        return (res.getStatus() == 201)&&(res.getBody().contains("created"));
+        boolean success = (res.getStatus() == 201)&&(res.getBody().contains("created"));
+        if (!success) {
+            Logger.error(res.asJson().toString());
+        }
+        return success;
     }
 
     public static model_pull_request get_pull_request(String url) {
