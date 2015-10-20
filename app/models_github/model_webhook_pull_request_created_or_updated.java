@@ -77,11 +77,6 @@ public class model_webhook_pull_request_created_or_updated implements interface_
     }
 
     @Override
-    public void handle_locally() {
-        store_local_db.update_pull_request(pull_request);
-    }
-
-    @Override
     public String get_response() {
         if (is_update()) {
             return "pull request was updated. Deals are removed";

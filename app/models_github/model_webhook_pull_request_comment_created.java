@@ -67,11 +67,6 @@ public class model_webhook_pull_request_comment_created implements interface_git
     }
 
     @Override
-    public void handle_locally() {
-        // ignore for now
-    }
-
-    @Override
     public String get_response() {
         return "Thanks for commenting on this pull request";
     }

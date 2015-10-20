@@ -61,11 +61,6 @@ public class model_webhook_issue_created implements interface_github_webhook {
     }
 
     @Override
-    public void handle_locally() {
-        // ignore for now
-    }
-
-    @Override
     public String get_response() {
         return "Thanks for creating this issue";
     }
