@@ -31,7 +31,6 @@ public class controller_webhooks_github extends Controller {
         }
 
         String response = "@"+sender_name+":\n\n";
-        Logger.info("sender_name="+sender_name);
         interface_github_webhook hook;
 
         if (model_webhook_issue_comment_created.is_me(json)) {
@@ -55,15 +54,12 @@ public class controller_webhooks_github extends Controller {
         }
 
         response += hook.get_response()+"\n\n";
-        Logger.info("response="+response);
 
         ArrayList<String> command_responses = handler_commands.handle_from_hook(hook);
         for (String command_response: command_responses) {
             response += command_response+"\n\n";
         }
-    response ="123";
-        Logger.info("repo_name="+hook.get_repo().repo_name);
-        Logger.info("issue_num="+Integer.toString(hook.get_issue_num()));
+
         if (!store_github_api.comment_on_issue(hook.get_repo(), hook.get_issue_num(), response)) {
             Logger.info("problem commenting...");
         };

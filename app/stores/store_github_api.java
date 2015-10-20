@@ -13,6 +13,7 @@ import play.libs.Json;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSRequest;
 import play.libs.ws.WSResponse;
+import scala.util.parsing.json.JSONObject$;
 import utils.utils_general;
 import utils.utils_random_string;
 
@@ -189,14 +190,12 @@ public class store_github_api {
 
     public static boolean comment_on_issue(model_repo repo, int issue_num, String comment_body) {
         // returns success as usual...
-        String json_payload_to_create = "{\"body\": \"__COMMENT_BODY__\"}".replace("__COMMENT_BODY__", comment_body);
+        JsonNode json = JsonNodeFactory.instance.objectNode().put("body", comment_body);
         String path = "/repos/__OWNER__/__REPO__/issues/__NUMBER__/comments"
                 .replace("__OWNER__", store_credentials.github.name)
                 .replace("__REPO__", repo.repo_name)
                 .replace("__NUMBER__", Integer.toString(issue_num));
-        Logger.info("path="+path);
-        Logger.info("payload="+json_payload_to_create);
-        WSRequest req = post_indie_auth_request(path, json_payload_to_create);
+        WSRequest req = post_indie_auth_request(path, json);
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
         boolean success = (res.getStatus() == 201)&&(res.getBody().contains("created"));
         if (!success) {
