@@ -7,7 +7,7 @@ import models.model_user;
 /**
  * Created by skariel on 14/10/15.
  */
-public class model_webhook_issue_created {
+public class model_webhook_issue_created implements interface_hook {
     public final String action;
     public final model_issue issue;
     public final model_repo repo;
@@ -44,4 +44,30 @@ public class model_webhook_issue_created {
                 json.has("issue") && json.has("repository") && json.has("sender") &&
                 json.size()==4 && (!json.get("issue").has("pull_request"));
     }
+
+    @Override
+    public model_repo get_repo() {
+        return repo;
+    }
+
+    @Override
+    public int get_issue_num() {
+        return issue.number;
+    }
+
+    @Override
+    public String get_comment() {
+        return issue.body;
+    }
+
+    @Override
+    public void handle_locally() {
+        // ignore for now
+    }
+
+    @Override
+    public String get_response() {
+        return "Thanks for creating this issue";
+    }
+
 }

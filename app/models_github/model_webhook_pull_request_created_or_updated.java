@@ -4,11 +4,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import models.model_pull_request;
 import models.model_repo;
 import models.model_user;
+import stores.store_local_db;
 
 /**
  * Created by skariel on 14/10/15.
  */
-public class model_webhook_pull_request_created_or_updated {
+public class model_webhook_pull_request_created_or_updated implements interface_hook {
     public final String action;
     public final Integer number;
     public final model_pull_request pull_request;
@@ -56,4 +57,36 @@ public class model_webhook_pull_request_created_or_updated {
                 json.has("number") && json.has("pull_request") && json.has("repository") &&
                 json.has("sender") && json.size()==5;
     }
+
+    @Override
+    public model_repo get_repo() {
+        return repo;
+    }
+
+    @Override
+    public int get_issue_num() {
+        return number;
+    }
+
+    @Override
+    public String get_comment() {
+        if (is_update()) {
+            return "";
+        }
+        return pull_request.body;
+    }
+
+    @Override
+    public void handle_locally() {
+        store_local_db.update_pull_request(pull_request);
+    }
+
+    @Override
+    public String get_response() {
+        if (is_update()) {
+            return "pull request was updated. Deals are removed";
+        }
+        return "Thanks for opening this pull request!";
+    }
+
 }

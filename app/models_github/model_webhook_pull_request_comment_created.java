@@ -7,7 +7,7 @@ import models.model_user;
 /**
  * Created by skariel on 14/10/15.
  */
-public class model_webhook_pull_request_comment_created {
+public class model_webhook_pull_request_comment_created implements interface_hook {
     public final String action;
     public final model_issue issue;
     public final model_comment comment;
@@ -50,4 +50,30 @@ public class model_webhook_pull_request_comment_created {
                 json.has("repository") && json.has("sender") &&
                 json.size()==5 && (json.get("issue").has("pull_request"));
     }
+
+    @Override
+    public model_repo get_repo() {
+        return repo;
+    }
+
+    @Override
+    public int get_issue_num() {
+        return issue.number;
+    }
+
+    @Override
+    public String get_comment() {
+        return comment.body;
+    }
+
+    @Override
+    public void handle_locally() {
+        // ignore for now
+    }
+
+    @Override
+    public String get_response() {
+        return "Thanks for commenting on this pull request";
+    }
+
 }
