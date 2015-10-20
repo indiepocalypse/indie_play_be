@@ -9,7 +9,7 @@ import stores.store_local_db;
 /**
  * Created by skariel on 14/10/15.
  */
-public class model_webhook_pull_request_created_or_updated implements interface_hook {
+public class model_webhook_pull_request_created_or_updated implements interface_github_webhook {
     public final String action;
     public final Integer number;
     public final model_pull_request pull_request;

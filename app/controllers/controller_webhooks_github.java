@@ -9,6 +9,8 @@ import play.mvc.Result;
 import stores.store_github_api;
 import stores.store_local_db;
 
+import java.util.ArrayList;
+
 /**
  * Created by skariel on 12/10/15.
  */
@@ -29,7 +31,7 @@ public class controller_webhooks_github extends Controller {
         }
 
         String response = "@"+sender_name+":\n\n";
-        interface_hook hook = null;
+        interface_github_webhook hook = null;
 
         if (model_webhook_issue_comment_created.is_me(json)) {
             hook = model_webhook_issue_comment_created.from_json(json);
@@ -53,9 +55,9 @@ public class controller_webhooks_github extends Controller {
 
         response += hook.get_response()+"\n\n";
 
-        ArrayList<interface_command> commands = handler_commands.create_and_handle_from_hook(hook);
-        for (interface_command command: commands) {
-            response += command.get_response()+"\n\n";
+        ArrayList<String> command_responses = handler_commands.handle_from_hook(hook);
+        for (String command_response: command_responses) {
+            response += command_response+"\n\n";
         }
 
         store_github_api.comment_on_issue(hook.get_repo(), hook.get_issue_num(), response);

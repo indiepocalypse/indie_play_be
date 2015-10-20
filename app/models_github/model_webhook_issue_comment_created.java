@@ -7,7 +7,7 @@ import models.model_user;
 /**
  * Created by skariel on 14/10/15.
  */
-public class model_webhook_issue_comment_created implements interface_hook {
+public class model_webhook_issue_comment_created implements interface_github_webhook {
     public final String action;
     public final model_issue issue;
     public final model_comment comment;
