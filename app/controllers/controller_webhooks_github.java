@@ -1,11 +1,13 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import handlers.handler_commands;
 import models_github.*;
 import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
 import stores.store_github_api;
+import stores.store_local_db;
 
 /**
  * Created by skariel on 12/10/15.
@@ -39,10 +41,10 @@ public class controller_webhooks_github extends Controller {
             hook = model_webhook_issue_created.from_json(json);
         }
         else if (model_webhook_pull_request_created_or_updated.is_me(json)) {
-            hook = model_webhook_pull_request_created_or_updated.from_json(json);
-        }
-        if (hook!=null) {
-            hook.handle_locally();
+            model_webhook_pull_request_created_or_updated tmp_hook =
+                model_webhook_pull_request_created_or_updated.from_json(json);
+            store_local_db.update_pull_request(tmp_hook.pull_request);
+            hook = tmp_hook;
         }
         else {
             Logger.info("we got some weird hook, not handled yet");
@@ -51,6 +53,10 @@ public class controller_webhooks_github extends Controller {
 
         response += hook.get_response()+"\n\n";
 
+        ArrayList<interface_command> commands = handler_commands.create_and_handle_from_hook(hook);
+        for (interface_command command: commands) {
+            response += command.get_response()+"\n\n";
+        }
 
         store_github_api.comment_on_issue(hook.get_repo(), hook.get_issue_num(), response);
 

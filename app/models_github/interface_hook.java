@@ -9,6 +9,5 @@ public interface interface_hook {
     model_repo get_repo();
     int get_issue_num();
     String get_comment();
-    void handle_locally();
     String get_response();
 }
