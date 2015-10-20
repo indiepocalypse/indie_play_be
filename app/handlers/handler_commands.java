@@ -17,24 +17,26 @@ public class handler_commands {
     public static ArrayList<String> handle_from_hook(interface_github_webhook hook) {
         ArrayList<String> responses = new ArrayList<>();
         responses.add(command_list_owners(hook));
+        responses.add(command_say_hi(hook));
         return responses;
     }
 
     private static String command_list_owners(interface_github_webhook hook) {
-        if (!hook.get_comment().contains("@indiepocalypse list owners")) {
+        if (!hook.get_comment().contains("@theindiepocalypse list owners")) {
             return "";
         }
         String response = "Owner | Percent\n"+
-                          "-----------------\n";
+                          "-------|---------\n";
         List<model_ownership> ownerships = store_local_db.get_ownerships_by_repo_name(hook.get_repo().repo_name);
         for (model_ownership ownership: ownerships) {
-            response += ownership.user.user_name + "|" + ownership.percent.toString()+"\n";
+            response += "@" + ownership.user.user_name + "|" + ownership.percent.toString()+"\n";
         }
+        response += "*total* | 100.0\n";
         return response;
     }
 
     private static String command_say_hi(interface_github_webhook hook) {
-        if (!hook.get_comment().contains("@indiepocalypse say hi")) {
+        if (!hook.get_comment().contains("@theindiepocalypse say hi")) {
             return "";
         }
         return "hi!";
