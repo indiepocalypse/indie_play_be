@@ -194,6 +194,8 @@ public class store_github_api {
                 .replace("__OWNER__", store_credentials.github.name)
                 .replace("__REPO__", repo.repo_name)
                 .replace("__NUMBER__", Integer.toString(issue_num));
+        Logger.info("path="+path);
+        Logger.info("payload="+json_payload_to_create);
         WSRequest req = post_indie_auth_request(path, json_payload_to_create);
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
         return (res.getStatus() == 201)&&(res.getBody().contains("created"));

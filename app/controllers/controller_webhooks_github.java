@@ -31,7 +31,7 @@ public class controller_webhooks_github extends Controller {
         }
 
         String response = "@"+sender_name+":\n\n";
-        Logger.info("sender_name=", sender_name);
+        Logger.info("sender_name="+sender_name);
         interface_github_webhook hook;
 
         if (model_webhook_issue_comment_created.is_me(json)) {
