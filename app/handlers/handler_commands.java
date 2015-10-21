@@ -1,9 +1,7 @@
 package handlers;
 
 import models.model_ownership;
-import models_commands.*;
 import models_github.interface_github_webhook;
-import stores.store_github_api;
 import stores.store_local_db;
 
 import java.util.ArrayList;
