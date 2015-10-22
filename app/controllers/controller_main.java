@@ -29,6 +29,7 @@ public class controller_main extends Controller {
     // TODO: limit the number of repos a user can have with more than 50% ownership
     // TODO: summarizing classes and models (like sync but internal, also cleaning stuff etc.)
     // TODO: remove method in store_db (for pull_requests, offers, etc.)
+    // TODO: is the save/update in the stor_local_db really necessary?
 
     private final static String main_title = "it's the Indiepocalypse!";
     private boolean is_redirected_from_github_login() {

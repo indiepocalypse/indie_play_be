@@ -223,4 +223,12 @@ public class store_github_api {
         }
         return pull_requests;
     }
+
+    public static boolean delete_collaborator_from_repo(String repo_name, String user_name) {
+        WSResponse res = indie_auth_request("/repos/theindiepocalypse/"+repo_name+"/collaborators/"+user_name)
+                .setMethod("DELETE")
+                .execute()
+                .get(60, TimeUnit.SECONDS);
+        return res.getStatus() == 204;
+    }
 }

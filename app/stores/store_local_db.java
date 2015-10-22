@@ -172,10 +172,14 @@ public class store_local_db {
     public static void remove_offers_by_pull_request(String repo_name, int number) {
         try {
             // TODO: this dlete one by one is bad. Fix it!
-            for (model_offer offer: model_offer.find.fetch("user").fetch("pull_request").fetch("repo")
+            // TODO: fix fetches above like the one below
+            List<model_offer> offers = model_offer.find.fetch("user").fetch("pull_request").fetch("pull_request.repo")
                     .where().eq("pull_request.number", Integer.toString(number))
-                    .where().eq("pull_request.repo.repo_name", repo_name).findList()) {
-                model_offer.find.deleteById(offer.id);
+                    .where().eq("pull_request.repo.repo_name", repo_name).findList();
+            if (offers!=null) {
+                for (model_offer offer: offers) {
+                    model_offer.find.deleteById(offer.id);
+                }
             }
         } catch (Exception e) {
             Logger.error("failed to remove offers by pull request:", e);
@@ -243,6 +247,7 @@ public class store_local_db {
         update_repo(hook.get_repo());
         if (hook.get_pull_request()!=null) {
             // yeah, this is the only field that can be null;
+            // (because the hook may be for something else than a pull request!)
             update_pull_request(hook.get_pull_request());
         }
     }

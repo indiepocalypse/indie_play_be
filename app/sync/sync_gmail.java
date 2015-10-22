@@ -195,6 +195,13 @@ public class sync_gmail {
                             catch (Exception ignored) {
                             }
                             store_github_api.create_webhook(ownership.repo);
+                            if (store_github_api.delete_collaborator_from_repo(ownership.repo.repo_name, from_user)) {
+                                Logger.info("user "+from_user+" removed from collaborators to "+ownership.repo.repo_name);
+                            }
+                            else {
+                                Logger.error("could not remove user "+from_user+" removed from collaborators to "+ownership.repo.repo_name);
+                            }
+
                             Logger.info("Successfuly transferred repo \"" + repo_name + "\" from Github");
                         }
                     }
