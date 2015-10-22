@@ -47,7 +47,7 @@ public class handler_general {
             store_github_api.create_webhook(repo);
         }
         model_ownership ownership1 = new model_ownership(user, repo, new BigDecimal("99.0"));
-        model_user theindiepocalypse = new model_user("theindiepocalypse", null, null, null, null, null, null, 0, 0);
+        model_user theindiepocalypse = store_local_db.get_user_by_name("theindiepocalypse");
         model_ownership ownership2 = new model_ownership(theindiepocalypse, repo, new BigDecimal("1.0"));
         store_local_db.update_ownership(ownership1);
         store_local_db.update_ownership(ownership2);

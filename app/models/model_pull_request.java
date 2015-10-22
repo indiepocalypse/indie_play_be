@@ -21,17 +21,15 @@ public class model_pull_request extends Model {
     public final Integer number;
     public final String state;
     public final String title;
+    @ManyToOne
     public final model_user user;
     public final String body;
     public final Boolean merged;
     public final Boolean mergeable;
     public final String comments_url;
-    public final Integer comments;
-    public final Integer additions;
-    public final Integer deletions;
-    public final Integer changed_files;
     public final String SHA;
-    public final String repo_name;
+    @ManyToOne
+    public final model_repo repo;
     // TODO: add many missing fields
 
     public model_pull_request(
@@ -45,10 +43,8 @@ public class model_pull_request extends Model {
             Boolean p_merged,
             Boolean p_mergeable,
             String p_comments_url,
-            Integer p_comments,
-            Integer p_additions,
-            Integer p_deletions,
-            Integer p_changed_files,
+            model_repo p_repo,
+            Integer p_number,
             String p_SHA
     ) {
         this.url = p_url;
@@ -61,33 +57,26 @@ public class model_pull_request extends Model {
         this.merged = p_merged;
         this.mergeable = p_mergeable;
         this.comments_url = p_comments_url;
-        this.comments = p_comments;
-        this.additions = p_additions;
-        this.deletions = p_deletions;
-        this.changed_files = p_changed_files;
         this.SHA = p_SHA;
-        String[] surl = url.split("/");
-        this.repo_name = surl[5];
-        this.number = Integer.parseInt(surl[7]);
-        this.id = this.repo_name + "/" + Integer.toString(this.number);
+        this.repo = p_repo;
+        this.number = p_number;
+        this.id = repo.repo_name + "/" + Integer.toString(this.number);
     }
 
     public static model_pull_request from_json(JsonNode json) {
-        String url = utils.utils_json.str_or_null(json, "url");
-        Long github_id = utils.utils_json.long_or_null(json, "id");
-        String html_url = utils.utils_json.str_or_null(json, "html_url");
-        String state = utils.utils_json.str_or_null(json, "state");
-        String title = utils.utils_json.str_or_null(json, "title");
+        Integer number = json.get("number").asInt();
+        String url = json.get("url").asText();
+        Long github_id = json.get("id").asLong();
+        String html_url = json.get("html_url").asText();
+        String state = json.get("state").asText();
+        String title = json.get("title").asText();
         model_user user = model_user.from_json(json.get("user"));
-        String body = utils.utils_json.str_or_null(json, "body");
-        Boolean merged = utils.utils_json.false_otherwise(json, "merged");
-        Boolean mergeable = utils.utils_json.false_otherwise(json, "mergeable");
-        String comments_url = utils.utils_json.str_or_null(json, "comments_url");
-        Integer comments = utils.utils_json.int_or_null(json, "comments");
-        Integer additions = utils.utils_json.int_or_null(json, "additions");
-        Integer deletions = utils.utils_json.int_or_null(json, "deletions");
-        Integer changed_files = utils.utils_json.int_or_null(json, "changed_files");
+        String body = json.get("body").asText();
+        Boolean merged = json.has("merged_at");
+        Boolean mergeable = json.has("mergeable") && json.get("mergeable")!=null && json.get("mergeable").asBoolean();
+        String comments_url = json.get("comments_url").asText();
         JsonNode head = json.get("head");
+        model_repo repo = model_repo.from_json(json.get("base").get("repo"));
         String SHA = null;
         if (head!=null) {
             SHA = head.get("label").asText() + "@" + head.get("sha");
@@ -103,10 +92,8 @@ public class model_pull_request extends Model {
             merged,
             mergeable,
             comments_url,
-            comments,
-            additions,
-            deletions,
-            changed_files,
+            repo,
+            number,
             SHA
         );
     }

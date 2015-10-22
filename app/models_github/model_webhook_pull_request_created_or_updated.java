@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import models.model_pull_request;
 import models.model_repo;
 import models.model_user;
-import stores.store_local_db;
 
 /**
  * Created by skariel on 14/10/15.
@@ -16,7 +15,6 @@ public class model_webhook_pull_request_created_or_updated implements interface_
     public final model_repo repo;
     public final model_user user;
     // TODO: add created and updated dates, labels, milestone, etc.
-    // TODO: use the utils class for the json parsing
 
     public model_webhook_pull_request_created_or_updated(
             String p_action,
@@ -61,6 +59,16 @@ public class model_webhook_pull_request_created_or_updated implements interface_
     @Override
     public model_repo get_repo() {
         return repo;
+    }
+
+    @Override
+    public model_user get_user() {
+        return user;
+    }
+
+    @Override
+    public model_pull_request get_pull_request() {
+        return pull_request;
     }
 
     @Override

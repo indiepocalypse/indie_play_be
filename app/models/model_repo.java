@@ -1,13 +1,10 @@
 package models;
 
 import com.avaje.ebean.Model;
-import com.avaje.ebean.annotation.ConcurrencyMode;
-import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Version;
 
 /**
  * Created by skariel on 29/09/15.
@@ -34,12 +31,12 @@ public class model_repo extends Model {
     }
 
     public static model_repo from_json(JsonNode json_repo) {
-        String name = utils.utils_json.str_or_null(json_repo, "name");
-        String description = utils.utils_json.str_or_null(json_repo, "description");
-        String github_html_url = utils.utils_json.str_or_null(json_repo, "html_url");
-        String homepage = utils.utils_json.str_or_null(json_repo, "homepage");
-        Integer stars_count = utils.utils_json.int_or_null(json_repo, "stargazers_count");
-        Integer forks_count = utils.utils_json.int_or_null(json_repo, "forks_count");
+        String name = json_repo.get("name").asText();
+        String description = json_repo.get("description").asText();
+        String github_html_url = json_repo.get("html_url").asText();
+        String homepage = json_repo.get("homepage").asText();
+        Integer stars_count = json_repo.get("stargazers_count").asInt();
+        Integer forks_count = json_repo.get("forks_count").asInt();
         return new model_repo(name, description, homepage, github_html_url, stars_count, forks_count);
     }
 

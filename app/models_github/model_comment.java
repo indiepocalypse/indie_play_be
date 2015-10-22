@@ -3,8 +3,6 @@ package models_github;
 import com.fasterxml.jackson.databind.JsonNode;
 import models.model_user;
 
-import java.util.Date;
-
 /**
  * Created by skariel on 14/10/15.
  */

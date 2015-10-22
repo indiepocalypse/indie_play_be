@@ -9,4 +9,6 @@ Current development principles:
 7) shared controller logic and specialized logic goes in handlers
 8) 3rd party tools go in vendors
 9) models are basically data-holders maybe plus some simple logic
+10) models are samllest common denomoinator in the github api sense. ie
+     all models can be built from the minial info in github api
 

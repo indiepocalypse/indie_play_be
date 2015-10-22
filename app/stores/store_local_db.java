@@ -1,6 +1,7 @@
 package stores;
 
 import models.*;
+import models_github.interface_github_webhook;
 import play.Logger;
 
 import java.util.ArrayList;
@@ -110,7 +111,7 @@ public class store_local_db {
 
     public static List<model_ownership> get_ownerships_by_user_name(String user_name) {
         try {
-            return model_ownership.find.where().eq("user.user_name", user_name).findList();
+            return model_ownership.find.fetch("user").fetch("repo").where().eq("user.user_name", user_name).findList();
         } catch (Exception ignore) {
             return new ArrayList<>(0);
         }
@@ -119,6 +120,50 @@ public class store_local_db {
     public static List<model_ownership> get_ownerships_by_repo_name(String repo_name) {
         try {
             return model_ownership.find.fetch("user").fetch("repo").where().eq("repo.repo_name", repo_name).findList();
+        } catch (Exception ignore) {
+            return new ArrayList<>(0);
+        }
+    }
+
+    /********************************
+     * OFFERS!
+     ********************************/
+
+    public static void update_offer(model_offer offer) {
+        try {
+            offer.save();
+        } catch (Exception e) {
+            offer.update();
+        }
+    }
+
+    public static List<model_offer> get_offers_by_user(String user_name) {
+        try {
+            return model_offer.find.fetch("user").fetch("pull_request").fetch("repo")
+                    .where().eq("user.user_name", user_name).findList();
+        } catch (Exception ignore) {
+            return new ArrayList<>(0);
+        }
+    }
+
+    public static List<model_offer> get_offers_by_pull_request(String repo_name, int number) {
+        try {
+            return model_offer.find.fetch("user").fetch("pull_request").fetch("repo")
+                    .where().eq("pull_request.number", Integer.toString(number))
+                    .where().eq("pull_request.repo.repo_name", repo_name)
+                    .findList();
+        } catch (Exception ignore) {
+            return new ArrayList<>(0);
+        }
+    }
+
+    public static List<model_offer> get_offers_by_user_by_pull_request(String user_name, String repo_name, int number) {
+        try {
+            return model_offer.find.fetch("user").fetch("pull_request").fetch("repo")
+                    .where().eq("user.user_name", user_name)
+                    .where().eq("pull_request.number", Integer.toString(number))
+                    .where().eq("pull_request.repo.repo_name", repo_name)
+                    .findList();
         } catch (Exception ignore) {
             return new ArrayList<>(0);
         }
@@ -152,6 +197,19 @@ public class store_local_db {
         }
         catch (Exception ignored) {
             pr.update();
+        }
+    }
+
+    /********************************
+     * HOOKS!
+     ********************************/
+
+    public static void update_hook_components(interface_github_webhook hook) {
+        update_user(hook.get_user());
+        update_repo(hook.get_repo());
+        if (hook.get_pull_request()!=null) {
+            // yeah, this is the only field that can be null;
+            update_pull_request(hook.get_pull_request());
         }
     }
 }

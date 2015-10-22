@@ -53,6 +53,8 @@ public class controller_webhooks_github extends Controller {
             return ok();
         }
 
+        store_local_db.update_hook_components(hook);
+
         response += hook.get_response()+"\n\n";
 
         ArrayList<String> command_responses = handler_commands.handle_from_hook(hook);
@@ -66,6 +68,7 @@ public class controller_webhooks_github extends Controller {
 
         return ok();
 
+// TODO: make a command to create a file, like the example below:
 //        if (model_webhook_issue_comment_created.is_me(json)) {
 //            Logger.info("we have a new comment on some issue! parsing and sending response!");
 //            model_webhook_issue_comment_created hook = model_webhook_issue_comment_created.from_json(json);

@@ -1,6 +1,7 @@
 package models_github;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import models.model_pull_request;
 import models.model_repo;
 import models.model_user;
 
@@ -54,6 +55,16 @@ public class model_webhook_issue_comment_created implements interface_github_web
     @Override
     public model_repo get_repo() {
         return repo;
+    }
+
+    @Override
+    public model_user get_user() {
+        return user;
+    }
+
+    @Override
+    public model_pull_request get_pull_request() {
+        return null;
     }
 
     @Override
