@@ -169,6 +169,19 @@ public class store_local_db {
         }
     }
 
+    public static void remove_offers_by_pull_request(String repo_name, int number) {
+        try {
+            // TODO: this dlete one by one is bad. Fix it!
+            for (model_offer offer: model_offer.find.fetch("user").fetch("pull_request").fetch("repo")
+                    .where().eq("pull_request.number", Integer.toString(number))
+                    .where().eq("pull_request.repo.repo_name", repo_name).findList()) {
+                model_offer.find.deleteById(offer.id);
+            }
+        } catch (Exception e) {
+            Logger.error("failed to remove offers by pull request:", e);
+        }
+    }
+
 
     /********************************
      * GMAIL!
@@ -192,6 +205,8 @@ public class store_local_db {
      ********************************/
 
     public static void update_pull_request(model_pull_request pr) {
+        // updated pull requests make all previous offers irrelevant!
+        remove_offers_by_pull_request(pr.repo.repo_name, pr.number);
         try {
             pr.save();
         }
