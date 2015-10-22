@@ -2,6 +2,7 @@ package controllers;
 
 import handlers.handler_general;
 import models.model_ownership;
+import models.model_pull_request;
 import models.model_repo;
 import models.model_user;
 import org.markdown4j.Markdown4jProcessor;
@@ -120,7 +121,8 @@ public class controller_main extends Controller {
 
     public Result repo_profile(String repo_name) {
         List<model_ownership> owners = store_local_db.get_ownerships_by_repo_name(repo_name);
-        return ok(view_main.render(repo_name, view_homerepo.render(store_local_db.get_repo_by_name(repo_name), owners)));
+        List<model_pull_request> pull_requests = store_local_db.get_pull_requests_by_repo_name(repo_name);
+        return ok(view_main.render(repo_name, view_homerepo.render(store_local_db.get_repo_by_name(repo_name), owners, pull_requests)));
     }
 
     public Result pull_profile(String repo_name, Long pull_id) {
