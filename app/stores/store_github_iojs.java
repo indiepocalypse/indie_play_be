@@ -42,7 +42,7 @@ public class store_github_iojs {
 
     public static boolean create_file(model_repo repo, String file_name, String content) {
         String url = repo.github_html_url+"/new/master?";
-        return run_iojs("accept_repo_transfer.js", store_credentials.github.name,
+        return run_iojs("create_file.js", store_credentials.github.name,
                 store_credentials.github.pssw, url, file_name, content);
     }
     public static boolean create_readme(model_repo repo, String content) {
