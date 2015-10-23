@@ -1,5 +1,6 @@
 package sync;
 
+import handlers.handler_general;
 import models.model_pull_request;
 import models.model_repo;
 import play.Logger;
@@ -80,6 +81,7 @@ public class sync_github_repos {
             store_local_db.update_repo(repo);
             if (first_time) {
                 store_github_api.create_webhook(repo);
+                handler_general.create_default_readme_if_not_existing(repo);
                 List<model_pull_request> all_pull_requests_for_repo = store_github_api.get_all_pull_requests(repo);
                 for (model_pull_request pr: all_pull_requests_for_repo) {
                     store_local_db.update_pull_request(pr);

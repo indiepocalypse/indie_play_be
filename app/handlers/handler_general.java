@@ -5,6 +5,7 @@ import models.model_repo;
 import models.model_user;
 import play.Logger;
 import stores.store_github_api;
+import stores.store_github_iojs;
 import stores.store_local_db;
 
 import java.math.BigDecimal;
@@ -45,6 +46,7 @@ public class handler_general {
     public static model_ownership integrate_github_repo(model_repo repo,  model_user user, boolean create_webhook) {
         if (create_webhook) {
             store_github_api.create_webhook(repo);
+            create_default_readme_if_not_existing(repo);
         }
         model_ownership ownership1 = new model_ownership(user, repo, new BigDecimal("99.0"));
         model_user theindiepocalypse = store_local_db.get_user_by_name("theindiepocalypse");
@@ -52,5 +54,20 @@ public class handler_general {
         store_local_db.update_ownership(ownership1);
         store_local_db.update_ownership(ownership2);
         return ownership1;
+    }
+
+    public static void create_default_readme_if_not_existing(model_repo repo) {
+        if (store_github_api.has_readme(repo.repo_name)) {
+            Logger.info("repo "+repo.repo_name+" already has a readme. Skipping creation of default one");
+            return;
+        }
+        Logger.info("Creating a default readme for repo "+repo.repo_name);
+        String content = "This is the default readme. It's needed so the repo can be forked";
+        if (store_github_iojs.create_readme(repo, content)) {
+            Logger.info("    successfuly created the default readme for repo "+repo.repo_name);
+        }
+        else {
+            Logger.error("    Problem createing the default readme for repo " + repo.repo_name);
+        }
     }
 }

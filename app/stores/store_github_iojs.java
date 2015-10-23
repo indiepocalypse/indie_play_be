@@ -46,7 +46,7 @@ public class store_github_iojs {
                 store_credentials.github.pssw, url, file_name, content);
     }
     public static boolean create_readme(model_repo repo, String content) {
-        final String file_name = "README.me";
+        final String file_name = "README.md";
         return create_file(repo, file_name, content);
     }
 }

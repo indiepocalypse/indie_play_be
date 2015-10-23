@@ -231,4 +231,13 @@ public class store_github_api {
                 .get(60, TimeUnit.SECONDS);
         return res.getStatus() == 204;
     }
+
+    public static boolean has_readme(String repo_name) {
+        WSResponse res = indie_auth_request("/repos/theindiepocalypse/"+repo_name+"/readme")
+                .setMethod("GET")
+                .execute()
+                .get(60, TimeUnit.SECONDS);
+        JsonNode json = res.asJson();
+        return (res.getStatus() == 200) && (json!=null) && (json.has("html_url"));
+    }
 }
