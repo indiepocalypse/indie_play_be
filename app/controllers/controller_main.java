@@ -37,7 +37,7 @@ public class controller_main extends Controller {
     }
 
     public Result faq() {
-        return ok(view_main.render("faq", "This is the FAQ!"));
+        return ok(view_main.render("faq", view_faq.render()));
     }
 
     public F.Promise<Result> explore() {
