@@ -2,32 +2,33 @@ package sync;
 
 import com.sun.mail.imap.IMAPFolder;
 import handlers.handler_general;
+import handlers.handler_policy;
 import models.model_gmail_last_date_read;
 import models.model_ownership;
-import models.model_repo;
-import models.model_user;
 import play.Logger;
 import stores.*;
 
-import javax.mail.Folder;
-import javax.mail.Message;
-import javax.mail.Session;
-import javax.mail.Store;
+import javax.mail.*;
 import javax.mail.event.MessageCountEvent;
 import javax.mail.event.MessageCountListener;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.mail.search.SearchTerm;
-import java.math.BigDecimal;
+
 import java.util.Date;
 import java.util.Properties;
 import java.util.Random;
 
 public class sync_gmail {
+    // TODO: refactor most of gmail functionality onto a store_gmail_api
     public static int mail_count = 0;
     private static IMAPFolder inbox = null;
     private static Store mail_store = null;
     private static Thread t1 = null;
     private static Thread t2 = null;
     private static boolean interrupted = false;
+    private static Session imap_session = null; // used to get mail
+    private static Session smtp_session = null; // used to send mail
 
     public static void start() {
         // some defensive shit here :)
@@ -121,6 +122,7 @@ public class sync_gmail {
             }
             mail_store = null;
         }
+        imap_session = null;
     }
 
     private static void handle_messages(Message[] ms) {
@@ -163,6 +165,25 @@ public class sync_gmail {
                 if (m_subject.contains("Repository transfer from")) {
                     String from_user = m_subject.split("@")[1].split("\\s+")[0];
                     String repo_name = m_subject.split("/")[1].split("\\)")[0];
+                    if (!handler_policy.can_create_new_repo(from_user)) {
+                        Logger.info("cannot transfer repo "+repo_name+" from user: " + from_user+" because of policy of maximum repos with more than 50% ownership.");
+                        // TODO: extract a function to send mails
+                        Message message = new MimeMessage(smtp_session);
+                        String user_mail = store_github_api.get_user_mail(from_user);
+                        try {
+                            message.setSubject("[TheIndiepocalypse] cannot accept repo trasfer (" + repo_name + ")");
+                            // TODO: move this mail address to the configuration
+                            message.setFrom(new InternetAddress("qbresty@gmail.com"));
+                            message.setRecipients(Message.RecipientType.TO,
+                                    InternetAddress.parse(user_mail));
+                            message.setText("The reason is that you already have the maximum number of repos allowed with 50% ore more ownership.");
+                            Transport.send(message);
+                        }
+                        catch (Exception e) {
+                            Logger.error("while sending mail saying cannot transfer repo: ", e);
+                        }
+                        continue;
+                    }
                     Logger.info("transfering from user: " + from_user + "    repo name: " + repo_name);
                     String lines[] = m_body.split("\\r?\\n");
                     for (String l : lines) {
@@ -199,10 +220,11 @@ public class sync_gmail {
                                 Logger.info("user "+from_user+" removed from collaborators to "+ownership.repo.repo_name);
                             }
                             else {
-                                Logger.error("could not remove user "+from_user+" removed from collaborators to "+ownership.repo.repo_name);
+                                Logger.error("could not remove user " + from_user + " removed from collaborators to " + ownership.repo.repo_name);
                             }
 
                             Logger.info("Successfuly transferred repo \"" + repo_name + "\" from Github");
+                            // TODO: send a success mail!
                         }
                     }
                 }
@@ -227,18 +249,32 @@ public class sync_gmail {
             e.printStackTrace();
         }
 
-        final Properties properties = System.getProperties();
-        properties.put("mail.imap.ssl.enable", "true");
-        properties.put("mail.imap.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        properties.put("mail.imap.socketFactory.fallback", "false");
+        final Properties imap_properties = System.getProperties();
+        imap_properties.put("mail.imap.ssl.enable", "true");
+        imap_properties.put("mail.imap.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        imap_properties.put("mail.imap.socketFactory.fallback", "false");
 
-        properties.setProperty("mail.imap.host", "imap.gmail.com");
-        properties.setProperty("mail.imap.port", "993");
-        properties.setProperty("mail.imap.connectiontimeout", "5000");
-        properties.setProperty("mail.imap.timeout", "5000");
+        imap_properties.setProperty("mail.imap.host", "imap.gmail.com");
+        imap_properties.setProperty("mail.imap.port", "993");
+        imap_properties.setProperty("mail.imap.connectiontimeout", "5000");
+        imap_properties.setProperty("mail.imap.timeout", "5000");
 
-        Session imap_session = Session.getDefaultInstance(properties, null);
+        imap_session = Session.getDefaultInstance(imap_properties, null);
         imap_session.setDebug(false);
+
+
+        Properties smtp_properties = new Properties();
+        smtp_properties.put("mail.smtp.auth", "true");
+        smtp_properties.put("mail.smtp.starttls.enable", "true");
+        smtp_properties.put("mail.smtp.host", "smtp.gmail.com");
+        smtp_properties.put("mail.smtp.port", "587");
+
+        smtp_session = Session.getInstance(smtp_properties,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(store_credentials.gmail.name, store_credentials.gmail.pssw);
+                    }
+                });
 
         try {
             mail_store = imap_session.getStore("imaps");

@@ -92,6 +92,7 @@ public class store_github_api {
     public static List<model_repo> get_indie_repositories() {
         WSResponse res = indie_auth_request("/user/repos")
                 .setMethod("GET")
+                .setQueryParameter("type", "all")
                 .execute()
                 .get(60, TimeUnit.SECONDS);
         JsonNode json = play.libs.Json.parse(res.getBody());
@@ -239,5 +240,29 @@ public class store_github_api {
                 .get(60, TimeUnit.SECONDS);
         JsonNode json = res.asJson();
         return (res.getStatus() == 200) && (json!=null) && (json.has("html_url"));
+    }
+
+    public static String get_user_mail(String user_name) {
+        WSResponse res_user;
+        WSRequest req_user = indie_auth_request("/users/" + user_name)
+                .setMethod("GET");
+        F.Promise<WSResponse> pres_user = req_user.execute();
+        res_user = pres_user.get(60, TimeUnit.SECONDS);
+        if (res_user.getStatus() != 200) {
+            Logger.error("while getting user mail from github: bad response (i.e. != 200)");
+            return "badmail_response";
+        }
+        JsonNode json = res_user.asJson();
+        if ((json == null) || (!json.has("email"))) {
+            Logger.error("while getting user mail from github: bad json!");
+            return "badmail_json";
+        }
+        JsonNode json_mail = json.get("email");
+        if (json_mail==null) {
+            Logger.error("while getting user mail from github: null mail!");
+            return "nullmailjson";
+
+        }
+        return json_mail.asText();
     }
 }

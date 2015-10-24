@@ -1,6 +1,7 @@
 package controllers;
 
 import handlers.handler_general;
+import handlers.handler_policy;
 import models.model_ownership;
 import models.model_pull_request;
 import models.model_repo;
@@ -13,12 +14,10 @@ import play.libs.F;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.twirl.api.Html;
-import stores.store_github_api;
-import stores.store_github_iojs;
-import stores.store_local_db;
-import stores.store_session;
+import stores.*;
 import views.html.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class controller_main extends Controller {
@@ -30,6 +29,7 @@ public class controller_main extends Controller {
     // TODO: summarizing classes and models (like sync but internal, also cleaning stuff etc.)
     // TODO: remove method in store_db (for pull_requests, offers, etc.)
     // TODO: is the save/update in the stor_local_db really necessary?
+    // TODO: make a configuration model, cached, so it can be changed from the admin dashboard.
 
     private final static String main_title = "it's the Indiepocalypse!";
     private boolean is_redirected_from_github_login() {
@@ -49,6 +49,9 @@ public class controller_main extends Controller {
     }
 
     public Result newrepo_get() {
+        if (!handler_policy.can_create_new_repo()) {
+            return ok(view_main.render("new repo", view_newrepo_too_many.render(stores.store_conf.get_policy_maximum_number_of_repos_per_user())));
+        }
         String def_repo_name = "";
         String def_repo_homepage = "";
         String def_repo_description = "";
@@ -75,6 +78,12 @@ public class controller_main extends Controller {
             repo_description = data.get(store_session.repo_description_name);
         } catch (Exception ignore) {
 
+        }
+        if (!store_session.user_is_logged()) {
+            return ok(view_main.render("new repo", view_newrepo.render(repo_name, repo_homepage, repo_description, "")));
+        }
+        if (!handler_policy.can_create_new_repo()) {
+            return ok(view_main.render("new repo", view_newrepo_too_many.render(stores.store_conf.get_policy_maximum_number_of_repos_per_user())));
         }
 
         try {
