@@ -4,6 +4,7 @@ import com.typesafe.config.ConfigFactory;
 import controllers.routes;
 import play.Routes;
 
+import java.math.BigDecimal;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -68,6 +69,7 @@ public class store_conf {
     public static int get_policy_maximum_number_of_repos_per_user() {
         return ConfigFactory.load().getInt("policy.maximum_number_of_repos_per_user");
     }
-
-
+    public static BigDecimal get_default_indie_ownership_percent() {
+        return new BigDecimal(ConfigFactory.load().getString("policy.default_indie_ownership_percent"));
+    }
 }

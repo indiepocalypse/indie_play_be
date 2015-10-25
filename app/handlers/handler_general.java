@@ -4,6 +4,7 @@ import models.model_ownership;
 import models.model_repo;
 import models.model_user;
 import play.Logger;
+import stores.store_conf;
 import stores.store_github_api;
 import stores.store_github_iojs;
 import stores.store_local_db;
@@ -42,10 +43,11 @@ public class handler_general {
             store_github_api.create_webhook(repo);
             create_default_readme_if_not_existing(repo);
         }
-        // TODO: move these percentages to conf.
-        model_ownership ownership1 = new model_ownership(user, repo, new BigDecimal("99.0"));
+        BigDecimal indie_ownership_percent = store_conf.get_default_indie_ownership_percent();
+        BigDecimal user_ownership_percent = new BigDecimal("100.0").subtract(indie_ownership_percent);
+        model_ownership ownership1 = new model_ownership(user, repo, user_ownership_percent);
         model_user theindiepocalypse = store_local_db.get_user_by_name("theindiepocalypse");
-        model_ownership ownership2 = new model_ownership(theindiepocalypse, repo, new BigDecimal("1.0"));
+        model_ownership ownership2 = new model_ownership(theindiepocalypse, repo, indie_ownership_percent);
         store_local_db.update_ownership(ownership1);
         store_local_db.update_ownership(ownership2);
         return ownership1;
