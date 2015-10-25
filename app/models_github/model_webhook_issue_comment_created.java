@@ -14,7 +14,6 @@ public class model_webhook_issue_comment_created implements interface_github_web
     public final model_comment comment;
     public final model_repo repo;
     public final model_user user;
-    // TODO: add created and updated dates, labels, milestone, etc.
 
     public model_webhook_issue_comment_created(
             String p_action,

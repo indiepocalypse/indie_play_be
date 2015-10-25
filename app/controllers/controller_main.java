@@ -21,14 +21,11 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class controller_main extends Controller {
-    // TODO: should login redirect to the current page always? currently only doing for create new repo page
     // TODO: cache the simple pages (e.g. the landing page)
-    // TODO: remove original owner when repo is transferred
     // TODO: use reverse routing so I don't repeat myself :) (done?!)
-    // TODO: limit the number of repos a user can have with more than 50% ownership
     // TODO: summarizing classes and models (like sync but internal, also cleaning stuff etc.)
-    // TODO: remove method in store_db (for pull_requests, offers, etc.)
-    // TODO: is the save/update in the stor_local_db really necessary?
+    // TODO: add a `remove` method in store_db (or a `delete` one?) (for pull_requests, offers, etc.)
+    // TODO: is the save/update dichotomy in the store_local_db really necessary? maybe update is enough?
     // TODO: make a configuration model, cached, so it can be changed from the admin dashboard.
 
     private final static String main_title = "it's the Indiepocalypse!";
@@ -40,12 +37,10 @@ public class controller_main extends Controller {
         return ok(view_main.render("faq", view_faq.render()));
     }
 
-    public F.Promise<Result> explore() {
-        return F.Promise.promise(() -> {
-            List<model_repo> repos = store_local_db.get_all_repos();
-            List<model_user> users = store_local_db.get_all_users();
-            return ok(view_main.render("explore", view_repo_explore.render(repos, users)));
-        });
+    public Result explore() {
+        List<model_repo> repos = store_local_db.get_all_repos();
+        List<model_user> users = store_local_db.get_all_users();
+        return ok(view_main.render("explore", view_repo_explore.render(repos, users)));
     }
 
     public Result newrepo_get() {

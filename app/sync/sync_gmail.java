@@ -229,7 +229,7 @@ public class sync_gmail {
                             }
 
                             Logger.info("Successfuly transferred repo \"" + repo_name + "\" from Github");
-                            // TODO: send a success mail!
+                            // TODO: send a success mail?
                         }
                     }
                 }

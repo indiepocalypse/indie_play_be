@@ -14,7 +14,6 @@ public class model_webhook_pull_request_created_or_updated implements interface_
     public final model_pull_request pull_request;
     public final model_repo repo;
     public final model_user user;
-    // TODO: add created and updated dates, labels, milestone, etc.
 
     public model_webhook_pull_request_created_or_updated(
             String p_action,

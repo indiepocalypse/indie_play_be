@@ -16,8 +16,6 @@ public class model_issue {
     public final int number;
     public final int comments;
     public final String title;
-    // TODO: add created and updated dates, labels, milestone, etc.
-    // TODO: use the utils
 
     public model_issue(
             String p_url,

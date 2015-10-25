@@ -45,7 +45,6 @@ public class store_local_db {
     }
 
     public static boolean has_repo(String repo_name) {
-        // TODO: is this the best way to check?!
         return (get_repo_by_name(repo_name) != null);
     }
 

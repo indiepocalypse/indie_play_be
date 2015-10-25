@@ -13,7 +13,6 @@ public class model_comment {
     public final Long id;
     public final model_user user;
     public final String body;
-    // TODO: add created and updated dates
 
     public model_comment(
             String p_url,

@@ -30,7 +30,6 @@ public class model_pull_request extends Model {
     public final String SHA;
     @ManyToOne
     public final model_repo repo;
-    // TODO: add many missing fields
 
     public model_pull_request(
             String p_url,

@@ -1,9 +1,6 @@
-import handlers.handler_general;
-import models.model_user;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
-import stores.store_credentials;
 import sync.sync_github_repos;
 import sync.sync_github_users;
 import sync.sync_gmail;

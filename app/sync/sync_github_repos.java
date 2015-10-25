@@ -59,7 +59,6 @@ public class sync_github_repos {
     }
 
     private static void sync(boolean first_time) {
-        // TODO: github bug? its not listing transferred repos for which original owner was removed!
         List<model_repo> repos = new ArrayList<>();
         try {
             repos = store_github_api.get_indie_repositories();

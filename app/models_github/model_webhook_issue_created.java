@@ -13,7 +13,6 @@ public class model_webhook_issue_created implements interface_github_webhook {
     public final model_issue issue;
     public final model_repo repo;
     public final model_user user;
-    // TODO: add created and updated dates, labels, milestone, etc.
 
     public model_webhook_issue_created(
             String p_action,

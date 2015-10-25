@@ -25,7 +25,6 @@ import java.util.concurrent.TimeUnit;
  * Created by skariel on 21/09/15.
  */
 public class store_github_api {
-    // TODO: move this scope constant to conf
     private static final String scope = "";
 
     public static String get_github_access_url(String state) {
