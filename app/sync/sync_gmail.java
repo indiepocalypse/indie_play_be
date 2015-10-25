@@ -216,6 +216,7 @@ public class sync_gmail {
                             catch (Exception ignored) {
                             }
                             store_github_api.create_webhook(ownership.repo);
+                            handler_general.create_default_readme_if_not_existing(ownership.repo);
                             if (store_github_api.delete_collaborator_from_repo(ownership.repo.repo_name, from_user)) {
                                 Logger.info("user "+from_user+" removed from collaborators to "+ownership.repo.repo_name);
                             }

@@ -30,8 +30,6 @@ public class controller_main extends Controller {
     // TODO: remove method in store_db (for pull_requests, offers, etc.)
     // TODO: is the save/update in the stor_local_db really necessary?
     // TODO: make a configuration model, cached, so it can be changed from the admin dashboard.
-    // TODO: reject new repo creation if name already exists
-    // TODO: reject repo transfer if name already existing
 
     private final static String main_title = "it's the Indiepocalypse!";
     private boolean is_redirected_from_github_login() {
@@ -83,6 +81,9 @@ public class controller_main extends Controller {
         }
         if (!store_session.user_is_logged()) {
             return ok(view_main.render("new repo", view_newrepo.render(repo_name, repo_homepage, repo_description, "")));
+        }
+        if (!store_local_db.has_repo(repo_name)) {
+            return ok(view_main.render("new repo", view_newrepo.render(repo_name, repo_homepage, repo_description, "repo name already exiss. Please choose another")));
         }
         if (!handler_policy.can_create_new_repo()) {
             return ok(view_main.render("new repo", view_newrepo_too_many.render(stores.store_conf.get_policy_maximum_number_of_repos_per_user())));

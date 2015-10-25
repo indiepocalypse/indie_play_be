@@ -30,15 +30,9 @@ public class handler_general {
     }
 
     public static model_ownership integrate_github_repo(String repo_name, String user_name, boolean create_webhook) {
+        // this method assumes repo is not in DB!
         model_user user = get_integrate_github_user_by_name(user_name);
-        // search repo in db
-        model_repo repo = store_local_db.get_repo_by_name(repo_name);
-        if (repo != null) {
-            Logger.info("repo \"" + repo_name + "\" already in DB. Will not integrate...");
-            return null;
-        }
-        // not found, update from github
-        repo = store_github_api.get_repo_by_name(user_name, repo_name);
+        model_repo repo =  store_github_api.get_repo_by_name(user_name, repo_name);
         store_local_db.update_repo(repo);
         return integrate_github_repo(repo, user, create_webhook);
     }
