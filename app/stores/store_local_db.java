@@ -173,6 +173,11 @@ public class store_local_db {
         try {
             // TODO: this dlete one by one is bad. Fix it!
             // TODO: fix fetches above like the one below
+            // TODO: there is a bug here when nusing postgres!:
+            // operator does not exist: integer = character varying
+            // 2015-10-25T07:09:58.142011+00:00 app[web.1]:   Hint: No operator matches the given name and argument type(s).You
+            // might need to add explicit type casts.
+
             List<model_offer> offers = model_offer.find.fetch("user").fetch("pull_request").fetch("pull_request.repo")
                     .where().eq("pull_request.number", Integer.toString(number))
                     .where().eq("pull_request.repo.repo_name", repo_name).findList();
