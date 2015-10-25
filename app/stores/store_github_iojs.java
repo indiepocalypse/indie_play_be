@@ -35,7 +35,7 @@ public class store_github_iojs {
         }
     }
 
-    static public boolean accept_trasfer_repo(String url) {
+    static public boolean accept_transfer_repo(String url) {
         return run_iojs("accept_repo_transfer.js", store_credentials.github.name, store_credentials.github.pssw, url);
     }
 

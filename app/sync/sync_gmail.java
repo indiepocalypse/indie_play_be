@@ -171,7 +171,7 @@ public class sync_gmail {
                         Message message = new MimeMessage(smtp_session);
                         String user_mail = store_github_api.get_user_mail(from_user);
                         try {
-                            message.setSubject("[TheIndiepocalypse] cannot accept repo trasfer (" + repo_name + ")");
+                            message.setSubject("[TheIndiepocalypse] cannot accept repo transfer (" + repo_name + ")");
                             // TODO: move this mail address to the configuration
                             message.setFrom(new InternetAddress("qbresty@gmail.com"));
                             message.setRecipients(Message.RecipientType.TO,
@@ -204,7 +204,7 @@ public class sync_gmail {
                                     continue;
                                 }
                             }
-                            if (!store_github_iojs.accept_trasfer_repo(lt)) {
+                            if (!store_github_iojs.accept_transfer_repo(lt)) {
                                 // unsuccesfull transfer, report
                                 Logger.error("Problem transferring repo \"" + repo_name + "\" from Github");
                                 continue;
