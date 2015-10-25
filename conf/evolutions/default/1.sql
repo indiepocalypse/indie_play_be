@@ -36,7 +36,7 @@ create table model_pull_request (
   url                       varchar(255),
   github_id                 bigint,
   html_url                  varchar(255),
-  number                    integer,
+  number                    varchar(255),
   state                     varchar(255),
   title                     varchar(255),
   user_user_name            varchar(255),

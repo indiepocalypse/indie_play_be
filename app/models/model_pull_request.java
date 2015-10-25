@@ -18,7 +18,7 @@ public class model_pull_request extends Model {
     public final String url;
     public final Long github_id;
     public final String html_url;
-    public final Integer number;
+    public final String number;
     public final String state;
     public final String title;
     @ManyToOne
@@ -44,7 +44,7 @@ public class model_pull_request extends Model {
             Boolean p_mergeable,
             String p_comments_url,
             model_repo p_repo,
-            Integer p_number,
+            String p_number,
             String p_SHA
     ) {
         this.url = p_url;
@@ -60,11 +60,12 @@ public class model_pull_request extends Model {
         this.SHA = p_SHA;
         this.repo = p_repo;
         this.number = p_number;
-        this.id = repo.repo_name + "/" + Integer.toString(this.number);
+        this.id = repo.repo_name + "/" + this.number;
     }
 
     public static model_pull_request from_json(JsonNode json) {
-        Integer number = json.get("number").asInt();
+        // TODO: can an int json value be parsed as string? the way below seems... just too much
+        String number = Integer.toString(json.get("number").asInt());
         String url = json.get("url").asText();
         Long github_id = json.get("id").asLong();
         String html_url = json.get("html_url").asText();

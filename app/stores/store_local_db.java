@@ -139,7 +139,7 @@ public class store_local_db {
 
     public static List<model_offer> get_offers_by_user(String user_name) {
         try {
-            return model_offer.find.fetch("user").fetch("pull_request").fetch("repo")
+            return model_offer.find.fetch("user").fetch("pull_request").fetch("pull_request.repo")
                     .where().eq("user.user_name", user_name).findList();
         } catch (Exception ignore) {
             return new ArrayList<>(0);
@@ -148,7 +148,7 @@ public class store_local_db {
 
     public static List<model_offer> get_offers_by_pull_request(String repo_name, int number) {
         try {
-            return model_offer.find.fetch("user").fetch("pull_request").fetch("repo")
+            return model_offer.find.fetch("user").fetch("pull_request").fetch("pull_request.repo")
                     .where().eq("pull_request.number", Integer.toString(number))
                     .where().eq("pull_request.repo.repo_name", repo_name)
                     .findList();
@@ -159,7 +159,7 @@ public class store_local_db {
 
     public static List<model_offer> get_offers_by_user_by_pull_request(String user_name, String repo_name, int number) {
         try {
-            return model_offer.find.fetch("user").fetch("pull_request").fetch("repo")
+            return model_offer.find.fetch("user").fetch("pull_request").fetch("pull_request.repo")
                     .where().eq("user.user_name", user_name)
                     .where().eq("pull_request.number", Integer.toString(number))
                     .where().eq("pull_request.repo.repo_name", repo_name)
@@ -169,17 +169,11 @@ public class store_local_db {
         }
     }
 
-    public static void remove_offers_by_pull_request(String repo_name, int number) {
+    public static void remove_offers_by_pull_request(String repo_name, String number) {
         try {
-            // TODO: this dlete one by one is bad. Fix it!
-            // TODO: fix fetches above like the one below
-            // TODO: there is a bug here when nusing postgres!:
-            // operator does not exist: integer = character varying
-            // 2015-10-25T07:09:58.142011+00:00 app[web.1]:   Hint: No operator matches the given name and argument type(s).You
-            // might need to add explicit type casts.
-
+            // TODO: this delete one by one is bad. Fix it!
             List<model_offer> offers = model_offer.find.fetch("user").fetch("pull_request").fetch("pull_request.repo")
-                    .where().eq("pull_request.number", Integer.toString(number))
+                    .where().eq("pull_request.number", number)
                     .where().eq("pull_request.repo.repo_name", repo_name).findList();
             if (offers!=null) {
                 for (model_offer offer: offers) {
