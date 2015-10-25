@@ -60,7 +60,10 @@ public class store_conf {
     }
 
     public static String get_github_webhook_url() {
-        return get_url_heroku_root()+ controllers.routes.controller_webhooks_github.handle_wildcard();
+        return get_absolute_url(controllers.routes.controller_webhooks_github.handle_wildcard().url());
+    }
+    public static String get_absolute_url(String path) {
+        return get_url_heroku_root() + path;
     }
     public static int get_policy_maximum_number_of_repos_per_user() {
         return ConfigFactory.load().getInt("policy.maximum_number_of_repos_per_user");

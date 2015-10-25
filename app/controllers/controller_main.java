@@ -50,7 +50,7 @@ public class controller_main extends Controller {
 
     public Result newrepo_get() {
         if (!handler_policy.can_create_new_repo()) {
-            return ok(view_main.render("new repo", view_newrepo_too_many.render(stores.store_conf.get_policy_maximum_number_of_repos_per_user())));
+            return ok(view_main.render("new repo", view_newrepo_too_many.render()));
         }
         String def_repo_name = "";
         String def_repo_homepage = "";
@@ -86,7 +86,7 @@ public class controller_main extends Controller {
             return ok(view_main.render("new repo", view_newrepo.render(repo_name, repo_homepage, repo_description, "repo name already exiss. Please choose another")));
         }
         if (!handler_policy.can_create_new_repo()) {
-            return ok(view_main.render("new repo", view_newrepo_too_many.render(stores.store_conf.get_policy_maximum_number_of_repos_per_user())));
+            return ok(view_main.render("new repo", view_newrepo_too_many.render()));
         }
 
         try {
@@ -100,7 +100,6 @@ public class controller_main extends Controller {
                 return ok(view_main.render("new repo", view_newrepo.render(repo_name, repo_homepage, repo_description, err)));
             }
             store_github_iojs.create_readme(repo, "this repository is mostly empty. Please fork and create a pull request when ready.");
-
             store_session.set_new_repo(repo.repo_name);
             return redirect(routes.controller_main.repo_profile(repo_name));
         } catch (Exception e) {

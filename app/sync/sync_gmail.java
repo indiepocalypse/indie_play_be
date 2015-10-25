@@ -1,6 +1,7 @@
 package sync;
 
 import com.sun.mail.imap.IMAPFolder;
+import controllers.routes;
 import handlers.handler_general;
 import handlers.handler_policy;
 import models.model_gmail_last_date_read;
@@ -167,23 +168,10 @@ public class sync_gmail {
                     String repo_name = m_subject.split("/")[1].split("\\)")[0];
                     if (!handler_policy.can_create_new_repo(from_user)) {
                         Logger.info("cannot transfer repo "+repo_name+" from user: " + from_user+" because of policy of maximum repos with more than 50% ownership.");
-                        // TODO: extract a function to send mails
-                        Message message = new MimeMessage(smtp_session);
-                        String user_mail = store_github_api.get_user_mail(from_user);
-                        try {
-                            message.setSubject("cannot accept repo transfer (" + repo_name + ")");
-                            // TODO: move this mail address to the configuration
-                            InternetAddress address = new InternetAddress("qbresty@gmail.com");
-                            address.setPersonal("theindiepocalypse");
-                            message.setFrom(address);
-                            message.setRecipients(Message.RecipientType.TO,
-                                    InternetAddress.parse(user_mail));
-                            message.setText("The reason is that you already have the maximum number of repos allowed with 50% ore more ownership.");
-                            Transport.send(message);
-                        }
-                        catch (Exception e) {
-                            Logger.error("while sending mail saying cannot transfer repo: ", e);
-                        }
+                        final String user_mail = store_github_api.get_user_mail(from_user);
+                        final String mail_subject = "Cannot accept repository transfer (" + repo_name + ")";
+                        final String mail_body = "The reason is that you already have the maximum number of repos allowed with 50% ore more ownership.";
+                        sendmail(user_mail, mail_subject, mail_body);
                         continue;
                     }
                     Logger.info("transfering from user: " + from_user + "    repo name: " + repo_name);
@@ -194,6 +182,11 @@ public class sync_gmail {
                             // try to accept the repo!
 
                             if (store_local_db.has_repo(repo_name)) {
+                                Logger.info("cannot transfer repo "+repo_name+" from user: " + from_user+" because it already exists in DB!");
+                                final String user_mail = store_github_api.get_user_mail(from_user);
+                                final String mail_subject = "Cannot accept repository transfer (" + repo_name + ")";
+                                final String mail_body = "The reason is that there is a repo with the same name in the DB.";
+                                sendmail(user_mail, mail_subject, mail_body);
                                 continue;
                             }
                             model_ownership ownership = handler_general.integrate_github_repo(repo_name, from_user, false);
@@ -226,6 +219,10 @@ public class sync_gmail {
                             handler_general.create_default_readme_if_not_existing(ownership.repo);
                             if (store_github_api.delete_collaborator_from_repo(ownership.repo.repo_name, from_user)) {
                                 Logger.info("user "+from_user+" removed from collaborators to "+ownership.repo.repo_name);
+                                final String user_mail = store_github_api.get_user_mail(from_user);
+                                final String mail_subject = "You were removed as collaborator from repository (" + repo_name + ")";
+                                final String mail_body = "The reason is that this repo was transferred to thindipocalypse user and it is now managed through its api.\n see the FAQ here:\n"+store_conf.get_absolute_url(routes.controller_main.faq().url());
+                                sendmail(user_mail, mail_subject, mail_body);
                             }
                             else {
                                 Logger.error("could not remove user " + from_user + " removed from collaborators to " + ownership.repo.repo_name);
@@ -241,6 +238,26 @@ public class sync_gmail {
         if (last_date_read_model != null) {
             store_local_db.update_gmail_last_read_date(last_date_read_model);
         }
+    }
+
+    private static void sendmail(String user_mail, String mail_subject, String mail_body) {
+        // TODO: move this method to a store_gmail_api (which does not exist yet...)
+        Message message = new MimeMessage(smtp_session);
+        try {
+            message.setSubject(mail_subject);
+            // TODO: move this mail address to the configuration
+            InternetAddress address = new InternetAddress("qbresty@gmail.com");
+            address.setPersonal("theindiepocalypse");
+            message.setFrom(address);
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(user_mail));
+            message.setText(mail_body);
+            Transport.send(message);
+        }
+        catch (Exception e) {
+            Logger.error("while sending mail saying cannot transfer repo: ", e);
+        }
+
     }
 
     private static void reload_folder() {
