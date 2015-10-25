@@ -173,10 +173,9 @@ public class sync_gmail {
                         try {
                             message.setSubject("cannot accept repo transfer (" + repo_name + ")");
                             // TODO: move this mail address to the configuration
-                            message.setFrom(new InternetAddress("TheIndiepocalypse"));
-                            Address[] reptos = new Address[1];
-                            reptos[0] = new InternetAddress("qbresty@gmail.com");
-                            message.setReplyTo(reptos);
+                            InternetAddress address = new InternetAddress("qbresty@gmail.com");
+                            address.setPersonal("theindiepocalypse");
+                            message.setFrom(address);
                             message.setRecipients(Message.RecipientType.TO,
                                     InternetAddress.parse(user_mail));
                             message.setText("The reason is that you already have the maximum number of repos allowed with 50% ore more ownership.");
