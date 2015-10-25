@@ -82,7 +82,7 @@ public class controller_main extends Controller {
         if (!store_session.user_is_logged()) {
             return ok(view_main.render("new repo", view_newrepo.render(repo_name, repo_homepage, repo_description, "")));
         }
-        if (!store_local_db.has_repo(repo_name)) {
+        if (store_local_db.has_repo(repo_name)) {
             return ok(view_main.render("new repo", view_newrepo.render(repo_name, repo_homepage, repo_description, "repo name already exiss. Please choose another")));
         }
         if (!handler_policy.can_create_new_repo()) {

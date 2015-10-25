@@ -171,9 +171,12 @@ public class sync_gmail {
                         Message message = new MimeMessage(smtp_session);
                         String user_mail = store_github_api.get_user_mail(from_user);
                         try {
-                            message.setSubject("[TheIndiepocalypse] cannot accept repo transfer (" + repo_name + ")");
+                            message.setSubject("cannot accept repo transfer (" + repo_name + ")");
                             // TODO: move this mail address to the configuration
-                            message.setFrom(new InternetAddress("qbresty@gmail.com"));
+                            message.setFrom(new InternetAddress("TheIndiepocalypse"));
+                            Address[] reptos = new Address[1];
+                            reptos[0] = new InternetAddress("qbresty@gmail.com");
+                            message.setReplyTo(reptos);
                             message.setRecipients(Message.RecipientType.TO,
                                     InternetAddress.parse(user_mail));
                             message.setText("The reason is that you already have the maximum number of repos allowed with 50% ore more ownership.");
@@ -203,6 +206,11 @@ public class sync_gmail {
                                     Logger.error("Problem transferring repo \"" + repo_name + "\" into DB");
                                     continue;
                                 }
+                            }
+                            try {
+                                Thread.sleep(5100);
+                            }
+                            catch (Exception ignored) {
                             }
                             if (!store_github_iojs.accept_transfer_repo(lt)) {
                                 // unsuccesfull transfer, report
