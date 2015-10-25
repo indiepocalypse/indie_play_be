@@ -30,6 +30,8 @@ public class controller_main extends Controller {
     // TODO: remove method in store_db (for pull_requests, offers, etc.)
     // TODO: is the save/update in the stor_local_db really necessary?
     // TODO: make a configuration model, cached, so it can be changed from the admin dashboard.
+    // TODO: reject new repo creation if name already exists
+    // TODO: reject repo transfer if name already existing
 
     private final static String main_title = "it's the Indiepocalypse!";
     private boolean is_redirected_from_github_login() {
