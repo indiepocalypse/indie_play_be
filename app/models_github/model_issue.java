@@ -16,6 +16,7 @@ public class model_issue {
     public final String number;
     public final int comments;
     public final String title;
+    public final boolean is_closed;
 
     public model_issue(
             String p_url,
@@ -26,7 +27,8 @@ public class model_issue {
             String p_body,
             String p_number,
             int p_comments,
-            String p_title
+            String p_title,
+            boolean p_is_closed
     ) {
         this.url = p_url;
         this.html_url = p_html_url;
@@ -37,6 +39,7 @@ public class model_issue {
         this.number = p_number;
         this.comments = p_comments;
         this.title = p_title;
+        this.is_closed = p_is_closed;
     }
 
     public static model_issue from_json(JsonNode json) {
@@ -50,6 +53,8 @@ public class model_issue {
         String number = Integer.toString(json.get("number").asInt());
         int comments = json.get("comments").asInt();
         String title = json.get("title").asText();
+        boolean is_closed = json.has("closed_at") && json.get("closed_at")!=null &&
+                json.get("closed_at").asText()!=null && (!json.get("closed_at").asText().equals("null"));
         return new model_issue(
                 url,
                 html_url,
@@ -59,7 +64,8 @@ public class model_issue {
                 body,
                 number,
                 comments,
-                title
+                title,
+                is_closed
         );
     }
 }

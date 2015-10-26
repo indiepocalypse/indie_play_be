@@ -3,6 +3,7 @@ package handlers;
 import models.model_ownership;
 import models.model_pull_request;
 import models_github.interface_github_webhook;
+import models_github.model_issue;
 import play.Logger;
 import stores.store_github_api;
 import stores.store_local_db;
@@ -53,15 +54,28 @@ public class handler_commands {
     private static String command_merge(interface_github_webhook hook) {
         // TODO: take care of ownership changes!
         if (!hook.get_comment().contains("@theindiepocalypse merge")) {
+            // not a merge command
             return "";
         }
+        // we have a merge command!
+        // check whether its mergeable:
         model_pull_request pull_request = hook.get_pull_request();
         if (pull_request==null) {
             return "merging commands are allowed only on pull requests, nothing to merge here :)";
         }
+        if (pull_request.merged) {
+            return "this pull request is already merged!";
+        }
+        model_issue issue = hook.get_issue();
+        if ((issue!=null) && (issue.is_closed)) {
+            return "this pull request is closed, please reopen to merge";
+        }
+        if (!pull_request.mergeable) {
+            return "this pull request is not mergeable automatically (the merge button) maybe a rebase will solve the issue? I can only merge with the merge button...";
+        }
         // TODO: match actual commit message!
         if (store_github_api.merge_pull_request(pull_request, "I did this!")) {
-            return "merged!\nThe new ownership structure:\n"+get_owners_good_looking_table(hook);
+            return "merged!\nThe new ownership structure:\n\n"+get_owners_good_looking_table(hook);
         }
         else {
             return "There was a problem while merging. Please contact suppoer [here \'s the link] or try again later...";

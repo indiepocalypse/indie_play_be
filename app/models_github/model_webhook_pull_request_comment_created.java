@@ -6,12 +6,13 @@ import models.model_repo;
 import models.model_user;
 import play.Logger;
 import stores.store_local_db;
+import utils.utils_github_webhooks;
 
 /**
  * Created by skariel on 14/10/15.
  */
 public class model_webhook_pull_request_comment_created implements interface_github_webhook {
-    public final String action;
+    public final enum_webhook_action action;
     public final model_issue issue;
     public final model_pull_request pull_request;
     public final model_comment comment;
@@ -25,7 +26,7 @@ public class model_webhook_pull_request_comment_created implements interface_git
             model_repo p_repo,
             model_user p_user
     ) {
-        this.action = p_action;
+        this.action = utils_github_webhooks.from_string(p_action);
         this.issue = p_issue;
         this.comment = p_comment;
         this.repo = p_repo;
@@ -85,7 +86,19 @@ public class model_webhook_pull_request_comment_created implements interface_git
 
     @Override
     public String get_response() {
-        return "Thanks for commenting on this pull request";
+        //return "Thanks for commenting on this pull request";
+        return ""; // no need for across the book response on comments without commands
     }
+
+    @Override
+    public model_issue get_issue() {
+        return issue;
+    }
+
+    @Override
+    public enum_webhook_action get_action() {
+        return action;
+    }
+
 
 }

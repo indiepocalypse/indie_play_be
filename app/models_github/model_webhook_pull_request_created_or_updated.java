@@ -4,12 +4,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import models.model_pull_request;
 import models.model_repo;
 import models.model_user;
+import utils.utils_github_webhooks;
 
 /**
  * Created by skariel on 14/10/15.
  */
 public class model_webhook_pull_request_created_or_updated implements interface_github_webhook {
-    public final String action;
+    public final enum_webhook_action action;
     public final String number;
     public final model_pull_request pull_request;
     public final model_repo repo;
@@ -22,7 +23,7 @@ public class model_webhook_pull_request_created_or_updated implements interface_
             model_repo p_repo,
             model_user p_user
     ) {
-        this.action = p_action;
+        this.action = utils_github_webhooks.from_string(p_action);
         this.number = p_number;
         this.pull_request = p_pull_request;
         this.repo = p_repo;
@@ -91,5 +92,16 @@ public class model_webhook_pull_request_created_or_updated implements interface_
         }
         return "Thanks for opening this pull request!";
     }
+
+    @Override
+    public model_issue get_issue() {
+        return null;
+    }
+
+    @Override
+    public enum_webhook_action get_action() {
+        return action;
+    }
+
 
 }
