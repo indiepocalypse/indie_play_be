@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import models.model_pull_request;
 import models.model_repo;
 import models.model_user;
+import play.Logger;
+import stores.store_local_db;
 
 /**
  * Created by skariel on 14/10/15.
@@ -11,6 +13,7 @@ import models.model_user;
 public class model_webhook_pull_request_comment_created implements interface_github_webhook {
     public final String action;
     public final model_issue issue;
+    public final model_pull_request pull_request;
     public final model_comment comment;
     public final model_repo repo;
     public final model_user user;
@@ -27,6 +30,10 @@ public class model_webhook_pull_request_comment_created implements interface_git
         this.comment = p_comment;
         this.repo = p_repo;
         this.user = p_user;
+        this.pull_request = store_local_db.get_pull_request_by_repo_name_and_number(repo.repo_name, issue.number);
+        if (pull_request==null) {
+            Logger.error("while creating a model_pull_request for repo "+repo.repo_name+" #"+issue.number+":\n", "couldn't find repo in local db!");
+        }
     }
 
     public static model_webhook_pull_request_comment_created from_json(JsonNode json) {
@@ -63,7 +70,7 @@ public class model_webhook_pull_request_comment_created implements interface_git
 
     @Override
     public model_pull_request get_pull_request() {
-        return null;
+        return pull_request;
     }
 
     @Override
