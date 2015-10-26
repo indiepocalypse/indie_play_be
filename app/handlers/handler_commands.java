@@ -63,12 +63,12 @@ public class handler_commands {
         if (pull_request==null) {
             return "merging commands are allowed only on pull requests, nothing to merge here :)";
         }
+        if (pull_request.merged) {
+            return "this pull request is already merged!";
+        }
         model_issue issue = hook.get_issue();
         if ((issue!=null) && (issue.is_closed)) {
             return "this pull request is closed, please reopen to merge";
-        }
-        if (pull_request.merged) {
-            return "this pull request is already merged!";
         }
         if (!pull_request.mergeable) {
             return "this pull request is not mergeable automatically (the merge button) maybe a rebase will solve the issue? I can only merge with the merge button...";
