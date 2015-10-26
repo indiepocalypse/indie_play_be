@@ -11,5 +11,4 @@ Current development principles:
 9) models are basically data-holders maybe plus some simple logic
 10) models are samllest common denomoinator in the github api sense. ie
      all models can be built from the minial info in github api
-11) Sync classes sync vs external resources (mail, github, etc.)
-12) Summary classes sync internal stuff (summary of repos, etc.)
+11) Sync classes are long running processes, organizing data in the background

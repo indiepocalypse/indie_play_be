@@ -29,7 +29,7 @@ public class controller_webhooks_github extends Controller {
             return ok();
         }
 
-        String response = "@"+sender_name+":\n\n";
+        String response ="";
         interface_github_webhook hook;
 
         if (model_webhook_issue_comment_created.is_me(json)) {
