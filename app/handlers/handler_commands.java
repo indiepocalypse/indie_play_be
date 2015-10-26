@@ -14,8 +14,9 @@ import java.util.List;
  * Created by skariel on 17/10/15.
  */
 public class handler_commands {
-
     public static ArrayList<String> handle_from_hook(interface_github_webhook hook) {
+        // this method returns responses to be shown to users.
+        // all responses are encapsulated in a common header which includes the @user welcome or whateve
         // TODO: this works but seems a bit inefficient. Do all commands need to be checked against every comment?
         ArrayList<String> responses = new ArrayList<>();
         responses.add(command_list_owners(hook));
@@ -58,7 +59,7 @@ public class handler_commands {
         if (pull_request==null) {
             return "merging commands are allowed only on pull requests, nothing to merge here :)";
         }
-        // TODO: match n actual commit message!
+        // TODO: match actual commit message!
         if (store_github_api.merge_pull_request(pull_request, "I did this!")) {
             return "merged!\nThe new ownership structure:\n"+get_owners_good_looking_table(hook);
         }
