@@ -26,7 +26,11 @@ public class model_command {
         while(matcher.find()) {
             String match = matcher.group().trim();
             Logger.info("---- match="+match);
-            String[] splitted = match.replace("@theindiepocalypse","").replace("/","").split("\\s");
+            String[] splitted = match
+                    .replace("@theindiepocalypse","")
+                    .replace("/","")
+                    .trim()
+                    .split("\\s");
             if (splitted.length==0) {
                 continue;
             }
