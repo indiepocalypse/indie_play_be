@@ -28,7 +28,7 @@ public class model_command {
             }
             model_command command = new model_command();
             command.command = splitted[1].trim();
-            for (int i=1; i<splitted.length-1; i++) {
+            for (int i=2; i<splitted.length-1; i++) {
                 command.args.add(splitted[i].trim());
             }
             commands.add(command);
