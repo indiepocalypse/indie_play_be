@@ -72,7 +72,8 @@ public class model_pull_request extends Model {
         String title = json.get("title").asText();
         model_user user = model_user.from_json(json.get("user"));
         String body = json.get("body").asText();
-        Boolean merged = json.has("merged_at");
+        Boolean merged = json.has("merged_at") && json.get("merged_at")!=null &&
+                json.get("merged_at").asText()!=null && !json.get("merged_at").asText().equals("null");
         Boolean mergeable = json.has("mergeable") && json.get("mergeable")!=null && json.get("mergeable").asBoolean();
         String comments_url = json.get("comments_url").asText();
         JsonNode head = json.get("head");
