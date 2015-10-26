@@ -29,9 +29,9 @@ public class controller_webhooks_github extends Controller {
             return ok();
         }
 
-        String response ="";
-        interface_github_webhook hook;
+        // Extracting the hook
 
+        interface_github_webhook hook;
         if (model_webhook_issue_comment_created.is_me(json)) {
             hook = model_webhook_issue_comment_created.from_json(json);
         }
@@ -51,12 +51,16 @@ public class controller_webhooks_github extends Controller {
             Logger.info("we got some weird hook, not handled yet");
             return ok();
         }
-
         store_local_db.update_hook_components(hook);
 
-        response += hook.get_response()+"\n\n";
+
+        // running the commands
 
         ArrayList<String> command_responses = handler_commands.handle_from_hook(hook);
+
+        // assembling response
+
+        String response = hook.get_response()+"\n\n";
         for (String command_response: command_responses) {
             response += command_response+"\n\n";
         }

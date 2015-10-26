@@ -8,8 +8,8 @@ import java.util.regex.Pattern;
  * Created by skariel on 26/10/15.
  */
 public class model_command {
-    String command;
-    ArrayList<String> args;
+    public String command;
+    public ArrayList<String> args;
 
     public model_command() {
         this.command = "";

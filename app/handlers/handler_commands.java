@@ -3,6 +3,7 @@ package handlers;
 import models.model_ownership;
 import models.model_pull_request;
 import models_github.interface_github_webhook;
+import models_github.model_command;
 import models_github.model_issue;
 import stores.store_github_api;
 import stores.store_local_db;
@@ -19,9 +20,31 @@ public class handler_commands {
         // all responses are encapsulated in a common header which includes the @user welcome or whateve
         // TODO: this works but seems a bit inefficient. Do all commands need to be checked against every comment?
         ArrayList<String> responses = new ArrayList<>();
-        responses.add(command_list_owners(hook));
-        responses.add(command_say_hi(hook));
-        responses.add(command_merge(hook));
+        for (model_command command: model_command.from_text(hook.get_comment())) {
+
+            switch (command.command) {
+                case "hi":
+                    if (command.args.size()==0) {
+                        responses.add("hi!");
+                    }
+                    break;
+                case "list":
+                    if ((command.args.size()==1) && (command.args.get(0).equals("owners"))) {
+                        responses.add(get_owners_good_looking_table(hook));
+                    }
+                    break;
+                case "merge":
+                    if (command.args.size()==0) {
+                        responses.add(handle_merge(hook));
+                    }
+                    break;
+            }
+        }
+        if ((responses.size()==0) && (hook.get_comment().contains("@theindiepocalypse"))) {
+            // @theindipocalypse was mentioned but no command was parsed!
+            // TODO: give actual help (say, a link to the help page?)
+            responses.add("such command... much help please");
+        }
         return responses;
     }
 
@@ -36,26 +59,8 @@ public class handler_commands {
         return response;
     }
 
-    private static String command_list_owners(interface_github_webhook hook) {
-        if (!hook.get_comment().contains("@theindiepocalypse list owners")) {
-            return "";
-        }
-        return get_owners_good_looking_table(hook);
-    }
-
-    private static String command_say_hi(interface_github_webhook hook) {
-        if (!hook.get_comment().contains("@theindiepocalypse say hi")) {
-            return "";
-        }
-        return "hi!";
-    }
-
-    private static String command_merge(interface_github_webhook hook) {
+    private static String handle_merge(interface_github_webhook hook) {
         // TODO: take care of ownership changes!
-        if (!hook.get_comment().contains("@theindiepocalypse merge")) {
-            // not a merge command
-            return "";
-        }
         // we have a merge command!
         // check whether its mergeable:
         model_pull_request pull_request = hook.get_pull_request();
