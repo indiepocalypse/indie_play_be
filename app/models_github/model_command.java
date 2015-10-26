@@ -1,5 +1,7 @@
 package models_github;
 
+import play.Logger;
+
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,7 +24,9 @@ public class model_command {
         Matcher matcher = pattern.matcher(text);
         ArrayList<model_command> commands = new ArrayList<>();
         while(matcher.find()) {
-            String[] splitted = matcher.group().replace("@theindiepocalypse","").replace("/","").split("\\s");
+            String match = matcher.group().trim();
+            Logger.info("---- match="+match);
+            String[] splitted = match.replace("@theindiepocalypse","").replace("/","").split("\\s");
             if (splitted.length==0) {
                 continue;
             }
