@@ -24,18 +24,22 @@ public class handler_commands {
         return responses;
     }
 
-    private static String command_list_owners(interface_github_webhook hook) {
-        if (!hook.get_comment().contains("@theindiepocalypse list owners")) {
-            return "";
-        }
+    private static String get_owners_good_looking_table(interface_github_webhook hook) {
         String response = "Owner | Percent\n"+
-                          "-------|---------\n";
+                "-------|---------\n";
         List<model_ownership> ownerships = store_local_db.get_ownerships_by_repo_name(hook.get_repo().repo_name);
         for (model_ownership ownership: ownerships) {
             response += "@" + ownership.user.user_name + "|" + ownership.percent.toString()+"\n";
         }
         response += "*total* | 100.0\n";
         return response;
+    }
+
+    private static String command_list_owners(interface_github_webhook hook) {
+        if (!hook.get_comment().contains("@theindiepocalypse list owners")) {
+            return "";
+        }
+        return get_owners_good_looking_table(hook);
     }
 
     private static String command_say_hi(interface_github_webhook hook) {
@@ -56,7 +60,7 @@ public class handler_commands {
         }
         // TODO: match n actual commit message!
         if (store_github_api.merge_pull_request(pull_request, "I did this!")) {
-            return "merged!\nThe new ownership structure:\n"+command_list_owners(hook);
+            return "merged!\nThe new ownership structure:\n"+get_owners_good_looking_table(hook);
         }
         else {
             return "There was a problem while merging. Please contact suppoer [here \'s the link] or try again later...";
