@@ -53,7 +53,7 @@ public class handler_commands {
     }
 
     private static String get_owners_good_looking_table(interface_github_webhook hook) {
-        String response = "Owner | Percent\n"+
+        String response = "\n\nOwner | Percent\n"+
                 "-------|---------\n";
         List<model_ownership> ownerships = store_local_db.get_ownerships_by_repo_name(hook.get_repo().repo_name);
         for (model_ownership ownership: ownerships) {
