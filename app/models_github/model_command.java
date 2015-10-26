@@ -30,7 +30,7 @@ public class model_command {
                     .replace("@theindiepocalypse","")
                     .replace("/","")
                     .trim()
-                    .split("\\s");
+                    .split("\\s+");
             if (splitted.length==0) {
                 continue;
             }
