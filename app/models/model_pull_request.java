@@ -79,7 +79,7 @@ public class model_pull_request extends Model {
         model_repo repo = model_repo.from_json(json.get("base").get("repo"));
         String SHA = null;
         if (head!=null) {
-            SHA = head.get("label").asText() + "@" + head.get("sha");
+            SHA = head.get("sha").asText();
         }
         return new model_pull_request(
             url,

@@ -1,7 +1,10 @@
 package handlers;
 
 import models.model_ownership;
+import models.model_pull_request;
 import models_github.interface_github_webhook;
+import play.Logger;
+import stores.store_github_api;
 import stores.store_local_db;
 
 import java.util.ArrayList;
@@ -13,9 +16,11 @@ import java.util.List;
 public class handler_commands {
 
     public static ArrayList<String> handle_from_hook(interface_github_webhook hook) {
+        // TODO: this works but seems a bit inefficient. Do all commands need to be checked against every comment?
         ArrayList<String> responses = new ArrayList<>();
         responses.add(command_list_owners(hook));
         responses.add(command_say_hi(hook));
+        responses.add(command_merge(hook));
         return responses;
     }
 
@@ -38,5 +43,23 @@ public class handler_commands {
             return "";
         }
         return "hi!";
+    }
+
+    private static String command_merge(interface_github_webhook hook) {
+        // TODO: take care of ownership changes!
+        if (!hook.get_comment().contains("@theindiepocalypse merge")) {
+            return "";
+        }
+        model_pull_request pull_request = hook.get_pull_request();
+        if (pull_request==null) {
+            return "merging commands are allowed only on pull requests, nothing to merge here :)";
+        }
+        // TODO: match n actual commit message!
+        if (store_github_api.merge_pull_request(pull_request, "I did this!")) {
+            return "merged!\nThe new ownership structure:\n"+command_list_owners(hook);
+        }
+        else {
+            return "There was a problem while merging. Please contact suppoer [here \'s the link] or try again later...";
+        }
     }
 }

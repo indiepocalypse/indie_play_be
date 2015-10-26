@@ -74,6 +74,13 @@ public class store_github_api {
                 .setBody(json);
     }
 
+    private static WSRequest put_indie_auth_request(String path, JsonNode json) {
+        return indie_auth_request(path)
+                .setMethod("PUT")
+                .setContentType("application/json; charset=utf-8")
+                .setBody(json);
+    }
+
     private static WSRequest post_indie_auth_request(String path, String json) {
         return indie_auth_request(path)
                 .setMethod("POST")
@@ -188,13 +195,13 @@ public class store_github_api {
         }
     }
 
-    public static boolean comment_on_issue(model_repo repo, int issue_num, String comment_body) {
+    public static boolean comment_on_issue(model_repo repo, String issue_num, String comment_body) {
         // returns success as usual...
         JsonNode json = JsonNodeFactory.instance.objectNode().put("body", comment_body);
         String path = "/repos/__OWNER__/__REPO__/issues/__NUMBER__/comments"
                 .replace("__OWNER__", store_credentials.github.name)
                 .replace("__REPO__", repo.repo_name)
-                .replace("__NUMBER__", Integer.toString(issue_num));
+                .replace("__NUMBER__", issue_num);
         WSRequest req = post_indie_auth_request(path, json);
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
         boolean success = (res.getStatus() == 201)&&(res.getBody().contains("created"));
@@ -263,5 +270,25 @@ public class store_github_api {
 
         }
         return json_mail.asText();
+    }
+
+    public static boolean merge_pull_request(model_pull_request pull_request, String commit_message) {
+        // will only succeed if pull request is mergeable.
+        // returns success
+        JsonNode json = JsonNodeFactory.instance.objectNode()
+                .put("commit_message", commit_message)
+                .put("sha", pull_request.SHA);
+        String path = "/repos/__OWNER__/__REPO__/pulls/__NUMBER__/merge"
+                .replace("__OWNER__", store_credentials.github.name)
+                .replace("__REPO__", pull_request.repo.repo_name)
+                .replace("__NUMBER__", pull_request.number);
+        WSRequest req = put_indie_auth_request(path, json);
+        WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
+        if (res.getStatus()==200) {
+            return true;
+        }
+        Logger.error("while mergin pull request for repo "+pull_request.repo.repo_name+" #"+pull_request.number+":\n",
+                res.asJson().toString());
+        return false;
     }
 }

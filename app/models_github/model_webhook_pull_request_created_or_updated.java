@@ -10,14 +10,14 @@ import models.model_user;
  */
 public class model_webhook_pull_request_created_or_updated implements interface_github_webhook {
     public final String action;
-    public final Integer number;
+    public final String number;
     public final model_pull_request pull_request;
     public final model_repo repo;
     public final model_user user;
 
     public model_webhook_pull_request_created_or_updated(
             String p_action,
-            Integer p_number,
+            String p_number,
             model_pull_request p_pull_request,
             model_repo p_repo,
             model_user p_user
@@ -35,7 +35,8 @@ public class model_webhook_pull_request_created_or_updated implements interface_
 
     public static model_webhook_pull_request_created_or_updated from_json(JsonNode json) {
         String action = json.get("action").asText();
-        Integer number = json.get("number").asInt();
+        // TODO: parsing a json int as a string allowed? the below seems... too much
+        String number = Integer.toString(json.get("number").asInt());
         model_pull_request pull_request = model_pull_request.from_json(json.get("pull_request"));
         model_repo repo = model_repo.from_json(json.get("repository"));
         model_user user = model_user.from_json(json.get("sender"));
@@ -71,7 +72,7 @@ public class model_webhook_pull_request_created_or_updated implements interface_
     }
 
     @Override
-    public int get_issue_num() {
+    public String get_issue_num() {
         return number;
     }
 

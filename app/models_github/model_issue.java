@@ -13,7 +13,7 @@ public class model_issue {
     public final Long id;
     public final model_user user;
     public final String body;
-    public final int number;
+    public final String number;
     public final int comments;
     public final String title;
 
@@ -24,7 +24,7 @@ public class model_issue {
             Long p_id,
             model_user p_user,
             String p_body,
-            int p_number,
+            String p_number,
             int p_comments,
             String p_title
     ) {
@@ -46,7 +46,8 @@ public class model_issue {
         Long id = json.get("id").asLong();
         model_user user = model_user.from_json(json.get("user"));
         String body = json.get("body").asText();
-        int number = json.get("number").asInt();
+        // TODO: parsing a number as string, allowed? below seems just... too much
+        String number = Integer.toString(json.get("number").asInt());
         int comments = json.get("comments").asInt();
         String title = json.get("title").asText();
         return new model_issue(

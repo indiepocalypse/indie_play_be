@@ -67,7 +67,7 @@ public class model_webhook_pull_request_comment_created implements interface_git
     }
 
     @Override
-    public int get_issue_num() {
+    public String get_issue_num() {
         return issue.number;
     }
 

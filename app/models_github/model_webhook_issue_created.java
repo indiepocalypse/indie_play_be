@@ -61,7 +61,7 @@ public class model_webhook_issue_created implements interface_github_webhook {
     }
 
     @Override
-    public int get_issue_num() {
+    public String get_issue_num() {
         return issue.number;
     }
 
