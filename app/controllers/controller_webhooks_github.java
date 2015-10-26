@@ -61,10 +61,13 @@ public class controller_webhooks_github extends Controller {
             response += command_response+"\n\n";
         }
 
+        if (response.trim().length()==0) {
+            return ok();
+        }
+        response = "@"+sender_name+":\n\n"+response;
         if (!store_github_api.comment_on_issue(hook.get_repo(), hook.get_issue_num(), response)) {
             Logger.info("problem commenting...");
         };
-
         return ok();
     }
 }
