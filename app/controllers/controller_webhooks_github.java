@@ -52,8 +52,7 @@ public class controller_webhooks_github extends Controller {
             return ok();
         }
         store_local_db.update_hook_components(hook);
-
-
+        
         // running the commands
 
         ArrayList<String> command_responses = handler_commands.handle_from_hook(hook);
