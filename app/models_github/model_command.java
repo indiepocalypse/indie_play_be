@@ -22,13 +22,13 @@ public class model_command {
         Matcher matcher = pattern.matcher(text);
         ArrayList<model_command> commands = new ArrayList<>();
         while(matcher.find()) {
-            String[] splitted = matcher.group().split("\\s");
+            String[] splitted = matcher.group().replace("@theindiepocalypse","").replace("/","").split("\\s");
             if (splitted.length==0) {
                 continue;
             }
             model_command command = new model_command();
-            command.command = splitted[1].trim();
-            for (int i=2; i<splitted.length-1; i++) {
+            command.command = splitted[0].trim();
+            for (int i=1; i<splitted.length; i++) {
                 command.args.add(splitted[i].trim());
             }
             commands.add(command);
