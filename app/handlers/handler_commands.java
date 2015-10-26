@@ -5,6 +5,7 @@ import models.model_pull_request;
 import models_github.interface_github_webhook;
 import models_github.model_command;
 import models_github.model_issue;
+import play.Logger;
 import stores.store_github_api;
 import stores.store_local_db;
 
@@ -18,9 +19,12 @@ public class handler_commands {
     public static ArrayList<String> handle_from_hook(interface_github_webhook hook) {
         // this method returns responses to be shown to users.
         // all responses are encapsulated in a common header which includes the @user welcome or whateve
-        // TODO: this works but seems a bit inefficient. Do all commands need to be checked against every comment?
         ArrayList<String> responses = new ArrayList<>();
         for (model_command command: model_command.from_text(hook.get_comment())) {
+            Logger.info("--- command: " + command.command);
+            for (String arg: command.args) {
+                Logger.info("         arg: "+arg);
+            }
 
             switch (command.command) {
                 case "hi":
