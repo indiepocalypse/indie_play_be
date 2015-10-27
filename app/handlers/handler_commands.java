@@ -22,9 +22,9 @@ public class handler_commands {
         // all responses are encapsulated in a common header which includes the @user welcome or whateve
         ArrayList<String> responses = new ArrayList<>();
         for (model_command command: model_command.from_text(hook.get_comment())) {
-            Logger.info("--- command: " + command.command);
+            Logger.info("--- command: " + command.command+" length="+Integer.toString(command.command.length()));
             for (String arg: command.args) {
-                Logger.info("         arg: "+arg);
+                Logger.info("         arg: "+arg+" length="+Integer.toString(arg.length()));
             }
 
             switch (command.command) {
