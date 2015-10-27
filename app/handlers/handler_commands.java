@@ -45,7 +45,7 @@ public class handler_commands {
                     responses.add(handle_merge(hook, commit_message));
                     break;
                 case "delete":
-                    if ((command.args.size()==1) && (command.args.get(1).equals("repo"))) {
+                    if ((command.args.size()==1) && (command.args.get(0).equals("repo"))) {
                         if (store_local_db.is_admin(hook.get_user().user_name)) {
                             if (store_github_api.delete_repo(hook.get_repo())) {
                                 responses.add("done!");
