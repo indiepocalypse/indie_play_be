@@ -1,5 +1,6 @@
 package handlers;
 
+import models.model_admin;
 import models.model_ownership;
 import models.model_pull_request;
 import models_github.interface_github_webhook;
@@ -35,6 +36,9 @@ public class handler_commands {
                 case "list":
                     if ((command.args.size()==1) && (command.args.get(0).equals("owners"))) {
                         responses.add(get_owners_good_looking_table(hook));
+                    }
+                    else if ((command.args.size()==1) && (command.args.get(0).equals("admins"))) {
+                        responses.add(get_admins_good_looking_list());
                     }
                     break;
                 case "merge":
@@ -75,6 +79,16 @@ public class handler_commands {
         List<model_ownership> ownerships = store_local_db.get_ownerships_by_repo_name(hook.get_repo().repo_name);
         for (model_ownership ownership: ownerships) {
             response += "@" + ownership.user.user_name + "|" + ownership.percent.toString()+"\n";
+        }
+        response += "*total* | 100.0\n";
+        return response;
+    }
+
+    private static String get_admins_good_looking_list() {
+        String response = "";
+        List<model_admin> admins = store_local_db.get_all_admins();
+        for (model_admin admin: admins) {
+            response += "@" + admin.user.user_name+"\n";
         }
         response += "*total* | 100.0\n";
         return response;

@@ -70,9 +70,17 @@ public class store_local_db {
 
     public static model_admin get_admin_by_name(String name) {
         try {
-            return model_admin.find.byId(name+"@admin");
+            return model_admin.find.fetch("user").where().idEq(name+"@admins").findUnique();
         } catch (Exception ignore) {
             return null;
+        }
+    }
+
+    public static List<model_admin> get_all_admins() {
+        try {
+            return model_admin.find.all();
+        } catch (Exception ignore) {
+            return new ArrayList<>();
         }
     }
 
