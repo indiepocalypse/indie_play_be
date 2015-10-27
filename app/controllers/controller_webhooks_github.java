@@ -42,10 +42,7 @@ public class controller_webhooks_github extends Controller {
             hook = model_webhook_issue_created.from_json(json);
         }
         else if (model_webhook_pull_request_created_or_updated.is_me(json)) {
-            model_webhook_pull_request_created_or_updated tmp_hook =
-                model_webhook_pull_request_created_or_updated.from_json(json);
-            store_local_db.update_pull_request(tmp_hook.pull_request);
-            hook = tmp_hook;
+            hook = model_webhook_pull_request_created_or_updated.from_json(json);
         }
         else {
             Logger.info("we got some weird hook, not handled yet");

@@ -153,8 +153,8 @@ public class store_local_db {
     public static void delete_ownerships_by_repo(model_repo repo) {
         try {
             // TODO: this delete one by one is bad. Fix it!
-            List<model_ownership> ownerships = model_ownership.find.fetch("pull_request").fetch("pull_request.repo")
-                    .where().eq("pull_request.repo.repo_name", repo.repo_name).findList();
+            List<model_ownership> ownerships = model_ownership.find.fetch("repo")
+                    .where().eq("repo.repo_name", repo.repo_name).findList();
             if (ownerships!=null) {
                 for (model_ownership ownership: ownerships) {
                     model_ownership.find.deleteById(ownership.id);
