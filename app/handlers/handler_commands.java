@@ -38,7 +38,7 @@ public class handler_commands {
                         responses.add(get_owners_good_looking_table(hook));
                     }
                     else if ((command.args.size()==1) && (command.args.get(0).equals("admins"))) {
-                        responses.add(get_admins_good_looking_list());
+                        responses.add(get_admins_good_looking_list(hook));
                     }
                     break;
                 case "merge":
