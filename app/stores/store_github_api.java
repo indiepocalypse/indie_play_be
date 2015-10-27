@@ -291,4 +291,19 @@ public class store_github_api {
                 res.asJson().toString());
         return false;
     }
+
+    public static boolean delete_repo(model_repo repo) {
+        // returns success
+        String path = "/repos/__OWNER__/__REPO__"
+                .replace("__OWNER__", store_credentials.github.name)
+                .replace("__REPO__", repo.repo_name);
+        WSRequest req = indie_auth_request(path).setMethod("DELETE");
+        WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
+        if (res.getStatus()==204) {
+            return true;
+        }
+        Logger.error("while deleting repo "+repo.repo_name+"\n",
+                res.asJson().toString());
+        return false;
+    }
 }

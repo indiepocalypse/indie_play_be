@@ -11,10 +11,12 @@ import java.util.regex.Pattern;
  */
 public class model_command {
     public String command;
+    public String joined_args;
     public ArrayList<String> args;
 
     public model_command() {
         this.command = "";
+        this.joined_args = "";
         this.args = new ArrayList<>();
     }
 
@@ -26,18 +28,22 @@ public class model_command {
         while(matcher.find()) {
             String match = matcher.group().trim();
             Logger.info("---- match="+match);
-            String[] splitted = match
+            String clean_match = match
                     .replace("@theindiepocalypse","")
                     .replace("/","")
-                    .trim()
-                    .split("\\s+");
+                    .trim();
+            String[] splitted2 = clean_match.split("\\s+", 1);
+            String[] splitted = clean_match.split("\\s+");
             if (splitted.length==0) {
                 continue;
             }
             model_command command = new model_command();
-            command.command = splitted[0].trim();
+            command.command = splitted[0];
+            if (splitted2.length>1) {
+                command.joined_args = splitted2[1];
+            }
             for (int i=1; i<splitted.length; i++) {
-                command.args.add(splitted[i].trim());
+                command.args.add(splitted[i]);
             }
             commands.add(command);
         }

@@ -38,8 +38,25 @@ public class handler_commands {
                     }
                     break;
                 case "merge":
-                    if (command.args.size()==0) {
-                        responses.add(handle_merge(hook));
+                    String commit_message = "this is the default commit message!";
+                    if (command.joined_args.equals("")) {
+                        commit_message = command.joined_args;
+                    }
+                    responses.add(handle_merge(hook, commit_message));
+                    break;
+                case "delete":
+                    if ((command.args.size()==1) && (command.args.get(1).equals("repo"))) {
+                        if (store_local_db.is_admin(hook.get_user().user_name)) {
+                            if (store_github_api.delete_repo(hook.get_repo())) {
+                                responses.add("done!");
+                            }
+                            else {
+                                responses.add("problem deleting repo. Please contact staff");
+                                Logger.error("error deleting repo "+hook.get_repo().repo_name);
+                            }
+                        } else {
+                            responses.add("only admins can delete a repository");
+                        }
                     }
                     break;
             }
@@ -63,7 +80,7 @@ public class handler_commands {
         return response;
     }
 
-    private static String handle_merge(interface_github_webhook hook) {
+    private static String handle_merge(interface_github_webhook hook, String commit_message) {
         // TODO: take care of ownership changes!
         // we have a merge command!
         // check whether its mergeable:
@@ -82,7 +99,7 @@ public class handler_commands {
             return "this pull request is not mergeable automatically (the merge button) maybe a rebase will solve the issue? I can only merge with the merge button...";
         }
         // TODO: match actual commit message!
-        if (store_github_api.merge_pull_request(pull_request, "I did this!")) {
+        if (store_github_api.merge_pull_request(pull_request, commit_message)) {
             return "merged!\nThe new ownership structure:\n\n"+get_owners_good_looking_table(hook);
         }
         else {
