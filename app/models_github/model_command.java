@@ -22,7 +22,7 @@ public class model_command {
 
     public static ArrayList<model_command> from_text(String text) {
         // basically parse the text into commands of the form @theindiepocalypse say hi /
-        String s = "\\z";
+        String s = "\\Z";
         Pattern pattern = Pattern.compile("@theindiepocalypse\\s([\\s\\w\\.\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\{\\}\\[\\]"+
                 "\\;\\`\\~\\'\\>\\\\\\+\\=\\-\\<\\>\\,\\?\\\"\\:\\|]*)[\\/"+s+"]");
         Matcher matcher = pattern.matcher(text);
