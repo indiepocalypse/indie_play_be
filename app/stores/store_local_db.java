@@ -48,6 +48,24 @@ public class store_local_db {
         return (get_repo_by_name(repo_name) != null);
     }
 
+    public static void delete_repo(model_repo repo) {
+        delete_offers_by_repo(repo);
+        delete_ownerships_by_repo(repo);
+        delete_pull_requests_by_repo(repo);
+        try {
+            // TODO: this delete one by one is bad. Fix it!
+            List<model_repo> repos = model_repo.find
+                    .where().eq("repo_name", repo.repo_name).findList();
+            if (repos!=null) {
+                for (model_repo irepo: repos) {
+                    model_pull_request.find.deleteById(irepo.repo_name);
+                }
+            }
+        } catch (Exception e) {
+            Logger.error("failed to delete repo "+repo.repo_name+":\n", e);
+        }
+    }
+
     /********************************
      * USERS!
      ********************************/
@@ -132,6 +150,21 @@ public class store_local_db {
         }
     }
 
+    public static void delete_ownerships_by_repo(model_repo repo) {
+        try {
+            // TODO: this delete one by one is bad. Fix it!
+            List<model_ownership> ownerships = model_ownership.find.fetch("pull_request").fetch("pull_request.repo")
+                    .where().eq("pull_request.repo.repo_name", repo.repo_name).findList();
+            if (ownerships!=null) {
+                for (model_ownership ownership: ownerships) {
+                    model_ownership.find.deleteById(ownership.id);
+                }
+            }
+        } catch (Exception e) {
+            Logger.error("failed to delete ownerships by repo:", e);
+        }
+    }
+
     /********************************
      * OFFERS!
      ********************************/
@@ -176,7 +209,7 @@ public class store_local_db {
         }
     }
 
-    public static void remove_offers_by_pull_request(String repo_name, String number) {
+    public static void delete_offers_by_pull_request(String repo_name, String number) {
         try {
             // TODO: this delete one by one is bad. Fix it!
             List<model_offer> offers = model_offer.find.fetch("user").fetch("pull_request").fetch("pull_request.repo")
@@ -188,10 +221,24 @@ public class store_local_db {
                 }
             }
         } catch (Exception e) {
-            Logger.error("failed to remove offers by pull request:", e);
+            Logger.error("failed to delete offers by pull request:", e);
         }
     }
 
+    public static void delete_offers_by_repo(model_repo repo) {
+        try {
+            // TODO: this delete one by one is bad. Fix it!
+            List<model_offer> offers = model_offer.find.fetch("pull_request").fetch("pull_request.repo")
+                    .where().eq("pull_request.repo.repo_name", repo.repo_name).findList();
+            if (offers!=null) {
+                for (model_offer offer: offers) {
+                    model_offer.find.deleteById(offer.id);
+                }
+            }
+        } catch (Exception e) {
+            Logger.error("failed to delete offers by repo:", e);
+        }
+    }
 
     /********************************
      * GMAIL!
@@ -216,7 +263,7 @@ public class store_local_db {
 
     public static void update_pull_request(model_pull_request pr) {
         // updated pull requests make all previous offers irrelevant!
-        remove_offers_by_pull_request(pr.repo.repo_name, pr.number);
+        delete_offers_by_pull_request(pr.repo.repo_name, pr.number);
         try {
             pr.save();
         }
@@ -254,6 +301,22 @@ public class store_local_db {
             return new ArrayList<>(0);
         }
     }
+
+    public static void delete_pull_requests_by_repo(model_repo repo) {
+        try {
+            // TODO: this delete one by one is bad. Fix it!
+            List<model_pull_request> pull_requests = model_pull_request.find.fetch("repo")
+                    .where().eq("repo.repo_name", repo.repo_name).findList();
+            if (pull_requests!=null) {
+                for (model_pull_request pull_request: pull_requests) {
+                    model_pull_request.find.deleteById(pull_request.id);
+                }
+            }
+        } catch (Exception e) {
+            Logger.error("failed to delete pull_requests by repo:", e);
+        }
+    }
+
 
     /********************************
      * HOOKS!

@@ -52,6 +52,7 @@ public class handler_commands {
                     if ((command.args.size()==1) && (command.args.get(0).equals("repo"))) {
                         if (store_local_db.is_admin(hook.get_user().user_name)) {
                             if (store_github_api.delete_repo(hook.get_repo())) {
+                                store_local_db.delete_repo(hook.get_repo());
                                 responses.add("done!");
                             }
                             else {
