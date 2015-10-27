@@ -84,13 +84,17 @@ public class handler_commands {
         return response;
     }
 
-    private static String get_admins_good_looking_list() {
-        String response = "";
+    private static String get_admins_good_looking_list(interface_github_webhook hook) {
+        // TODO: improve response wording, etc.
+        String response = " ";
         List<model_admin> admins = store_local_db.get_all_admins();
         for (model_admin admin: admins) {
-            response += "@" + admin.user.user_name+"\n";
+            if (hook.get_user().user_name.equals(admin.user.user_name)) {
+                response += "you ";
+            }
+            response += "@" + admin.user.user_name+" ";
         }
-        response += "*total* | 100.0\n";
+        response += " are admins";
         return response;
     }
 
