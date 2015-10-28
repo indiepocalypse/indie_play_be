@@ -69,7 +69,7 @@ public class handler_general {
         }
     }
 
-    public static void handle_updated_pull_request(model_pull_request pull_request) {
+    public static void notify_by_comment_that_pr_changed_and_offers_are_removed(model_pull_request pull_request) {
         store_github_api.comment_on_issue(pull_request.repo, pull_request.number,
                 "PR updated, all offers cleared!\nplease place your new offers");
     }

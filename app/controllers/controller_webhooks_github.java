@@ -47,10 +47,9 @@ public class controller_webhooks_github extends Controller {
         }
         else if (model_webhook_pull_request_created_or_updated.is_me(json)) {
             hook = model_webhook_pull_request_created_or_updated.from_json(json);
-            if (((model_webhook_pull_request_created_or_updated)hook).is_update()) {
+            if (store_local_db.update_pull_request(hook.get_pull_request())) {
                 // code in PR was updated. No comment was created, no command issued.
-                // Just notify everybody
-                handler_general.handle_updated_pull_request(hook.get_pull_request());
+                // store call was responsible to notify everybody
                 return ok();
             }
         }

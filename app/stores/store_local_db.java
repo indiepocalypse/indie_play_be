@@ -3,6 +3,7 @@ package stores;
 import handlers.handler_general;
 import models.*;
 import models_github.interface_github_webhook;
+import models_github.model_webhook_pull_request_created_or_updated;
 import play.Logger;
 
 import java.util.ArrayList;
@@ -263,6 +264,8 @@ public class store_local_db {
      ********************************/
 
     public static boolean update_pull_request(model_pull_request pull_request) {
+        // users notification here. Reason is that this is always coupled:
+        // when deleting offers, users always need to be notified!
         // return whether update was a real update, in the sense that offers were cleared
         boolean updated = false;
         // check previous pull request, the one we are about to override:
@@ -271,7 +274,8 @@ public class store_local_db {
             updated = true;
             // updated pull requests contains different code, all previous offers rendered irrelevant
             delete_offers_by_pull_request(pull_request.repo.repo_name, pull_request.number);
-            handler_general.handle_updated_pull_request(pull_request);
+            // notify users
+            handler_general.notify_by_comment_that_pr_changed_and_offers_are_removed(pull_request);
         }
         try {
             pull_request.save();
