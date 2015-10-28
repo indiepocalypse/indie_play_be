@@ -71,6 +71,6 @@ public class handler_general {
 
     public static void handle_updated_pull_request(model_pull_request pull_request) {
         store_github_api.comment_on_issue(pull_request.repo, pull_request.number,
-                "PR updated, all offers cleared!\nplease plase your new offers");
+                "PR updated, all offers cleared!\nplease place your new offers");
     }
 }
