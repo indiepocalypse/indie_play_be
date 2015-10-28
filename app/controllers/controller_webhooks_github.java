@@ -57,6 +57,9 @@ public class controller_webhooks_github extends Controller {
         // assembling response
 
         String response = hook.get_response();
+        if (!response.trim().equals("")) {
+            response += "\n\n";
+        }
         for (String command_response: command_responses) {
             response += command_response+"\n\n";
         }
