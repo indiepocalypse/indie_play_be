@@ -75,6 +75,9 @@ public class model_pull_request extends Model {
         Boolean merged = json.has("merged_at") && json.get("merged_at")!=null &&
                 json.get("merged_at").asText()!=null && !json.get("merged_at").asText().equals("null");
         Boolean mergeable = json.has("mergeable") && json.get("mergeable")!=null && json.get("mergeable").asBoolean();
+        if ((json.get("mergeable")==null) || (json.get("mergeable").isNull())) {
+            mergeable = null;
+        }
         String comments_url = json.get("comments_url").asText();
         JsonNode head = json.get("head");
         model_repo repo = model_repo.from_json(json.get("base").get("repo"));

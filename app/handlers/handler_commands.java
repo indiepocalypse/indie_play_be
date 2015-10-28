@@ -132,25 +132,28 @@ public class handler_commands {
         if ((issue!=null) && (issue.is_closed)) {
             return "this pull request is closed, please reopen to merge";
         }
-        if (!pull_request.mergeable) {
-            if (should_try_to_update_from_github_if_not_mergeable) {
-                // maybe pull request needs to be updated from github, since mergable was not calculated
-                // in time for this merge. It will get updated anyway, but lets do this here now:
-                String repo_name = hook.get_pull_request().repo.repo_name;
-                String number = hook.get_pull_request().number;
-                model_pull_request updated_pull_request = store_github_api.get_pull_request_by_repo_by_number(repo_name, number);
-                store_local_db.update_pull_request(updated_pull_request);
-                ((model_webhook_pull_request_created_or_updated)hook).pull_request = updated_pull_request;
-                return handle_merge(hook, commit_message, false);
-
+        if (pull_request.mergeable==null) {
+            // was undecided by Github when DB entry was created. Lets update the record....
+            String repo_name = hook.get_pull_request().repo.repo_name;
+            String number = hook.get_pull_request().number;
+            Logger.info("updating mergeable field for repo "+repo_name+" for PR#"+number);
+            model_pull_request updated_pull_request = store_github_api.get_pull_request_by_repo_by_number(repo_name, number);
+            store_local_db.update_pull_request(updated_pull_request);
+            if (pull_request.mergeable==null) {
+                Logger.info("     -- after update: mergeable=null");
             }
-            return "this pull request is not mergeable automatically (the merge button) maybe a rebase will solve the issue? I can only merge with the merge button...";
+            else {
+                Logger.info("     -- after update: mergeable="+Boolean.toString(pull_request.mergeable));
+            }
+        }
+        if (!pull_request.mergeable) {
+            return "this pull request is not mergeable automatically (the merge button) maybe a rebase will solve the issue?";
         }
         if (store_github_api.merge_pull_request(pull_request, commit_message)) {
             return "merged!\nThe new ownership structure:\n\n"+get_owners_good_looking_table(hook);
         }
         else {
-            return "There was a problem while merging. Please contact suppoer [here \'s the link] or try again later...";
+            return "Cannot merge right now. Maybe our DB is not yet in sync with Github. Please try again later...";
         }
     }
 }
