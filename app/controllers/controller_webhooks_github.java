@@ -2,6 +2,7 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import handlers.handler_commands;
+import handlers.handler_general;
 import models_github.*;
 import play.Logger;
 import play.mvc.Controller;
@@ -29,6 +30,9 @@ public class controller_webhooks_github extends Controller {
             return ok();
         }
 
+        String response_header = "";
+        String response_footer = "";
+
         // Extracting the hook
 
         interface_github_webhook hook;
@@ -43,6 +47,12 @@ public class controller_webhooks_github extends Controller {
         }
         else if (model_webhook_pull_request_created_or_updated.is_me(json)) {
             hook = model_webhook_pull_request_created_or_updated.from_json(json);
+            if (((model_webhook_pull_request_created_or_updated)hook).is_update()) {
+                // code in PR was updated. No comment was created, no command issued.
+                // Just notify everybody
+                handler_general.handle_updated_pull_request(hook.get_pull_request());
+                return ok();
+            }
         }
         else {
             Logger.info("we got some weird hook, not handled yet");
@@ -56,13 +66,14 @@ public class controller_webhooks_github extends Controller {
 
         // assembling response
 
-        String response = hook.get_response();
+        String response = response_header;
         if (!response.trim().equals("")) {
             response += "\n\n";
         }
         for (String command_response: command_responses) {
             response += command_response+"\n\n";
         }
+        response += response_footer;
 
         if (response.trim().length()==0) {
             return ok();

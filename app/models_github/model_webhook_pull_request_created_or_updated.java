@@ -86,14 +86,6 @@ public class model_webhook_pull_request_created_or_updated implements interface_
     }
 
     @Override
-    public String get_response() {
-        if (is_update()) {
-            return "pull request was updated. Deals are removed";
-        }
-        return "Thanks for opening this pull request!";
-    }
-
-    @Override
     public model_issue get_issue() {
         return null;
     }

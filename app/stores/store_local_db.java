@@ -1,5 +1,6 @@
 package stores;
 
+import handlers.handler_general;
 import models.*;
 import models_github.interface_github_webhook;
 import play.Logger;
@@ -261,15 +262,24 @@ public class store_local_db {
      * PULL REQUESTS!
      ********************************/
 
-    public static void update_pull_request(model_pull_request pr) {
-        // updated pull requests make all previous offers irrelevant!
-        delete_offers_by_pull_request(pr.repo.repo_name, pr.number);
+    public static boolean update_pull_request(model_pull_request pull_request) {
+        // return whether update was a real update, in the sense that offers were cleared
+        boolean updated = false;
+        // check previous pull request, the one we are about to override:
+        model_pull_request old_pull_request = get_pull_request_by_repo_name_and_number(pull_request.repo.repo_name, pull_request.number);
+        if ((old_pull_request != null) && (!old_pull_request.SHA.equals(pull_request.SHA))) {
+            updated = true;
+            // updated pull requests contains different code, all previous offers rendered irrelevant
+            delete_offers_by_pull_request(pull_request.repo.repo_name, pull_request.number);
+            handler_general.handle_updated_pull_request(pull_request);
+        }
         try {
-            pr.save();
+            pull_request.save();
         }
         catch (Exception ignored) {
-            pr.update();
+            pull_request.update();
         }
+        return updated;
     }
 
     public static model_pull_request get_pull_request_by_repo_name_and_number(String repo_name, String number) {

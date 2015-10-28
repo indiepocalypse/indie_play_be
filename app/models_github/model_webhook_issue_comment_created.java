@@ -83,12 +83,6 @@ public class model_webhook_issue_comment_created implements interface_github_web
     }
 
     @Override
-    public String get_response() {
-        // return "Thanks for commenting on this issue. I'm on it!";
-        return ""; // no need to respond on every comment not containing a command
-    }
-
-    @Override
     public enum_webhook_action get_action() {
         return action;
     }

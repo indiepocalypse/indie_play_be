@@ -85,12 +85,6 @@ public class model_webhook_pull_request_comment_created implements interface_git
     }
 
     @Override
-    public String get_response() {
-        //return "Thanks for commenting on this pull request";
-        return ""; // no need for across the book response on comments without commands
-    }
-
-    @Override
     public model_issue get_issue() {
         return issue;
     }

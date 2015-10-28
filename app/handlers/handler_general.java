@@ -1,6 +1,7 @@
 package handlers;
 
 import models.model_ownership;
+import models.model_pull_request;
 import models.model_repo;
 import models.model_user;
 import play.Logger;
@@ -66,5 +67,10 @@ public class handler_general {
         else {
             Logger.error("    Problem createing the default readme for repo " + repo.repo_name);
         }
+    }
+
+    public static void handle_updated_pull_request(model_pull_request pull_request) {
+        store_github_api.comment_on_issue(pull_request.repo, pull_request.number,
+                "PR updated, all offers cleared!\nplease plase your new offers");
     }
 }

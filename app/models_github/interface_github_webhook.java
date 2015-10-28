@@ -14,6 +14,5 @@ public interface interface_github_webhook {
     model_issue get_issue(); // this one can be null
     String get_issue_num();
     String get_comment();
-    String get_response();
     enum_webhook_action get_action();
 }
