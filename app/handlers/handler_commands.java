@@ -141,6 +141,7 @@ public class handler_commands {
             store_local_db.update_pull_request(updated_pull_request);
             if (pull_request.mergeable==null) {
                 Logger.info("     -- after update: mergeable=null");
+                return "Cannot merge right now. Maybe our DB is not yet in sync with Github. Please try again later...";
             }
             else {
                 Logger.info("     -- after update: mergeable="+Boolean.toString(pull_request.mergeable));
@@ -149,11 +150,13 @@ public class handler_commands {
         if (!pull_request.mergeable) {
             return "this pull request is not mergeable automatically (the merge button) maybe a rebase will solve the issue?";
         }
+
+        // try to merge!
         if (store_github_api.merge_pull_request(pull_request, commit_message)) {
             return "merged!\nThe new ownership structure:\n\n"+get_owners_good_looking_table(hook);
         }
         else {
-            return "Cannot merge right now. Maybe our DB is not yet in sync with Github. Please try again later...";
+            return "Some problem with merging. Please try again later, or contant an admin";
         }
     }
 }
