@@ -217,6 +217,14 @@ public class store_github_api {
         return model_pull_request.from_json(res.asJson());
     }
 
+    public static model_pull_request get_pull_request_by_repo_by_number(String repo_name, String number) {
+        String path = "/repos/theindiepocalypse/"+repo_name+"/pulls/"+number;
+        WSRequest req = indie_auth_request(path).setMethod("GET");
+        WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
+        return model_pull_request.from_json(res.asJson());
+    }
+
+
     public static List<model_pull_request> get_all_pull_requests(model_repo repo) {
         WSResponse res = indie_auth_request("/repos/theindiepocalypse/"+repo.repo_name+"/pulls")
                 .setMethod("GET")

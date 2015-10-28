@@ -136,7 +136,9 @@ public class handler_commands {
             if (should_try_to_update_from_github_if_not_mergeable) {
                 // maybe pull request needs to be updated from github, since mergable was not calculated
                 // in time for this merge. It will get updated anyway, but lets do this here now:
-                model_pull_request updated_pull_request = store_github_api.get_pull_request(hook.get_pull_request().url);
+                String repo_name = hook.get_pull_request().repo.repo_name;
+                String number = hook.get_pull_request().number;
+                model_pull_request updated_pull_request = store_github_api.get_pull_request_by_repo_by_number(repo_name, number);
                 store_local_db.update_pull_request(updated_pull_request);
                 ((model_webhook_pull_request_created_or_updated)hook).pull_request = updated_pull_request;
                 return handle_merge(hook, commit_message, false);
