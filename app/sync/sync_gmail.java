@@ -195,7 +195,7 @@ public class sync_gmail {
                             try {
                                 ownership = handler_general.integrate_github_repo(repo_name, from_user, false);
                             }
-                            catch (Error e) {
+                            catch (Exception e) {
                                 Logger.error("XX--> cannot move repo "+repo_name+" from user "+from_user+". Maybe it has been deleted? -->\n", e);
                                 break;
                             }
