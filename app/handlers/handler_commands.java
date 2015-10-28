@@ -43,7 +43,10 @@ public class handler_commands {
                     break;
                 case "merge":
                     String commit_message = "this is the default commit message!";
-                    if (command.joined_args.equals("")) {
+                    if ((hook.get_pull_request()!=null) && (hook.get_pull_request().title!=null)) {
+                        commit_message = hook.get_pull_request().title;
+                    }
+                    if (!command.joined_args.equals("")) {
                         commit_message = command.joined_args;
                     }
                     responses.add(handle_merge(hook, commit_message));
@@ -117,7 +120,6 @@ public class handler_commands {
         if (!pull_request.mergeable) {
             return "this pull request is not mergeable automatically (the merge button) maybe a rebase will solve the issue? I can only merge with the merge button...";
         }
-        // TODO: match actual commit message!
         if (store_github_api.merge_pull_request(pull_request, commit_message)) {
             return "merged!\nThe new ownership structure:\n\n"+get_owners_good_looking_table(hook);
         }
