@@ -92,13 +92,27 @@ public class handler_commands {
         // TODO: improve response wording, etc.
         String response = " ";
         List<model_admin> admins = store_local_db.get_all_admins();
+        if (admins.size()==0) {
+            return "no admins at all, weird!";
+        }
+        boolean more_than_one_admin = admins.size()>1;
+        boolean are_you_included = false;
         for (model_admin admin: admins) {
             if (hook.get_user().user_name.equals(admin.user.user_name)) {
-                response += "you ";
+                are_you_included = true;
+                continue;
             }
             response += "@" + admin.user.user_name+" ";
         }
-        response += " are admins";
+        if ((more_than_one_admin)&&(are_you_included)) {
+            response += "and you, are admins";
+        }
+        else if ((!more_than_one_admin)&&(are_you_included)) {
+            response = "you are the only admin";
+        }
+        else if ((more_than_one_admin)&&(!are_you_included)) {
+            response = "are admins";
+        }
         return response;
     }
 
