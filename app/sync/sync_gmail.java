@@ -156,9 +156,11 @@ public class sync_gmail {
             }
             if (last_date_read_model == null) {
                 last_date_read_model = new model_gmail_last_date_read(m_date);
-            } else {
+            }
+            else {
                 if (last_date_read_model.lastdate.before(m_date)) {
                     last_date_read_model.lastdate = m_date;
+                    store_local_db.update_gmail_last_read_date(last_date_read_model);
                 }
             }
 
@@ -189,15 +191,13 @@ public class sync_gmail {
                                 sendmail(user_mail, mail_subject, mail_body);
                                 continue;
                             }
-                            model_ownership ownership = handler_general.integrate_github_repo(repo_name, from_user, false);
-                            if (ownership == null) {
-                                // we try once more...
+                            model_ownership ownership = null;
+                            try {
                                 ownership = handler_general.integrate_github_repo(repo_name, from_user, false);
-                                if (ownership == null) {
-                                    // just report...
-                                    Logger.error("Problem transferring repo \"" + repo_name + "\" into DB");
-                                    continue;
-                                }
+                            }
+                            catch (Error e) {
+                                Logger.error("cannot move repo "+repo_name+" from user "+from_user+". Maybe it has been deleted? -->\n", e);
+                                continue;
                             }
                             try {
                                 Thread.sleep(5100);
