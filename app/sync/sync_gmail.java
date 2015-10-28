@@ -178,7 +178,7 @@ public class sync_gmail {
                     }
                     Logger.info("transfering from user: " + from_user + "    repo name: " + repo_name);
                     String lines[] = m_body.split("\\r?\\n");
-                    for (String l : lines) {
+                    for (String l: lines) {
                         String lt = l.trim();
                         if (lt.startsWith("https")) {
                             // try to accept the repo!
@@ -189,7 +189,7 @@ public class sync_gmail {
                                 final String mail_subject = "Cannot accept repository transfer (" + repo_name + ")";
                                 final String mail_body = "The reason is that there is a repo with the same name in the DB.";
                                 sendmail(user_mail, mail_subject, mail_body);
-                                continue;
+                                break;
                             }
                             model_ownership ownership = null;
                             try {
@@ -207,7 +207,7 @@ public class sync_gmail {
                             if (!store_github_iojs.accept_transfer_repo(lt)) {
                                 // unsuccesfull transfer, report
                                 Logger.error("Problem transferring repo \"" + repo_name + "\" from Github");
-                                continue;
+                                break;
                             }
                             // all seems ok!
                             try {
