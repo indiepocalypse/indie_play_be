@@ -6,6 +6,7 @@ import models.model_pull_request;
 import models_github.interface_github_webhook;
 import models_github.model_command;
 import models_github.model_issue;
+import models_github.model_webhook_pull_request_created_or_updated;
 import play.Logger;
 import stores.store_github_api;
 import stores.store_local_db;
@@ -49,7 +50,7 @@ public class handler_commands {
                     if (!command.joined_args.equals("")) {
                         commit_message = command.joined_args;
                     }
-                    responses.add(handle_merge(hook, commit_message));
+                    responses.add(handle_merge(hook, commit_message, true)); // true is for update pull request and retry
                     break;
                 case "delete":
                     if ((command.args.size()==1) && (command.args.get(0).equals("repo"))) {
@@ -116,7 +117,7 @@ public class handler_commands {
         return response;
     }
 
-    private static String handle_merge(interface_github_webhook hook, String commit_message) {
+    private static String handle_merge(interface_github_webhook hook, String commit_message, boolean should_try_to_update_from_github_if_not_mergeable) {
         // TODO: take care of ownership changes!
         // we have a merge command!
         // check whether its mergeable:
@@ -132,6 +133,15 @@ public class handler_commands {
             return "this pull request is closed, please reopen to merge";
         }
         if (!pull_request.mergeable) {
+            if (should_try_to_update_from_github_if_not_mergeable) {
+                // maybe pull request needs to be updated from github, since mergable was not calculated
+                // in time for this merge. It will get updated anyway, but lets do this here now:
+                model_pull_request updated_pull_request = store_github_api.get_pull_request(hook.get_pull_request().url);
+                store_local_db.update_pull_request(updated_pull_request);
+                ((model_webhook_pull_request_created_or_updated)hook).pull_request = updated_pull_request;
+                return handle_merge(hook, commit_message, false);
+
+            }
             return "this pull request is not mergeable automatically (the merge button) maybe a rebase will solve the issue? I can only merge with the merge button...";
         }
         if (store_github_api.merge_pull_request(pull_request, commit_message)) {
