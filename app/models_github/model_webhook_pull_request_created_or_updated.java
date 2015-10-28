@@ -12,7 +12,7 @@ import utils.utils_github_webhooks;
 public class model_webhook_pull_request_created_or_updated implements interface_github_webhook {
     public final enum_webhook_action action;
     public final String number;
-    public model_pull_request pull_request; // yep. not final since this may need an update from github on the fly
+    public final model_pull_request pull_request;
     public final model_repo repo;
     public final model_user user;
 

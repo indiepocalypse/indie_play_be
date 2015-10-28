@@ -137,8 +137,8 @@ public class handler_commands {
             String repo_name = hook.get_pull_request().repo.repo_name;
             String number = hook.get_pull_request().number;
             Logger.info("updating mergeable field for repo "+repo_name+" for PR#"+number);
-            model_pull_request updated_pull_request = store_github_api.get_pull_request_by_repo_by_number(repo_name, number);
-            store_local_db.update_pull_request(updated_pull_request);
+            pull_request = store_github_api.get_pull_request_by_repo_by_number(repo_name, number);
+            store_local_db.update_pull_request(pull_request);
             if (pull_request.mergeable==null) {
                 Logger.info("     -- after update: mergeable=null");
                 return "Cannot merge right now. Maybe our DB is not yet in sync with Github. Please try again later...";
