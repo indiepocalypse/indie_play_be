@@ -216,7 +216,7 @@ public class store_github_api {
         // returns success as usual...
         // TODO: add labels, etc.
         JsonNode json = JsonNodeFactory.instance.objectNode()
-                .put("state", issue.is_closed ? "closed" : "open")
+                .put("state", issue.is_closed() ? "closed" : "open")
                 .put("title", issue.title)
                 .put("body", issue.body);
         String path = "/repos/__OWNER__/__REPO__/issues/__NUMBER__"
@@ -237,7 +237,7 @@ public class store_github_api {
     public static boolean update_pull_request(model_pull_request pull_request) {
         // returns success as usual...
         JsonNode json = JsonNodeFactory.instance.objectNode()
-                .put("state", pull_request.is_closed ? "closed" : "open")
+                .put("state", pull_request.is_closed() ? "closed" : "open")
                 .put("title", pull_request.title)
                 .put("body", pull_request.body);
         String path = "/repos/__OWNER__/__REPO__/pulls/__NUMBER__"
