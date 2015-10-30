@@ -19,16 +19,15 @@ public class model_pull_request extends Model {
     public final Long github_id;
     public final String html_url;
     public final String number;
-    public final String state;
-    public final String title;
+    public String state;
+    public String title;
     @ManyToOne
     public final model_user user;
-    public final String body;
-    public final Boolean merged;
-    public final Boolean mergeable;
+    public String body;
+    public Boolean merged;
+    public Boolean mergeable;
     public final String comments_url;
     public final String SHA;
-    public final boolean is_closed;
     @ManyToOne
     public final model_repo repo;
 
@@ -45,8 +44,7 @@ public class model_pull_request extends Model {
             String p_comments_url,
             model_repo p_repo,
             String p_number,
-            String p_SHA,
-            boolean is_closed
+            String p_SHA
     ) {
         this.url = p_url;
         this.github_id = p_github_id;
@@ -62,7 +60,10 @@ public class model_pull_request extends Model {
         this.repo = p_repo;
         this.number = p_number;
         this.id = repo.repo_name + "/" + this.number;
-        this.is_closed = is_closed;
+    }
+
+    public boolean is_closed() {
+        return !this.state.equals("open");
     }
 
     public static model_pull_request from_json(JsonNode json) {
@@ -88,7 +89,6 @@ public class model_pull_request extends Model {
         if (head!=null) {
             SHA = head.get("sha").asText();
         }
-        boolean is_closed = !json.get("state").asText().equals("open");
         return new model_pull_request(
             url,
             github_id,
@@ -102,8 +102,7 @@ public class model_pull_request extends Model {
             comments_url,
             repo,
             number,
-            SHA,
-            is_closed
+            SHA
         );
     }
 

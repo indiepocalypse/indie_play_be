@@ -68,6 +68,22 @@ public class handler_commands {
                         }
                     }
                     break;
+                case "close":
+                    if (hook.get_pull_request()!=null) {
+                        // we have a pull reuqest
+                        model_pull_request pull_request = hook.get_pull_request();
+                        pull_request.state = "closed";
+                        if (store_github_api.update_pull_request(pull_request)) {
+                            store_local_db.update_pull_request(pull_request);
+                        }
+                        else {
+                            Logger.error("could not close pull request #"+pull_request.number+" on repo "+pull_request.repo.repo_name);
+                        }
+                    }
+                    else {
+                        // we have an issue
+                    }
+                    break;
             }
         }
         if ((responses.size()==0) && (hook.get_comment().contains("@theindiepocalypse"))) {
@@ -129,7 +145,7 @@ public class handler_commands {
             return "this pull request is already merged!";
         }
         model_issue issue = hook.get_issue();
-        if ((issue!=null) && (issue.is_closed)) {
+        if ((issue!=null) && (issue.is_closed())) {
             return "this pull request is closed, please reopen to merge";
         }
         if (pull_request.mergeable==null) {
@@ -153,6 +169,9 @@ public class handler_commands {
 
         // try to merge!
         if (store_github_api.merge_pull_request(pull_request, commit_message)) {
+            pull_request.merged = true;
+            pull_request.mergeable = false; // TODO: should this actually change?
+            store_local_db.update_pull_request(pull_request);
             return "merged!\nThe new ownership structure:\n\n"+get_owners_good_looking_table(hook);
         }
         else {
