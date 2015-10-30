@@ -7,6 +7,7 @@ import models.model_user;
  * Created by skariel on 14/10/15.
  */
 public class model_issue {
+    // TODO: add labels, etc.
     public final String url;
     public final String html_url;
     public final String comments_url;

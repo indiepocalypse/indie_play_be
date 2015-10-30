@@ -7,6 +7,7 @@ import com.typesafe.config.ConfigFactory;
 import models.model_repo;
 import models.model_user;
 import models.model_pull_request;
+import models_github.model_issue;
 import play.Logger;
 import play.libs.F;
 import play.libs.Json;
@@ -206,7 +207,29 @@ public class store_github_api {
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
         boolean success = (res.getStatus() == 201)&&(res.getBody().contains("created"));
         if (!success) {
-            Logger.error(res.asJson().toString());
+            Logger.error("while commenting on issue #"+issue_num+" at repo "+repo.repo_name, res.asJson().toString());
+        }
+        return success;
+    }
+
+    public static boolean update_issue(model_repo repo, model_issue issue) {
+        // returns success as usual...
+        // TODO: add labels, etc.
+        JsonNode json = JsonNodeFactory.instance.objectNode()
+                .put("state", issue.is_closed ? "closed" : "open")
+                .put("title", issue.title)
+                .put("body", issue.body);
+        String path = "/repos/__OWNER__/__REPO__/issues/__NUMBER__"
+                .replace("__OWNER__", store_credentials.github.name)
+                .replace("__REPO__", repo.repo_name)
+                .replace("__NUMBER__", issue.number);
+        WSRequest req = indie_auth_request(path)
+                .setMethod("PATCH")
+                .setBody(json);
+        WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
+        boolean success = (res.getStatus() == 200)&&(res.getBody().contains("body"));
+        if (!success) {
+            Logger.error("while updating an issue #"+issue.number+" at repo "+repo.repo_name, res.asJson().toString());
         }
         return success;
     }
@@ -308,4 +331,6 @@ public class store_github_api {
                 res.asJson().toString());
         return false;
     }
+
+
 }
