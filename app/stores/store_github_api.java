@@ -229,7 +229,28 @@ public class store_github_api {
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
         boolean success = (res.getStatus() == 200)&&(res.getBody().contains("body"));
         if (!success) {
-            Logger.error("while updating an issue #"+issue.number+" at repo "+repo.repo_name, res.asJson().toString());
+            Logger.error("while updating issue #"+issue.number+" at repo "+repo.repo_name, res.asJson().toString());
+        }
+        return success;
+    }
+
+    public static boolean update_pull_request(model_pull_request pull_request) {
+        // returns success as usual...
+        JsonNode json = JsonNodeFactory.instance.objectNode()
+                .put("state", pull_request.is_closed ? "closed" : "open")
+                .put("title", pull_request.title)
+                .put("body", pull_request.body);
+        String path = "/repos/__OWNER__/__REPO__/pulls/__NUMBER__"
+                .replace("__OWNER__", store_credentials.github.name)
+                .replace("__REPO__", pull_request.repo.repo_name)
+                .replace("__NUMBER__", pull_request.number);
+        WSRequest req = indie_auth_request(path)
+                .setMethod("PATCH")
+                .setBody(json);
+        WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
+        boolean success = (res.getStatus() == 200)&&(res.getBody().contains("body"));
+        if (!success) {
+            Logger.error("while updating pull request #"+pull_request.number+" at repo "+pull_request.repo.repo_name, res.asJson().toString());
         }
         return success;
     }
