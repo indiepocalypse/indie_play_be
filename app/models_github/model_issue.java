@@ -13,11 +13,11 @@ public class model_issue {
     public final String comments_url;
     public final Long id;
     public final model_user user;
-    public final String body;
+    public String body;
     public final String number;
     public final int comments;
-    public final String title;
-    public final String state;
+    public String title;
+    public String state;
 
     public model_issue(
             String p_url,

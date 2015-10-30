@@ -82,6 +82,11 @@ public class handler_commands {
                     }
                     else {
                         // we have an issue
+                        model_issue issue = hook.get_issue();
+                        issue.state = "closed";
+                        if (!store_github_api.update_issue(hook.get_repo(), issue)) {
+                            Logger.error("could not close issue #"+issue.number+" on repo "+hook.get_repo().repo_name);
+                        }
                     }
                     break;
             }
