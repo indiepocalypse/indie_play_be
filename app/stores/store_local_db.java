@@ -51,18 +51,13 @@ public class store_local_db {
     }
 
     public static void delete_repo(model_repo repo) {
+        // TODO: check repo deletion. Is this even working?!
         delete_offers_by_repo(repo);
         delete_ownerships_by_repo(repo);
         delete_pull_requests_by_repo(repo);
         try {
             // TODO: this delete one by one is bad. Fix it!
-            List<model_repo> repos = model_repo.find
-                    .where().eq("repo_name", repo.repo_name).findList();
-            if (repos!=null) {
-                for (model_repo irepo: repos) {
-                    model_pull_request.find.deleteById(irepo.repo_name);
-                }
-            }
+            model_repo.find.deleteById(repo.repo_name);
         } catch (Exception e) {
             Logger.error("failed to delete repo "+repo.repo_name+":\n", e);
         }
