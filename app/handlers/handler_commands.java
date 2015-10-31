@@ -24,6 +24,7 @@ public class handler_commands {
 
     public static ArrayList<String> handle_from_hook(interface_github_webhook hook) {
         if (commands==null) {
+            commands = new ArrayList<>(100);
             Reflections reflections = new Reflections("commands");
             for (Class command: reflections.getSubTypesOf(interface_command.class)) {
                 try {
