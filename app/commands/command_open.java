@@ -23,7 +23,7 @@ public class command_open implements interface_command {
         if (hook.get_pull_request()!=null) {
             // we have a pull reuqest
             model_pull_request pull_request = hook.get_pull_request();
-            if (pull_request.is_closed()) {
+            if (!pull_request.is_closed()) {
                 return "this pull request is open";
             }
             pull_request.state = "open";
@@ -37,7 +37,7 @@ public class command_open implements interface_command {
         else {
             // we have an issue
             model_issue issue = hook.get_issue();
-            if (issue.is_closed()) {
+            if (!issue.is_closed()) {
                 return "this issue is open";
             }
             issue.state = "open";
