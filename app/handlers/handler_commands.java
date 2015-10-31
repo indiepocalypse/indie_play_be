@@ -22,6 +22,7 @@ public class handler_commands {
         // this method returns responses to be shown to users.
         // all responses are encapsulated in a common header which includes the @user welcome or whateve
         ArrayList<String> responses = new ArrayList<>();
+        boolean command_recognized = false;
         for (model_command command: model_command.from_text(hook.get_comment())) {
             Logger.info("--- command: " + command.command+" length="+Integer.toString(command.command.length()));
             for (String arg: command.args) {
@@ -32,14 +33,17 @@ public class handler_commands {
                 case "hi":
                     if (command.args.size()==0) {
                         responses.add("hi!");
+                        command_recognized = true;
                     }
                     break;
                 case "list":
                     if ((command.args.size()==1) && (command.args.get(0).equals("owners"))) {
                         responses.add(get_owners_good_looking_table(hook));
+                        command_recognized = true;
                     }
                     else if ((command.args.size()==1) && (command.args.get(0).equals("admins"))) {
                         responses.add(get_admins_good_looking_list(hook));
+                        command_recognized = true;
                     }
                     break;
                 case "merge":
@@ -51,6 +55,7 @@ public class handler_commands {
                         commit_message = command.joined_args;
                     }
                     responses.add(handle_merge(hook, commit_message, true)); // true is for update pull request and retry
+                    command_recognized = true;
                     break;
                 case "delete":
                     if ((command.args.size()==1) && (command.args.get(0).equals("repo"))) {
@@ -58,13 +63,16 @@ public class handler_commands {
                             if (store_github_api.delete_repo(hook.get_repo())) {
                                 store_local_db.delete_repo(hook.get_repo());
                                 responses.add("done!");
+                                command_recognized = true;
                             }
                             else {
                                 responses.add("problem deleting repo. Please contact staff");
+                                command_recognized = true;
                                 Logger.error("error deleting repo "+hook.get_repo().repo_name);
                             }
                         } else {
                             responses.add("only admins can delete a repository");
+                            command_recognized = true;
                         }
                     }
                     break;
@@ -75,6 +83,7 @@ public class handler_commands {
                         pull_request.state = "closed";
                         if (store_github_api.update_pull_request(pull_request)) {
                             store_local_db.update_pull_request(pull_request);
+                            command_recognized = true;
                         }
                         else {
                             Logger.error("could not close pull request #"+pull_request.number+" on repo "+pull_request.repo.repo_name);
@@ -86,12 +95,13 @@ public class handler_commands {
                         issue.state = "closed";
                         if (!store_github_api.update_issue(hook.get_repo(), issue)) {
                             Logger.error("could not close issue #"+issue.number+" on repo "+hook.get_repo().repo_name);
+                            command_recognized = true;
                         }
                     }
                     break;
             }
         }
-        if ((responses.size()==0) && (hook.get_comment().contains("@theindiepocalypse"))) {
+        if ((!command_recognized) && (hook.get_comment().contains("@theindiepocalypse"))) {
             // @theindipocalypse was mentioned but no command was parsed!
             // TODO: give actual help (say, a link to the help page?)
             responses.add("such command... much help please");
