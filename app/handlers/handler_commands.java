@@ -39,7 +39,7 @@ public class handler_commands {
 
             for (interface_command command_handler: commands) {
                 if (command_handler.is_recognized(command)) {
-                    command_handler.handle(command, hook);
+                    responses.add(command_handler.handle(command, hook));
                     some_command_recognized = true;
                     break;
                 }
