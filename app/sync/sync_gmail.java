@@ -22,6 +22,7 @@ import java.util.Random;
 
 public class sync_gmail {
     // TODO: refactor most of gmail functionality onto a store_gmail_api
+    // FIXME: there's a bug transferring `just_testing_game` it remains on skariel github account?
     public static int mail_count = 0;
     private static IMAPFolder inbox = null;
     private static Store mail_store = null;
