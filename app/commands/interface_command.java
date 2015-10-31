@@ -1,5 +1,6 @@
 package commands;
 
+import models_github.interface_github_webhook;
 import models_github.model_command;
 
 /**
@@ -7,6 +8,6 @@ import models_github.model_command;
  */
 public interface interface_command {
     boolean is_recognized(model_command command);
-    String handle(model_command command);
+    String handle(model_command command, interface_github_webhook hook);
     String get_command_name();
 }
