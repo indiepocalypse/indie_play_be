@@ -19,6 +19,7 @@ import java.util.List;
  */
 public class handler_commands {
     public static ArrayList<String> handle_from_hook(interface_github_webhook hook) {
+        // TODO: refactor this into self contained command classes!
         // this method returns responses to be shown to users.
         // all responses are encapsulated in a common header which includes the @user welcome or whateve
         ArrayList<String> responses = new ArrayList<>();
@@ -80,6 +81,11 @@ public class handler_commands {
                     if (hook.get_pull_request()!=null) {
                         // we have a pull reuqest
                         model_pull_request pull_request = hook.get_pull_request();
+                        if (pull_request.is_closed()) {
+                            responses.add("this pull request is already closed");
+                            command_recognized = true;
+                            break;
+                        }
                         pull_request.state = "closed";
                         if (store_github_api.update_pull_request(pull_request)) {
                             store_local_db.update_pull_request(pull_request);
@@ -92,9 +98,47 @@ public class handler_commands {
                     else {
                         // we have an issue
                         model_issue issue = hook.get_issue();
+                        if (issue.is_closed()) {
+                            responses.add("this issue is already closed");
+                            command_recognized = true;
+                            break;
+                        }
                         issue.state = "closed";
                         if (!store_github_api.update_issue(hook.get_repo(), issue)) {
                             Logger.error("could not close issue #"+issue.number+" on repo "+hook.get_repo().repo_name);
+                            command_recognized = true;
+                        }
+                    }
+                    break;
+                case "open":
+                    if (hook.get_pull_request()!=null) {
+                        // we have a pull reuqest
+                        model_pull_request pull_request = hook.get_pull_request();
+                        if (!pull_request.is_closed()) {
+                            responses.add("this pull request is already open");
+                            command_recognized = true;
+                            break;
+                        }
+                        pull_request.state = "open";
+                        if (store_github_api.update_pull_request(pull_request)) {
+                            store_local_db.update_pull_request(pull_request);
+                            command_recognized = true;
+                        }
+                        else {
+                            Logger.error("could not open pull request #"+pull_request.number+" on repo "+pull_request.repo.repo_name);
+                        }
+                    }
+                    else {
+                        // we have an issue
+                        model_issue issue = hook.get_issue();
+                        if (!issue.is_closed()) {
+                            responses.add("this issue is already open");
+                            command_recognized = true;
+                            break;
+                        }
+                        issue.state = "open";
+                        if (!store_github_api.update_issue(hook.get_repo(), issue)) {
+                            Logger.error("could not open issue #"+issue.number+" on repo "+hook.get_repo().repo_name);
                             command_recognized = true;
                         }
                     }
