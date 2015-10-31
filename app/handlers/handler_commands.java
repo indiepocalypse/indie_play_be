@@ -1,12 +1,13 @@
 package handlers;
 
+import commands.interface_command;
 import models.model_admin;
 import models.model_ownership;
 import models.model_pull_request;
 import models_github.interface_github_webhook;
 import models_github.model_command;
 import models_github.model_issue;
-import models_github.model_webhook_pull_request_created_or_updated;
+import org.reflections.Reflections;
 import play.Logger;
 import stores.store_github_api;
 import stores.store_local_db;
@@ -18,7 +19,27 @@ import java.util.List;
  * Created by skariel on 17/10/15.
  */
 public class handler_commands {
+
+    private static ArrayList<interface_command> commands = null;
+
     public static ArrayList<String> handle_from_hook(interface_github_webhook hook) {
+        if (commands==null) {
+            Reflections reflections = new Reflections("commands");
+            for (Class command: reflections.getSubTypesOf(interface_command.class)) {
+                try {
+                    commands.add((interface_command) command.newInstance());
+                }
+                catch (Exception e) {
+                    Logger.error("while dynamically loading commands", e);
+                }
+            }
+            // just testing
+            // TODO: use this stuff!
+            for (interface_command command: commands) {
+                Logger.info(command.get_command_name());
+            }
+        }
+
         // TODO: refactor this into self contained command classes!
         // this method returns responses to be shown to users.
         // all responses are encapsulated in a common header which includes the @user welcome or whateve
@@ -152,6 +173,7 @@ public class handler_commands {
         if ((!command_recognized) && (hook.get_comment().contains("@theindiepocalypse"))) {
             // @theindipocalypse was mentioned but no command was parsed!
             // TODO: give actual help (say, a link to the help page?)
+            // TODO: this will show up only if no command was recognized. What if some were but some weren't?
             responses.add("such command... much help please");
         }
         return responses;
