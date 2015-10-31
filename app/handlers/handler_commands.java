@@ -107,6 +107,7 @@ public class handler_commands {
                         if (!store_github_api.update_issue(hook.get_repo(), issue)) {
                             Logger.error("could not close issue #"+issue.number+" on repo "+hook.get_repo().repo_name);
                             command_recognized = true;
+                            Logger.info("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa");
                         }
                     }
                     break;
@@ -145,6 +146,7 @@ public class handler_commands {
                     break;
             }
         }
+        Logger.info("BBBBBBBBBBBBBBBBBBBBBBB: "+Boolean.toString(command_recognized));
         if ((!command_recognized) && (hook.get_comment().contains("@theindiepocalypse"))) {
             // @theindipocalypse was mentioned but no command was parsed!
             // TODO: give actual help (say, a link to the help page?)
