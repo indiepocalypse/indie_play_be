@@ -78,18 +78,22 @@ public class handler_commands {
                     }
                     break;
                 case "close":
+                    if (command.args.size()==0) {
+                        command_recognized = true;
+                    }
+                    else {
+                        break;
+                    }
                     if (hook.get_pull_request()!=null) {
                         // we have a pull reuqest
                         model_pull_request pull_request = hook.get_pull_request();
                         if (pull_request.is_closed()) {
                             responses.add("this pull request is already closed");
-                            command_recognized = true;
                             break;
                         }
                         pull_request.state = "closed";
                         if (store_github_api.update_pull_request(pull_request)) {
                             store_local_db.update_pull_request(pull_request);
-                            command_recognized = true;
                         }
                         else {
                             Logger.error("could not close pull request #"+pull_request.number+" on repo "+pull_request.repo.repo_name);
@@ -100,30 +104,31 @@ public class handler_commands {
                         model_issue issue = hook.get_issue();
                         if (issue.is_closed()) {
                             responses.add("this issue is already closed");
-                            command_recognized = true;
                             break;
                         }
                         issue.state = "closed";
                         if (!store_github_api.update_issue(hook.get_repo(), issue)) {
                             Logger.error("could not close issue #"+issue.number+" on repo "+hook.get_repo().repo_name);
-                            command_recognized = true;
-                            Logger.info("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa");
                         }
                     }
                     break;
                 case "open":
+                    if (command.args.size()== 0) {
+                        command_recognized = true;
+                    }
+                    else {
+                        break;
+                    }
                     if (hook.get_pull_request()!=null) {
                         // we have a pull reuqest
                         model_pull_request pull_request = hook.get_pull_request();
                         if (!pull_request.is_closed()) {
                             responses.add("this pull request is already open");
-                            command_recognized = true;
                             break;
                         }
                         pull_request.state = "open";
                         if (store_github_api.update_pull_request(pull_request)) {
                             store_local_db.update_pull_request(pull_request);
-                            command_recognized = true;
                         }
                         else {
                             Logger.error("could not open pull request #"+pull_request.number+" on repo "+pull_request.repo.repo_name);
@@ -134,19 +139,16 @@ public class handler_commands {
                         model_issue issue = hook.get_issue();
                         if (!issue.is_closed()) {
                             responses.add("this issue is already open");
-                            command_recognized = true;
                             break;
                         }
                         issue.state = "open";
                         if (!store_github_api.update_issue(hook.get_repo(), issue)) {
                             Logger.error("could not open issue #"+issue.number+" on repo "+hook.get_repo().repo_name);
-                            command_recognized = true;
                         }
                     }
                     break;
             }
         }
-        Logger.info("BBBBBBBBBBBBBBBBBBBBBBB: "+Boolean.toString(command_recognized));
         if ((!command_recognized) && (hook.get_comment().contains("@theindiepocalypse"))) {
             // @theindipocalypse was mentioned but no command was parsed!
             // TODO: give actual help (say, a link to the help page?)
