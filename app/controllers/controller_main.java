@@ -29,6 +29,8 @@ public class controller_main extends Controller {
     // TODO: integrate policy into merging
     // TODO: integrate policy into issue lifecycle
     // TODO: implement policy changing commands
+    // TODO: error handling: when requesting from github. Either use exceptions or return values. Currently we have both!
+    // TODO: error handling: when contacting github and the sb touch 1st github and only if success continue
 
     private final static String main_title = "it's the Indiepocalypse!";
 
