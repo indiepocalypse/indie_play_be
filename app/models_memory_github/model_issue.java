@@ -17,7 +17,7 @@ public class model_issue {
     public final int comments;
     public final String body;
     public final String title;
-    public final String state;
+    public String state;
 
     public model_issue(
             String p_url,

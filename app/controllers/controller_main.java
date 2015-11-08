@@ -96,15 +96,9 @@ public class controller_main extends Controller {
             final boolean create_webhook = true;
             final boolean check_for_existance_of_readme_before_creating_one = false;
             final boolean delete_original_collaborators = false;
-            model_ownership ownership = handler_general.integrate_github_repo(repo, user,
+            handler_general.integrate_github_repo(repo, user,
                     create_webhook, check_for_existance_of_readme_before_creating_one,
                     delete_original_collaborators);
-            if (ownership == null) {
-                handler_general.delete_repo_from_github_and_db_and_also_related_ownership_policy_offers(repo);
-                // TODO: elaborate on error
-                String err = "Couldn't create the repo, sorry!";
-                return ok(view_main.render("new repo", view_newrepo.render(repo_name, repo_homepage, repo_description, err)));
-            }
             store_session.set_new_repo(repo.repo_name);
             return redirect(routes.controller_main.repo_profile(repo_name));
         } catch (Exception e) {
