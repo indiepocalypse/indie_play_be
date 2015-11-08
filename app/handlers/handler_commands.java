@@ -126,21 +126,21 @@ public class handler_commands {
         if ((issue!=null) && (issue.is_closed())) {
             return "this pull request is closed, please reopen to merge";
         }
+        // always update pull request before merge! so we have offers/pull version aligned!
+        String repo_name = hook.get_pull_request().repo.repo_name;
+        String number = hook.get_pull_request().number;
+        Logger.info("updating pull request #"+number+" for repo "+repo_name);
+        pull_request = store_github_api.get_pull_request_by_repo_by_number(repo_name, number);
+        store_local_db.update_pull_request(pull_request);
+
         if (pull_request.mergeable==null) {
-            // was undecided by Github when DB entry was created. Lets update the record....
-            String repo_name = hook.get_pull_request().repo.repo_name;
-            String number = hook.get_pull_request().number;
-            Logger.info("updating mergeable field for repo "+repo_name+" for PR#"+number);
-            pull_request = store_github_api.get_pull_request_by_repo_by_number(repo_name, number);
-            store_local_db.update_pull_request(pull_request);
-            if (pull_request.mergeable==null) {
-                Logger.info("     -- after update: mergeable=null");
-                return "Cannot merge right now. Maybe our DB is not yet in sync with Github. Please try again later...";
-            }
-            else {
-                Logger.info("     -- after update: mergeable="+Boolean.toString(pull_request.mergeable));
-            }
+            Logger.info("     -- pull request.mergeable==null");
+            return "Cannot merge right now. Maybe our DB is not yet in sync with Github. Please try again later...";
         }
+        else {
+            Logger.info("     -- mergeable="+Boolean.toString(pull_request.mergeable));
+        }
+
         if (!pull_request.mergeable) {
             return "this pull request is not mergeable automatically (the merge button) maybe a rebase will solve the issue?";
         }

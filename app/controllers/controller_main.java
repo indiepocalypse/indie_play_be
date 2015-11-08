@@ -6,7 +6,6 @@ import models_db_github.model_pull_request;
 import models_db_github.model_repo;
 import models_db_github.model_user;
 import models_db_indie.model_ownership;
-import models_db_indie.model_repo_policy;
 import org.markdown4j.Markdown4jProcessor;
 import play.Logger;
 import play.data.DynamicForm;
@@ -15,7 +14,6 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.twirl.api.Html;
 import stores.store_github_api;
-import stores.store_github_iojs;
 import stores.store_local_db;
 import stores.store_session;
 import views.html.*;
@@ -26,11 +24,8 @@ public class controller_main extends Controller {
     // TODO: cache the simple pages (e.g. the landing page)
     // TODO: use reverse routing so I don't repeat myself :) (done?!)
     // TODO: summarizing classes and models (like sync but internal, also cleaning stuff etc.)
-    // TODO: add a `remove` method in store_db (or a `delete` one?) (for pull_requests, offers, etc.)
     // TODO: is the save/update dichotomy in the store_local_db really necessary? maybe update is enough?
-    // TODO: make a configuration model, cached, so it can be changed from the admin dashboard.
     // TODO: when merging, update repo from github. If offers were cleared, deny merge
-    // TODO: policy commands
     // TODO: integrate policy into merging
     // TODO: integrate policy into issue lifecycle
     // TODO: implement policy changing commands

@@ -292,6 +292,7 @@ public class store_local_db {
      ********************************/
 
     public static boolean update_pull_request(model_pull_request pull_request) {
+        // this method deletes offers is pull reuqest was updated.
         // users notification here. Reason is that this is always coupled:
         // when deleting offers, users always need to be notified!
         // return whether update was a real update, in the sense that offers were cleared
