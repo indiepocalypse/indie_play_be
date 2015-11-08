@@ -27,6 +27,10 @@ public class controller_main extends Controller {
     // TODO: is the save/update dichotomy in the store_local_db really necessary? maybe update is enough?
     // TODO: make a configuration model, cached, so it can be changed from the admin dashboard.
     // TODO: when merging, update repo from github. If offers were cleared, deny merge
+    // TODO: policy commands
+    // TODO: integrate policy into merging
+    // TODO: integrate policy into issue lifecycle
+    // TODO: implement policy changing commands
 
     private final static String main_title = "it's the Indiepocalypse!";
     private boolean is_redirected_from_github_login() {
