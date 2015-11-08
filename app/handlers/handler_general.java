@@ -4,6 +4,7 @@ import models_db_github.model_pull_request;
 import models_db_github.model_repo;
 import models_db_github.model_user;
 import models_db_indie.model_ownership;
+import models_db_indie.model_repo_policy;
 import play.Logger;
 import stores.store_conf;
 import stores.store_github_api;
@@ -51,6 +52,11 @@ public class handler_general {
         model_ownership ownership2 = new model_ownership(theindiepocalypse, repo, indie_ownership_percent);
         store_local_db.update_ownership(ownership1);
         store_local_db.update_ownership(ownership2);
+
+        // TODO: should return the policy too?
+        model_repo_policy policy = new model_repo_policy(repo);
+        store_local_db.update_policy(policy);
+
         return ownership1;
     }
 
