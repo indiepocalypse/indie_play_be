@@ -6,6 +6,7 @@ import models_db_indie.model_ownership;
 import models_db_github.model_pull_request;
 import models_db_github.model_repo;
 import models_db_github.model_user;
+import models_db_indie.model_repo_policy;
 import org.markdown4j.Markdown4jProcessor;
 import play.Logger;
 import play.data.DynamicForm;
@@ -83,12 +84,19 @@ public class controller_main extends Controller {
             return ok(view_main.render("new repo", view_newrepo_too_many.render()));
         }
 
+        // create the repo, with proper ownership and policy!
+
         try {
             model_repo repo = store_github_api.create_new_repo(repo_name, repo_homepage, repo_description);
             store_local_db.update_repo(repo);
             model_user user = store_local_db.get_user_by_name(store_session.get_user_name());
             model_ownership ownership = handler_general.integrate_github_repo(repo, user, true);
+            model_repo_policy policy = new model_repo_policy(repo);
+            store_local_db.update_policy(policy);
             if (ownership==null) {
+                // TODO: deleting repo functionality should move to a handler. This is used in command_delete too!
+                store_github_api.delete_repo(repo);
+                store_local_db.delete_repo_and_related_ownership_policy_and_offers(repo);
                 // TODO: elaborate on error
                 String err = "Couldn't create the repo, sorry!";
                 return ok(view_main.render("new repo", view_newrepo.render(repo_name, repo_homepage, repo_description, err)));

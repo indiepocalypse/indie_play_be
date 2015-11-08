@@ -1,6 +1,7 @@
 package models_db_indie;
 
 import com.avaje.ebean.Model;
+import com.typesafe.config.ConfigFactory;
 import models_db_github.model_repo;
 
 import javax.persistence.Entity;
@@ -23,11 +24,11 @@ public class model_repo_policy extends Model {
     BigDecimal ownership_required_to_change_policy;
     BigDecimal ownership_required_to_manage_issues; // close/label/etc.
 
-    public model_repo_policy(model_repo p_repo, BigDecimal p_ownership_required_to_change_policy, BigDecimal p_ownership_required_to_manage_issues) {
+    public model_repo_policy(model_repo p_repo) {
         id = p_repo.repo_name + "@policy";
         this.repo = p_repo;
-        this.ownership_required_to_change_policy = p_ownership_required_to_change_policy;
-        this.ownership_required_to_manage_issues = p_ownership_required_to_manage_issues;
+        this.ownership_required_to_change_policy = new BigDecimal(ConfigFactory.load().getString("policy.default_ownership_required_to_change_policy"));
+        this.ownership_required_to_manage_issues = new BigDecimal(ConfigFactory.load().getString("policy.default_ownership_required_to_manage_issues"));
     }
 }
 
