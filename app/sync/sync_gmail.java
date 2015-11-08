@@ -129,12 +129,6 @@ public class sync_gmail {
     private static void handle_messages(Message[] ms) {
         model_gmail_last_date_read last_date_read_model = store_local_db.get_gmail_latest_sync_date();
         for (Message m : ms) {
-// TODO: FIX: THIS JITTER SLEEP HERE CAUSES FLODER TO CLOSE?
-//            try {
-//                Thread.sleep(stores.store_conf.get_gmail_reload_sync_jitter_small_milis());
-//            }
-//            catch (Exception ignored) {
-//            }
             Date m_date = null;
             String m_subject = null;
             String m_body = null;
@@ -210,7 +204,6 @@ public class sync_gmail {
                             catch (Exception ignored) {
                             }
                             // we need the above delay to let github spread the news that repo was transferred
-                            model_ownership ownership = null;
                             try {
                                 final boolean check_for_existance_of_readme = true;
                                 final boolean create_webhook = true;
