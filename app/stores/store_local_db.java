@@ -52,14 +52,8 @@ public class store_local_db {
         return (get_repo_by_name(repo_name) != null);
     }
 
-    public static void delete_repo_and_related_ownership_policy_and_offers(model_repo repo) {
-        // TODO: check repo deletion. Is this even working?!
-        delete_offers_by_repo(repo);
-        delete_ownerships_by_repo(repo);
-        delete_policies_by_repo(repo);
-        delete_pull_requests_by_repo(repo);
+    public static void delete_repo(model_repo repo) {
         try {
-            // TODO: this delete one by one is bad. Fix it!
             model_repo.find.deleteById(repo.repo_name);
         } catch (Exception e) {
             Logger.error("failed to delete repo "+repo.repo_name+":\n", e);

@@ -79,4 +79,14 @@ public class handler_general {
         store_github_api.comment_on_issue(pull_request.repo, pull_request.number,
                 "PR updated, all offers cleared!\nplease place your new offers");
     }
+
+    public static void delete_repo_from_github_and_db_and_also_related_ownership_policy_offers(model_repo repo) {
+        store_local_db.delete_offers_by_repo(repo);
+        store_local_db.delete_ownerships_by_repo(repo);
+        store_local_db.delete_policies_by_repo(repo);
+        store_local_db.delete_pull_requests_by_repo(repo);
+        store_local_db.delete_repo(repo);
+        store_github_api.delete_repo(repo);
+    }
+
 }
