@@ -11,6 +11,11 @@ Current development principles:
      all models can be built from the minial info in github api
 9) Sync classes are long running processes, they can organize data in the background
 
+10) there are two classes of policies: global e.g. how many repos each  user can have
+       vs per repo policy e.g. minimal ownership needed to manage issues.
+       the global policy if managed in app conf folder. The per repo
+       policies are managed with a db model model_repo_policy
+
 to remotely debug:
 
 activator -jvm-debug 9999 run
