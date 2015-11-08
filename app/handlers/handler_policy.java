@@ -1,6 +1,6 @@
 package handlers;
 
-import models.model_ownership;
+import models_db_indie.model_ownership;
 import stores.store_conf;
 import stores.store_local_db;
 import stores.store_session;

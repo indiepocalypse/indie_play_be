@@ -1,6 +1,8 @@
-package models;
+package models_db_indie;
 
 import com.avaje.ebean.Model;
+import models_db_github.model_repo;
+import models_db_github.model_user;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

@@ -1,9 +1,9 @@
 package models_memory_github;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import models.model_pull_request;
-import models.model_repo;
-import models.model_user;
+import models_db_github.model_pull_request;
+import models_db_github.model_repo;
+import models_db_github.model_user;
 import play.Logger;
 import stores.store_local_db;
 import utils.utils_github_webhooks;

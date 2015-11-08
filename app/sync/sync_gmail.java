@@ -4,8 +4,8 @@ import com.sun.mail.imap.IMAPFolder;
 import controllers.routes;
 import handlers.handler_general;
 import handlers.handler_policy;
-import models.model_gmail_last_date_read;
-import models.model_ownership;
+import models_db_indie.model_gmail_last_date_read;
+import models_db_indie.model_ownership;
 import play.Logger;
 import stores.*;
 

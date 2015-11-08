@@ -1,6 +1,6 @@
 package stores;
 
-import models.model_repo;
+import models_db_github.model_repo;
 import play.Logger;
 
 import java.util.ArrayList;

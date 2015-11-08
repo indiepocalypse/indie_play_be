@@ -1,7 +1,7 @@
 package models_memory_github;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import models.model_user;
+import models_db_github.model_user;
 
 /**
  * Created by skariel on 14/10/15.

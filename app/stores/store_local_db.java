@@ -1,7 +1,11 @@
 package stores;
 
 import handlers.handler_general;
-import models.*;
+import models_db_github.*;
+import models_db_indie.model_admin;
+import models_db_indie.model_gmail_last_date_read;
+import models_db_indie.model_offer;
+import models_db_indie.model_ownership;
 import models_memory_github.interface_github_webhook;
 import play.Logger;
 

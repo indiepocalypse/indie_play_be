@@ -1,8 +1,8 @@
 package models_memory_github;
 
-import models.model_pull_request;
-import models.model_repo;
-import models.model_user;
+import models_db_github.model_pull_request;
+import models_db_github.model_repo;
+import models_db_github.model_user;
 
 /**
  * Created by skariel on 20/10/15.

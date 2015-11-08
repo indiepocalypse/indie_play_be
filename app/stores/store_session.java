@@ -1,7 +1,7 @@
 package stores;
 
 import controllers.controller_main;
-import models.model_user;
+import models_db_github.model_user;
 
 /**
  * Created by skariel on 11/10/15.

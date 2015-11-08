@@ -1,6 +1,8 @@
-package models;
+package models_db_indie;
 
 import com.avaje.ebean.Model;
+import models_db_github.model_pull_request;
+import models_db_github.model_user;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

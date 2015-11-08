@@ -2,22 +2,20 @@ package controllers;
 
 import handlers.handler_general;
 import handlers.handler_policy;
-import models.model_ownership;
-import models.model_pull_request;
-import models.model_repo;
-import models.model_user;
+import models_db_indie.model_ownership;
+import models_db_github.model_pull_request;
+import models_db_github.model_repo;
+import models_db_github.model_user;
 import org.markdown4j.Markdown4jProcessor;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
-import play.libs.F;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.twirl.api.Html;
 import stores.*;
 import views.html.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public class controller_main extends Controller {
