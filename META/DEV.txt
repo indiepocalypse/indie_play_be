@@ -12,3 +12,10 @@ Current development principles:
 10) models are samllest common denomoinator in the github api sense. ie
      all models can be built from the minial info in github api
 11) Sync classes are long running processes, organizing data in the background
+
+to remotely debug:
+
+activator -jvm-debug 9999 run
+(see here: http://stackoverflow.com/questions/24218341/how-to-run-play-framework-2-x-in-debug-mode-in-intellij-idea
+answer at the bottom)
+
