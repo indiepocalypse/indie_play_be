@@ -2,10 +2,7 @@ package stores;
 
 import handlers.handler_general;
 import models_db_github.*;
-import models_db_indie.model_admin;
-import models_db_indie.model_gmail_last_date_read;
-import models_db_indie.model_offer;
-import models_db_indie.model_ownership;
+import models_db_indie.*;
 import models_memory_github.interface_github_webhook;
 import play.Logger;
 
@@ -57,6 +54,7 @@ public class store_local_db {
         // TODO: check repo deletion. Is this even working?!
         delete_offers_by_repo(repo);
         delete_ownerships_by_repo(repo);
+        delete_policies_by_repo(repo);
         delete_pull_requests_by_repo(repo);
         try {
             // TODO: this delete one by one is bad. Fix it!
@@ -237,6 +235,42 @@ public class store_local_db {
             }
         } catch (Exception e) {
             Logger.error("failed to delete offers by repo:", e);
+        }
+    }
+
+    /********************************
+     * policies!
+     ********************************/
+
+    public static void update_policy(model_repo_policy policy) {
+        try {
+            policy.save();
+        } catch (Exception e) {
+            policy.update();
+        }
+    }
+
+    public static List<model_repo_policy> get_policies_by_repo(String repo_name) {
+        try {
+            return model_repo_policy.find.fetch("repo")
+                    .where().eq("repo.repo_name", repo_name).findList();
+        } catch (Exception ignore) {
+            return new ArrayList<>(0);
+        }
+    }
+
+    public static void delete_policies_by_repo(model_repo repo) {
+        try {
+            // TODO: this delete one by one is bad. Fix it!
+            List<model_repo_policy> policies = model_repo_policy.find.fetch("repo")
+                    .where().eq("repo.repo_name", repo.repo_name).findList();
+            if (policies!=null) {
+                for (model_repo_policy policy: policies) {
+                    model_repo_policy.find.deleteById(policy.id);
+                }
+            }
+        } catch (Exception e) {
+            Logger.error("failed to delete policies by repo:", e);
         }
     }
 

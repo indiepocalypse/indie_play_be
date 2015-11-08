@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 
 @Entity
 public class model_repo_policy extends Model {
+    // TODO: integrate in db store
     public static final Finder<String, model_repo_policy> find = new Finder<>(model_repo_policy.class);
     @Id
     public final String id;
@@ -25,11 +26,8 @@ public class model_repo_policy extends Model {
     public model_repo_policy(model_repo p_repo, BigDecimal p_ownership_required_to_change_policy, BigDecimal p_ownership_required_to_manage_issues) {
         id = p_repo.repo_name + "@policy";
         this.repo = p_repo;
-
         this.ownership_required_to_change_policy = p_ownership_required_to_change_policy;
         this.ownership_required_to_manage_issues = p_ownership_required_to_manage_issues;
-
-
     }
 }
 
