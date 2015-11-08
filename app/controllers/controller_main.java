@@ -2,10 +2,10 @@ package controllers;
 
 import handlers.handler_general;
 import handlers.handler_policy;
-import models_db_indie.model_ownership;
 import models_db_github.model_pull_request;
 import models_db_github.model_repo;
 import models_db_github.model_user;
+import models_db_indie.model_ownership;
 import models_db_indie.model_repo_policy;
 import org.markdown4j.Markdown4jProcessor;
 import play.Logger;
@@ -14,7 +14,10 @@ import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.twirl.api.Html;
-import stores.*;
+import stores.store_github_api;
+import stores.store_github_iojs;
+import stores.store_local_db;
+import stores.store_session;
 import views.html.*;
 
 import java.util.List;

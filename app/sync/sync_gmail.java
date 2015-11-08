@@ -15,7 +15,6 @@ import javax.mail.event.MessageCountListener;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.search.SearchTerm;
-
 import java.util.Date;
 import java.util.Properties;
 import java.util.Random;

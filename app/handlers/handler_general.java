@@ -1,9 +1,9 @@
 package handlers;
 
-import models_db_indie.model_ownership;
 import models_db_github.model_pull_request;
 import models_db_github.model_repo;
 import models_db_github.model_user;
+import models_db_indie.model_ownership;
 import play.Logger;
 import stores.store_conf;
 import stores.store_github_api;

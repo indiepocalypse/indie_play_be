@@ -1,7 +1,9 @@
 package stores;
 
 import handlers.handler_general;
-import models_db_github.*;
+import models_db_github.model_pull_request;
+import models_db_github.model_repo;
+import models_db_github.model_user;
 import models_db_indie.*;
 import models_memory_github.interface_github_webhook;
 import play.Logger;

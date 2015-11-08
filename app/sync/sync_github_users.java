@@ -1,8 +1,8 @@
 package sync;
 
 import handlers.handler_general;
-import models_db_indie.model_admin;
 import models_db_github.model_user;
+import models_db_indie.model_admin;
 import play.Logger;
 import stores.store_conf;
 import stores.store_credentials;

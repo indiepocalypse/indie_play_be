@@ -1,8 +1,6 @@
 package stores;
 
 import com.typesafe.config.ConfigFactory;
-import controllers.routes;
-import play.Routes;
 
 import java.math.BigDecimal;
 import java.util.concurrent.TimeUnit;

@@ -1,10 +1,11 @@
 package models_db_github;
 
 import com.avaje.ebean.Model;
-
-import javax.persistence.*;
-
 import com.fasterxml.jackson.databind.JsonNode;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  * Created by skariel on 17/10/15.
