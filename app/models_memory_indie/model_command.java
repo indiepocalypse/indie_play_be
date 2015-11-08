@@ -3,6 +3,8 @@ package models_memory_indie;
 import play.Logger;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,7 +14,7 @@ import java.util.regex.Pattern;
 public class model_command {
     public String command;
     public String joined_args;
-    public ArrayList<String> args;
+    public final ArrayList<String> args;
 
     public model_command() {
         this.command = "";
@@ -44,9 +46,7 @@ public class model_command {
             if (splitted2.length > 1) {
                 command.joined_args = splitted2[1];
             }
-            for (int i = 1; i < splitted.length; i++) {
-                command.args.add(splitted[i]);
-            }
+            command.args.addAll(Arrays.asList(splitted).subList(1, splitted.length));
             commands.add(command);
         }
         return commands;

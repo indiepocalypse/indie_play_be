@@ -27,8 +27,8 @@ public class model_pull_request extends Model {
     @ManyToOne
     public final model_repo repo;
     public String state;
-    public String title;
-    public String body;
+    public final String title;
+    public final String body;
     public Boolean merged;
     public Boolean mergeable;
 

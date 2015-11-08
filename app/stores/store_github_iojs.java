@@ -4,6 +4,7 @@ import models_db_github.model_repo;
 import play.Logger;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by skariel on 02/10/15.
@@ -14,10 +15,9 @@ public class store_github_iojs {
             ArrayList<String> args = new ArrayList<>(11);
             args.add("app/vendors/iojs/iojs");
             args.add("app/vendors/iojs/" + script_file_name);
-            for (String p : params) {
-                args.add(p);
-            }
-            Process process = new ProcessBuilder(args).start();
+            Collections.addAll(args, params);
+            new ProcessBuilder(args).start();
+            //Process process = new ProcessBuilder(args).start();
             // Reading the result... not used right now
 //            InputStream in = process.getInputStream();
 //            BufferedReader reader = new BufferedReader(new InputStreamReader(in));

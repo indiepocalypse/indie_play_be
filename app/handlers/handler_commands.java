@@ -102,7 +102,7 @@ public class handler_commands {
             response += "and you, are admins";
         } else if ((!more_than_one_admin) && (are_you_included)) {
             response = "you are the only admin";
-        } else if ((more_than_one_admin) && (!are_you_included)) {
+        } else if (more_than_one_admin) {
             response = "are admins";
         }
         return response;

@@ -79,7 +79,6 @@ public class controller_webhooks_github extends Controller {
         if (!store_github_api.comment_on_issue(hook.get_repo(), hook.get_issue_num(), response)) {
             Logger.info("problem commenting...");
         }
-        ;
         return ok();
     }
 }

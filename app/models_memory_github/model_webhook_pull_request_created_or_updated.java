@@ -54,7 +54,7 @@ public class model_webhook_pull_request_created_or_updated implements interface_
     }
 
     public boolean is_update() {
-        return this.action.equals("synchronize");
+        return this.action.equals(enum_webhook_action.SYNCHRONIZE);
     }
 
     @Override

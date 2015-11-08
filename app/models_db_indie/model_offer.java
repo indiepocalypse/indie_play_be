@@ -22,11 +22,11 @@ public class model_offer extends Model {
     public final model_user user;
     @ManyToOne
     public final model_pull_request pull_request;
-    BigDecimal amount_percent;
-    Boolean is_active;
-    Boolean was_positively_accepted;
-    Boolean date_accepted_if_accepted;
-    Boolean date_created;
+    final BigDecimal amount_percent;
+    final Boolean is_active;
+    final Boolean was_positively_accepted;
+    final Boolean date_accepted_if_accepted;
+    final Boolean date_created;
 
     public model_offer(model_user p_user, model_pull_request p_pull_request, BigDecimal p_amount_percent, Boolean p_is_active, Boolean p_was_positively_accepted, Boolean p_date_created, Boolean p_date_accepted_if_accepted) {
         id = p_user.user_name + "@admins";

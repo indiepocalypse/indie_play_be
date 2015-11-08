@@ -15,9 +15,9 @@ public class model_issue {
     public final model_user user;
     public final String number;
     public final int comments;
-    public String body;
-    public String title;
-    public String state;
+    public final String body;
+    public final String title;
+    public final String state;
 
     public model_issue(
             String p_url,
