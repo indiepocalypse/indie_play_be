@@ -250,12 +250,12 @@ public class store_local_db {
         }
     }
 
-    public static List<model_repo_policy> get_policies_by_repo(String repo_name) {
+    public static model_repo_policy get_policies_by_repo(model_repo repo) {
         try {
             return model_repo_policy.find.fetch("repo")
-                    .where().eq("repo.repo_name", repo_name).findList();
+                    .where().eq("repo.repo_name", repo.repo_name).findUnique();
         } catch (Exception ignore) {
-            return new ArrayList<>(0);
+            return null;
         }
     }
 
