@@ -1,4 +1,4 @@
-package models_github;
+package models_memory_github;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import models.model_user;

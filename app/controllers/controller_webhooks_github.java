@@ -2,8 +2,7 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import handlers.handler_commands;
-import handlers.handler_general;
-import models_github.*;
+import models_memory_github.*;
 import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;

@@ -1,4 +1,4 @@
-package models_github;
+package models_memory_github;
 
 /**
  * Created by skariel on 26/10/15.

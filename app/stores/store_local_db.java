@@ -2,8 +2,7 @@ package stores;
 
 import handlers.handler_general;
 import models.*;
-import models_github.interface_github_webhook;
-import models_github.model_webhook_pull_request_created_or_updated;
+import models_memory_github.interface_github_webhook;
 import play.Logger;
 
 import java.util.ArrayList;

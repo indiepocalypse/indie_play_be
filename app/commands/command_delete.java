@@ -1,7 +1,7 @@
 package commands;
 
-import models_github.interface_github_webhook;
-import models_github.model_command;
+import models_memory_github.interface_github_webhook;
+import models_memory_indie.model_command;
 import play.Logger;
 import stores.store_github_api;
 import stores.store_local_db;

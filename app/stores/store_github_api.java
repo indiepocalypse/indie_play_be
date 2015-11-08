@@ -7,14 +7,13 @@ import com.typesafe.config.ConfigFactory;
 import models.model_repo;
 import models.model_user;
 import models.model_pull_request;
-import models_github.model_issue;
+import models_memory_github.model_issue;
 import play.Logger;
 import play.libs.F;
 import play.libs.Json;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSRequest;
 import play.libs.ws.WSResponse;
-import scala.util.parsing.json.JSONObject$;
 import utils.utils_general;
 import utils.utils_random_string;
 

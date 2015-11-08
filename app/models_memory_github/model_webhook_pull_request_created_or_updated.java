@@ -1,62 +1,60 @@
-package models_github;
+package models_memory_github;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import models.model_pull_request;
 import models.model_repo;
 import models.model_user;
-import play.Logger;
-import stores.store_local_db;
 import utils.utils_github_webhooks;
 
 /**
  * Created by skariel on 14/10/15.
  */
-public class model_webhook_pull_request_comment_created implements interface_github_webhook {
+public class model_webhook_pull_request_created_or_updated implements interface_github_webhook {
     public final enum_webhook_action action;
-    public final model_issue issue;
+    public final String number;
     public final model_pull_request pull_request;
-    public final model_comment comment;
     public final model_repo repo;
     public final model_user user;
 
-    public model_webhook_pull_request_comment_created(
+    public model_webhook_pull_request_created_or_updated(
             String p_action,
-            model_issue p_issue,
-            model_comment p_comment,
+            String p_number,
+            model_pull_request p_pull_request,
             model_repo p_repo,
             model_user p_user
     ) {
         this.action = utils_github_webhooks.from_string(p_action);
-        this.issue = p_issue;
-        this.comment = p_comment;
+        this.number = p_number;
+        this.pull_request = p_pull_request;
         this.repo = p_repo;
         this.user = p_user;
-        this.pull_request = store_local_db.get_pull_request_by_repo_name_and_number(repo.repo_name, issue.number);
-        if (pull_request==null) {
-            Logger.error("while creating a model_pull_request for repo "+repo.repo_name+" #"+issue.number+":\n", "couldn't find repo in local db!");
-        }
     }
 
-    public static model_webhook_pull_request_comment_created from_json(JsonNode json) {
+    public boolean is_update() {
+        return this.action.equals("synchronize");
+    }
+
+    public static model_webhook_pull_request_created_or_updated from_json(JsonNode json) {
         String action = json.get("action").asText();
-        model_issue issue = model_issue.from_json(json.get("issue"));
-        model_comment comment = model_comment.from_json(json.get("comment"));
+        // TODO: parsing a json int as a string allowed? the below seems... too much
+        String number = Integer.toString(json.get("number").asInt());
+        model_pull_request pull_request = model_pull_request.from_json(json.get("pull_request"));
         model_repo repo = model_repo.from_json(json.get("repository"));
         model_user user = model_user.from_json(json.get("sender"));
-        return new model_webhook_pull_request_comment_created(
+        return new model_webhook_pull_request_created_or_updated(
                 action,
-                issue,
-                comment,
+                number,
+                pull_request,
                 repo,
                 user
         );
     }
 
     public static boolean is_me(JsonNode json) {
-        return json.has("action") && json.get("action").asText().equals("created") &&
-                json.has("issue") && json.has("comment") &&
-                json.has("repository") && json.has("sender") &&
-                json.size()==5 && (json.get("issue").has("pull_request"));
+        return json.has("action") &&
+                ((json.get("action").asText().equals("opened")) || (json.get("action").asText().equals("synchronize"))) &&
+                json.has("number") && json.has("pull_request") && json.has("repository") &&
+                json.has("sender") && json.size()==5;
     }
 
     @Override
@@ -76,17 +74,20 @@ public class model_webhook_pull_request_comment_created implements interface_git
 
     @Override
     public String get_issue_num() {
-        return issue.number;
+        return number;
     }
 
     @Override
     public String get_comment() {
-        return comment.body;
+        if (is_update()) {
+            return "";
+        }
+        return pull_request.body;
     }
 
     @Override
     public model_issue get_issue() {
-        return issue;
+        return null;
     }
 
     @Override

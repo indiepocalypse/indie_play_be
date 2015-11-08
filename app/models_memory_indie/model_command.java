@@ -1,4 +1,4 @@
-package models_github;
+package models_memory_indie;
 
 import play.Logger;
 

@@ -1,8 +1,8 @@
 package commands;
 
 import handlers.handler_commands;
-import models_github.interface_github_webhook;
-import models_github.model_command;
+import models_memory_github.interface_github_webhook;
+import models_memory_indie.model_command;
 
 /**
  * Created by skariel on 31/10/15.

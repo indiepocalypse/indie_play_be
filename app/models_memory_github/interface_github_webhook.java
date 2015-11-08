@@ -1,4 +1,4 @@
-package models_github;
+package models_memory_github;
 
 import models.model_pull_request;
 import models.model_repo;

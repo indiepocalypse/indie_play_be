@@ -1,7 +1,7 @@
 Current development principles:
 
 1) only store_local_db touches db models
-2) stores can only read from other stores
+2) stores can only READ from other stores
 3) only controller_main touches views
 4) models are db-ebean models
 5) other models are not represented in the db. For e.g models_github
@@ -9,9 +9,9 @@ Current development principles:
 7) shared controller logic and specialized logic goes in handlers
 8) 3rd party tools go in vendors
 9) models are basically data-holders maybe plus some simple logic
-10) models are samllest common denomoinator in the github api sense. ie
+10) models are `smallest common denomoinator`, in the github api sense. ie
      all models can be built from the minial info in github api
-11) Sync classes are long running processes, organizing data in the background
+11) Sync classes are long running processes, they can organize data in the background
 
 to remotely debug:
 

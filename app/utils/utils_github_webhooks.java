@@ -1,6 +1,6 @@
 package utils;
 
-import models_github.enum_webhook_action;
+import models_memory_github.enum_webhook_action;
 
 /**
  * Created by skariel on 26/10/15.
