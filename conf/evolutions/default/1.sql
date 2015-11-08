@@ -20,6 +20,10 @@ create table model_offer (
   user_user_name            varchar(255),
   pull_request_id           varchar(255),
   amount_percent            decimal(38),
+  is_active                 boolean,
+  was_positively_accepted   boolean,
+  date_accepted_if_accepted boolean,
+  date_created              boolean,
   constraint pk_model_offer primary key (id))
 ;
 
@@ -59,6 +63,14 @@ create table model_repo (
   constraint pk_model_repo primary key (repo_name))
 ;
 
+create table model_repo_policy (
+  id                        varchar(255) not null,
+  repo_repo_name            varchar(255),
+  ownership_required_to_change_policy decimal(38),
+  ownership_required_to_manage_issues decimal(38),
+  constraint pk_model_repo_policy primary key (id))
+;
+
 create table model_user (
   user_name                 varchar(255) not null,
   github_html_url           varchar(255),
@@ -78,6 +90,8 @@ create sequence model_pull_request_seq;
 
 create sequence model_repo_seq;
 
+create sequence model_repo_policy_seq;
+
 create sequence model_user_seq;
 
 alter table model_admin add constraint fk_model_admin_user_1 foreign key (user_user_name) references model_user (user_name) on delete restrict on update restrict;
@@ -94,6 +108,8 @@ alter table model_pull_request add constraint fk_model_pull_request_user_6 forei
 create index ix_model_pull_request_user_6 on model_pull_request (user_user_name);
 alter table model_pull_request add constraint fk_model_pull_request_repo_7 foreign key (repo_repo_name) references model_repo (repo_name) on delete restrict on update restrict;
 create index ix_model_pull_request_repo_7 on model_pull_request (repo_repo_name);
+alter table model_repo_policy add constraint fk_model_repo_policy_repo_8 foreign key (repo_repo_name) references model_repo (repo_name) on delete restrict on update restrict;
+create index ix_model_repo_policy_repo_8 on model_repo_policy (repo_repo_name);
 
 
 
@@ -113,6 +129,8 @@ drop table if exists model_pull_request;
 
 drop table if exists model_repo;
 
+drop table if exists model_repo_policy;
+
 drop table if exists model_user;
 
 SET REFERENTIAL_INTEGRITY TRUE;
@@ -128,6 +146,8 @@ drop sequence if exists model_ownership_seq;
 drop sequence if exists model_pull_request_seq;
 
 drop sequence if exists model_repo_seq;
+
+drop sequence if exists model_repo_policy_seq;
 
 drop sequence if exists model_user_seq;
 
