@@ -94,13 +94,15 @@ public class controller_main extends Controller {
         // create the repo, with proper ownership and policy!
 
         try {
-            // TODO: can this use the integrate repo functionality in handler_gerneral?
             model_repo repo = store_github_api.create_new_repo(repo_name, repo_homepage, repo_description);
-            store_local_db.update_repo(repo);
             model_user user = store_local_db.get_user_by_name(store_session.get_user_name());
-            model_ownership ownership = handler_general.integrate_github_repo(repo, user, true);
-            model_repo_policy policy = new model_repo_policy(repo);
-            store_local_db.update_policy(policy);
+
+            final boolean create_webhook = true;
+            final boolean check_for_existance_of_readme_before_creating_one = false;
+            final boolean delete_original_collaborators = false;
+            model_ownership ownership = handler_general.integrate_github_repo(repo, user,
+                    create_webhook, check_for_existance_of_readme_before_creating_one,
+                    delete_original_collaborators);
             if (ownership==null) {
                 handler_general.delete_repo_from_github_and_db_and_also_related_ownership_policy_offers(repo);
                 // TODO: elaborate on error

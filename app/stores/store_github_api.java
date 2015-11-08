@@ -276,14 +276,6 @@ public class store_github_api {
         return pull_requests;
     }
 
-    public static boolean delete_collaborator_from_repo(String repo_name, String user_name) {
-        WSResponse res = indie_auth_request("/repos/theindiepocalypse/"+repo_name+"/collaborators/"+user_name)
-                .setMethod("DELETE")
-                .execute()
-                .get(60, TimeUnit.SECONDS);
-        return res.getStatus() == 204;
-    }
-
     public static boolean has_readme(String repo_name) {
         WSResponse res = indie_auth_request("/repos/theindiepocalypse/"+repo_name+"/readme")
                 .setMethod("GET")
@@ -352,5 +344,37 @@ public class store_github_api {
         return false;
     }
 
+    public static List<model_user> get_all_collaborators(model_repo repo) {
+        WSResponse res = indie_auth_request("/repos/theindiepocalypse/"+repo.repo_name+"/collaborators")
+                .setMethod("GET")
+                .execute()
+                .get(60, TimeUnit.SECONDS);
+        if (res.getStatus()!=200) {
+            return new ArrayList<>();
+        }
+        JsonNode json = res.asJson();
+        ArrayList<model_user> collaborators = new ArrayList<>(json.size());
+        for (int i=0; i<json.size(); i++) {
+            collaborators.add(model_user.from_json(json.get(i)));
+        }
+        return collaborators;
+    }
 
+    public static boolean delete_collaborator_from_repo(model_repo repo, model_user user) {
+        WSResponse res = indie_auth_request("/repos/theindiepocalypse/"+repo.repo_name+"/collaborators/"+user.user_name)
+                .setMethod("DELETE")
+                .execute()
+                .get(60, TimeUnit.SECONDS);
+        return res.getStatus() == 204;
+    }
+
+    public static boolean delete_all_collaborators_from_repo(model_repo repo) {
+        boolean ok = true;
+        for (model_user user: get_all_collaborators(repo)) {
+            if (!delete_collaborator_from_repo(repo, user)) {
+                ok = false;
+            }
+        }
+        return ok;
+    }
 }

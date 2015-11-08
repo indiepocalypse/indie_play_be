@@ -20,7 +20,6 @@ public class command_delete implements interface_command {
 
     @Override
     public String handle(model_command command, interface_github_webhook hook) {
-        // TODO: deleting repo functionality should move to a handler. This is used in controller_main too
         if (store_local_db.is_admin(hook.get_user().user_name)) {
             if (store_github_api.delete_repo(hook.get_repo())) {
                 handler_general.delete_repo_from_github_and_db_and_also_related_ownership_policy_offers(hook.get_repo());

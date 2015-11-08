@@ -181,6 +181,7 @@ public class sync_gmail {
                     for (String l: lines) {
                         String lt = l.trim();
                         if (lt.startsWith("https")) {
+
                             // try to accept the repo!
 
                             if (store_local_db.has_repo(repo_name)) {
@@ -191,14 +192,7 @@ public class sync_gmail {
                                 sendmail(user_mail, mail_subject, mail_body);
                                 break;
                             }
-                            model_ownership ownership = null;
-                            try {
-                                ownership = handler_general.integrate_github_repo(repo_name, from_user, false);
-                            }
-                            catch (Exception e) {
-                                Logger.error("XX--> cannot move repo "+repo_name+" from user "+from_user+". Maybe it has been deleted? -->\n", e);
-                                break;
-                            }
+                            // delay needed to let github spread news that user wants to transfer repo
                             try {
                                 Thread.sleep(5100);
                             }
@@ -215,21 +209,22 @@ public class sync_gmail {
                             }
                             catch (Exception ignored) {
                             }
-                            store_github_api.create_webhook(ownership.repo);
-                            handler_general.create_default_readme_if_not_existing(ownership.repo);
-                            if (store_github_api.delete_collaborator_from_repo(ownership.repo.repo_name, from_user)) {
-                                Logger.info("user "+from_user+" removed from collaborators to "+ownership.repo.repo_name);
-                                final String user_mail = store_github_api.get_user_mail(from_user);
-                                final String mail_subject = "You were removed as collaborator from repository (" + repo_name + ")";
-                                final String mail_body = "The reason is that this repo was transferred to thindipocalypse user and it is now managed through its api.\n see the FAQ here:\n"+store_conf.get_absolute_url(routes.controller_main.faq().url());
-                                sendmail(user_mail, mail_subject, mail_body);
+                            // we need the above delay to let github spread the news that repo was transferred
+                            model_ownership ownership = null;
+                            try {
+                                final boolean check_for_existance_of_readme = true;
+                                final boolean create_webhook = true;
+                                final boolean delete_original_collaborators = true;
+                                handler_general.integrate_github_repo(repo_name, from_user, create_webhook,
+                                        check_for_existance_of_readme, delete_original_collaborators);
                             }
-                            else {
-                                Logger.error("could not remove user " + from_user + " removed from collaborators to " + ownership.repo.repo_name);
+                            catch (Exception e) {
+                                Logger.error("XX--> cannot move repo "+repo_name+" from user "+from_user+". Maybe it has been deleted? -->\n", e);
+                                break;
                             }
 
-                            Logger.info("Successfuly transferred repo \"" + repo_name + "\" from Github");
-                            // TODO: send a success mail?
+                            // TODO: determine real success?
+                            Logger.info("code for transfer of repo \"" + repo_name + "\" is done. check above for any errors.");
                         }
                     }
                 }
@@ -240,7 +235,7 @@ public class sync_gmail {
         }
     }
 
-    private static void sendmail(String user_mail, String mail_subject, String mail_body) {
+    public static void sendmail(String user_mail, String mail_subject, String mail_body) {
         // TODO: move this method to a store_gmail_api (which does not exist yet...)
         Message message = new MimeMessage(smtp_session);
         try {

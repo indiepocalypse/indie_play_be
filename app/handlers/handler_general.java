@@ -1,5 +1,6 @@
 package handlers;
 
+import controllers.routes;
 import models_db_github.model_pull_request;
 import models_db_github.model_repo;
 import models_db_github.model_user;
@@ -10,6 +11,7 @@ import stores.store_conf;
 import stores.store_github_api;
 import stores.store_github_iojs;
 import stores.store_local_db;
+import sync.sync_gmail;
 
 import java.math.BigDecimal;
 
@@ -32,38 +34,61 @@ public class handler_general {
         return user;
     }
 
-    public static model_ownership integrate_github_repo(String repo_name, String user_name, boolean create_webhook) {
+    public static model_ownership integrate_github_repo(String repo_name, String user_name, boolean create_webhook,
+                                                        boolean check_for_existance_of_readme,
+                                                        boolean delete_original_collaborators) {
         // this method assumes repo is not in DB!
         model_user user = get_integrate_github_user_by_name(user_name);
         model_repo repo =  store_github_api.get_repo_by_name(user_name, repo_name);
-        store_local_db.update_repo(repo);
-        return integrate_github_repo(repo, user, create_webhook);
+        return integrate_github_repo(repo, user, create_webhook, check_for_existance_of_readme, delete_original_collaborators);
     }
 
-    public static model_ownership integrate_github_repo(model_repo repo,  model_user user, boolean create_webhook) {
+    public static model_ownership integrate_github_repo(model_repo repo,  model_user user, boolean create_webhook,
+                                                        boolean check_for_existance_first,
+                                                        boolean delete_original_collaborators) {
+        store_local_db.update_repo(repo);
         if (create_webhook) {
             store_github_api.create_webhook(repo);
-            create_default_readme_if_not_existing(repo);
         }
         BigDecimal indie_ownership_percent = store_conf.get_default_indie_ownership_percent();
         BigDecimal user_ownership_percent = new BigDecimal("100.0").subtract(indie_ownership_percent);
         model_ownership ownership1 = new model_ownership(user, repo, user_ownership_percent);
+        if (ownership1==null) {
+            Logger.error("error while integrating repo "+repo.repo_name+". Couldn't create an ownership");
+            return null;
+        }
         model_user theindiepocalypse = store_local_db.get_user_by_name("theindiepocalypse");
         model_ownership ownership2 = new model_ownership(theindiepocalypse, repo, indie_ownership_percent);
         store_local_db.update_ownership(ownership1);
         store_local_db.update_ownership(ownership2);
-
         // TODO: should return the policy too?
         model_repo_policy policy = new model_repo_policy(repo);
         store_local_db.update_policy(policy);
 
+        create_default_readme(repo, check_for_existance_first);
+
+        if (delete_original_collaborators) {
+            if (store_github_api.delete_all_collaborators_from_repo(ownership1.repo)) {
+                Logger.info("user "+user.user_name+" removed from collaborators to "+ownership1.repo.repo_name);
+                final String user_mail = store_github_api.get_user_mail(user.user_name);
+                final String mail_subject = "You were removed as collaborator from repository (" + repo.repo_name + ")";
+                final String mail_body = "The reason is that this repo was transferred to thindipocalypse user and it is now managed through its api.\n see the FAQ here:\n"+store_conf.get_absolute_url(routes.controller_main.faq().url());
+                sync_gmail.sendmail(user_mail, mail_subject, mail_body);
+            }
+            else {
+                Logger.error("could not remove user " + user.user_name + " removed from collaborators to " + ownership1.repo.repo_name);
+            }
+
+        }
         return ownership1;
     }
 
-    public static void create_default_readme_if_not_existing(model_repo repo) {
-        if (store_github_api.has_readme(repo.repo_name)) {
-            Logger.info("repo "+repo.repo_name+" already has a readme. Skipping creation of default one");
-            return;
+    public static void create_default_readme(model_repo repo, boolean check_for_existance_first) {
+        if (check_for_existance_first) {
+            if (store_github_api.has_readme(repo.repo_name)) {
+                Logger.info("repo " + repo.repo_name + " already has a readme. Skipping creation of default one");
+                return;
+            }
         }
         Logger.info("Creating a default readme for repo "+repo.repo_name);
         String content = "This is the default readme. It's needed so the repo can be forked";
