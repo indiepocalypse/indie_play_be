@@ -20,6 +20,9 @@ public class controller_webhooks_github extends Controller {
         // TODO: remove excessive logging.info and add datetime to log entries
         // TODO: consider using the github api package for java. See here: http://github-api.kohsuke.org/
 
+        // basically, this whole class just gets a webhook, then extract commands from it,
+        // runs them, and responses to the user that issued the commands (for e.g. on a comment)
+
         Logger.info("** incomming webhook! **");
         JsonNode json = request().body().asJson();
 
