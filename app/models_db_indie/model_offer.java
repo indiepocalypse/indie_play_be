@@ -23,12 +23,20 @@ public class model_offer extends Model {
     @ManyToOne
     public final model_pull_request pull_request;
     BigDecimal amount_percent;
+    Boolean is_active;
+    Boolean was_positively_accepted;
+    Boolean date_accepted_if_accepted;
+    Boolean date_created;
 
-    public model_offer(model_user p_user, model_pull_request p_pull_request, BigDecimal p_amount_percent) {
+    public model_offer(model_user p_user, model_pull_request p_pull_request, BigDecimal p_amount_percent, Boolean p_is_active, Boolean p_was_positively_accepted, Boolean p_date_created, Boolean p_date_accepted_if_accepted) {
         id = p_user.user_name + "@admins";
         this.user = p_user;
         this.pull_request = p_pull_request;
         this.amount_percent = p_amount_percent;
+        this.is_active = p_is_active;
+        this.was_positively_accepted = p_was_positively_accepted;
+        this.date_created = p_date_created;
+        this.date_accepted_if_accepted = p_date_accepted_if_accepted;
     }
 }
 
