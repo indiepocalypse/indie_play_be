@@ -94,6 +94,7 @@ public class controller_main extends Controller {
         // create the repo, with proper ownership and policy!
 
         try {
+            // TODO: can this use th integrate repo functionality in handler_gerneral?
             model_repo repo = store_github_api.create_new_repo(repo_name, repo_homepage, repo_description);
             store_local_db.update_repo(repo);
             model_user user = store_local_db.get_user_by_name(store_session.get_user_name());
