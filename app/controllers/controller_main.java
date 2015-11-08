@@ -109,7 +109,6 @@ public class controller_main extends Controller {
                 String err = "Couldn't create the repo, sorry!";
                 return ok(view_main.render("new repo", view_newrepo.render(repo_name, repo_homepage, repo_description, err)));
             }
-            store_github_iojs.create_readme(repo, "this repository is mostly empty. Please fork and create a pull request when ready.");
             store_session.set_new_repo(repo.repo_name);
             return redirect(routes.controller_main.repo_profile(repo_name));
         } catch (Exception e) {
