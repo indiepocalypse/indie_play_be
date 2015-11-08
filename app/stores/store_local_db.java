@@ -52,14 +52,6 @@ public class store_local_db {
         return (get_repo_by_name(repo_name) != null);
     }
 
-    public static void delete_repo(model_repo repo) {
-        try {
-            model_repo.find.deleteById(repo.repo_name);
-        } catch (Exception e) {
-            Logger.error("failed to delete repo " + repo.repo_name + ":\n", e);
-        }
-    }
-
     /********************************
      * USERS!
      ********************************/
@@ -291,29 +283,6 @@ public class store_local_db {
      * PULL REQUESTS!
      ********************************/
 
-    public static boolean update_pull_request(model_pull_request pull_request) {
-        // this method deletes offers is pull reuqest was updated.
-        // users notification here. Reason is that this is always coupled:
-        // when deleting offers, users always need to be notified!
-        // return whether update was a real update, in the sense that offers were cleared
-        boolean updated = false;
-        // check previous pull request, the one we are about to override:
-        model_pull_request old_pull_request = get_pull_request_by_repo_name_and_number(pull_request.repo.repo_name, pull_request.number);
-        if ((old_pull_request != null) && (!old_pull_request.SHA.equals(pull_request.SHA))) {
-            updated = true;
-            // updated pull requests contains different code, all previous offers rendered irrelevant
-            delete_offers_by_pull_request(pull_request.repo.repo_name, pull_request.number);
-            // notify users
-            handler_general.notify_by_comment_that_pr_changed_and_offers_are_removed(pull_request);
-        }
-        try {
-            pull_request.save();
-        } catch (Exception ignored) {
-            pull_request.update();
-        }
-        return updated;
-    }
-
     public static model_pull_request get_pull_request_by_repo_name_and_number(String repo_name, String number) {
         try {
             return model_pull_request.find.fetch("user").fetch("repo")
@@ -370,7 +339,7 @@ public class store_local_db {
         if (hook.get_pull_request() != null) {
             // yeah, this is the only field that can be null;
             // (because the hook may be for something else than a pull request!)
-            update_pull_request(hook.get_pull_request());
+            handler_general.update_pull_request_and_clear_offers_if_necessary(hook.get_pull_request());
         }
     }
 }

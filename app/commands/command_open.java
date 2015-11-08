@@ -1,12 +1,12 @@
 package commands;
 
+import handlers.handler_general;
 import models_db_github.model_pull_request;
 import models_memory_github.interface_github_webhook;
 import models_memory_github.model_issue;
 import models_memory_indie.model_command;
 import play.Logger;
 import stores.store_github_api;
-import stores.store_local_db;
 
 /**
  * Created by skariel on 31/10/15.
@@ -27,7 +27,7 @@ public class command_open implements interface_command {
             }
             pull_request.state = "open";
             if (store_github_api.update_pull_request(pull_request)) {
-                store_local_db.update_pull_request(pull_request);
+                handler_general.update_pull_request_and_clear_offers_if_necessary(pull_request);
             } else {
                 Logger.error("could not open pull request #" + pull_request.number + " on repo " + pull_request.repo.repo_name);
             }

@@ -97,13 +97,44 @@ public class handler_general {
                 "PR updated, all offers cleared!\nplease place your new offers");
     }
 
+    private static void __delete_repo(model_repo repo) {
+        try {
+            model_repo.find.deleteById(repo.repo_name);
+        } catch (Exception e) {
+            Logger.error("failed to delete repo " + repo.repo_name + ":\n", e);
+        }
+    }
+
+
     public static void delete_repo_from_github_and_db_and_also_related_ownership_policy_offers(model_repo repo) {
         store_local_db.delete_offers_by_repo(repo);
         store_local_db.delete_ownerships_by_repo(repo);
         store_local_db.delete_policies_by_repo(repo);
         store_local_db.delete_pull_requests_by_repo(repo);
-        store_local_db.delete_repo(repo);
+        __delete_repo(repo);
         store_github_api.delete_repo(repo);
     }
 
+    public static boolean update_pull_request_and_clear_offers_if_necessary(model_pull_request pull_request) {
+        // this method deletes offers is pull reuqest was updated.
+        // users notification here. Reason is that this is always coupled:
+        // when deleting offers, users always need to be notified!
+        // return whether update was a real update, in the sense that offers were cleared
+        boolean updated = false;
+        // check previous pull request, the one we are about to override:
+        model_pull_request old_pull_request = store_local_db.get_pull_request_by_repo_name_and_number(pull_request.repo.repo_name, pull_request.number);
+        if ((old_pull_request != null) && (!old_pull_request.SHA.equals(pull_request.SHA))) {
+            updated = true;
+            // updated pull requests contains different code, all previous offers rendered irrelevant
+            store_local_db.delete_offers_by_pull_request(pull_request.repo.repo_name, pull_request.number);
+            // notify users
+            notify_by_comment_that_pr_changed_and_offers_are_removed(pull_request);
+        }
+        try {
+            pull_request.save();
+        } catch (Exception ignored) {
+            pull_request.update();
+        }
+        return updated;
+    }
 }

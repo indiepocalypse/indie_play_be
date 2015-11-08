@@ -128,7 +128,7 @@ public class handler_commands {
         String number = hook.get_pull_request().number;
         Logger.info("updating pull request #" + number + " for repo " + repo_name);
         pull_request = store_github_api.get_pull_request_by_repo_by_number(repo_name, number);
-        store_local_db.update_pull_request(pull_request);
+        handler_general.update_pull_request_and_clear_offers_if_necessary(pull_request);
 
         if (pull_request.mergeable == null) {
             Logger.info("     -- pull request.mergeable==null");
@@ -145,7 +145,7 @@ public class handler_commands {
         if (store_github_api.merge_pull_request(pull_request, commit_message)) {
             pull_request.merged = true;
             pull_request.mergeable = false; // TODO: should this actually change?
-            store_local_db.update_pull_request(pull_request);
+            handler_general.update_pull_request_and_clear_offers_if_necessary(pull_request);
             return "merged!\nThe new ownership structure:\n\n" + get_owners_good_looking_table(hook);
         } else {
             return "Some problem with merging. Please try again later, or contant an admin";

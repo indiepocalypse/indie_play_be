@@ -2,6 +2,7 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import handlers.handler_commands;
+import handlers.handler_general;
 import models_memory_github.*;
 import play.Logger;
 import play.mvc.Controller;
@@ -46,7 +47,7 @@ public class controller_webhooks_github extends Controller {
             hook = model_webhook_issue_created.from_json(json);
         } else if (model_webhook_pull_request_created_or_updated.is_me(json)) {
             hook = model_webhook_pull_request_created_or_updated.from_json(json);
-            if (store_local_db.update_pull_request(hook.get_pull_request())) {
+            if (handler_general.update_pull_request_and_clear_offers_if_necessary(hook.get_pull_request())) {
                 // code in PR was updated. No comment was created, no command issued.
                 // store call was responsible to notify everybody
                 return ok();

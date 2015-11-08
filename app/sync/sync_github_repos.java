@@ -84,7 +84,7 @@ public class sync_github_repos {
                 final boolean check_first_for_existance = true;
                 handler_general.create_default_readme(repo, check_first_for_existance);
                 List<model_pull_request> all_pull_requests_for_repo = store_github_api.get_all_pull_requests(repo);
-                all_pull_requests_for_repo.forEach(store_local_db::update_pull_request);
+                all_pull_requests_for_repo.forEach(handler_general::update_pull_request_and_clear_offers_if_necessary);
             }
         }
         Logger.info("syncing " + Integer.toString(repos.size()) + " github repos");
