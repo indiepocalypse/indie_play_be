@@ -1,11 +1,9 @@
 package sync;
 
 import com.sun.mail.imap.IMAPFolder;
-import controllers.routes;
 import handlers.handler_general;
 import handlers.handler_policy;
 import models_db_indie.model_gmail_last_date_read;
-import models_db_indie.model_ownership;
 import play.Logger;
 import stores.*;
 
@@ -41,7 +39,7 @@ public class sync_gmail {
                     try {
                         Thread.sleep(store_conf.get_gmail_reload_sync_delta_milis());
                         Random rand = new Random();
-                        int jitter = (int)(rand.nextFloat()*stores.store_conf.get_gmail_reload_sync_jitter_milis()+
+                        int jitter = (int) (rand.nextFloat() * stores.store_conf.get_gmail_reload_sync_jitter_milis() +
                                 store_conf.get_gmail_reload_sync_minimum_milis());
                         Thread.sleep(jitter);
                         reload_folder();
@@ -62,8 +60,7 @@ public class sync_gmail {
                         if (inbox != null) {
                             if (inbox.isOpen()) {
                                 inbox.idle(true);
-                            }
-                            else {
+                            } else {
                                 // try to reopen...
                                 Logger.info("gmail inbox appears closed, trying to reopen...");
                                 Thread.sleep(1500);
@@ -85,8 +82,7 @@ public class sync_gmail {
                     }
                     try {
                         Thread.sleep(50);
-                    }
-                    catch (Exception ignored) {
+                    } catch (Exception ignored) {
                     }
                 }
             }
@@ -150,8 +146,7 @@ public class sync_gmail {
             }
             if (last_date_read_model == null) {
                 last_date_read_model = new model_gmail_last_date_read(m_date);
-            }
-            else {
+            } else {
                 if (last_date_read_model.lastdate.before(m_date)) {
                     last_date_read_model.lastdate = m_date;
                     store_local_db.update_gmail_last_read_date(last_date_read_model);
@@ -163,7 +158,7 @@ public class sync_gmail {
                     String from_user = m_subject.split("@")[1].split("\\s+")[0];
                     String repo_name = m_subject.split("/")[1].split("\\)")[0];
                     if (!handler_policy.can_create_new_repo(from_user)) {
-                        Logger.info("cannot transfer repo "+repo_name+" from user: " + from_user+" because of policy of maximum repos with more than 50% ownership.");
+                        Logger.info("cannot transfer repo " + repo_name + " from user: " + from_user + " because of policy of maximum repos with more than 50% ownership.");
                         final String user_mail = store_github_api.get_user_mail(from_user);
                         final String mail_subject = "Cannot accept repository transfer (" + repo_name + ")";
                         final String mail_body = "The reason is that you already have the maximum number of repos allowed with 50% ore more ownership.";
@@ -172,14 +167,14 @@ public class sync_gmail {
                     }
                     Logger.info("transfering from user: " + from_user + "    repo name: " + repo_name);
                     String lines[] = m_body.split("\\r?\\n");
-                    for (String l: lines) {
+                    for (String l : lines) {
                         String lt = l.trim();
                         if (lt.startsWith("https")) {
 
                             // try to accept the repo!
 
                             if (store_local_db.has_repo(repo_name)) {
-                                Logger.info("cannot transfer repo "+repo_name+" from user: " + from_user+" because it already exists in DB!");
+                                Logger.info("cannot transfer repo " + repo_name + " from user: " + from_user + " because it already exists in DB!");
                                 final String user_mail = store_github_api.get_user_mail(from_user);
                                 final String mail_subject = "Cannot accept repository transfer (" + repo_name + ")";
                                 final String mail_body = "The reason is that there is a repo with the same name in the DB.";
@@ -189,8 +184,7 @@ public class sync_gmail {
                             // delay needed to let github spread news that user wants to transfer repo
                             try {
                                 Thread.sleep(5100);
-                            }
-                            catch (Exception ignored) {
+                            } catch (Exception ignored) {
                             }
                             if (!store_github_iojs.accept_transfer_repo(lt)) {
                                 // unsuccesfull transfer, report
@@ -200,8 +194,7 @@ public class sync_gmail {
                             // all seems ok!
                             try {
                                 Thread.sleep(5100);
-                            }
-                            catch (Exception ignored) {
+                            } catch (Exception ignored) {
                             }
                             // we need the above delay to let github spread the news that repo was transferred
                             try {
@@ -210,9 +203,8 @@ public class sync_gmail {
                                 final boolean delete_original_collaborators = true;
                                 handler_general.integrate_github_repo(repo_name, from_user, create_webhook,
                                         check_for_existance_of_readme, delete_original_collaborators);
-                            }
-                            catch (Exception e) {
-                                Logger.error("XX--> cannot move repo "+repo_name+" from user "+from_user+". Maybe it has been deleted? -->\n", e);
+                            } catch (Exception e) {
+                                Logger.error("XX--> cannot move repo " + repo_name + " from user " + from_user + ". Maybe it has been deleted? -->\n", e);
                                 break;
                             }
 
@@ -241,8 +233,7 @@ public class sync_gmail {
                     InternetAddress.parse(user_mail));
             message.setText(mail_body);
             Transport.send(message);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Logger.error("while sending mail saying cannot transfer repo: ", e);
         }
 
@@ -300,7 +291,7 @@ public class sync_gmail {
                 @Override
                 public boolean match(Message message) {
                     try {
-                        return f_last_date_read_model==null || message.getReceivedDate().after(f_last_date_read_model.lastdate);
+                        return f_last_date_read_model == null || message.getReceivedDate().after(f_last_date_read_model.lastdate);
                     } catch (Exception e) {
                         Logger.error("retreiving messages (initialli)...", e);
                     }
@@ -309,7 +300,7 @@ public class sync_gmail {
             });
             mail_count = inbox.getMessageCount();
             handle_messages(messages);
-            Logger.info("mail_count"+Integer.toString(mail_count));
+            Logger.info("mail_count" + Integer.toString(mail_count));
             inbox.addMessageCountListener(new MessageCountListener() {
                 @Override
                 public void messagesAdded(MessageCountEvent messageCountEvent) {

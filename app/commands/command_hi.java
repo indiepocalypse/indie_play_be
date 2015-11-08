@@ -9,7 +9,7 @@ import models_memory_indie.model_command;
 public class command_hi implements interface_command {
     @Override
     public boolean is_recognized(model_command command) {
-        return (command.command.equals("hi")) && (command.args.size()==0);
+        return (command.command.equals("hi")) && (command.args.size() == 0);
     }
 
     @Override

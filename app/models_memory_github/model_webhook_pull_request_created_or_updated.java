@@ -30,10 +30,6 @@ public class model_webhook_pull_request_created_or_updated implements interface_
         this.user = p_user;
     }
 
-    public boolean is_update() {
-        return this.action.equals("synchronize");
-    }
-
     public static model_webhook_pull_request_created_or_updated from_json(JsonNode json) {
         String action = json.get("action").asText();
         // TODO: parsing a json int as a string allowed? the below seems... too much
@@ -54,7 +50,11 @@ public class model_webhook_pull_request_created_or_updated implements interface_
         return json.has("action") &&
                 ((json.get("action").asText().equals("opened")) || (json.get("action").asText().equals("synchronize"))) &&
                 json.has("number") && json.has("pull_request") && json.has("repository") &&
-                json.has("sender") && json.size()==5;
+                json.has("sender") && json.size() == 5;
+    }
+
+    public boolean is_update() {
+        return this.action.equals("synchronize");
     }
 
     @Override

@@ -49,7 +49,7 @@ public class model_webhook_issue_comment_created implements interface_github_web
         return json.has("action") && json.get("action").asText().equals("created") &&
                 json.has("issue") && json.has("comment") &&
                 json.has("repository") && json.has("sender") &&
-                json.size()==5 && (!json.get("issue").has("pull_request"));
+                json.size() == 5 && (!json.get("issue").has("pull_request"));
     }
 
     @Override

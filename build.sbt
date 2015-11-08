@@ -1,6 +1,4 @@
-import play.ebean.sbt.PlayEbean
-import play.routes.compiler.InjectedRoutesGenerator
-import play.sbt.PlayJava
+
 
 name := """indie_play_be"""
 

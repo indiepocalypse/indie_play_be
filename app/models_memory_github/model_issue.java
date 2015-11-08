@@ -13,9 +13,9 @@ public class model_issue {
     public final String comments_url;
     public final Long id;
     public final model_user user;
-    public String body;
     public final String number;
     public final int comments;
+    public String body;
     public String title;
     public String state;
 
@@ -43,11 +43,6 @@ public class model_issue {
         this.state = p_state;
     }
 
-    public boolean is_closed() {
-        return !this.state.equals("open");
-    }
-
-
     public static model_issue from_json(JsonNode json) {
         String url = json.get("url").asText();
         String html_url = json.get("html_url").asText();
@@ -72,5 +67,9 @@ public class model_issue {
                 title,
                 state
         );
+    }
+
+    public boolean is_closed() {
+        return !this.state.equals("open");
     }
 }

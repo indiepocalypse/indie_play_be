@@ -31,8 +31,8 @@ public class sync_github_repos {
                         sync(first_time);
                         first_time = false;
                         Random rand = new Random();
-                        int jitter = (int)(store_conf.get_github_repo_sync_minimum_milis() +
-                                rand.nextFloat()*stores.store_conf.get_github_repo_sync_jitter_milis());
+                        int jitter = (int) (store_conf.get_github_repo_sync_minimum_milis() +
+                                rand.nextFloat() * stores.store_conf.get_github_repo_sync_jitter_milis());
                         Thread.sleep(store_conf.get_github_repo_sync_delta_milis() + jitter);
                         if (interrupted) {
                             return;
@@ -62,35 +62,33 @@ public class sync_github_repos {
         List<model_repo> repos = new ArrayList<>();
         try {
             repos = store_github_api.get_indie_repositories();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Logger.error("while retrieving repos from github during a repo sync", e);
         }
         for (model_repo repo : repos) {
             try {
                 Thread.sleep(stores.store_conf.get_github_repo_sync_jitter_small_milis());
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 if (!interrupted) {
                     Logger.error("while syncing github repos", e);
                 }
             }
-            Logger.info(":: updating self repo "+repo.repo_name);
+            Logger.info(":: updating self repo " + repo.repo_name);
             if (interrupted) {
                 return;
             }
-            Logger.info(":: updating self repo "+repo.repo_name);
+            Logger.info(":: updating self repo " + repo.repo_name);
             store_local_db.update_repo(repo);
             if (first_time) {
                 store_github_api.create_webhook(repo);
                 boolean check_first_for_existance = true;
                 handler_general.create_default_readme(repo, check_first_for_existance);
                 List<model_pull_request> all_pull_requests_for_repo = store_github_api.get_all_pull_requests(repo);
-                for (model_pull_request pr: all_pull_requests_for_repo) {
+                for (model_pull_request pr : all_pull_requests_for_repo) {
                     store_local_db.update_pull_request(pr);
                 }
             }
         }
-        Logger.info("syncing " + Integer.toString(repos.size())+" github repos");
+        Logger.info("syncing " + Integer.toString(repos.size()) + " github repos");
     }
 }

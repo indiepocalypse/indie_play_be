@@ -86,28 +86,27 @@ public class store_session {
         controller_main.session().clear();
     }
 
-    public static void set_token(String token) {
-        controller_main.session().put(token_session_key, token);
-    }
-
     public static String get_token() {
         return controller_main.session().get(token_session_key);
     }
 
-    public static void set_github_code(String code) {
-        controller_main.session().put(github_code_session_key, code);
+    public static void set_token(String token) {
+        controller_main.session().put(token_session_key, token);
     }
 
     public static String get_github_code() {
         return controller_main.session().get(github_code_session_key);
     }
 
+    public static void set_github_code(String code) {
+        controller_main.session().put(github_code_session_key, code);
+    }
 
     public static void set_admin(boolean _admin) {
         controller_main.session().put(user_is_admin, "true");
     }
 
     public static boolean user_is_admin() {
-        return (get_token()!=null) && (controller_main.session().containsKey(user_is_admin));
+        return (get_token() != null) && (controller_main.session().containsKey(user_is_admin));
     }
 }

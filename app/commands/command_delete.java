@@ -14,7 +14,7 @@ public class command_delete implements interface_command {
     @Override
     public boolean is_recognized(model_command command) {
         return (command.command.equals("delete")) &&
-                (command.args.size()==1) &&
+                (command.args.size() == 1) &&
                 (command.args.get(0).equals("repo"));
     }
 
@@ -24,13 +24,11 @@ public class command_delete implements interface_command {
             if (store_github_api.delete_repo(hook.get_repo())) {
                 handler_general.delete_repo_from_github_and_db_and_also_related_ownership_policy_offers(hook.get_repo());
                 return "done!";
-            }
-            else {
-                Logger.error("error deleting repo "+hook.get_repo().repo_name);
+            } else {
+                Logger.error("error deleting repo " + hook.get_repo().repo_name);
                 return "problem deleting repo. Please contact staff";
             }
-        }
-        else {
+        } else {
             return "only admins can delete a repository";
         }
     }

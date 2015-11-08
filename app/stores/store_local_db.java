@@ -56,7 +56,7 @@ public class store_local_db {
         try {
             model_repo.find.deleteById(repo.repo_name);
         } catch (Exception e) {
-            Logger.error("failed to delete repo "+repo.repo_name+":\n", e);
+            Logger.error("failed to delete repo " + repo.repo_name + ":\n", e);
         }
     }
 
@@ -82,7 +82,7 @@ public class store_local_db {
 
     public static model_admin get_admin_by_name(String name) {
         try {
-            return model_admin.find.fetch("user").where().idEq(name+"@admins").findUnique();
+            return model_admin.find.fetch("user").where().idEq(name + "@admins").findUnique();
         } catch (Exception ignore) {
             return null;
         }
@@ -149,8 +149,8 @@ public class store_local_db {
             // TODO: this delete one by one is bad. Fix it!
             List<model_ownership> ownerships = model_ownership.find.fetch("repo")
                     .where().eq("repo.repo_name", repo.repo_name).findList();
-            if (ownerships!=null) {
-                for (model_ownership ownership: ownerships) {
+            if (ownerships != null) {
+                for (model_ownership ownership : ownerships) {
                     model_ownership.find.deleteById(ownership.id);
                 }
             }
@@ -209,8 +209,8 @@ public class store_local_db {
             List<model_offer> offers = model_offer.find.fetch("user").fetch("pull_request").fetch("pull_request.repo")
                     .where().eq("pull_request.number", number)
                     .where().eq("pull_request.repo.repo_name", repo_name).findList();
-            if (offers!=null) {
-                for (model_offer offer: offers) {
+            if (offers != null) {
+                for (model_offer offer : offers) {
                     model_offer.find.deleteById(offer.id);
                 }
             }
@@ -224,8 +224,8 @@ public class store_local_db {
             // TODO: this delete one by one is bad. Fix it!
             List<model_offer> offers = model_offer.find.fetch("pull_request").fetch("pull_request.repo")
                     .where().eq("pull_request.repo.repo_name", repo.repo_name).findList();
-            if (offers!=null) {
-                for (model_offer offer: offers) {
+            if (offers != null) {
+                for (model_offer offer : offers) {
                     model_offer.find.deleteById(offer.id);
                 }
             }
@@ -260,8 +260,8 @@ public class store_local_db {
             // TODO: this delete one by one is bad. Fix it!
             List<model_repo_policy> policies = model_repo_policy.find.fetch("repo")
                     .where().eq("repo.repo_name", repo.repo_name).findList();
-            if (policies!=null) {
-                for (model_repo_policy policy: policies) {
+            if (policies != null) {
+                for (model_repo_policy policy : policies) {
                     model_repo_policy.find.deleteById(policy.id);
                 }
             }
@@ -308,8 +308,7 @@ public class store_local_db {
         }
         try {
             pull_request.save();
-        }
-        catch (Exception ignored) {
+        } catch (Exception ignored) {
             pull_request.update();
         }
         return updated;
@@ -350,8 +349,8 @@ public class store_local_db {
             // TODO: this delete one by one is bad. Fix it!
             List<model_pull_request> pull_requests = model_pull_request.find.fetch("repo")
                     .where().eq("repo.repo_name", repo.repo_name).findList();
-            if (pull_requests!=null) {
-                for (model_pull_request pull_request: pull_requests) {
+            if (pull_requests != null) {
+                for (model_pull_request pull_request : pull_requests) {
                     model_pull_request.find.deleteById(pull_request.id);
                 }
             }
@@ -368,7 +367,7 @@ public class store_local_db {
     public static void update_hook_components(interface_github_webhook hook) {
         update_user(hook.get_user());
         update_repo(hook.get_repo());
-        if (hook.get_pull_request()!=null) {
+        if (hook.get_pull_request() != null) {
             // yeah, this is the only field that can be null;
             // (because the hook may be for something else than a pull request!)
             update_pull_request(hook.get_pull_request());

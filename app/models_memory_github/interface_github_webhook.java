@@ -9,10 +9,16 @@ import models_db_github.model_user;
  */
 public interface interface_github_webhook {
     model_repo get_repo(); // always should exist
+
     model_user get_user(); // always should exist
+
     model_pull_request get_pull_request(); // this one can be null
+
     model_issue get_issue(); // this one can be null
+
     String get_issue_num();
+
     String get_comment();
+
     enum_webhook_action get_action();
 }

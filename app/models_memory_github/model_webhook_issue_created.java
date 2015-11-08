@@ -43,7 +43,7 @@ public class model_webhook_issue_created implements interface_github_webhook {
     public static boolean is_me(JsonNode json) {
         return json.has("action") && json.get("action").asText().equals("opened") &&
                 json.has("issue") && json.has("repository") && json.has("sender") &&
-                json.size()==4 && (!json.get("issue").has("pull_request"));
+                json.size() == 4 && (!json.get("issue").has("pull_request"));
     }
 
     @Override

@@ -12,8 +12,8 @@ import java.util.Date;
 
 @Entity
 public class model_gmail_last_date_read extends Model {
-    private static final String constid = "gmail_last_message_date_read_id_1789627853";
     public static final Finder<String, model_gmail_last_date_read> find = new Finder<>(model_gmail_last_date_read.class);
+    private static final String constid = "gmail_last_message_date_read_id_1789627853";
     @Id
     public final String id;
     public Date lastdate;
@@ -27,8 +27,7 @@ public class model_gmail_last_date_read extends Model {
         model_gmail_last_date_read last_date_read_model = null;
         try {
             last_date_read_model = model_gmail_last_date_read.find.byId(model_gmail_last_date_read.constid);
-        }
-        catch (Exception ignored) {
+        } catch (Exception ignored) {
         }
         return last_date_read_model;
     }

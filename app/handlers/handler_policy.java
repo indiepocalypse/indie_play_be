@@ -20,7 +20,7 @@ public class handler_policy {
     public static boolean can_create_new_repo(String user_name) {
         List<model_ownership> ownerships = store_local_db.get_ownerships_by_user_name(user_name);
         int total_repos = 0;
-        for (model_ownership ownership: ownerships) {
+        for (model_ownership ownership : ownerships) {
             if (ownership.percent.compareTo(new BigDecimal("50.0")) == 1) {
                 total_repos += 1;
             }

@@ -10,7 +10,7 @@ import models_memory_indie.model_command;
 public class command_list_owners implements interface_command {
     @Override
     public boolean is_recognized(model_command command) {
-        return (command.command.equals("list")) && (command.args.size()==1) &&
+        return (command.command.equals("list")) && (command.args.size() == 1) &&
                 (command.args.get(0).equals("owners"));
     }
 

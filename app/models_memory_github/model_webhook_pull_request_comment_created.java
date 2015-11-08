@@ -32,8 +32,8 @@ public class model_webhook_pull_request_comment_created implements interface_git
         this.repo = p_repo;
         this.user = p_user;
         this.pull_request = store_local_db.get_pull_request_by_repo_name_and_number(repo.repo_name, issue.number);
-        if (pull_request==null) {
-            Logger.error("while creating a model_pull_request for repo "+repo.repo_name+" #"+issue.number+":\n", "couldn't find repo in local db!");
+        if (pull_request == null) {
+            Logger.error("while creating a model_pull_request for repo " + repo.repo_name + " #" + issue.number + ":\n", "couldn't find repo in local db!");
         }
     }
 
@@ -56,7 +56,7 @@ public class model_webhook_pull_request_comment_created implements interface_git
         return json.has("action") && json.get("action").asText().equals("created") &&
                 json.has("issue") && json.has("comment") &&
                 json.has("repository") && json.has("sender") &&
-                json.size()==5 && (json.get("issue").has("pull_request"));
+                json.size() == 5 && (json.get("issue").has("pull_request"));
     }
 
     @Override

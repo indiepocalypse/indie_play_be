@@ -34,7 +34,7 @@ public class store_credentials {
                 client_id = json.get("client_id").asText();
                 client_secret = json.get("client_secret").asText();
             } catch (FileNotFoundException e) {
-                if ((tmp_name==null)||(tmp_name.equals("changeme")) || (tmp_pssw==null)||(tmp_pssw.equals("changeme"))) {
+                if ((tmp_name == null) || (tmp_name.equals("changeme")) || (tmp_pssw == null) || (tmp_pssw.equals("changeme"))) {
                     Logger.error("while loading github credentials...", e);
                 }
             }
@@ -70,7 +70,7 @@ public class store_credentials {
                 tmp_name = json.get("username").asText();
                 tmp_pssw = json.get("pssw").asText();
             } catch (FileNotFoundException e) {
-                if ((tmp_name==null)||(tmp_name.equals("changeme")) || (tmp_pssw==null)||(tmp_pssw.equals("changeme"))) {
+                if ((tmp_name == null) || (tmp_name.equals("changeme")) || (tmp_pssw == null) || (tmp_pssw.equals("changeme"))) {
                     Logger.error("while loading gmail credentials...", e);
                 }
             }

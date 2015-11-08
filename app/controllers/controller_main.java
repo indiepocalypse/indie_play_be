@@ -31,6 +31,7 @@ public class controller_main extends Controller {
     // TODO: implement policy changing commands
 
     private final static String main_title = "it's the Indiepocalypse!";
+
     private boolean is_redirected_from_github_login() {
         return request().getQueryString("code") != null;
     }
@@ -98,7 +99,7 @@ public class controller_main extends Controller {
             model_ownership ownership = handler_general.integrate_github_repo(repo, user,
                     create_webhook, check_for_existance_of_readme_before_creating_one,
                     delete_original_collaborators);
-            if (ownership==null) {
+            if (ownership == null) {
                 handler_general.delete_repo_from_github_and_db_and_also_related_ownership_policy_offers(repo);
                 // TODO: elaborate on error
                 String err = "Couldn't create the repo, sorry!";
@@ -120,8 +121,7 @@ public class controller_main extends Controller {
         String content = "error!"; //there are " + Integer.toString(sync_gmail.mail_count) + " messages in inbox!";
         try {
             content = new Markdown4jProcessor().process("This is a **bold** text\n\n```\nsome code...\nfn main() {}\n```");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Logger.error("while rendering the blog...", e);
         }
         return ok(view_main.render("blog", view_blog_entry.render(new Html(content), store_session.user_is_admin())));

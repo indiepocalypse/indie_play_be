@@ -36,8 +36,8 @@ public class sync_github_users {
                     try {
                         sync();
                         Random rand = new Random();
-                        int jitter = (int)(store_conf.get_github_user_sync_minimum_milis() +
-                                rand.nextFloat()* store_conf.get_github_user_sync_jitter_milis());
+                        int jitter = (int) (store_conf.get_github_user_sync_minimum_milis() +
+                                rand.nextFloat() * store_conf.get_github_user_sync_jitter_milis());
                         Thread.sleep(store_conf.get_github_user_sync_delta_milis() + jitter);
                         if (interrupted) {
                             return;
@@ -62,15 +62,14 @@ public class sync_github_users {
             t1 = null;
         }
     }
-    
+
     private static void sync() {
         List<model_user> users = store_local_db.get_all_users();
-        Logger.info("syncing " + Integer.toString(users.size())+" users with github");
-        for (model_user user: users) {
+        Logger.info("syncing " + Integer.toString(users.size()) + " users with github");
+        for (model_user user : users) {
             try {
                 Thread.sleep(store_conf.get_github_user_sync_jitter_small_milis());
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 if (!interrupted) {
                     Logger.error("while syncing user with github...", e);
                 }
@@ -80,8 +79,7 @@ public class sync_github_users {
             }
             try {
                 user = store_github_api.get_user_by_name(user.user_name);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 Logger.error("while getting user info from github during user sync...", e);
             }
             store_local_db.update_user(user);

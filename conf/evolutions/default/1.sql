@@ -41,15 +41,15 @@ create table model_pull_request (
   github_id                 bigint,
   html_url                  varchar(255),
   number                    varchar(255),
-  state                     varchar(255),
-  title                     varchar(255),
   user_user_name            varchar(255),
-  body                      varchar(255),
-  merged                    boolean,
-  mergeable                 boolean,
   comments_url              varchar(255),
   sha                       varchar(255),
   repo_repo_name            varchar(255),
+  state                     varchar(255),
+  title                     varchar(255),
+  body                      varchar(255),
+  merged                    boolean,
+  mergeable                 boolean,
   constraint pk_model_pull_request primary key (id))
 ;
 

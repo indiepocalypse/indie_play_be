@@ -10,13 +10,13 @@ import models_memory_indie.model_command;
 public class command_merge implements interface_command {
     @Override
     public boolean is_recognized(model_command command) {
-        return (command.command.equals("merge")) && (command.args.size()==0);
+        return (command.command.equals("merge")) && (command.args.size() == 0);
     }
 
     @Override
     public String handle(model_command command, interface_github_webhook hook) {
         String commit_message = "this is the default commit message!";
-        if ((hook.get_pull_request()!=null) && (hook.get_pull_request().title!=null)) {
+        if ((hook.get_pull_request() != null) && (hook.get_pull_request().title != null)) {
             commit_message = hook.get_pull_request().title;
         }
         if (!command.joined_args.equals("")) {

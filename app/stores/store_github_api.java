@@ -136,7 +136,7 @@ public class store_github_api {
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
         JsonNode json = play.libs.Json.parse(res.getBody());
         if ((json.has("message")) && (json.get("message").toString().contains("not found"))) {
-            throw new Error("repo \'"+path+"\" not found");
+            throw new Error("repo \'" + path + "\" not found");
         }
         return model_repo.from_json(json);
     }
@@ -161,13 +161,13 @@ public class store_github_api {
 
     public static boolean create_webhook(model_repo repo) {
         // TODO: give some app id to the webhook?
-        Logger.info("creating webhook for repo named "+repo.repo_name);
+        Logger.info("creating webhook for repo named " + repo.repo_name);
         // (returns success)
         // see for reference: https://developer.github.com/v3/repos/hooks/
         String json_payload_to_create = "{\n" +
                 "  \"name\": \"web\",\n" +
                 "  \"active\": true,\n" +
-                "  \"events\": \"*\",\n"+
+                "  \"events\": \"*\",\n" +
                 "  \"config\": {\n" +
                 "    \"url\": \"__GITHUB_WEBHOOK_URL__\",\n" +
                 "    \"content_type\": \"json\"\n" +
@@ -179,18 +179,17 @@ public class store_github_api {
                 .replace("__REPO__", repo.repo_name);
         WSRequest req = post_indie_auth_request(path, json_payload_to_create);
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
-        boolean success = (res.getStatus() == 201)&&(res.getBody().contains("ping_url"));
+        boolean success = (res.getStatus() == 201) && (res.getBody().contains("ping_url"));
         if (success) {
-            Logger.info("successfuly created a webhook for repo named "+repo.repo_name);
+            Logger.info("successfuly created a webhook for repo named " + repo.repo_name);
             return true;
-        }
-        else {
+        } else {
             if (res.getBody().contains("already exists")) {
-                Logger.info("hook already exists for repo \""+repo.repo_name+"\"");
+                Logger.info("hook already exists for repo \"" + repo.repo_name + "\"");
                 // TODO: what should we return?
                 return true;
             }
-            Logger.info("error during github webhook creation: "+res.getBody());
+            Logger.info("error during github webhook creation: " + res.getBody());
             return false;
         }
     }
@@ -204,9 +203,9 @@ public class store_github_api {
                 .replace("__NUMBER__", issue_num);
         WSRequest req = post_indie_auth_request(path, json);
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
-        boolean success = (res.getStatus() == 201)&&(res.getBody().contains("created"));
+        boolean success = (res.getStatus() == 201) && (res.getBody().contains("created"));
         if (!success) {
-            Logger.error("while commenting on issue #"+issue_num+" at repo "+repo.repo_name, res.asJson().toString());
+            Logger.error("while commenting on issue #" + issue_num + " at repo " + repo.repo_name, res.asJson().toString());
         }
         return success;
     }
@@ -226,9 +225,9 @@ public class store_github_api {
                 .setMethod("PATCH")
                 .setBody(json);
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
-        boolean success = (res.getStatus() == 200)&&(res.getBody().contains("body"));
+        boolean success = (res.getStatus() == 200) && (res.getBody().contains("body"));
         if (!success) {
-            Logger.error("while updating issue #"+issue.number+" at repo "+repo.repo_name, res.asJson().toString());
+            Logger.error("while updating issue #" + issue.number + " at repo " + repo.repo_name, res.asJson().toString());
         }
         return success;
     }
@@ -247,15 +246,15 @@ public class store_github_api {
                 .setMethod("PATCH")
                 .setBody(json);
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
-        boolean success = (res.getStatus() == 200)&&(res.getBody().contains("body"));
+        boolean success = (res.getStatus() == 200) && (res.getBody().contains("body"));
         if (!success) {
-            Logger.error("while updating pull request #"+pull_request.number+" at repo "+pull_request.repo.repo_name, res.asJson().toString());
+            Logger.error("while updating pull request #" + pull_request.number + " at repo " + pull_request.repo.repo_name, res.asJson().toString());
         }
         return success;
     }
 
     public static model_pull_request get_pull_request_by_repo_by_number(String repo_name, String number) {
-        String path = "/repos/theindiepocalypse/"+repo_name+"/pulls/"+number;
+        String path = "/repos/theindiepocalypse/" + repo_name + "/pulls/" + number;
         WSRequest req = indie_auth_request(path).setMethod("GET");
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
         return model_pull_request.from_json(res.asJson());
@@ -263,7 +262,7 @@ public class store_github_api {
 
 
     public static List<model_pull_request> get_all_pull_requests(model_repo repo) {
-        WSResponse res = indie_auth_request("/repos/theindiepocalypse/"+repo.repo_name+"/pulls")
+        WSResponse res = indie_auth_request("/repos/theindiepocalypse/" + repo.repo_name + "/pulls")
                 .setMethod("GET")
                 .execute()
                 .get(60, TimeUnit.SECONDS);
@@ -277,12 +276,12 @@ public class store_github_api {
     }
 
     public static boolean has_readme(String repo_name) {
-        WSResponse res = indie_auth_request("/repos/theindiepocalypse/"+repo_name+"/readme")
+        WSResponse res = indie_auth_request("/repos/theindiepocalypse/" + repo_name + "/readme")
                 .setMethod("GET")
                 .execute()
                 .get(60, TimeUnit.SECONDS);
         JsonNode json = res.asJson();
-        return (res.getStatus() == 200) && (json!=null) && (json.has("html_url"));
+        return (res.getStatus() == 200) && (json != null) && (json.has("html_url"));
     }
 
     public static String get_user_mail(String user_name) {
@@ -301,7 +300,7 @@ public class store_github_api {
             return "badmail_json";
         }
         JsonNode json_mail = json.get("email");
-        if (json_mail==null) {
+        if (json_mail == null) {
             Logger.error("while getting user mail from github: null mail!");
             return "nullmailjson";
 
@@ -321,10 +320,10 @@ public class store_github_api {
                 .replace("__NUMBER__", pull_request.number);
         WSRequest req = put_indie_auth_request(path, json);
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
-        if (res.getStatus()==200) {
+        if (res.getStatus() == 200) {
             return true;
         }
-        Logger.error("while mergin pull request for repo "+pull_request.repo.repo_name+" #"+pull_request.number+":\n",
+        Logger.error("while mergin pull request for repo " + pull_request.repo.repo_name + " #" + pull_request.number + ":\n",
                 res.asJson().toString());
         return false;
     }
@@ -336,32 +335,32 @@ public class store_github_api {
                 .replace("__REPO__", repo.repo_name);
         WSRequest req = indie_auth_request(path).setMethod("DELETE");
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
-        if (res.getStatus()==204) {
+        if (res.getStatus() == 204) {
             return true;
         }
-        Logger.error("while deleting repo "+repo.repo_name+"\n",
+        Logger.error("while deleting repo " + repo.repo_name + "\n",
                 res.asJson().toString());
         return false;
     }
 
     public static List<model_user> get_all_collaborators(model_repo repo) {
-        WSResponse res = indie_auth_request("/repos/theindiepocalypse/"+repo.repo_name+"/collaborators")
+        WSResponse res = indie_auth_request("/repos/theindiepocalypse/" + repo.repo_name + "/collaborators")
                 .setMethod("GET")
                 .execute()
                 .get(60, TimeUnit.SECONDS);
-        if (res.getStatus()!=200) {
+        if (res.getStatus() != 200) {
             return new ArrayList<>();
         }
         JsonNode json = res.asJson();
         ArrayList<model_user> collaborators = new ArrayList<>(json.size());
-        for (int i=0; i<json.size(); i++) {
+        for (int i = 0; i < json.size(); i++) {
             collaborators.add(model_user.from_json(json.get(i)));
         }
         return collaborators;
     }
 
     public static boolean delete_collaborator_from_repo(model_repo repo, model_user user) {
-        WSResponse res = indie_auth_request("/repos/theindiepocalypse/"+repo.repo_name+"/collaborators/"+user.user_name)
+        WSResponse res = indie_auth_request("/repos/theindiepocalypse/" + repo.repo_name + "/collaborators/" + user.user_name)
                 .setMethod("DELETE")
                 .execute()
                 .get(60, TimeUnit.SECONDS);
@@ -370,7 +369,7 @@ public class store_github_api {
 
     public static boolean delete_all_collaborators_from_repo(model_repo repo) {
         boolean ok = true;
-        for (model_user user: get_all_collaborators(repo)) {
+        for (model_user user : get_all_collaborators(repo)) {
             if (!delete_collaborator_from_repo(repo, user)) {
                 ok = false;
             }

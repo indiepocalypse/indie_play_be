@@ -14,12 +14,12 @@ import stores.store_local_db;
 public class command_close implements interface_command {
     @Override
     public boolean is_recognized(model_command command) {
-        return (command.command.equals("close")) && (command.args.size()==0);
+        return (command.command.equals("close")) && (command.args.size() == 0);
     }
 
     @Override
     public String handle(model_command command, interface_github_webhook hook) {
-        if (hook.get_pull_request()!=null) {
+        if (hook.get_pull_request() != null) {
             // we have a pull reuqest
             model_pull_request pull_request = hook.get_pull_request();
             if (pull_request.is_closed()) {
@@ -28,12 +28,10 @@ public class command_close implements interface_command {
             pull_request.state = "closed";
             if (store_github_api.update_pull_request(pull_request)) {
                 store_local_db.update_pull_request(pull_request);
+            } else {
+                Logger.error("could not close pull request #" + pull_request.number + " on repo " + pull_request.repo.repo_name);
             }
-            else {
-                Logger.error("could not close pull request #"+pull_request.number+" on repo "+pull_request.repo.repo_name);
-            }
-        }
-        else {
+        } else {
             // we have an issue
             model_issue issue = hook.get_issue();
             if (issue.is_closed()) {
@@ -41,7 +39,7 @@ public class command_close implements interface_command {
             }
             issue.state = "closed";
             if (!store_github_api.update_issue(hook.get_repo(), issue)) {
-                Logger.error("could not close issue #"+issue.number+" on repo "+hook.get_repo().repo_name);
+                Logger.error("could not close issue #" + issue.number + " on repo " + hook.get_repo().repo_name);
             }
         }
         return "";

@@ -20,17 +20,17 @@ public class model_pull_request extends Model {
     public final Long github_id;
     public final String html_url;
     public final String number;
-    public String state;
-    public String title;
     @ManyToOne
     public final model_user user;
-    public String body;
-    public Boolean merged;
-    public Boolean mergeable;
     public final String comments_url;
     public final String SHA;
     @ManyToOne
     public final model_repo repo;
+    public String state;
+    public String title;
+    public String body;
+    public Boolean merged;
+    public Boolean mergeable;
 
     public model_pull_request(
             String p_url,
@@ -63,10 +63,6 @@ public class model_pull_request extends Model {
         this.id = repo.repo_name + "/" + this.number;
     }
 
-    public boolean is_closed() {
-        return !this.state.equals("open");
-    }
-
     public static model_pull_request from_json(JsonNode json) {
         // TODO: can an int json value be parsed as string? the way below seems... just too much
         String number = Integer.toString(json.get("number").asInt());
@@ -77,34 +73,38 @@ public class model_pull_request extends Model {
         String title = json.get("title").asText();
         model_user user = model_user.from_json(json.get("user"));
         String body = json.get("body").asText();
-        Boolean merged = json.has("merged_at") && json.get("merged_at")!=null &&
-                json.get("merged_at").asText()!=null && !json.get("merged_at").asText().equals("null");
-        Boolean mergeable = json.has("mergeable") && json.get("mergeable")!=null && json.get("mergeable").asBoolean();
-        if ((json.get("mergeable")==null) || (json.get("mergeable").isNull())) {
+        Boolean merged = json.has("merged_at") && json.get("merged_at") != null &&
+                json.get("merged_at").asText() != null && !json.get("merged_at").asText().equals("null");
+        Boolean mergeable = json.has("mergeable") && json.get("mergeable") != null && json.get("mergeable").asBoolean();
+        if ((json.get("mergeable") == null) || (json.get("mergeable").isNull())) {
             mergeable = null;
         }
         String comments_url = json.get("comments_url").asText();
         JsonNode head = json.get("head");
         model_repo repo = model_repo.from_json(json.get("base").get("repo"));
         String SHA = null;
-        if (head!=null) {
+        if (head != null) {
             SHA = head.get("sha").asText();
         }
         return new model_pull_request(
-            url,
-            github_id,
-            html_url,
-            state,
-            title,
-            user,
-            body,
-            merged,
-            mergeable,
-            comments_url,
-            repo,
-            number,
-            SHA
+                url,
+                github_id,
+                html_url,
+                state,
+                title,
+                user,
+                body,
+                merged,
+                mergeable,
+                comments_url,
+                repo,
+                number,
+                SHA
         );
+    }
+
+    public boolean is_closed() {
+        return !this.state.equals("open");
     }
 
 }

@@ -40,22 +40,18 @@ public class controller_webhooks_github extends Controller {
         interface_github_webhook hook;
         if (model_webhook_issue_comment_created.is_me(json)) {
             hook = model_webhook_issue_comment_created.from_json(json);
-        }
-        else if (model_webhook_pull_request_comment_created.is_me(json)) {
+        } else if (model_webhook_pull_request_comment_created.is_me(json)) {
             hook = model_webhook_pull_request_comment_created.from_json(json);
-        }
-        else if (model_webhook_issue_created.is_me(json)) {
+        } else if (model_webhook_issue_created.is_me(json)) {
             hook = model_webhook_issue_created.from_json(json);
-        }
-        else if (model_webhook_pull_request_created_or_updated.is_me(json)) {
+        } else if (model_webhook_pull_request_created_or_updated.is_me(json)) {
             hook = model_webhook_pull_request_created_or_updated.from_json(json);
             if (store_local_db.update_pull_request(hook.get_pull_request())) {
                 // code in PR was updated. No comment was created, no command issued.
                 // store call was responsible to notify everybody
                 return ok();
             }
-        }
-        else {
+        } else {
             Logger.info("we got some weird hook, not handled yet");
             return ok();
         }
@@ -71,18 +67,19 @@ public class controller_webhooks_github extends Controller {
         if (!response.trim().equals("")) {
             response += "\n\n";
         }
-        for (String command_response: command_responses) {
-            response += command_response+"\n\n";
+        for (String command_response : command_responses) {
+            response += command_response + "\n\n";
         }
         response += response_footer;
 
-        if (response.trim().length()==0) {
+        if (response.trim().length() == 0) {
             return ok();
         }
-        response = "@"+sender_name+": "+response;
+        response = "@" + sender_name + ": " + response;
         if (!store_github_api.comment_on_issue(hook.get_repo(), hook.get_issue_num(), response)) {
             Logger.info("problem commenting...");
-        };
+        }
+        ;
         return ok();
     }
 }
