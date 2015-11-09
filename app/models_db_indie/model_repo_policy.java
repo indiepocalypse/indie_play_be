@@ -3,6 +3,7 @@ package models_db_indie;
 import com.avaje.ebean.Model;
 import com.typesafe.config.ConfigFactory;
 import models_db_github.model_repo;
+import stores.store_conf;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -27,8 +28,8 @@ public class model_repo_policy extends Model {
     public model_repo_policy(model_repo p_repo) {
         id = p_repo.repo_name + "@policy";
         this.repo = p_repo;
-        this.ownership_required_to_change_policy = new BigDecimal(ConfigFactory.load().getString("policy.default_ownership_required_to_change_policy"));
-        this.ownership_required_to_manage_issues = new BigDecimal(ConfigFactory.load().getString("policy.default_ownership_required_to_manage_issues"));
+        this.ownership_required_to_change_policy = store_conf.get_policy_default_ownership_required_to_change_policy();
+        this.ownership_required_to_manage_issues = store_conf.get_policy_default_ownership_required_to_manage_issues();
     }
 }
 
