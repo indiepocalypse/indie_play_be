@@ -30,7 +30,7 @@ public class command_close implements interface_command {
         if (ownership==null) {
             return "Only owners with more than "+min_ownership.toString()+"% ownership can close issues. You currently have no ownership at all...";
         }
-        if (ownership.percent.compareTo(store_conf.get_policy_default_ownership_required_to_manage_issues())>0) {
+        if (ownership.percent.compareTo(store_conf.get_policy_default_ownership_required_to_manage_issues())<0) {
             return "Only owners with more than "+min_ownership.toString()+"% ownership can close issues. You currently have "+ownership.percent.toString()+"%";
         }
 
