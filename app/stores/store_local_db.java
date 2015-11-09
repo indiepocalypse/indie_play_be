@@ -136,6 +136,17 @@ public class store_local_db {
         }
     }
 
+    public static model_ownership get_ownerships_by_user_name_and_repo_name(model_user user, model_repo repo) {
+        try {
+            return model_ownership.find.fetch("user").fetch("repo").where()
+                    .eq("repo.repo_name", repo.repo_name)
+                    .eq("user.user_name", user.user_name)
+                    .findUnique();
+        } catch (Exception ignore) {
+            return null;
+        }
+    }
+
     public static void delete_ownerships_by_repo(model_repo repo) {
         try {
             // TODO: this delete one by one is bad. Fix it!
