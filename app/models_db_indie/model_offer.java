@@ -23,7 +23,7 @@ public class model_offer extends Model {
     public final model_user user;
     @ManyToOne
     public final model_pull_request pull_request;
-    @Column(precision = 3, scale = 7)
+    @Column(precision = 7, scale = 4)
     final BigDecimal amount_percent;
     final Boolean is_active;
     final Boolean was_positively_accepted;
