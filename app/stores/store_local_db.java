@@ -249,7 +249,7 @@ public class store_local_db {
         }
     }
 
-    public static model_repo_policy get_policies_by_repo(model_repo repo) {
+    public static model_repo_policy get_policy_by_repo(model_repo repo) {
         try {
             return model_repo_policy.find.fetch("repo")
                     .where().eq("repo.repo_name", repo.repo_name).findUnique();
@@ -258,7 +258,7 @@ public class store_local_db {
         }
     }
 
-    public static void delete_policies_by_repo(model_repo repo) {
+    public static void delete_policy_by_repo(model_repo repo) {
         try {
             // TODO: this delete one by one is bad. Fix it!
             List<model_repo_policy> policies = model_repo_policy.find.fetch("repo")

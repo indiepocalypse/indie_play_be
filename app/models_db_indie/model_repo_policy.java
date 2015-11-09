@@ -22,8 +22,8 @@ public class model_repo_policy extends Model {
     public final String id;
     @ManyToOne
     public final model_repo repo;
-    public final BigDecimal ownership_required_to_change_policy;
-    public final BigDecimal ownership_required_to_manage_issues; // close/label/etc.
+    public BigDecimal ownership_required_to_change_policy;
+    public BigDecimal ownership_required_to_manage_issues; // close/label/etc.
 
     public model_repo_policy(model_repo p_repo) {
         id = p_repo.repo_name + "@policy";
