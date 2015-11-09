@@ -4,6 +4,7 @@ import com.avaje.ebean.Model;
 import models_db_github.model_repo;
 import models_db_github.model_user;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -22,6 +23,7 @@ public class model_ownership extends Model {
     public final model_user user;
     @ManyToOne
     public final model_repo repo;
+    @Column(precision = 3, scale = 3)
     public final BigDecimal percent;
 
     public model_ownership(model_user p_user, model_repo p_repo, BigDecimal p_percent) {

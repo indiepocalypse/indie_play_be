@@ -40,7 +40,7 @@ public class command_change_issue_policy implements interface_command {
         }
         return false;
     }
-    
+
     @Override
     public String handle(model_command command, interface_github_webhook hook) {
         model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo());

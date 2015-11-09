@@ -4,6 +4,7 @@ import com.avaje.ebean.Model;
 import models_db_github.model_pull_request;
 import models_db_github.model_user;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -22,6 +23,7 @@ public class model_offer extends Model {
     public final model_user user;
     @ManyToOne
     public final model_pull_request pull_request;
+    @Column(precision = 3, scale = 3)
     final BigDecimal amount_percent;
     final Boolean is_active;
     final Boolean was_positively_accepted;

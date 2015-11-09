@@ -19,7 +19,7 @@ create table model_offer (
   id                        varchar(255) not null,
   user_user_name            varchar(255),
   pull_request_id           varchar(255),
-  amount_percent            decimal(38),
+  amount_percent            decimal(3,3),
   is_active                 boolean,
   was_positively_accepted   boolean,
   date_accepted_if_accepted boolean,
@@ -31,7 +31,7 @@ create table model_ownership (
   id                        varchar(255) not null,
   user_user_name            varchar(255),
   repo_repo_name            varchar(255),
-  percent                   decimal(38),
+  percent                   decimal(3,3),
   constraint pk_model_ownership primary key (id))
 ;
 
@@ -66,8 +66,8 @@ create table model_repo (
 create table model_repo_policy (
   id                        varchar(255) not null,
   repo_repo_name            varchar(255),
-  ownership_required_to_change_policy decimal(38),
-  ownership_required_to_manage_issues decimal(38),
+  ownership_required_to_change_policy decimal(3,3),
+  ownership_required_to_manage_issues decimal(3,3),
   constraint pk_model_repo_policy primary key (id))
 ;
 

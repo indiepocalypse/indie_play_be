@@ -1,10 +1,10 @@
 package models_db_indie;
 
 import com.avaje.ebean.Model;
-import com.typesafe.config.ConfigFactory;
 import models_db_github.model_repo;
 import stores.store_conf;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -22,7 +22,9 @@ public class model_repo_policy extends Model {
     public final String id;
     @ManyToOne
     public final model_repo repo;
+    @Column(precision = 3, scale = 3)
     public BigDecimal ownership_required_to_change_policy;
+    @Column(precision = 3, scale = 3)
     public BigDecimal ownership_required_to_manage_issues; // close/label/etc.
 
     public model_repo_policy(model_repo p_repo) {
