@@ -22,9 +22,9 @@ public class model_repo_policy extends Model {
     public final String id;
     @ManyToOne
     public final model_repo repo;
-    @Column(precision = 3, scale = 3)
+    @Column(precision = 3, scale = 7)
     public BigDecimal ownership_required_to_change_policy;
-    @Column(precision = 3, scale = 3)
+    @Column(precision = 3, scale = 7)
     public BigDecimal ownership_required_to_manage_issues; // close/label/etc.
 
     public model_repo_policy(model_repo p_repo) {
