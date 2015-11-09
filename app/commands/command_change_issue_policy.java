@@ -40,7 +40,6 @@ public class command_change_issue_policy implements interface_command {
         }
         return false;
     }
-
     
     @Override
     public String handle(model_command command, interface_github_webhook hook) {
@@ -65,6 +64,7 @@ public class command_change_issue_policy implements interface_command {
             return "policy created";
         }
         policy.ownership_required_to_manage_issues = new_percent;
+        store_local_db.update_policy(policy);
         return "policy changed";
     }
 
