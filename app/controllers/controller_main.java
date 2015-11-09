@@ -31,6 +31,8 @@ public class controller_main extends Controller {
     // TODO: implement policy changing commands
     // TODO: error handling: when requesting from github. Either use exceptions or return values. Currently we have both!
     // TODO: error handling: when contacting github and the sb touch 1st github and only if success continue
+    // TODO: pretty-print the BigDecimals
+    // TODO: check the BigDecimals are in compliance with the number of digits etc. (e.g. 4 after the point, no more!)
 
     private final static String main_title = "it's the Indiepocalypse!";
 
