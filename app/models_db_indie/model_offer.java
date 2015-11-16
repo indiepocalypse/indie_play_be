@@ -40,5 +40,9 @@ public class model_offer extends Model {
         this.date_created = p_date_created;
         this.date_accepted_if_accepted = p_date_accepted_if_accepted;
     }
+
+    public boolean is_requested() {
+        return user.user_name.equals(pull_request.user.user_name);
+    }
 }
 
