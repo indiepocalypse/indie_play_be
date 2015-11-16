@@ -86,6 +86,10 @@ public class handler_commands {
     }
 
     public static String get_offers_good_looking_table(interface_github_webhook hook) {
+        // TODO: show requested percent
+        // TODO: show current offers satisfied (and total satisfied)
+        // TODO: show current offers unsatisfies (and total unsatisfied)
+        // TODO: show minimal requirements for merge
         String response = "\n\nOwner | Current offer\n" +
                 "-------|---------\n";
         List<model_offer> offers = store_local_db.get_offers_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
