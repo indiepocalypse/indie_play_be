@@ -177,4 +177,9 @@ public class handler_commands {
             return "Some problem with merging. Please try again later, or contant an admin";
         }
     }
+
+    public static String handle_make_offer(interface_github_webhook hook, String percent_amount) {
+        just do it!
+        XXXXXXXXXXXXXXXXXXXXX;
+    }
 }
