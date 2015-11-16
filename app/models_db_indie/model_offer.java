@@ -24,7 +24,7 @@ public class model_offer extends Model {
     @ManyToOne
     public final model_pull_request pull_request;
     @Column(precision = 7, scale = 4)
-    final BigDecimal amount_percent;
+    public final BigDecimal amount_percent;
     final Boolean is_active;
     final Boolean was_positively_accepted;
     final Boolean date_accepted_if_accepted;

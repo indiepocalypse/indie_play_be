@@ -194,10 +194,10 @@ public class store_local_db {
         }
     }
 
-    public static List<model_offer> get_offers_by_pull_request(String repo_name, int number) {
+    public static List<model_offer> get_offers_by_pull_request(String repo_name, String number) {
         try {
             return model_offer.find.fetch("user").fetch("pull_request").fetch("pull_request.repo")
-                    .where().eq("pull_request.number", Integer.toString(number))
+                    .where().eq("pull_request.number", number)
                     .where().eq("pull_request.repo.repo_name", repo_name)
                     .findList();
         } catch (Exception ignore) {

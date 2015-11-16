@@ -29,6 +29,6 @@ public class command_show_policy implements interface_command {
 
     @Override
     public String get_command_name() {
-        return "SHOW POLICY";
+        return "SHOW_POLICY";
     }
 }

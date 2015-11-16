@@ -70,6 +70,6 @@ public class command_change_issue_policy implements interface_command {
 
     @Override
     public String get_command_name() {
-        return "OPEN";
+        return "CHANGE_ISSUE_POLICY";
     }
 }

@@ -21,6 +21,6 @@ public class command_list_admins implements interface_command {
 
     @Override
     public String get_command_name() {
-        return "LIST ADMINS";
+        return "LIST_ADMINS";
     }
 }

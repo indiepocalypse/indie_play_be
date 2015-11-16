@@ -30,6 +30,6 @@ public class command_show_creator implements interface_command {
 
     @Override
     public String get_command_name() {
-        return "LIST OWNERS";
+        return "SHOW_CREATOR";
     }
 }

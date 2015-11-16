@@ -3,6 +3,7 @@ package handlers;
 import commands.interface_command;
 import models_db_github.model_pull_request;
 import models_db_indie.model_admin;
+import models_db_indie.model_offer;
 import models_db_indie.model_ownership;
 import models_memory_github.interface_github_webhook;
 import models_memory_github.model_issue;
@@ -12,7 +13,9 @@ import play.Logger;
 import stores.store_github_api;
 import stores.store_local_db;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.List;
 
 /**
@@ -79,6 +82,19 @@ public class handler_commands {
             response += "@" + ownership.user.user_name + "|" + ownership.percent.toString() + "\n";
         }
         response += "*total* | 100.0\n";
+        return response;
+    }
+
+    public static String get_offers_good_looking_table(interface_github_webhook hook) {
+        String response = "\n\nOwner | Current offer\n" +
+                "-------|---------\n";
+        List<model_offer> offers = store_local_db.get_offers_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
+        BigDecimal total = new BigDecimal("0.0");
+        for (model_offer offer : offers) {
+            response += "@" + offer.user.user_name + "|" + offer.amount_percent.toString() + "\n";
+            total.add(offer.amount_percent);
+        }
+        response += "*total* | "+total.toString()+"\n";
         return response;
     }
 
