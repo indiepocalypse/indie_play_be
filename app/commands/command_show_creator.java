@@ -1,6 +1,5 @@
 package commands;
 
-import handlers.handler_commands;
 import models_db_indie.model_ownership;
 import models_memory_github.interface_github_webhook;
 import models_memory_indie.model_command;
