@@ -182,7 +182,22 @@ public class handler_commands {
     }
 
     public static String handle_make_offer(interface_github_webhook hook, String percent_amount, boolean is_request) {
+        String str_offer = is_request? "request" : "offer";
+        if (hook.get_pull_request()==null) {
+            return "this is no pull reuqest, cannot make a "+str_offer+" here";
+        }
+        if ((is_request) && (!hook.get_user().user_name.equals(hook.get_pull_request().user.user_name))) {
+            return "only the user making the pull request can make a request";
+        }
+        if ((!is_request) && (hook.get_user().user_name.equals(hook.get_pull_request().user.user_name))) {
+            return "you are the user making the request, you cannot place an offer";
+        }
+
+        // we can make or update the use offer or request...
+
+        List<model_offer> current_offers = store_local_db.get_offers_by_pull_request()
         just do it!
         XXXXXXXXXXXXXXXXXXXXX;
+        at the end also list offers
     }
 }
