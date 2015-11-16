@@ -93,6 +93,9 @@ public class handler_commands {
         // TODO: show current offers satisfied (and total satisfied)
         // TODO: show current offers unsatisfies (and total unsatisfied)
         // TODO: show minimal requirements for merge
+        if (hook.get_pull_request()==null) {
+            return "this is not a pull request, there are no offers here";
+        }
         String response = "\n\nOwner | Current offer\n" +
                 "-------|---------\n";
         List<model_offer> offers = store_local_db.get_offers_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
@@ -178,7 +181,7 @@ public class handler_commands {
         }
     }
 
-    public static String handle_make_offer(interface_github_webhook hook, String percent_amount) {
+    public static String handle_make_offer(interface_github_webhook hook, String percent_amount, boolean is_request) {
         just do it!
         XXXXXXXXXXXXXXXXXXXXX;
     }

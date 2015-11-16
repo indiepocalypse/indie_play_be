@@ -22,9 +22,6 @@ public class command_list_offers implements interface_command {
 
     @Override
     public String handle(model_command command, interface_github_webhook hook) {
-        if (hook.get_pull_request()==null) {
-            return "this is not a pull request, there are no offers here";
-        }
         return handler_commands.get_offers_good_looking_table(hook);
     }
 
