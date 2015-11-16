@@ -116,20 +116,20 @@ public class handler_commands {
             return "there are no admins";
         }
         boolean more_than_one_admin = admins.size() > 1;
-        boolean are_you_included = false;
+        boolean you_are_included = false;
         for (model_admin admin : admins) {
             if (hook.get_user().user_name.equals(admin.user.user_name)) {
-                are_you_included = true;
+                you_are_included = true;
                 continue;
             }
             response += "@" + admin.user.user_name + " ";
         }
-        if ((more_than_one_admin) && (are_you_included)) {
+        if ((more_than_one_admin) && (you_are_included)) {
             response += "and you, are admins";
-        } else if ((!more_than_one_admin) && (are_you_included)) {
+        } else if ((!more_than_one_admin) && (you_are_included)) {
             response = "you are the only admin";
         } else if (more_than_one_admin) {
-            response = "are admins";
+            response += "are admins";
         }
         return response;
     }
