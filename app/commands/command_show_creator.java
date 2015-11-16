@@ -5,6 +5,7 @@ import models_db_indie.model_ownership;
 import models_memory_github.interface_github_webhook;
 import models_memory_indie.model_command;
 import stores.store_local_db;
+import stores.store_session;
 
 /**
  * Created by skariel on 31/10/15.
@@ -22,7 +23,10 @@ public class command_show_creator implements interface_command {
         if (creator==null) {
             return "this repo has no creator";
         }
-        return "the creator of this repo is "+creator.user.user_name;
+        if (creator.user.user_name.equals(store_session.get_user_name())) {
+            return "the creator of this repo is you!";
+        }
+        return "the creator of this repo is @"+creator.user.user_name;
     }
 
     @Override
