@@ -78,6 +78,9 @@ public class handler_commands {
         String response = "\n\nOwner | Percent\n" +
                 "-------|---------\n";
         List<model_ownership> ownerships = store_local_db.get_ownerships_by_repo_name(hook.get_repo().repo_name);
+        if (ownerships.size()==0) {
+            return "thre are no owners";
+        }
         for (model_ownership ownership : ownerships) {
             response += "@" + ownership.user.user_name + "|" + ownership.percent.toString() + "\n";
         }
@@ -93,6 +96,9 @@ public class handler_commands {
         String response = "\n\nOwner | Current offer\n" +
                 "-------|---------\n";
         List<model_offer> offers = store_local_db.get_offers_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
+        if (offers.size()==0) {
+            return "thre are no offers";
+        }
         BigDecimal total = new BigDecimal("0.0");
         for (model_offer offer : offers) {
             response += "@" + offer.user.user_name + "|" + offer.amount_percent.toString() + "\n";
@@ -107,7 +113,7 @@ public class handler_commands {
         String response = " ";
         List<model_admin> admins = store_local_db.get_all_admins();
         if (admins.size() == 0) {
-            return "no admins at all, weird!";
+            return "there are no admins";
         }
         boolean more_than_one_admin = admins.size() > 1;
         boolean are_you_included = false;
