@@ -128,6 +128,17 @@ public class store_local_db {
         }
     }
 
+    public static model_ownership get_creator_by_repo(model_repo repo) {
+        try {
+            return model_ownership.find.fetch("user").fetch("repo")
+                    .where().eq("repo.repo_name", repo.repo_name)
+                    .where().eq("is_creator", true)
+                    .findUnique();
+        } catch (Exception ignore) {
+            return null;
+        }
+    }
+
     public static List<model_ownership> get_ownerships_by_repo_name(String repo_name) {
         try {
             return model_ownership.find.fetch("user").fetch("repo").where().eq("repo.repo_name", repo_name).findList();
