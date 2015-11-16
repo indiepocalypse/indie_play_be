@@ -25,6 +25,7 @@ public class command_list_offers implements interface_command {
         return handler_commands.get_offers_good_looking_table(hook);
     }
 
+    
     @Override
     public String get_command_name() {
         return "LIST_OFFERS";
