@@ -25,12 +25,14 @@ public class model_ownership extends Model {
     public final model_repo repo;
     @Column(precision = 7, scale = 4)
     public final BigDecimal percent;
+    public final boolean is_creator;
 
-    public model_ownership(model_user p_user, model_repo p_repo, BigDecimal p_percent) {
+    public model_ownership(model_user p_user, model_repo p_repo, BigDecimal p_percent, boolean p_is_creator) {
         id = p_user.user_name + "@" + p_repo.repo_name;
         user = p_user;
         repo = p_repo;
         percent = p_percent;
+        is_creator = p_is_creator;
     }
 }
 

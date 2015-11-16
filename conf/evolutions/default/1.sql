@@ -32,6 +32,7 @@ create table model_ownership (
   user_user_name            varchar(255),
   repo_repo_name            varchar(255),
   percent                   decimal(7,4),
+  is_creator                boolean,
   constraint pk_model_ownership primary key (id))
 ;
 

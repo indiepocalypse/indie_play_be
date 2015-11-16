@@ -51,9 +51,11 @@ public class handler_general {
         }
         BigDecimal indie_ownership_percent = store_conf.get_default_indie_ownership_percent();
         BigDecimal user_ownership_percent = new BigDecimal("100.0").subtract(indie_ownership_percent);
-        model_ownership ownership1 = new model_ownership(user, repo, user_ownership_percent);
+        final boolean is_creator = true;
+        model_ownership ownership1 = new model_ownership(user, repo, user_ownership_percent, is_creator);
         model_user theindiepocalypse = store_local_db.get_user_by_name("theindiepocalypse");
-        model_ownership ownership2 = new model_ownership(theindiepocalypse, repo, indie_ownership_percent);
+        final boolean indiepocalypse_is_creator = false;
+        model_ownership ownership2 = new model_ownership(theindiepocalypse, repo, indie_ownership_percent, indiepocalypse_is_creator);
         store_local_db.update_ownership(ownership1);
         store_local_db.update_ownership(ownership2);
         // TODO: should return the policy too?
