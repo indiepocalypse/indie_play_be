@@ -2,3 +2,4 @@ The commands, ie the classes in thi directory that implement the interface_comma
 are scanned and put into an array automatically.
 
 // TODO: a `mocve_creator` command (ie move creatorship to someone else
+// TODO: a `help command`
