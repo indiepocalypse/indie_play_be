@@ -7,10 +7,7 @@ import models_db_github.model_user;
 import models_db_indie.model_ownership;
 import models_db_indie.model_repo_policy;
 import play.Logger;
-import stores.store_conf;
-import stores.store_github_api;
-import stores.store_github_iojs;
-import stores.store_local_db;
+import stores.*;
 import sync.sync_gmail;
 
 import java.math.BigDecimal;
@@ -25,8 +22,12 @@ public class handler_general {
         model_user user = store_local_db.get_user_by_name(name);
         if (user == null) {
             // not found, update from github
-            user = store_github_api.get_user_by_name(name);
-            store_local_db.update_user(user);
+            try {
+                user = store_github_api.get_user_by_name(name);
+                store_local_db.update_user(user);
+            }
+            catch (github_io_exception ignore) {
+            }
         } else {
             Logger.info("user " + name + " already in DB, will not integrate user");
         }
@@ -35,7 +36,7 @@ public class handler_general {
 
     public static void integrate_github_repo(String repo_name, String user_name, boolean create_webhook,
                                                         boolean check_for_existance_of_readme,
-                                                        boolean delete_original_collaborators) {
+                                                        boolean delete_original_collaborators) throws github_io_exception {
         // this method assumes repo is not in DB!
         model_user user = get_integrate_github_user_by_name(user_name);
         model_repo repo = store_github_api.get_repo_by_name(user_name, repo_name);
@@ -44,7 +45,7 @@ public class handler_general {
 
     public static void integrate_github_repo(model_repo repo, model_user user, boolean create_webhook,
                                                         boolean check_for_existance_first,
-                                                        boolean delete_original_collaborators) {
+                                                        boolean delete_original_collaborators) throws github_io_exception {
         store_local_db.update_repo(repo);
         if (create_webhook) {
             store_github_api.create_webhook(repo);
@@ -65,13 +66,15 @@ public class handler_general {
         create_default_readme(repo, check_for_existance_first);
 
         if (delete_original_collaborators) {
-            if (store_github_api.delete_all_collaborators_from_repo(ownership1.repo)) {
+            try {
+                store_github_api.delete_all_collaborators_from_repo(ownership1.repo);
                 Logger.info("user " + user.user_name + " removed from collaborators to " + ownership1.repo.repo_name);
                 final String user_mail = store_github_api.get_user_mail(user.user_name);
                 final String mail_subject = "You were removed as collaborator from repository (" + repo.repo_name + ")";
                 final String mail_body = "The reason is that this repo was transferred to thindipocalypse user and it is now managed through its api.\n see the FAQ here:\n" + store_conf.get_absolute_url(routes.controller_main.faq().url());
                 sync_gmail.sendmail(user_mail, mail_subject, mail_body);
-            } else {
+            }
+            catch (github_io_exception e) {
                 Logger.error("could not remove user " + user.user_name + " removed from collaborators to " + ownership1.repo.repo_name);
             }
 
@@ -80,7 +83,10 @@ public class handler_general {
 
     public static void create_default_readme(model_repo repo, boolean check_for_existance_first) {
         if (check_for_existance_first) {
-            if (store_github_api.has_readme(repo.repo_name)) {
+            try {
+                store_github_api.has_readme(repo.repo_name);
+            }
+            catch (github_io_exception e) {
                 Logger.info("repo " + repo.repo_name + " already has a readme. Skipping creation of default one");
                 return;
             }
@@ -94,7 +100,7 @@ public class handler_general {
         }
     }
 
-    public static void notify_by_comment_that_pr_changed_and_offers_are_removed(model_pull_request pull_request) {
+    public static void notify_by_comment_that_pr_changed_and_offers_are_removed(model_pull_request pull_request) throws github_io_exception {
         store_github_api.comment_on_issue(pull_request.repo, pull_request.number,
                 "PR updated, all offers cleared!\nplease place your new offers");
     }
@@ -108,7 +114,7 @@ public class handler_general {
     }
 
 
-    public static void delete_repo_from_github_and_db_and_also_related_ownership_policy_offers(model_repo repo) {
+    public static void delete_repo_from_github_and_db_and_also_related_ownership_policy_offers(model_repo repo) throws github_io_exception {
         store_local_db.delete_offers_by_repo(repo);
         store_local_db.delete_ownerships_by_repo(repo);
         store_local_db.delete_policy_by_repo(repo);
@@ -130,7 +136,11 @@ public class handler_general {
             // updated pull requests contains different code, all previous offers rendered irrelevant
             store_local_db.delete_offers_by_pull_request(pull_request.repo.repo_name, pull_request.number);
             // notify users
-            notify_by_comment_that_pr_changed_and_offers_are_removed(pull_request);
+            try {
+                notify_by_comment_that_pr_changed_and_offers_are_removed(pull_request);
+            }
+            catch (github_io_exception ignore) {
+            }
         }
         try {
             pull_request.save();

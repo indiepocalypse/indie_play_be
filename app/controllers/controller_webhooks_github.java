@@ -7,6 +7,7 @@ import models_memory_github.*;
 import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
+import stores.github_io_exception;
 import stores.store_github_api;
 import stores.store_local_db;
 
@@ -77,7 +78,10 @@ public class controller_webhooks_github extends Controller {
             return ok();
         }
         response = "@" + sender_name + ": " + response;
-        if (!store_github_api.comment_on_issue(hook.get_repo(), hook.get_issue_num(), response)) {
+        try {
+            store_github_api.comment_on_issue(hook.get_repo(), hook.get_issue_num(), response);
+        }
+        catch (github_io_exception e) {
             Logger.info("problem commenting...");
         }
         return ok();

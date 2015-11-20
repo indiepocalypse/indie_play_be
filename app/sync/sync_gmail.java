@@ -159,7 +159,14 @@ public class sync_gmail {
                     String repo_name = m_subject.split("/")[1].split("\\)")[0];
                     if (!handler_policy.can_create_new_repo(from_user)) {
                         Logger.info("cannot transfer repo " + repo_name + " from user: " + from_user + " because of policy of maximum repos with more than 50% ownership.");
-                        final String user_mail = store_github_api.get_user_mail(from_user);
+                        String user_mail = null;
+                        try {
+                            user_mail = store_github_api.get_user_mail(from_user);
+                        }
+                        catch (github_io_exception e) {
+                            Logger.error("could not get user "+from_user+" mail in order to send a cannot move repo error. Repo name is "+repo_name);
+                            continue;
+                        }
                         final String mail_subject = "Cannot accept repository transfer (" + repo_name + ")";
                         final String mail_body = "The reason is that you already have the maximum number of repos allowed with 50% ore more ownership.";
                         sendmail(user_mail, mail_subject, mail_body);
@@ -175,7 +182,13 @@ public class sync_gmail {
 
                             if (store_local_db.has_repo(repo_name)) {
                                 Logger.info("cannot transfer repo " + repo_name + " from user: " + from_user + " because it already exists in DB!");
-                                final String user_mail = store_github_api.get_user_mail(from_user);
+                                String user_mail = null;
+                                try {
+                                    user_mail = store_github_api.get_user_mail(from_user);
+                                }
+                                catch (github_io_exception e) {
+                                    Logger.error("Could not get user "+from_user+" mail to send him a mail about error that repo "+repo_name+" cannot be transferred because a similar name already exists in the db");
+                                }
                                 final String mail_subject = "Cannot accept repository transfer (" + repo_name + ")";
                                 final String mail_body = "The reason is that there is a repo with the same name in the DB.";
                                 sendmail(user_mail, mail_subject, mail_body);

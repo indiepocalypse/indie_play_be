@@ -8,6 +8,7 @@ import models_memory_github.interface_github_webhook;
 import models_memory_github.model_issue;
 import models_memory_indie.model_command;
 import play.Logger;
+import stores.github_io_exception;
 import stores.store_conf;
 import stores.store_github_api;
 import stores.store_local_db;
@@ -44,9 +45,11 @@ public class command_open implements interface_command {
                 return "this pull request is open";
             }
             pull_request.state = "open";
-            if (store_github_api.update_pull_request(pull_request)) {
+            try {
+                store_github_api.update_pull_request(pull_request);
                 handler_general.update_pull_request_and_clear_offers_if_necessary(pull_request);
-            } else {
+            }
+            catch (github_io_exception e) {
                 Logger.error("could not open pull request #" + pull_request.number + " on repo " + pull_request.repo.repo_name);
             }
         } else {
@@ -56,7 +59,10 @@ public class command_open implements interface_command {
                 return "this issue is open";
             }
             issue.state = "open";
-            if (!store_github_api.update_issue(hook.get_repo(), issue)) {
+            try {
+                store_github_api.update_issue(hook.get_repo(), issue);
+            }
+            catch (github_io_exception e) {
                 Logger.error("could not open issue #" + issue.number + " on repo " + hook.get_repo().repo_name);
             }
         }
