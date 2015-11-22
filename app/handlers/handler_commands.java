@@ -11,7 +11,6 @@ import models_memory_github.model_issue;
 import models_memory_indie.model_command;
 import org.reflections.Reflections;
 import play.Logger;
-import scala.collection.immutable.Range;
 import stores.github_io_exception;
 import stores.store_github_api;
 import stores.store_local_db;
@@ -170,7 +169,13 @@ public class handler_commands {
         String number = hook.get_pull_request().number;
         Logger.info("updating pull request #" + number + " for repo " + repo_name);
 
-        handler_general.update_pull_request_and_clear_offers_if_necessary(pull_request);
+        try {
+            pull_request = store_github_api.get_pull_request_by_repo_by_number(repo_name, number);
+        }
+        catch (github_io_exception e) {
+            return "cannot get updated pull request. cannot merge";
+        }
+        handler_general.locally_update_pull_request_and_clear_offers_if_necessary(pull_request);
 
         if (pull_request.mergeable == null) {
             Logger.info("     -- pull request.mergeable==null");
@@ -188,7 +193,7 @@ public class handler_commands {
             store_github_api.merge_pull_request(pull_request, commit_message);
             pull_request.merged = true;
             pull_request.mergeable = false; // TODO: should this actually change?
-            handler_general.update_pull_request_and_clear_offers_if_necessary(pull_request);
+            handler_general.locally_update_pull_request_and_clear_offers_if_necessary(pull_request);
             return "merged!\nThe new ownership structure:\n\n" + get_owners_good_looking_table(hook);
         }
         catch (github_io_exception e) {
@@ -210,7 +215,16 @@ public class handler_commands {
             return "this pull request is closed, cannot place a request for merge";
         }
         model_pull_request pull_request = hook.get_pull_request();
-        handler_general.update_pull_request_and_clear_offers_if_necessary(pull_request);
+
+
+        try {
+            pull_request = store_github_api.get_pull_request_by_repo_by_number(pull_request.repo.repo_name, pull_request.number);
+        }
+        catch (github_io_exception e) {
+            return "cannot get updated pull request. cannot open request for merge";
+        }
+
+        handler_general.locally_update_pull_request_and_clear_offers_if_necessary(pull_request);
         if (hook.get_pull_request().mergeable==null) {
             return "cannot determine mergeability of pull request. Please try again later";
         }
@@ -221,6 +235,7 @@ public class handler_commands {
         // we can make or update the user request...
 
         model_request_for_merge current_request = store_local_db.get_request_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
+
         final boolean is_active = true;
         final boolean was_positively_accepted = false;
         if (current_request!=null) {
@@ -261,7 +276,14 @@ public class handler_commands {
             return "this pull request is closed, cannot place an offer";
         }
         model_pull_request pull_request = hook.get_pull_request();
-        handler_general.update_pull_request_and_clear_offers_if_necessary(pull_request);
+
+        try {
+            pull_request = store_github_api.get_pull_request_by_repo_by_number(pull_request.repo.repo_name, pull_request.number);
+        }
+        catch (github_io_exception e) {
+            return "cannot get updated pull request. cannot place offer";
+        }
+        handler_general.locally_update_pull_request_and_clear_offers_if_necessary(pull_request);
         if (hook.get_pull_request().mergeable==null) {
             return "cannot determine mergeability of pull request. Please try again later";
         }

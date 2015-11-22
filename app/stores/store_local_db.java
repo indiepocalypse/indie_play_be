@@ -424,7 +424,7 @@ public class store_local_db {
         if (hook.get_pull_request() != null) {
             // yeah, this is the only field that can be null;
             // (because the hook may be for something else than a pull request!)
-            handler_general.update_pull_request_and_clear_offers_if_necessary(hook.get_pull_request());
+            handler_general.locally_update_pull_request_and_clear_offers_if_necessary(hook.get_pull_request());
         }
     }
 }

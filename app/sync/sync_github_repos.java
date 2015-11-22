@@ -88,7 +88,7 @@ public class sync_github_repos {
             handler_general.create_default_readme(repo, check_first_for_existance);
             try {
                 List<model_pull_request> all_pull_requests_for_repo = store_github_api.get_all_pull_requests(repo);
-                all_pull_requests_for_repo.forEach(handler_general::update_pull_request_and_clear_offers_if_necessary);
+                all_pull_requests_for_repo.forEach(handler_general::locally_update_pull_request_and_clear_offers_if_necessary);
             }
             catch (github_io_exception e) {
                 Logger.error("could not get pull requests from repo "+repo.repo_name+" while syncing");

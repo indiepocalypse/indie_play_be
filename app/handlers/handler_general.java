@@ -124,7 +124,7 @@ public class handler_general {
         store_github_api.delete_repo(repo);
     }
 
-    public static boolean update_pull_request_and_clear_offers_if_necessary(model_pull_request pull_request) {
+    public static boolean locally_update_pull_request_and_clear_offers_if_necessary(model_pull_request pull_request) {
         // this method deletes offers iff pull reuqest was updated.
         // users notification here. Reason is that this is always coupled:
         // when deleting offers, users always need to be notified!
@@ -144,6 +144,7 @@ public class handler_general {
             catch (github_io_exception ignore) {
             }
         }
+        // this is on purpose here and not in the store_local_db. Since every local update needs all the above logic
         try {
             pull_request.save();
         } catch (Exception ignored) {
