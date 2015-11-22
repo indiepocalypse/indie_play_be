@@ -61,7 +61,7 @@ public class controller_webhooks_github extends Controller {
 
         // running the commands
 
-        ArrayList<String> command_responses = handler_commands.handle_from_hook(hook);
+        ArrayList<String> command_responses = handler_commands.handle_commands_from_hook(hook);
 
         // assembling response
 

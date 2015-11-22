@@ -28,7 +28,7 @@ public class handler_commands {
 
     private static ArrayList<interface_command> commands = null;
 
-    public static ArrayList<String> handle_from_hook(interface_github_webhook hook) {
+    public static ArrayList<String> handle_commands_from_hook(interface_github_webhook hook) {
         if (commands == null) {
             dynamically_initialize_commands();
         }
@@ -91,7 +91,8 @@ public class handler_commands {
         return response;
     }
 
-    public static String get_offers_good_looking_table(interface_github_webhook hook) {
+    public static String get_negotiations_good_looking_table(interface_github_webhook hook) {
+        // this makes a list of all offers and the request
         // TODO: show requested percent
         // TODO: show current offers satisfied (and total satisfied)
         // TODO: show current offers unsatisfies (and total unsatisfied)
@@ -194,7 +195,7 @@ public class handler_commands {
 
     public static String handle_make_request(interface_github_webhook hook, String percent_amount) {
         if (hook.get_pull_request()==null) {
-            return "this is no pull reuqest, cannot make a request for merge here";
+            return "this is no pull request, cannot make a request for merge here";
         }
         if (!hook.get_user().user_name.equals(hook.get_pull_request().user.user_name)) {
             return "only the user making the pull request can make a request for merge";
@@ -209,9 +210,54 @@ public class handler_commands {
             return "this pull request is not currently mergeable. Cannot open a request for merge";
         }
 
-        // we can make or update the user offer or request...
+        // we can make or update the user request...
 
         model_request_for_merge current_request = store_local_db.get_request_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
+        final boolean is_active = true;
+        final boolean was_positively_accepted = false;
+        if (current_request!=null) {
+            current_request = new model_request_for_merge(
+                    current_request.user,
+                    hook.get_pull_request(),
+                    new BigDecimal(percent_amount),
+                    is_active,
+                    was_positively_accepted,
+                    current_request.date_created,
+                    current_request.date_accepted_if_accepted
+            );
+            return "request for merge updated to "+percent_amount+"%";
+        }
+        else {
+            final Date date_accepted_if_accepted = null;
+            final Date date_created = new Date();
+            current_request = new model_request_for_merge(
+                    hook.get_user(), hook.get_pull_request(), new BigDecimal(percent_amount),
+                    is_active, was_positively_accepted, date_created, date_accepted_if_accepted));
+            return "request for merge created as "+percent_amount+"%";
+        }
+        store_local_db.update_request(current_request);
+    }
+
+    public static String handle_make_offer(interface_github_webhook hook, String percent_amount) {
+        if (hook.get_pull_request()==null) {
+            return "this is no pull request, cannot make an offer for merge";
+        }
+        if (hook.get_user().user_name.equals(hook.get_pull_request().user.user_name)) {
+            return "only users not creating the pull request can make an offer for merge";
+        }
+        if (hook.get_pull_request().merged) {
+            return "this pull request is already merged, cannot place an offer";
+        }
+        if (hook.get_pull_request().is_closed()) {
+            return "this pull request is closed, cannot place an offer";
+        }
+        if (!hook.get_pull_request().mergeable) {
+            return "this pull request is not currently mergeable. Cannot place an offer for merge";
+        }
+
+        // we can make or update the user offer...
+
+        model_offer_for_merge current_offer = store_local_db.get_offer_by_user_by_pull_request(hook.get_user().user_name, hook.get_repo().repo_name, hook.get_issue_num());
         final boolean is_active = true;
         final boolean was_positively_accepted = false;
         if (current_request!=null) {
