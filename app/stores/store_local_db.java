@@ -205,11 +205,11 @@ public class store_local_db {
         }
     }
 
-    public static model_offer_for_merge get_offer_by_user_by_pull_request(String user_name, String repo_name, int number) {
+    public static model_offer_for_merge get_offer_by_user_by_pull_request(String user_name, String repo_name, String number) {
         try {
             return model_offer_for_merge.find.fetch("user").fetch("pull_request").fetch("pull_request.repo")
                     .where().eq("user.user_name", user_name)
-                    .where().eq("pull_request.number", Integer.toString(number))
+                    .where().eq("pull_request.number", number)
                     .where().eq("pull_request.repo.repo_name", repo_name)
                     .findUnique();
         } catch (Exception ignore) {

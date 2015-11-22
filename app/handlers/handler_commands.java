@@ -93,7 +93,6 @@ public class handler_commands {
 
     public static String get_negotiations_good_looking_table(interface_github_webhook hook) {
         // this makes a list of all offers and the request
-        // TODO: show requested percent
         // TODO: show current offers satisfied (and total satisfied)
         // TODO: show current offers unsatisfies (and total unsatisfied)
         // TODO: show minimal requirements for merge
@@ -112,6 +111,16 @@ public class handler_commands {
             total.add(offer.amount_percent);
         }
         response += "*total* | "+total.toString()+"\n";
+
+        response += "\n\n";
+        model_request_for_merge request = store_local_db.get_request_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
+        if (request==null) {
+            response += "no requested percentage for merging yet\n";
+        }
+        else {
+            response += "requested for merge "+request.amount_percent.toString()+"%\n";
+        }
+
         return response;
     }
 
@@ -225,6 +234,7 @@ public class handler_commands {
                     current_request.date_created,
                     current_request.date_accepted_if_accepted
             );
+            store_local_db.update_request(current_request);
             return "request for merge updated to "+percent_amount+"%";
         }
         else {
@@ -232,10 +242,10 @@ public class handler_commands {
             final Date date_created = new Date();
             current_request = new model_request_for_merge(
                     hook.get_user(), hook.get_pull_request(), new BigDecimal(percent_amount),
-                    is_active, was_positively_accepted, date_created, date_accepted_if_accepted));
+                    is_active, was_positively_accepted, date_created, date_accepted_if_accepted);
+            store_local_db.update_request(current_request);
             return "request for merge created as "+percent_amount+"%";
         }
-        store_local_db.update_request(current_request);
     }
 
     public static String handle_make_offer(interface_github_webhook hook, String percent_amount) {
@@ -260,26 +270,27 @@ public class handler_commands {
         model_offer_for_merge current_offer = store_local_db.get_offer_by_user_by_pull_request(hook.get_user().user_name, hook.get_repo().repo_name, hook.get_issue_num());
         final boolean is_active = true;
         final boolean was_positively_accepted = false;
-        if (current_request!=null) {
-            current_request = new model_request_for_merge(
-                    current_request.user,
+        if (current_offer!=null) {
+            current_offer = new model_offer_for_merge(
+                    current_offer.user,
                     hook.get_pull_request(),
                     new BigDecimal(percent_amount),
                     is_active,
                     was_positively_accepted,
-                    current_request.date_created,
-                    current_request.date_accepted_if_accepted
+                    current_offer.date_created,
+                    current_offer.date_accepted_if_accepted
             );
+            store_local_db.update_offer(current_offer);
             return "request for merge updated to "+percent_amount+"%";
         }
         else {
             final Date date_accepted_if_accepted = null;
             final Date date_created = new Date();
-            current_request = new model_request_for_merge(
+            current_offer = new model_offer_for_merge(
                     hook.get_user(), hook.get_pull_request(), new BigDecimal(percent_amount),
-                    is_active, was_positively_accepted, date_created, date_accepted_if_accepted));
+                    is_active, was_positively_accepted, date_created, date_accepted_if_accepted);
+            store_local_db.update_offer(current_offer);
             return "request for merge created as "+percent_amount+"%";
         }
-        store_local_db.update_request(current_request);
     }
 }
