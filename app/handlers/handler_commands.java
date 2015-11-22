@@ -226,7 +226,7 @@ public class handler_commands {
         }
 
         handler_general.locally_update_pull_request_and_clear_offers_if_necessary(pull_request);
-        if (hook.get_pull_request().mergeable==null) {
+        if (pull_request.mergeable==null) {
             return "cannot determine mergeability of pull request. Please try again later";
         }
         if (!pull_request.mergeable) {
@@ -285,7 +285,7 @@ public class handler_commands {
             return "cannot get updated pull request. cannot place offer";
         }
         handler_general.locally_update_pull_request_and_clear_offers_if_necessary(pull_request);
-        if (hook.get_pull_request().mergeable==null) {
+        if (pull_request.mergeable==null) {
             return "cannot determine mergeability of pull request. Please try again later";
         }
         if (!pull_request.mergeable) {
