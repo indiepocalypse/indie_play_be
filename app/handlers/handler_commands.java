@@ -293,4 +293,12 @@ public class handler_commands {
             return "request for merge created as "+percent_amount+"%";
         }
     }
+
+    public static String get_commands_good_looking_list(interface_github_webhook hook) {
+        String result = "";
+        for (interface_command command: commands) {
+            result += command.get_command_help()+"\n";
+        }
+        return result;
+    }
 }
