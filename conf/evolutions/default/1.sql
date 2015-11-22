@@ -22,8 +22,8 @@ create table model_offer_for_merge (
   amount_percent            decimal(7,4),
   is_active                 boolean,
   was_positively_accepted   boolean,
-  date_accepted_if_accepted boolean,
-  date_created              boolean,
+  date_accepted_if_accepted timestamp,
+  date_created              timestamp,
   constraint pk_model_offer_for_merge primary key (id))
 ;
 
@@ -79,8 +79,8 @@ create table model_request_for_merge (
   amount_percent            decimal(7,4),
   is_active                 boolean,
   was_positively_accepted   boolean,
-  date_accepted_if_accepted boolean,
-  date_created              boolean,
+  date_accepted_if_accepted timestamp,
+  date_created              timestamp,
   constraint pk_model_request_for_merge primary key (id))
 ;
 
