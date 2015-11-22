@@ -174,10 +174,10 @@ public class store_local_db {
     }
 
     /********************************
-     * OFFERS!
+     * OFFERS FOR PRS!
      ********************************/
 
-    public static void update_offer(model_offer offer) {
+    public static void update_offer(model_offer_for_merge offer) {
         try {
             offer.save();
         } catch (Exception e) {
@@ -185,18 +185,18 @@ public class store_local_db {
         }
     }
 
-    public static List<model_offer> get_offers_by_user(String user_name) {
+    public static List<model_offer_for_merge> get_offers_by_user(String user_name) {
         try {
-            return model_offer.find.fetch("user").fetch("pull_request").fetch("pull_request.repo")
+            return model_offer_for_merge.find.fetch("user").fetch("pull_request").fetch("pull_request.repo")
                     .where().eq("user.user_name", user_name).findList();
         } catch (Exception ignore) {
             return new ArrayList<>(0);
         }
     }
 
-    public static List<model_offer> get_offers_by_pull_request(String repo_name, String number) {
+    public static List<model_offer_for_merge> get_offers_by_pull_request(String repo_name, String number) {
         try {
-            return model_offer.find.fetch("user").fetch("pull_request").fetch("pull_request.repo")
+            return model_offer_for_merge.find.fetch("user").fetch("pull_request").fetch("pull_request.repo")
                     .where().eq("pull_request.number", number)
                     .where().eq("pull_request.repo.repo_name", repo_name)
                     .findList();
@@ -205,9 +205,9 @@ public class store_local_db {
         }
     }
 
-    public static List<model_offer> get_offers_by_user_by_pull_request(String user_name, String repo_name, int number) {
+    public static List<model_offer_for_merge> get_offers_by_user_by_pull_request(String user_name, String repo_name, int number) {
         try {
-            return model_offer.find.fetch("user").fetch("pull_request").fetch("pull_request.repo")
+            return model_offer_for_merge.find.fetch("user").fetch("pull_request").fetch("pull_request.repo")
                     .where().eq("user.user_name", user_name)
                     .where().eq("pull_request.number", Integer.toString(number))
                     .where().eq("pull_request.repo.repo_name", repo_name)
@@ -220,12 +220,12 @@ public class store_local_db {
     public static void delete_offers_by_pull_request(String repo_name, String number) {
         try {
             // TODO: this delete one by one is bad. Fix it!
-            List<model_offer> offers = model_offer.find.fetch("user").fetch("pull_request").fetch("pull_request.repo")
+            List<model_offer_for_merge> offers = model_offer_for_merge.find.fetch("user").fetch("pull_request").fetch("pull_request.repo")
                     .where().eq("pull_request.number", number)
                     .where().eq("pull_request.repo.repo_name", repo_name).findList();
             if (offers != null) {
-                for (model_offer offer : offers) {
-                    model_offer.find.deleteById(offer.id);
+                for (model_offer_for_merge offer : offers) {
+                    model_offer_for_merge.find.deleteById(offer.id);
                 }
             }
         } catch (Exception e) {
@@ -236,15 +236,78 @@ public class store_local_db {
     public static void delete_offers_by_repo(model_repo repo) {
         try {
             // TODO: this delete one by one is bad. Fix it!
-            List<model_offer> offers = model_offer.find.fetch("pull_request").fetch("pull_request.repo")
+            List<model_offer_for_merge> offers = model_offer_for_merge.find.fetch("pull_request").fetch("pull_request.repo")
                     .where().eq("pull_request.repo.repo_name", repo.repo_name).findList();
             if (offers != null) {
-                for (model_offer offer : offers) {
-                    model_offer.find.deleteById(offer.id);
+                for (model_offer_for_merge offer : offers) {
+                    model_offer_for_merge.find.deleteById(offer.id);
                 }
             }
         } catch (Exception e) {
             Logger.error("failed to delete offers by repo:", e);
+        }
+    }
+
+    /********************************
+     * REQUESTS FOR PRS!
+     ********************************/
+
+    public static void update_request(model_request_for_merge request) {
+        try {
+            request.save();
+        } catch (Exception e) {
+            request.update();
+        }
+    }
+
+    public static List<model_request_for_merge> get_requests_by_user(String user_name) {
+        try {
+            return model_request_for_merge.find.fetch("user").fetch("pull_request").fetch("pull_request.repo")
+                    .where().eq("user.user_name", user_name).findList();
+        } catch (Exception ignore) {
+            return new ArrayList<>(0);
+        }
+    }
+
+    public static model_request_for_merge get_request_by_pull_request(String repo_name, String number) {
+        try {
+            return model_request_for_merge.find.fetch("user").fetch("pull_request").fetch("pull_request.repo")
+                    .where().eq("pull_request.number", number)
+                    .where().eq("pull_request.repo.repo_name", repo_name)
+                    .findUnique();
+        } catch (Exception ignore) {
+            return null;
+        }
+    }
+
+    public static void delete_request_by_pull_request(String repo_name, String number) {
+        try {
+            model_request_for_merge
+                    .find.fetch("user").fetch("pull_request").fetch("pull_request.repo")
+                    .where().eq("pull_request.number", number)
+                    .where().eq("pull_request.repo.repo_name", repo_name)
+                    .findUnique().delete();
+        } catch (Exception e) {
+            Logger.error("failed to delete request by pull request:", e);
+        }
+    }
+
+    public static void delete_requests_by_repo(model_repo repo) {
+        try {
+            // TODO: this delete one by one is bad. Fix it!
+            List<model_request_for_merge> requests = model_request_for_merge.find
+                    .fetch("pull_request")
+                    .fetch("pull_request.repo")
+                    .where()
+                    .eq("pull_request.repo.repo_name", repo.repo_name)
+                    .findList();
+            if (requests != null) {
+                for (model_request_for_merge offer : requests) {
+                    model_request_for_merge.find.deleteById(offer.id);
+                }
+            }
+        } catch (Exception e) {
+            Logger.error("failed to delete requests by repo:", e);
         }
     }
 

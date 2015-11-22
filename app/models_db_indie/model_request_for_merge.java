@@ -15,8 +15,8 @@ import java.math.BigDecimal;
  */
 
 @Entity
-public class model_offer extends Model {
-    public static final Finder<String, model_offer> find = new Finder<>(model_offer.class);
+public class model_request_for_merge extends Model {
+    public static final Finder<String, model_request_for_merge> find = new Finder<>(model_request_for_merge.class);
     @Id
     public final String id;
     @ManyToOne
@@ -30,8 +30,8 @@ public class model_offer extends Model {
     final Boolean date_accepted_if_accepted;
     final Boolean date_created;
 
-    public model_offer(model_user p_user, model_pull_request p_pull_request, BigDecimal p_amount_percent, Boolean p_is_active, Boolean p_was_positively_accepted, Boolean p_date_created, Boolean p_date_accepted_if_accepted) {
-        id = p_user.user_name + "@admins";
+    public model_request_for_merge(model_user p_user, model_pull_request p_pull_request, BigDecimal p_amount_percent, Boolean p_is_active, Boolean p_was_positively_accepted, Boolean p_date_created, Boolean p_date_accepted_if_accepted) {
+        id = "request_for_merge_from_user_"+p_user.user_name + "_for_pull_request_number_"+p_pull_request.number+"_for_repo_"+p_pull_request.repo.repo_name;
         this.user = p_user;
         this.pull_request = p_pull_request;
         this.amount_percent = p_amount_percent;
@@ -39,10 +39,6 @@ public class model_offer extends Model {
         this.was_positively_accepted = p_was_positively_accepted;
         this.date_created = p_date_created;
         this.date_accepted_if_accepted = p_date_accepted_if_accepted;
-    }
-
-    public static boolean is_requested(model_offer offer) {
-        return offer.user.user_name.equals(offer.pull_request.user.user_name);
     }
 }
 

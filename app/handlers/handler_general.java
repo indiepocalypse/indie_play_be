@@ -115,6 +115,7 @@ public class handler_general {
 
 
     public static void delete_repo_from_github_and_db_and_also_related_ownership_policy_offers(model_repo repo) throws github_io_exception {
+        store_local_db.delete_requests_by_repo(repo);
         store_local_db.delete_offers_by_repo(repo);
         store_local_db.delete_ownerships_by_repo(repo);
         store_local_db.delete_policy_by_repo(repo);
@@ -134,6 +135,7 @@ public class handler_general {
         if ((old_pull_request != null) && (!old_pull_request.SHA.equals(pull_request.SHA))) {
             updated = true;
             // updated pull requests contains different code, all previous offers rendered irrelevant
+            store_local_db.delete_request_by_pull_request(pull_request.repo.repo_name, pull_request.number);
             store_local_db.delete_offers_by_pull_request(pull_request.repo.repo_name, pull_request.number);
             // notify users
             try {

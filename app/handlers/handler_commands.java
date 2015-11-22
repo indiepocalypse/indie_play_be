@@ -3,7 +3,7 @@ package handlers;
 import commands.interface_command;
 import models_db_github.model_pull_request;
 import models_db_indie.model_admin;
-import models_db_indie.model_offer;
+import models_db_indie.model_offer_for_merge;
 import models_db_indie.model_ownership;
 import models_memory_github.interface_github_webhook;
 import models_memory_github.model_issue;
@@ -16,7 +16,6 @@ import stores.store_local_db;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Formatter;
 import java.util.List;
 
 /**
@@ -99,12 +98,12 @@ public class handler_commands {
         }
         String response = "\n\nOwner | Current offer\n" +
                 "-------|---------\n";
-        List<model_offer> offers = store_local_db.get_offers_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
+        List<model_offer_for_merge> offers = store_local_db.get_offers_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
         if (offers.size()==0) {
             return "thre are no offers";
         }
         BigDecimal total = new BigDecimal("0.0");
-        for (model_offer offer : offers) {
+        for (model_offer_for_merge offer : offers) {
             response += "@" + offer.user.user_name + "|" + offer.amount_percent.toString() + "\n";
             total.add(offer.amount_percent);
         }
@@ -190,7 +189,8 @@ public class handler_commands {
         }
     }
 
-//    public static String handle_make_offer(interface_github_webhook hook, String percent_amount, boolean is_request) {
+// This is WIP
+//    public static String handle_make_request(interface_github_webhook hook, String percent_amount) {
 //        String str_offer = is_request? "request" : "offer";
 //        if (hook.get_pull_request()==null) {
 //            return "this is no pull reuqest, cannot make a "+str_offer+" here";
@@ -202,9 +202,9 @@ public class handler_commands {
 //            return "you are the user making the request, you cannot place an offer";
 //        }
 //
-//        // we can make or update the use offer or request...
+//        // we can make or update the user offer or request...
 //
-//        List<model_offer> current_offers = store_local_db.get_offers_by_pull_request()
+//        List<model_offer_for_merge> current_offers = store_local_db.get_offers_by_pull_request()
 //        just do it!
 //        XXXXXXXXXXXXXXXXXXXXX;
 //        at the end also list offers
