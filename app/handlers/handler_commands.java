@@ -169,12 +169,6 @@ public class handler_commands {
         String repo_name = hook.get_pull_request().repo.repo_name;
         String number = hook.get_pull_request().number;
         Logger.info("updating pull request #" + number + " for repo " + repo_name);
-        try {
-            pull_request = store_github_api.get_pull_request_by_repo_by_number(repo_name, number);
-        }
-        catch (github_io_exception e) {
-            return "cannot get updated pull request. not merging";
-        }
 
         handler_general.update_pull_request_and_clear_offers_if_necessary(pull_request);
 
@@ -215,8 +209,13 @@ public class handler_commands {
         if (hook.get_pull_request().is_closed()) {
             return "this pull request is closed, cannot place a request for merge";
         }
-        if (!hook.get_pull_request().mergeable) {
-            return "this pull request is not currently mergeable. Cannot open a request for merge";
+        model_pull_request pull_request = hook.get_pull_request();
+        handler_general.update_pull_request_and_clear_offers_if_necessary(pull_request);
+        if (hook.get_pull_request().mergeable==null) {
+            return "cannot determine mergeability of pull request. Please try again later";
+        }
+        if (!pull_request.mergeable) {
+            return "this pull request is not currently mergeable. Cannot place a request for merge";
         }
 
         // we can make or update the user request...
@@ -227,7 +226,7 @@ public class handler_commands {
         if (current_request!=null) {
             current_request = new model_request_for_merge(
                     current_request.user,
-                    hook.get_pull_request(),
+                    pull_request,
                     new BigDecimal(percent_amount),
                     is_active,
                     was_positively_accepted,
@@ -241,7 +240,7 @@ public class handler_commands {
             final Date date_accepted_if_accepted = null;
             final Date date_created = new Date();
             current_request = new model_request_for_merge(
-                    hook.get_user(), hook.get_pull_request(), new BigDecimal(percent_amount),
+                    hook.get_user(), pull_request, new BigDecimal(percent_amount),
                     is_active, was_positively_accepted, date_created, date_accepted_if_accepted);
             store_local_db.update_request(current_request);
             return "request for merge created as "+percent_amount+"%";
@@ -261,7 +260,12 @@ public class handler_commands {
         if (hook.get_pull_request().is_closed()) {
             return "this pull request is closed, cannot place an offer";
         }
-        if (!hook.get_pull_request().mergeable) {
+        model_pull_request pull_request = hook.get_pull_request();
+        handler_general.update_pull_request_and_clear_offers_if_necessary(pull_request);
+        if (hook.get_pull_request().mergeable==null) {
+            return "cannot determine mergeability of pull request. Please try again later";
+        }
+        if (!pull_request.mergeable) {
             return "this pull request is not currently mergeable. Cannot place an offer for merge";
         }
 
@@ -273,7 +277,7 @@ public class handler_commands {
         if (current_offer!=null) {
             current_offer = new model_offer_for_merge(
                     current_offer.user,
-                    hook.get_pull_request(),
+                    pull_request,
                     new BigDecimal(percent_amount),
                     is_active,
                     was_positively_accepted,
@@ -287,7 +291,7 @@ public class handler_commands {
             final Date date_accepted_if_accepted = null;
             final Date date_created = new Date();
             current_offer = new model_offer_for_merge(
-                    hook.get_user(), hook.get_pull_request(), new BigDecimal(percent_amount),
+                    hook.get_user(), pull_request, new BigDecimal(percent_amount),
                     is_active, was_positively_accepted, date_created, date_accepted_if_accepted);
             store_local_db.update_offer(current_offer);
             return "request for merge created as "+percent_amount+"%";
