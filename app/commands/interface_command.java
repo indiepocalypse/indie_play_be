@@ -12,4 +12,6 @@ public interface interface_command {
     String handle(model_command command, interface_github_webhook hook);
 
     String get_command_name();
+
+    String get_command_help();
 }

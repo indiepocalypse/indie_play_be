@@ -10,8 +10,8 @@ import models_memory_indie.model_command;
 public class command_negotiation_status implements interface_command {
     @Override
     public boolean is_recognized(model_command command) {
-        return (command.command.equals("list")) && (command.args.size() == 1) &&
-                (command.args.get(0).equals("offers"));
+        return (command.command.equals("negotiation")) && (command.args.size() == 1) &&
+                (command.args.get(0).equals("status"));
     }
 
     @Override
@@ -21,6 +21,12 @@ public class command_negotiation_status implements interface_command {
 
     @Override
     public String get_command_name() {
-        return "LIST_OFFERS";
+        return "NEGOTIATION_STATUS";
     }
+
+    @Override
+    public String get_command_help() {
+        return "negotiation status";
+    }
+
 }

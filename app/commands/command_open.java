@@ -73,4 +73,10 @@ public class command_open implements interface_command {
     public String get_command_name() {
         return "OPEN";
     }
+
+    @Override
+    public String get_command_help() {
+        return "open";
+    }
+
 }

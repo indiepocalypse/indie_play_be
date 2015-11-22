@@ -32,4 +32,10 @@ public class command_show_creator implements interface_command {
     public String get_command_name() {
         return "SHOW_CREATOR";
     }
+
+    @Override
+    public String get_command_help() {
+        return "show creator";
+    }
+
 }

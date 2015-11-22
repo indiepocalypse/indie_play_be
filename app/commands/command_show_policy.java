@@ -31,4 +31,10 @@ public class command_show_policy implements interface_command {
     public String get_command_name() {
         return "SHOW_POLICY";
     }
+
+    @Override
+    public String get_command_help() {
+        return "show policy";
+    }
+
 }

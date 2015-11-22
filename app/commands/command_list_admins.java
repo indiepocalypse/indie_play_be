@@ -23,4 +23,10 @@ public class command_list_admins implements interface_command {
     public String get_command_name() {
         return "LIST_ADMINS";
     }
+
+    @Override
+    public String get_command_help() {
+        return "list admins";
+    }
+
 }

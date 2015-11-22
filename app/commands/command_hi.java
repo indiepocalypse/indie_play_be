@@ -21,4 +21,10 @@ public class command_hi implements interface_command {
     public String get_command_name() {
         return "HI";
     }
+
+    @Override
+    public String get_command_help() {
+        return "hi";
+    }
+
 }

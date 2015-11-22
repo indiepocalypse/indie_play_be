@@ -40,4 +40,10 @@ public class command_delete implements interface_command {
     public String get_command_name() {
         return "DELETE REPO";
     }
+
+    @Override
+    public String get_command_help() {
+        return "delete repo";
+    }
+
 }

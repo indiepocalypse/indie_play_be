@@ -23,4 +23,10 @@ public class command_list_owners implements interface_command {
     public String get_command_name() {
         return "LIST_OWNERS";
     }
+
+    @Override
+    public String get_command_help() {
+        return "list owners";
+    }
+
 }

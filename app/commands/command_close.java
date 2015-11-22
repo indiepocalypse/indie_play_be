@@ -73,4 +73,10 @@ public class command_close implements interface_command {
     public String get_command_name() {
         return "CLOSE";
     }
+
+    @Override
+    public String get_command_help() {
+        return "close";
+    }
+
 }

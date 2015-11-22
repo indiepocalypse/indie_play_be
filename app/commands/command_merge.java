@@ -32,4 +32,10 @@ public class command_merge implements interface_command {
     public String get_command_name() {
         return "MERGE";
     }
+
+    @Override
+    public String get_command_help() {
+        return "merge";
+    }
+
 }
