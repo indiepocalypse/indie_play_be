@@ -98,29 +98,30 @@ public class handler_commands {
         if (hook.get_pull_request()==null) {
             return "this is not a pull request, there are no offers here";
         }
-        String response = "\n\nOwner | Current offer\n" +
+
+        String request_str = "";
+        model_request_for_merge request = store_local_db.get_request_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
+        if (request==null) {
+            request_str = "no requested percentage for merging yet\n";
+        }
+        else {
+            request_str = "requested for merge "+request.amount_percent.toString()+"%\n";
+        }
+
+        String offers_str = "\n\nOwner | Current offer\n" +
                 "-------|---------\n";
         List<model_offer_for_merge> offers = store_local_db.get_offers_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
         if (offers.size()==0) {
-            return "thre are no offers";
+            return request_str + "thre are no offers";
         }
         BigDecimal total = new BigDecimal("0.0");
         for (model_offer_for_merge offer : offers) {
-            response += "@" + offer.user.user_name + "|" + offer.amount_percent.toString() + "\n";
+            offers_str += "@" + offer.user.user_name + "|" + offer.amount_percent.toString() + "\n";
             total.add(offer.amount_percent);
         }
-        response += "*total* | "+total.toString()+"\n";
+        offers_str += "*total* | "+total.toString()+"\n";
 
-        response += "\n\n";
-        model_request_for_merge request = store_local_db.get_request_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
-        if (request==null) {
-            response += "no requested percentage for merging yet\n";
-        }
-        else {
-            response += "requested for merge "+request.amount_percent.toString()+"%\n";
-        }
-
-        return response;
+        return request_str + offers_str;
     }
 
     public static String get_admins_good_looking_list(interface_github_webhook hook) {
