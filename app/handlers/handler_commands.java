@@ -5,17 +5,20 @@ import models_db_github.model_pull_request;
 import models_db_indie.model_admin;
 import models_db_indie.model_offer_for_merge;
 import models_db_indie.model_ownership;
+import models_db_indie.model_request_for_merge;
 import models_memory_github.interface_github_webhook;
 import models_memory_github.model_issue;
 import models_memory_indie.model_command;
 import org.reflections.Reflections;
 import play.Logger;
+import scala.collection.immutable.Range;
 import stores.github_io_exception;
 import stores.store_github_api;
 import stores.store_local_db;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -189,24 +192,48 @@ public class handler_commands {
         }
     }
 
-// This is WIP
-//    public static String handle_make_request(interface_github_webhook hook, String percent_amount) {
-//        String str_offer = is_request? "request" : "offer";
-//        if (hook.get_pull_request()==null) {
-//            return "this is no pull reuqest, cannot make a "+str_offer+" here";
-//        }
-//        if ((is_request) && (!hook.get_user().user_name.equals(hook.get_pull_request().user.user_name))) {
-//            return "only the user making the pull request can make a request";
-//        }
-//        if ((!is_request) && (hook.get_user().user_name.equals(hook.get_pull_request().user.user_name))) {
-//            return "you are the user making the request, you cannot place an offer";
-//        }
-//
-//        // we can make or update the user offer or request...
-//
-//        List<model_offer_for_merge> current_offers = store_local_db.get_offers_by_pull_request()
-//        just do it!
-//        XXXXXXXXXXXXXXXXXXXXX;
-//        at the end also list offers
-//    }
+    public static String handle_make_request(interface_github_webhook hook, String percent_amount) {
+        if (hook.get_pull_request()==null) {
+            return "this is no pull reuqest, cannot make a request for merge here";
+        }
+        if (!hook.get_user().user_name.equals(hook.get_pull_request().user.user_name)) {
+            return "only the user making the pull request can make a request for merge";
+        }
+        if (hook.get_pull_request().merged) {
+            return "this pull request is already merged, cannot place a request for merge";
+        }
+        if (hook.get_pull_request().is_closed()) {
+            return "this pull request is closed, cannot place a request for merge";
+        }
+        if (!hook.get_pull_request().mergeable) {
+            return "this pull request is not currently mergeable. Cannot open a request for merge";
+        }
+
+        // we can make or update the user offer or request...
+
+        model_request_for_merge current_request = store_local_db.get_request_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
+        final boolean is_active = true;
+        final boolean was_positively_accepted = false;
+        if (current_request!=null) {
+            current_request = new model_request_for_merge(
+                    current_request.user,
+                    hook.get_pull_request(),
+                    new BigDecimal(percent_amount),
+                    is_active,
+                    was_positively_accepted,
+                    current_request.date_created,
+                    current_request.date_accepted_if_accepted
+            );
+            return "request for merge updated to "+percent_amount+"%";
+        }
+        else {
+            final Date date_accepted_if_accepted = null;
+            final Date date_created = new Date();
+            current_request = new model_request_for_merge(
+                    hook.get_user(), hook.get_pull_request(), new BigDecimal(percent_amount),
+                    is_active, was_positively_accepted, date_created, date_accepted_if_accepted));
+            return "request for merge created as "+percent_amount+"%";
+        }
+        store_local_db.update_request(current_request);
+    }
 }
