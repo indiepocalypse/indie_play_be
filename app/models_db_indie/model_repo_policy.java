@@ -26,12 +26,15 @@ public class model_repo_policy extends Model {
     public BigDecimal ownership_required_to_change_policy;
     @Column(precision = 7, scale = 4)
     public BigDecimal ownership_required_to_manage_issues; // close/label/etc.
+    @Column(precision = 7, scale = 4)
+    public BigDecimal percentage_to_merge;
 
     public model_repo_policy(model_repo p_repo) {
         id = p_repo.repo_name + "@policy";
         this.repo = p_repo;
         this.ownership_required_to_change_policy = store_conf.get_policy_default_ownership_required_to_change_policy();
         this.ownership_required_to_manage_issues = store_conf.get_policy_default_ownership_required_to_manage_issues();
+        this.percentage_to_merge = store_conf.get_policy_default_percentage_to_merge_policy();
     }
 }
 

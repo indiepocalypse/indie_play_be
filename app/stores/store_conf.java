@@ -91,4 +91,8 @@ public class store_conf {
     public static BigDecimal get_policy_default_ownership_required_to_change_policy() {
         return new BigDecimal(ConfigFactory.load().getString("policy.default_ownership_required_to_change_policy"));
     }
+
+    public static BigDecimal get_policy_default_percentage_to_merge_policy() {
+        return new BigDecimal(ConfigFactory.load().getString("policy.default_percentage_to_merge_policy"));
+    }
 }

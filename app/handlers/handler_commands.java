@@ -235,6 +235,7 @@ public class handler_commands {
 
         final boolean is_active = true;
         final boolean was_positively_accepted = false;
+        String result = "";
         if (current_request != null) {
             current_request = new model_request_for_merge(
                     current_request.user,
@@ -246,7 +247,7 @@ public class handler_commands {
                     current_request.date_accepted_if_accepted
             );
             store_local_db.update_request(current_request);
-            return "request for merge updated to " + percent_amount + "%";
+            result = "request for merge updated to " + percent_amount + "%";
         } else {
             final Date date_accepted_if_accepted = null;
             final Date date_created = new Date();
@@ -254,8 +255,10 @@ public class handler_commands {
                     hook.get_user(), pull_request, new BigDecimal(percent_amount),
                     is_active, was_positively_accepted, date_created, date_accepted_if_accepted);
             store_local_db.update_request(current_request);
-            return "request for merge created as " + percent_amount + "%";
+            result = "request for merge created as " + percent_amount + "%";
         }
+        negotiations_status status = new negotiation_status(current_request, store_local_db.get_o);
+        return result;
     }
 
     public static String handle_make_offer(interface_github_webhook hook, String percent_amount) {
@@ -291,6 +294,7 @@ public class handler_commands {
         model_offer_for_merge current_offer = store_local_db.get_offer_by_user_by_pull_request(hook.get_user().user_name, hook.get_repo().repo_name, hook.get_issue_num());
         final boolean is_active = true;
         final boolean was_positively_accepted = false;
+        String result = "";
         if (current_offer != null) {
             current_offer = new model_offer_for_merge(
                     current_offer.user,
@@ -302,7 +306,7 @@ public class handler_commands {
                     current_offer.date_accepted_if_accepted
             );
             store_local_db.update_offer(current_offer);
-            return "request for merge updated to " + percent_amount + "%";
+            result = "request for merge updated to " + percent_amount + "%";
         } else {
             final Date date_accepted_if_accepted = null;
             final Date date_created = new Date();
@@ -310,8 +314,10 @@ public class handler_commands {
                     hook.get_user(), pull_request, new BigDecimal(percent_amount),
                     is_active, was_positively_accepted, date_created, date_accepted_if_accepted);
             store_local_db.update_offer(current_offer);
-            return "request for merge created as " + percent_amount + "%";
+            result = "request for merge created as " + percent_amount + "%";
         }
+        negotiations_status status = new negotiation_status(current_request, store_local_db.get_o);
+        return result;
     }
 
     public static String get_commands_good_looking_list(interface_github_webhook hook) {
