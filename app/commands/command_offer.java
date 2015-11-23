@@ -17,15 +17,11 @@ public class command_offer implements interface_command {
             try {
                 // try to parse this
                 BigDecimal percent = utils_bigdecimal.from_percent_or_number(command.args.get(0));
-                if (percent.compareTo(new BigDecimal("0.0"))<0) {
+                if (percent.compareTo(new BigDecimal("0.0")) < 0) {
                     return false;
                 }
-                if (percent.compareTo(new BigDecimal("100.0"))>0) {
-                    return false;
-                }
-                return true;
-            }
-            catch (Exception ignored) {
+                return percent.compareTo(new BigDecimal("100.0")) <= 0;
+            } catch (Exception ignored) {
                 return false;
             }
         }

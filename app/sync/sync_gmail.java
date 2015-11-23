@@ -162,9 +162,8 @@ public class sync_gmail {
                         String user_mail = null;
                         try {
                             user_mail = store_github_api.get_user_mail(from_user);
-                        }
-                        catch (github_io_exception e) {
-                            Logger.error("could not get user "+from_user+" mail in order to send a cannot move repo error. Repo name is "+repo_name);
+                        } catch (github_io_exception e) {
+                            Logger.error("could not get user " + from_user + " mail in order to send a cannot move repo error. Repo name is " + repo_name);
                             continue;
                         }
                         final String mail_subject = "Cannot accept repository transfer (" + repo_name + ")";
@@ -185,9 +184,8 @@ public class sync_gmail {
                                 String user_mail = null;
                                 try {
                                     user_mail = store_github_api.get_user_mail(from_user);
-                                }
-                                catch (github_io_exception e) {
-                                    Logger.error("Could not get user "+from_user+" mail to send him a mail about error that repo "+repo_name+" cannot be transferred because a similar name already exists in the db");
+                                } catch (github_io_exception e) {
+                                    Logger.error("Could not get user " + from_user + " mail to send him a mail about error that repo " + repo_name + " cannot be transferred because a similar name already exists in the db");
                                 }
                                 final String mail_subject = "Cannot accept repository transfer (" + repo_name + ")";
                                 final String mail_body = "The reason is that there is a repo with the same name in the DB.";

@@ -25,8 +25,7 @@ public class handler_general {
             try {
                 user = store_github_api.get_user_by_name(name);
                 store_local_db.update_user(user);
-            }
-            catch (github_io_exception ignore) {
+            } catch (github_io_exception ignore) {
             }
         } else {
             Logger.info("user " + name + " already in DB, will not integrate user");
@@ -35,8 +34,8 @@ public class handler_general {
     }
 
     public static void integrate_github_repo(String repo_name, String user_name, boolean create_webhook,
-                                                        boolean check_for_existance_of_readme,
-                                                        boolean delete_original_collaborators) throws github_io_exception {
+                                             boolean check_for_existance_of_readme,
+                                             boolean delete_original_collaborators) throws github_io_exception {
         // this method assumes repo is not in DB!
         model_user user = get_integrate_github_user_by_name(user_name);
         model_repo repo = store_github_api.get_repo_by_name(user_name, repo_name);
@@ -44,8 +43,8 @@ public class handler_general {
     }
 
     public static void integrate_github_repo(model_repo repo, model_user user, boolean create_webhook,
-                                                        boolean check_for_existance_first,
-                                                        boolean delete_original_collaborators) throws github_io_exception {
+                                             boolean check_for_existance_first,
+                                             boolean delete_original_collaborators) throws github_io_exception {
         store_local_db.update_repo(repo);
         if (create_webhook) {
             store_github_api.create_webhook(repo);
@@ -73,8 +72,7 @@ public class handler_general {
                 final String mail_subject = "You were removed as collaborator from repository (" + repo.repo_name + ")";
                 final String mail_body = "The reason is that this repo was transferred to thindipocalypse user and it is now managed through its api.\n see the FAQ here:\n" + store_conf.get_absolute_url(routes.controller_main.faq().url());
                 sync_gmail.sendmail(user_mail, mail_subject, mail_body);
-            }
-            catch (github_io_exception e) {
+            } catch (github_io_exception e) {
                 Logger.error("could not remove user " + user.user_name + " removed from collaborators to " + ownership1.repo.repo_name);
             }
 
@@ -85,8 +83,7 @@ public class handler_general {
         if (check_for_existance_first) {
             try {
                 store_github_api.has_readme(repo.repo_name);
-            }
-            catch (github_io_exception e) {
+            } catch (github_io_exception e) {
                 Logger.info("repo " + repo.repo_name + " already has a readme. Skipping creation of default one");
                 return;
             }
@@ -140,8 +137,7 @@ public class handler_general {
             // notify users
             try {
                 notify_by_comment_that_pr_changed_and_offers_are_removed(pull_request);
-            }
-            catch (github_io_exception ignore) {
+            } catch (github_io_exception ignore) {
             }
         }
         // this is on purpose here and not in the store_local_db. Since every local update needs all the above logic

@@ -22,15 +22,11 @@ public class command_change_issue_policy implements interface_command {
             try {
                 // try to parse this
                 BigDecimal new_percent = utils_bigdecimal.from_percent_or_number(command.args.get(2));
-                if (new_percent.compareTo(new BigDecimal("0.0"))<0) {
+                if (new_percent.compareTo(new BigDecimal("0.0")) < 0) {
                     return false;
                 }
-                if (new_percent.compareTo(new BigDecimal("100.0"))>0) {
-                    return false;
-                }
-                return true;
-            }
-            catch (Exception ignored) {
+                return new_percent.compareTo(new BigDecimal("100.0")) <= 0;
+            } catch (Exception ignored) {
                 return false;
             }
         }
@@ -40,7 +36,7 @@ public class command_change_issue_policy implements interface_command {
     @Override
     public String handle(model_command command, interface_github_webhook hook) {
         model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo());
-        if (policy!=null) {
+        if (policy != null) {
             model_ownership ownership = store_local_db.get_ownerships_by_user_name_and_repo_name(hook.get_user(), hook.get_repo());
             BigDecimal min_ownership = policy.ownership_required_to_change_policy;
             if (ownership == null) {
@@ -53,7 +49,7 @@ public class command_change_issue_policy implements interface_command {
 
         // change the policy!
         BigDecimal new_percent = new BigDecimal(command.args.get(2));
-        if (policy==null) {
+        if (policy == null) {
             policy = new model_repo_policy(hook.get_repo());
             policy.ownership_required_to_manage_issues = new_percent;
             store_local_db.update_policy(policy);

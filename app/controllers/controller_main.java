@@ -168,8 +168,7 @@ public class controller_main extends Controller {
                 model_user user = null;
                 try {
                     user = store_github_api.get_user_by_token(token);
-                }
-                catch (github_io_exception e) {
+                } catch (github_io_exception e) {
                     return ok(view_main.render(main_title, "error while logging in. Couldn't read user info from github"));
                 }
                 store_session.set_admin(store_local_db.is_admin(user.user_name));

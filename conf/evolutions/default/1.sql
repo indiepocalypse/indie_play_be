@@ -20,10 +20,10 @@ create table model_offer_for_merge (
   user_user_name            varchar(255),
   pull_request_id           varchar(255),
   amount_percent            decimal(7,4),
-  is_active                 boolean,
-  was_positively_accepted   boolean,
   date_accepted_if_accepted timestamp,
   date_created              timestamp,
+  is_active                 boolean,
+  was_positively_accepted   boolean,
   constraint pk_model_offer_for_merge primary key (id))
 ;
 
@@ -46,9 +46,9 @@ create table model_pull_request (
   comments_url              varchar(255),
   sha                       varchar(255),
   repo_repo_name            varchar(255),
-  state                     varchar(255),
   title                     varchar(255),
   body                      varchar(255),
+  state                     varchar(255),
   merged                    boolean,
   mergeable                 boolean,
   constraint pk_model_pull_request primary key (id))
@@ -77,10 +77,10 @@ create table model_request_for_merge (
   user_user_name            varchar(255),
   pull_request_id           varchar(255),
   amount_percent            decimal(7,4),
-  is_active                 boolean,
-  was_positively_accepted   boolean,
   date_accepted_if_accepted timestamp,
   date_created              timestamp,
+  is_active                 boolean,
+  was_positively_accepted   boolean,
   constraint pk_model_request_for_merge primary key (id))
 ;
 

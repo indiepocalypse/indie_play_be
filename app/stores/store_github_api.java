@@ -150,7 +150,7 @@ public class store_github_api {
         String path = "/repos/" + user_name + "/" + repo_name;
         WSRequest req = indie_auth_request(path);
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
-        if (res.getStatus()!=200) {
+        if (res.getStatus() != 200) {
             throw new github_io_exception("while creating girhub repo");
         }
         JsonNode json = play.libs.Json.parse(res.getBody());
@@ -163,7 +163,7 @@ public class store_github_api {
                 .setMethod("GET");
         F.Promise<WSResponse> pres_user = req_user.execute();
         res_user = pres_user.get(60, TimeUnit.SECONDS);
-        if (res_user.getStatus()!=200) {
+        if (res_user.getStatus() != 200) {
             throw new github_io_exception("while getting user (by token) from github");
         }
         return model_user.from_json(Json.parse(res_user.getBody()));
@@ -175,7 +175,7 @@ public class store_github_api {
                 .setMethod("GET");
         F.Promise<WSResponse> pres_user = req_user.execute();
         res_user = pres_user.get(60, TimeUnit.SECONDS);
-        if (res_user.getStatus()!=200) {
+        if (res_user.getStatus() != 200) {
             throw new github_io_exception("while getting user (by name) from github");
         }
         return model_user.from_json(Json.parse(res_user.getBody()));
@@ -211,7 +211,7 @@ public class store_github_api {
             return;
         }
         Logger.info("error during github webhook creation: " + res.getBody());
-        throw new github_io_exception("while creating github webhook for repo "+repo.repo_name);
+        throw new github_io_exception("while creating github webhook for repo " + repo.repo_name);
     }
 
     public static void comment_on_issue(model_repo repo, String issue_num, String comment_body) throws github_io_exception {
@@ -248,7 +248,7 @@ public class store_github_api {
         boolean success = (res.getStatus() == 200) && (res.getBody().contains("body"));
         if (!success) {
             Logger.error("while updating issue #" + issue.number + " at repo " + repo.repo_name, res.asJson().toString());
-            throw new github_io_exception("while updating issue number "+issue.number+" on repo "+repo.repo_name);
+            throw new github_io_exception("while updating issue number " + issue.number + " on repo " + repo.repo_name);
         }
     }
 
@@ -269,7 +269,7 @@ public class store_github_api {
         boolean success = (res.getStatus() == 200) && (res.getBody().contains("body"));
         if (!success) {
             Logger.error("while updating pull request #" + pull_request.number + " at repo " + pull_request.repo.repo_name, res.asJson().toString());
-            throw new github_io_exception("while updating pull request number "+pull_request.number+" on repo "+pull_request.repo.repo_name);
+            throw new github_io_exception("while updating pull request number " + pull_request.number + " on repo " + pull_request.repo.repo_name);
         }
     }
 
@@ -277,8 +277,8 @@ public class store_github_api {
         String path = "/repos/theindiepocalypse/" + repo_name + "/pulls/" + number;
         WSRequest req = indie_auth_request(path).setMethod("GET");
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
-        if (res.getStatus()!=200) {
-            throw new github_io_exception("while reading repo "+repo_name+" from github");
+        if (res.getStatus() != 200) {
+            throw new github_io_exception("while reading repo " + repo_name + " from github");
         }
         return model_pull_request.from_json(res.asJson());
     }
@@ -288,8 +288,8 @@ public class store_github_api {
                 .setMethod("GET")
                 .execute()
                 .get(60, TimeUnit.SECONDS);
-        if (res.getStatus()!=200) {
-            throw new github_io_exception("while reading all pull requests on repo "+repo.repo_name);
+        if (res.getStatus() != 200) {
+            throw new github_io_exception("while reading all pull requests on repo " + repo.repo_name);
         }
         JsonNode json = play.libs.Json.parse(res.getBody());
         ArrayList<model_pull_request> pull_requests = new ArrayList<>(json.size());
@@ -306,13 +306,13 @@ public class store_github_api {
                 .execute()
                 .get(60, TimeUnit.SECONDS);
         JsonNode json = res.asJson();
-        if (res.getStatus()==200) {
+        if (res.getStatus() == 200) {
             return true;
         }
-        if (res.getStatus()==404) {
+        if (res.getStatus() == 404) {
             return false;
         }
-        throw new github_io_exception("while checking for readme for repo "+repo_name);
+        throw new github_io_exception("while checking for readme for repo " + repo_name);
     }
 
     public static String get_user_mail(String user_name) throws github_io_exception {
@@ -323,7 +323,7 @@ public class store_github_api {
         res_user = pres_user.get(60, TimeUnit.SECONDS);
         if (res_user.getStatus() != 200) {
             Logger.error("while getting user mail from github: bad response (i.e. != 200)");
-            throw new github_io_exception("while reading user "+user_name+" mail");
+            throw new github_io_exception("while reading user " + user_name + " mail");
         }
         JsonNode json = res_user.asJson();
         JsonNode json_mail = json.get("email");
@@ -345,7 +345,7 @@ public class store_github_api {
         if (res.getStatus() != 200) {
             Logger.error("while mergin pull request for repo " + pull_request.repo.repo_name + " #" + pull_request.number + ":\n",
                     res.asJson().toString());
-            throw new github_io_exception("while trying to merge pull request "+pull_request.number+" on repo "+pull_request.repo.repo_name);
+            throw new github_io_exception("while trying to merge pull request " + pull_request.number + " on repo " + pull_request.repo.repo_name);
         }
     }
 
@@ -359,7 +359,7 @@ public class store_github_api {
         if (res.getStatus() != 204) {
             Logger.error("while deleting repo " + repo.repo_name + "\n",
                     res.asJson().toString());
-            throw new github_io_exception("while trying to delete repo "+repo.repo_name);
+            throw new github_io_exception("while trying to delete repo " + repo.repo_name);
         }
     }
 
@@ -369,7 +369,7 @@ public class store_github_api {
                 .execute()
                 .get(60, TimeUnit.SECONDS);
         if (res.getStatus() != 200) {
-            throw new github_io_exception("while trying to get a list of all collaborator for repo "+repo.repo_name);
+            throw new github_io_exception("while trying to get a list of all collaborator for repo " + repo.repo_name);
         }
         JsonNode json = res.asJson();
         ArrayList<model_user> collaborators = new ArrayList<>(json.size());
@@ -385,7 +385,7 @@ public class store_github_api {
                 .execute()
                 .get(60, TimeUnit.SECONDS);
         if (res.getStatus() != 204) {
-            throw new github_io_exception("while trying to delete collaborator "+user.user_name+" from repo "+repo.repo_name);
+            throw new github_io_exception("while trying to delete collaborator " + user.user_name + " from repo " + repo.repo_name);
         }
     }
 
@@ -394,13 +394,12 @@ public class store_github_api {
         for (model_user user : get_all_collaborators(repo)) {
             try {
                 delete_collaborator_from_repo(repo, user);
-            }
-            catch (github_io_exception e) {
+            } catch (github_io_exception e) {
                 ok = false;
             }
         }
         if (!ok) {
-            throw new github_io_exception("while trying to delete all collaborators from repo "+repo.repo_name);
+            throw new github_io_exception("while trying to delete all collaborators from repo " + repo.repo_name);
         }
     }
 }

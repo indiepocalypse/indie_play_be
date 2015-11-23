@@ -28,7 +28,7 @@ public class model_ownership extends Model {
     public final boolean is_creator;
 
     public model_ownership(model_user p_user, model_repo p_repo, BigDecimal p_percent, boolean p_is_creator) {
-        id = "ownershio@"+p_user.user_name + "@" + p_repo.repo_name;
+        id = "ownershio@" + p_user.user_name + "@" + p_repo.repo_name;
         user = p_user;
         repo = p_repo;
         percent = p_percent;

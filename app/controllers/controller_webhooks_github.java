@@ -80,8 +80,7 @@ public class controller_webhooks_github extends Controller {
         response = "@" + sender_name + ": " + response;
         try {
             store_github_api.comment_on_issue(hook.get_repo(), hook.get_issue_num(), response);
-        }
-        catch (github_io_exception e) {
+        } catch (github_io_exception e) {
             Logger.info("problem commenting...");
         }
         return ok();

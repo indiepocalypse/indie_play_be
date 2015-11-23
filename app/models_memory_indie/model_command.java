@@ -4,7 +4,6 @@ import play.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,9 +11,9 @@ import java.util.regex.Pattern;
  * Created by skariel on 26/10/15.
  */
 public class model_command {
+    public final ArrayList<String> args;
     public String command;
     public String joined_args;
-    public final ArrayList<String> args;
 
     public model_command() {
         this.command = "";

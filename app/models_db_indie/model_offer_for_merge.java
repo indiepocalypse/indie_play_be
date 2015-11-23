@@ -26,13 +26,13 @@ public class model_offer_for_merge extends Model {
     public final model_pull_request pull_request;
     @Column(precision = 7, scale = 4)
     public final BigDecimal amount_percent;
-    final Boolean is_active;
-    final Boolean was_positively_accepted;
     final public Date date_accepted_if_accepted;
     final public Date date_created;
+    final Boolean is_active;
+    final Boolean was_positively_accepted;
 
     public model_offer_for_merge(model_user p_user, model_pull_request p_pull_request, BigDecimal p_amount_percent, Boolean p_is_active, Boolean p_was_positively_accepted, Date p_date_created, Date p_date_accepted_if_accepted) {
-        id = "offer_for_merge_from_user_"+p_user.user_name + "_for_pull_request_number_"+p_pull_request.number+"_for_repo_"+p_pull_request.repo.repo_name;
+        id = "offer_for_merge_from_user_" + p_user.user_name + "_for_pull_request_number_" + p_pull_request.number + "_for_repo_" + p_pull_request.repo.repo_name;
         this.user = p_user;
         this.pull_request = p_pull_request;
         this.amount_percent = p_amount_percent;

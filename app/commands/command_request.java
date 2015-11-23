@@ -1,13 +1,8 @@
 package commands;
 
 import handlers.handler_commands;
-import models_db_indie.model_ownership;
-import models_db_indie.model_repo_policy;
-import models_db_indie.model_request_for_merge;
 import models_memory_github.interface_github_webhook;
 import models_memory_indie.model_command;
-import stores.store_conf;
-import stores.store_local_db;
 import utils.utils_bigdecimal;
 
 import java.math.BigDecimal;
@@ -22,15 +17,11 @@ public class command_request implements interface_command {
             try {
                 // try to parse this
                 BigDecimal percent = utils_bigdecimal.from_percent_or_number(command.args.get(0));
-                if (percent.compareTo(new BigDecimal("0.0"))<0) {
+                if (percent.compareTo(new BigDecimal("0.0")) < 0) {
                     return false;
                 }
-                if (percent.compareTo(new BigDecimal("100.0"))>0) {
-                    return false;
-                }
-                return true;
-            }
-            catch (Exception ignored) {
+                return percent.compareTo(new BigDecimal("100.0")) <= 0;
+            } catch (Exception ignored) {
                 return false;
             }
         }

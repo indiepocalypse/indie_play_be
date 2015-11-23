@@ -80,7 +80,7 @@ public class handler_commands {
         String response = "\n\nOwner | Percent\n" +
                 "-------|---------\n";
         List<model_ownership> ownerships = store_local_db.get_ownerships_by_repo_name(hook.get_repo().repo_name);
-        if (ownerships.size()==0) {
+        if (ownerships.size() == 0) {
             return "thre are no owners";
         }
         for (model_ownership ownership : ownerships) {
@@ -95,23 +95,22 @@ public class handler_commands {
         // TODO: show current offers satisfied (and total satisfied)
         // TODO: show current offers unsatisfies (and total unsatisfied)
         // TODO: show minimal requirements for merge
-        if (hook.get_pull_request()==null) {
+        if (hook.get_pull_request() == null) {
             return "this is not a pull request, there are no offers here";
         }
 
         String request_str = "";
         model_request_for_merge request = store_local_db.get_request_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
-        if (request==null) {
+        if (request == null) {
             request_str = "no requested percentage for merging yet\n";
-        }
-        else {
-            request_str = "requested for merge "+request.amount_percent.toString()+"%\n";
+        } else {
+            request_str = "requested for merge " + request.amount_percent.toString() + "%\n";
         }
 
         String offers_str = "\n\nOwner | Current offer\n" +
                 "-------|---------\n";
         List<model_offer_for_merge> offers = store_local_db.get_offers_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
-        if (offers.size()==0) {
+        if (offers.size() == 0) {
             return request_str + "thre are no offers";
         }
         BigDecimal total = new BigDecimal("0.0");
@@ -119,7 +118,7 @@ public class handler_commands {
             offers_str += "@" + offer.user.user_name + "|" + offer.amount_percent.toString() + "\n";
             total.add(offer.amount_percent);
         }
-        offers_str += "*total* | "+total.toString()+"\n";
+        offers_str += "*total* | " + total.toString() + "\n";
 
         return request_str + offers_str;
     }
@@ -172,8 +171,7 @@ public class handler_commands {
 
         try {
             pull_request = store_github_api.get_pull_request_by_repo_by_number(repo_name, number);
-        }
-        catch (github_io_exception e) {
+        } catch (github_io_exception e) {
             return "cannot get updated pull request. cannot merge";
         }
         handler_general.locally_update_pull_request_and_clear_offers_if_necessary(pull_request);
@@ -196,14 +194,13 @@ public class handler_commands {
             pull_request.mergeable = false; // TODO: should this actually change?
             handler_general.locally_update_pull_request_and_clear_offers_if_necessary(pull_request);
             return "merged!\nThe new ownership structure:\n\n" + get_owners_good_looking_table(hook);
-        }
-        catch (github_io_exception e) {
+        } catch (github_io_exception e) {
             return "Some problem with merging. Please try again later, or contant an admin";
         }
     }
 
     public static String handle_make_request(interface_github_webhook hook, String percent_amount) {
-        if (hook.get_pull_request()==null) {
+        if (hook.get_pull_request() == null) {
             return "this is no pull request, cannot make a request for merge here";
         }
         if (!hook.get_user().user_name.equals(hook.get_pull_request().user.user_name)) {
@@ -220,13 +217,12 @@ public class handler_commands {
 
         try {
             pull_request = store_github_api.get_pull_request_by_repo_by_number(pull_request.repo.repo_name, pull_request.number);
-        }
-        catch (github_io_exception e) {
+        } catch (github_io_exception e) {
             return "cannot get updated pull request. cannot open request for merge";
         }
 
         handler_general.locally_update_pull_request_and_clear_offers_if_necessary(pull_request);
-        if (pull_request.mergeable==null) {
+        if (pull_request.mergeable == null) {
             return "cannot determine mergeability of pull request. Please try again later";
         }
         if (!pull_request.mergeable) {
@@ -239,7 +235,7 @@ public class handler_commands {
 
         final boolean is_active = true;
         final boolean was_positively_accepted = false;
-        if (current_request!=null) {
+        if (current_request != null) {
             current_request = new model_request_for_merge(
                     current_request.user,
                     pull_request,
@@ -250,21 +246,20 @@ public class handler_commands {
                     current_request.date_accepted_if_accepted
             );
             store_local_db.update_request(current_request);
-            return "request for merge updated to "+percent_amount+"%";
-        }
-        else {
+            return "request for merge updated to " + percent_amount + "%";
+        } else {
             final Date date_accepted_if_accepted = null;
             final Date date_created = new Date();
             current_request = new model_request_for_merge(
                     hook.get_user(), pull_request, new BigDecimal(percent_amount),
                     is_active, was_positively_accepted, date_created, date_accepted_if_accepted);
             store_local_db.update_request(current_request);
-            return "request for merge created as "+percent_amount+"%";
+            return "request for merge created as " + percent_amount + "%";
         }
     }
 
     public static String handle_make_offer(interface_github_webhook hook, String percent_amount) {
-        if (hook.get_pull_request()==null) {
+        if (hook.get_pull_request() == null) {
             return "this is no pull request, cannot make an offer for merge";
         }
         if (hook.get_user().user_name.equals(hook.get_pull_request().user.user_name)) {
@@ -280,12 +275,11 @@ public class handler_commands {
 
         try {
             pull_request = store_github_api.get_pull_request_by_repo_by_number(pull_request.repo.repo_name, pull_request.number);
-        }
-        catch (github_io_exception e) {
+        } catch (github_io_exception e) {
             return "cannot get updated pull request. cannot place offer";
         }
         handler_general.locally_update_pull_request_and_clear_offers_if_necessary(pull_request);
-        if (pull_request.mergeable==null) {
+        if (pull_request.mergeable == null) {
             return "cannot determine mergeability of pull request. Please try again later";
         }
         if (!pull_request.mergeable) {
@@ -297,7 +291,7 @@ public class handler_commands {
         model_offer_for_merge current_offer = store_local_db.get_offer_by_user_by_pull_request(hook.get_user().user_name, hook.get_repo().repo_name, hook.get_issue_num());
         final boolean is_active = true;
         final boolean was_positively_accepted = false;
-        if (current_offer!=null) {
+        if (current_offer != null) {
             current_offer = new model_offer_for_merge(
                     current_offer.user,
                     pull_request,
@@ -308,23 +302,22 @@ public class handler_commands {
                     current_offer.date_accepted_if_accepted
             );
             store_local_db.update_offer(current_offer);
-            return "request for merge updated to "+percent_amount+"%";
-        }
-        else {
+            return "request for merge updated to " + percent_amount + "%";
+        } else {
             final Date date_accepted_if_accepted = null;
             final Date date_created = new Date();
             current_offer = new model_offer_for_merge(
                     hook.get_user(), pull_request, new BigDecimal(percent_amount),
                     is_active, was_positively_accepted, date_created, date_accepted_if_accepted);
             store_local_db.update_offer(current_offer);
-            return "request for merge created as "+percent_amount+"%";
+            return "request for merge created as " + percent_amount + "%";
         }
     }
 
     public static String get_commands_good_looking_list(interface_github_webhook hook) {
         String result = "";
-        for (interface_command command: commands) {
-            result += command.get_command_help()+"\n";
+        for (interface_command command : commands) {
+            result += command.get_command_help() + "\n";
         }
         return result;
     }
