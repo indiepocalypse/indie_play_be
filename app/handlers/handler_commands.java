@@ -91,10 +91,7 @@ public class handler_commands {
     }
 
     public static String get_negotiations_good_looking_table(interface_github_webhook hook) {
-        // this makes a list of all offers and the request
-        // TODO: show current offers satisfied (and total satisfied)
-        // TODO: show current offers unsatisfies (and total unsatisfied)
-        // TODO: show minimal requirements for merge
+        // TODO: use the negotiation status class
         if (hook.get_pull_request() == null) {
             return "this is not a pull request, there are no offers here";
         }

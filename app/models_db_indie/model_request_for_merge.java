@@ -23,6 +23,8 @@ public class model_request_for_merge extends Model {
     @ManyToOne
     public final model_user user;
     @ManyToOne
+    public final model_ownership ownership;
+    @ManyToOne
     public final model_pull_request pull_request;
     @Column(precision = 7, scale = 4)
     public final BigDecimal amount_percent;
