@@ -1,16 +1,12 @@
 package commands;
 
-import handlers.handler_general;
-import models_db_github.model_pull_request;
 import models_db_indie.model_ownership;
 import models_db_indie.model_repo_policy;
 import models_memory_github.interface_github_webhook;
-import models_memory_github.model_issue;
 import models_memory_indie.model_command;
-import play.Logger;
 import stores.store_conf;
-import stores.store_github_api;
 import stores.store_local_db;
+import utils.utils_bigdecimal;
 
 import java.math.BigDecimal;
 
@@ -25,7 +21,7 @@ public class command_change_issue_policy implements interface_command {
                 (command.args.get(1).equals("issue"))) {
             try {
                 // try to parse this
-                BigDecimal new_percent = new BigDecimal(command.args.get(2));
+                BigDecimal new_percent = utils_bigdecimal.from_percent_or_number(command.args.get(2));
                 if (new_percent.compareTo(new BigDecimal("0.0"))<0) {
                     return false;
                 }

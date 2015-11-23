@@ -8,6 +8,7 @@ import models_memory_github.interface_github_webhook;
 import models_memory_indie.model_command;
 import stores.store_conf;
 import stores.store_local_db;
+import utils.utils_bigdecimal;
 
 import java.math.BigDecimal;
 
@@ -20,7 +21,7 @@ public class command_request implements interface_command {
         if ((command.command.equals("request")) && (command.args.size() == 1)) {
             try {
                 // try to parse this
-                BigDecimal percent = new BigDecimal(command.args.get(0));
+                BigDecimal percent = utils_bigdecimal.from_percent_or_number(command.args.get(0));
                 if (percent.compareTo(new BigDecimal("0.0"))<0) {
                     return false;
                 }

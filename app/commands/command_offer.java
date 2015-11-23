@@ -3,6 +3,7 @@ package commands;
 import handlers.handler_commands;
 import models_memory_github.interface_github_webhook;
 import models_memory_indie.model_command;
+import utils.utils_bigdecimal;
 
 import java.math.BigDecimal;
 
@@ -15,7 +16,7 @@ public class command_offer implements interface_command {
         if ((command.command.equals("offer")) && (command.args.size() == 1)) {
             try {
                 // try to parse this
-                BigDecimal percent = new BigDecimal(command.args.get(0));
+                BigDecimal percent = utils_bigdecimal.from_percent_or_number(command.args.get(0));
                 if (percent.compareTo(new BigDecimal("0.0"))<0) {
                     return false;
                 }
