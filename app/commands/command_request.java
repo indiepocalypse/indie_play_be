@@ -50,6 +50,6 @@ public class command_request implements interface_command {
 
     @Override
     public String get_command_help() {
-        return "request 0.3";
+        return "request 0.3%";
     }
 }

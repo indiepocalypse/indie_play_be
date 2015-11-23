@@ -45,6 +45,6 @@ public class command_offer implements interface_command {
 
     @Override
     public String get_command_help() {
-        return "offer 0.3";
+        return "offer 0.3%";
     }
 }
