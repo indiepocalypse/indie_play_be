@@ -13,12 +13,14 @@ import java.math.BigDecimal;
 /**
  * Created by skariel on 31/10/15.
  */
-public class command_change_issue_policy implements interface_command {
+public class command_change_policy_policy implements interface_command {
+    // TODO: maybe use just e.g. `change policy 30%` is policy twice for consistency worth it?
+
     @Override
     public boolean is_recognized(model_command command) {
         if ((command.command.equals("change")) && (command.args.size() == 3) &&
                 (command.args.get(0).equals("policy")) &&
-                (command.args.get(1).equals("issue"))) {
+                (command.args.get(1).equals("policy"))) {
             try {
                 // try to parse this
                 BigDecimal new_percent = utils_bigdecimal.from_percent_or_number(command.args.get(2));
@@ -51,7 +53,7 @@ public class command_change_issue_policy implements interface_command {
         BigDecimal new_percent = new BigDecimal(command.args.get(2));
         if (policy == null) {
             policy = new model_repo_policy(hook.get_repo());
-            policy.ownership_required_to_manage_issues = new_percent;
+            policy.ownership_required_to_change_policy = new_percent;
             store_local_db.update_policy(policy);
             return "policy created";
         }
@@ -62,11 +64,11 @@ public class command_change_issue_policy implements interface_command {
 
     @Override
     public String get_command_name() {
-        return "CHANGE_ISSUE_POLICY";
+        return "CHANGE_POLICY_POLICY";
     }
 
     @Override
     public String get_command_help() {
-        return "change policy issue 30%";
+        return "change policy policy 30%";
     }
 }
