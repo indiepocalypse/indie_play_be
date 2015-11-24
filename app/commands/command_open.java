@@ -39,6 +39,8 @@ public class command_open implements interface_command {
         }
 
         if (hook.get_pull_request() != null) {
+            // TODO: handle open/close of merged PRs correctly
+
             // we have a pull reuqest
             model_pull_request pull_request = hook.get_pull_request();
             if (pull_request.merged) {
