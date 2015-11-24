@@ -41,6 +41,9 @@ public class command_open implements interface_command {
         if (hook.get_pull_request() != null) {
             // we have a pull reuqest
             model_pull_request pull_request = hook.get_pull_request();
+            if (pull_request.merged) {
+                return "cannot open a merged pull request";
+            }
             if (!pull_request.is_closed()) {
                 return "this pull request is open";
             }
