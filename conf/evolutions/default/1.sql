@@ -19,7 +19,7 @@ create table model_offer_for_merge (
   id                        varchar(255) not null,
   user_user_name            varchar(255),
   pull_request_id           varchar(255),
-  amount_percent            decimal(7,4),
+  amount_percent            decimal(5,2),
   date_accepted_if_accepted timestamp,
   date_created              timestamp,
   is_active                 boolean,
@@ -69,6 +69,7 @@ create table model_repo_policy (
   repo_repo_name            varchar(255),
   ownership_required_to_change_policy decimal(7,4),
   ownership_required_to_manage_issues decimal(7,4),
+  ownership_required_to_merge_pull_requests decimal(7,4),
   constraint pk_model_repo_policy primary key (id))
 ;
 

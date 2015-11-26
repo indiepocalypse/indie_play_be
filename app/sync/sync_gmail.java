@@ -232,7 +232,7 @@ public class sync_gmail {
     }
 
     public static void sendmail(String user_mail, String mail_subject, String mail_body) {
-        if (store_conf.get_debug_should_send_mails()) {
+        if (!store_conf.get_debug_should_send_mails()) {
             Logger.warn("SKIPPING MAIL BECAUSE DEBUG:\n" +
                     "to: " + user_mail +
                     "subject: " + mail_subject +
