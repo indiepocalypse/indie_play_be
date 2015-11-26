@@ -14,6 +14,7 @@ import play.Logger;
 import stores.github_io_exception;
 import stores.store_github_api;
 import stores.store_local_db;
+import utils.utils_bigdecimal;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -239,7 +240,7 @@ public class handler_commands {
             current_request = new model_request_for_merge(
                     current_request.user,
                     pull_request,
-                    new BigDecimal(percent_amount),
+                    utils_bigdecimal.from_percent_or_number(percent_amount),
                     is_active,
                     was_positively_accepted,
                     current_request.date_created,
@@ -251,7 +252,7 @@ public class handler_commands {
             final Date date_accepted_if_accepted = null;
             final Date date_created = new Date();
             current_request = new model_request_for_merge(
-                    hook.get_user(), pull_request, new BigDecimal(percent_amount),
+                    hook.get_user(), pull_request, utils_bigdecimal.from_percent_or_number(percent_amount),
                     is_active, was_positively_accepted, date_created, date_accepted_if_accepted);
             store_local_db.update_request(current_request);
             result = "request for merge created as " + percent_amount + "%";
@@ -304,7 +305,7 @@ public class handler_commands {
             current_offer = new model_offer_for_merge(
                     current_offer.user,
                     pull_request,
-                    new BigDecimal(percent_amount),
+                    utils_bigdecimal.from_percent_or_number(percent_amount),
                     is_active,
                     was_positively_accepted,
                     current_offer.date_created,
@@ -316,7 +317,7 @@ public class handler_commands {
             final Date date_accepted_if_accepted = null;
             final Date date_created = new Date();
             current_offer = new model_offer_for_merge(
-                    hook.get_user(), pull_request, new BigDecimal(percent_amount),
+                    hook.get_user(), pull_request, utils_bigdecimal.from_percent_or_number(percent_amount),
                     is_active, was_positively_accepted, date_created, date_accepted_if_accepted);
             store_local_db.update_offer(current_offer);
             result = "request for merge created as " + percent_amount + "%";
