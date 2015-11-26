@@ -108,4 +108,8 @@ public class store_conf {
         return new BigDecimal(ConfigFactory.load().getString("policy.floor_ownership_to_merge_pull_request_policy"));
     }
 
+    public static boolean get_debug_should_send_mails() {
+        return ConfigFactory.load().getBoolean("debug.should_send_mails");
+    }
+
 }

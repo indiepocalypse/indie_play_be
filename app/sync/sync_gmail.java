@@ -232,22 +232,29 @@ public class sync_gmail {
     }
 
     public static void sendmail(String user_mail, String mail_subject, String mail_body) {
-        // TODO: move this method to a store_gmail_api (which does not exist yet...)
-        Message message = new MimeMessage(smtp_session);
-        try {
-            message.setSubject(mail_subject);
-            // TODO: move this mail address to the configuration
-            InternetAddress address = new InternetAddress("qbresty@gmail.com");
-            address.setPersonal("theindiepocalypse");
-            message.setFrom(address);
-            message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(user_mail));
-            message.setText(mail_body);
-            Transport.send(message);
-        } catch (Exception e) {
-            Logger.error("while sending mail saying cannot transfer repo: ", e);
+        if (store_conf.get_debug_should_send_mails()) {
+            Logger.warn("SKIPPING MAIL BECAUSE DEBUG:\n" +
+                    "to: " + user_mail +
+                    "subject: " + mail_subject +
+                    "body: " + mail_body);
         }
-
+        else {
+            // TODO: move this method to a store_gmail_api (which does not exist yet...)
+            Message message = new MimeMessage(smtp_session);
+            try {
+                message.setSubject(mail_subject);
+                // TODO: move this mail address to the configuration
+                InternetAddress address = new InternetAddress("qbresty@gmail.com");
+                address.setPersonal("theindiepocalypse");
+                message.setFrom(address);
+                message.setRecipients(Message.RecipientType.TO,
+                        InternetAddress.parse(user_mail));
+                message.setText(mail_body);
+                Transport.send(message);
+            } catch (Exception e) {
+                Logger.error("while sending mail saying cannot transfer repo: ", e);
+            }
+        }
     }
 
     private static void reload_folder() {
