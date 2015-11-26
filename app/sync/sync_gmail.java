@@ -237,8 +237,7 @@ public class sync_gmail {
                     "to: " + user_mail +
                     "subject: " + mail_subject +
                     "body: " + mail_body);
-        }
-        else {
+        } else {
             // TODO: move this method to a store_gmail_api (which does not exist yet...)
             Message message = new MimeMessage(smtp_session);
             try {

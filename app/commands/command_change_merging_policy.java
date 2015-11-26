@@ -50,8 +50,8 @@ public class command_change_merging_policy implements interface_command {
         // change the policy!
         BigDecimal new_percent = new BigDecimal(command.args.get(2));
         if (new_percent.compareTo(store_conf.get_policy_floor_ownership_required_to_merge_pull_request()) < 0) {
-            return "the total ownership to merge pull requests must be above "+
-                    store_conf.get_policy_floor_ownership_required_to_merge_pull_request()+"%";
+            return "the total ownership to merge pull requests must be above " +
+                    store_conf.get_policy_floor_ownership_required_to_merge_pull_request() + "%";
         }
 
         if (policy == null) {

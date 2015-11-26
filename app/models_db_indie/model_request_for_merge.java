@@ -24,7 +24,7 @@ public class model_request_for_merge extends Model {
     public final model_user user;
     @ManyToOne
     public final model_pull_request pull_request;
-    @Column(precision=5, scale=2)
+    @Column(precision = 5, scale = 2)
     public final BigDecimal amount_percent;
     public final Date date_accepted_if_accepted;
     public final Date date_created;

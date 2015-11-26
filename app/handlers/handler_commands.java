@@ -274,8 +274,8 @@ public class handler_commands {
             return "this pull request is closed, cannot place an offer";
         }
         model_ownership user_ownership = store_local_db.get_ownerships_by_user_name_and_repo_name(hook.get_user(), hook.get_repo());
-        if ((user_ownership==null)||(user_ownership.percent==null)||
-                (user_ownership.percent.compareTo(new BigDecimal("0.0"))<=0)){
+        if ((user_ownership == null) || (user_ownership.percent == null) ||
+                (user_ownership.percent.compareTo(new BigDecimal("0.0")) <= 0)) {
             return "Only owners with ownership can make offers";
         }
 

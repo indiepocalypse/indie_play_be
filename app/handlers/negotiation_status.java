@@ -24,13 +24,13 @@ public class negotiation_status {
                               List<model_ownership> ownerships) {
 
         Map<model_user, model_ownership> ownership_from_user = new HashMap<>(11);
-        if (ownerships!=null) {
+        if (ownerships != null) {
             for (model_ownership ownership : ownerships) {
                 ownership_from_user.put(ownership.user, ownership);
             }
         }
 
-        if (offers!=null) {
+        if (offers != null) {
             // sort offers in descending order!
             Collections.sort(offers, new Comparator<model_offer_for_merge>() {
                 @Override
@@ -40,20 +40,18 @@ public class negotiation_status {
             });
         }
 
-        if (policy!=null) {
+        if (policy != null) {
             required_ownership_as_per_policy = policy.ownership_required_to_merge_pull_requests;
-        }
-        else {
+        } else {
             required_ownership_as_per_policy = null;
         }
         if (request != null) {
             requested_percent = request.amount_percent;
-        }
-        else {
+        } else {
             requested_percent = null;
         }
 
-        if ((offers!=null) && (request!=null)) {
+        if ((offers != null) && (request != null)) {
             BigDecimal tmp_ownership_currently_accepted = new BigDecimal("0.0");
             for (model_offer_for_merge offer : offers) {
                 if (offer.amount_percent.compareTo(request.amount_percent) >= 0) {
@@ -62,16 +60,15 @@ public class negotiation_status {
                 }
             }
             ownership_currently_accepted = tmp_ownership_currently_accepted;
-        }
-        else {
+        } else {
             ownership_currently_accepted = new BigDecimal("0.0");
         }
 
 
-        if ((offers!=null) && (policy!=null)) {
+        if ((offers != null) && (policy != null)) {
             BigDecimal tmp_ownership = new BigDecimal("0.0");
             BigDecimal tmp_best_offer = null;
-            for (model_offer_for_merge offer: offers) {
+            for (model_offer_for_merge offer : offers) {
                 tmp_ownership.add(ownership_from_user.get(offer.user).percent);
                 if (tmp_ownership.compareTo(policy.ownership_required_to_merge_pull_requests) >= 0) {
                     tmp_best_offer = offer.amount_percent;
@@ -79,18 +76,16 @@ public class negotiation_status {
                 }
             }
             required_for_acceptance_current_best_case = tmp_best_offer;
-        }
-        else {
+        } else {
             required_for_acceptance_current_best_case = null;
         }
     }
 
     public boolean is_negotiation_succesful() {
-        if ((ownership_currently_accepted==null) ||
-            (required_ownership_as_per_policy==null) ||
-            (requested_percent==null) ||
-            (required_ownership_as_per_policy==null))
-        {
+        if ((ownership_currently_accepted == null) ||
+                (required_ownership_as_per_policy == null) ||
+                (requested_percent == null) ||
+                (required_ownership_as_per_policy == null)) {
             return false;
         }
         return ownership_currently_accepted.compareTo(required_ownership_as_per_policy) >= 0;

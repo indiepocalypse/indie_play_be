@@ -50,8 +50,8 @@ public class command_change_issue_policy implements interface_command {
         // change the policy!
         BigDecimal new_percent = new BigDecimal(command.args.get(2));
         if (new_percent.compareTo(store_conf.get_policy_floor_ownership_required_to_manage_issues()) < 0) {
-            return "the ownership to manage isues must be above "+
-                    store_conf.get_policy_floor_ownership_required_to_manage_issues()+"%";
+            return "the ownership to manage isues must be above " +
+                    store_conf.get_policy_floor_ownership_required_to_manage_issues() + "%";
         }
 
         if (policy == null) {
