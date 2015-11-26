@@ -23,7 +23,7 @@ public class model_ownership extends Model {
     public final model_user user;
     @ManyToOne
     public final model_repo repo;
-    @Column(precision = 7, scale = 4)
+    @Column(precision = 5, scale = 2)
     public final BigDecimal percent;
     public final boolean is_creator;
 
