@@ -100,12 +100,12 @@ public class store_conf {
         return new BigDecimal(ConfigFactory.load().getString("policy.floor_ownership_required_to_change_policy"));
     }
 
-    public static BigDecimal get_policy_default_percentage_to_merge_policy() {
-        return new BigDecimal(ConfigFactory.load().getString("policy.default_percentage_to_merge_policy"));
+    public static BigDecimal get_policy_default_ownership_required_to_merge_pull_request() {
+        return new BigDecimal(ConfigFactory.load().getString("policy.default_ownership_to_merge_pull_request_policy"));
     }
 
-    public static BigDecimal get_policy_floor_percentage_to_merge_policy() {
-        return new BigDecimal(ConfigFactory.load().getString("policy.floor_percentage_to_merge_policy"));
+    public static BigDecimal get_policy_floor_ownership_required_to_merge_pull_request() {
+        return new BigDecimal(ConfigFactory.load().getString("policy.floor_ownership_to_merge_pull_request_policy"));
     }
 
 }

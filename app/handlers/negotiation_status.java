@@ -41,7 +41,7 @@ public class negotiation_status {
         }
 
         if (policy!=null) {
-            required_ownership_as_per_policy = policy.percentage_to_merge;
+            required_ownership_as_per_policy = policy.ownership_required_to_merge_pull_requests;
         }
         else {
             required_ownership_as_per_policy = null;
@@ -73,7 +73,7 @@ public class negotiation_status {
             BigDecimal tmp_best_offer = null;
             for (model_offer_for_merge offer: offers) {
                 tmp_ownership.add(ownership_from_user.get(offer.user).percent);
-                if (tmp_ownership.compareTo(policy.percentage_to_merge) >= 0) {
+                if (tmp_ownership.compareTo(policy.ownership_required_to_merge_pull_requests) >= 0) {
                     tmp_best_offer = offer.amount_percent;
                     break;
                 }
