@@ -51,6 +51,11 @@ public class command_change_policy_policy implements interface_command {
 
         // change the policy!
         BigDecimal new_percent = new BigDecimal(command.args.get(2));
+        if (new_percent.compareTo(store_conf.get_policy_floor_ownership_required_to_change_policy()) < 0) {
+            return "the ownership to manage policy must be above "+
+                    store_conf.get_policy_floor_ownership_required_to_change_policy()+"%";
+        }
+
         if (policy == null) {
             policy = new model_repo_policy(hook.get_repo());
             policy.ownership_required_to_change_policy = new_percent;
