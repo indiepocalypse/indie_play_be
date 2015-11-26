@@ -91,7 +91,7 @@ public class handler_commands {
     }
 
     public static String get_negotiations_good_looking_table(interface_github_webhook hook) {
-        // TODO: use the negotiation status class
+        // xxxxxxxxxxxxxxxxxxxxxxxx TODO: use the negotiation status class
         if (hook.get_pull_request() == null) {
             return "this is not a pull request, there are no offers here";
         }
@@ -256,7 +256,7 @@ public class handler_commands {
             store_local_db.update_request(current_request);
             result = "request for merge created as " + percent_amount + "%";
         }
-        negotiations_status status = new negotiation_status(current_request, store_local_db.get_o);
+        // xxxxxxxxxxxxxxxx negotiations_status status = new negotiation_status(current_request, store_local_db.get_o);
         return result;
     }
 
@@ -315,7 +315,7 @@ public class handler_commands {
             store_local_db.update_offer(current_offer);
             result = "request for merge created as " + percent_amount + "%";
         }
-        negotiations_status status = new negotiation_status(current_request, store_local_db.get_o);
+        // xxxxxxxxxxxxxxxxxxxx negotiations_status status = new negotiation_status(current_request, store_local_db.get_o);
         return result;
     }
 
