@@ -8,6 +8,7 @@ import models_db_github.model_user;
 import models_db_indie.model_ownership;
 import org.markdown4j.Markdown4jProcessor;
 import play.Logger;
+import play.cache.Cache;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
@@ -20,6 +21,7 @@ import stores.store_session;
 import views.html.*;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
 public class controller_main extends Controller {
     // TODO: cache the simple pages (e.g. the landing page)
@@ -46,6 +48,18 @@ public class controller_main extends Controller {
     }
 
     public Result explore() {
+        final String key = "exlpore_webpage_not_logged";
+        if (!store_session.user_is_logged()) {
+            return (Status)Cache.getOrElse(key, new Callable<Object>() {
+                @Override
+                public Object call() throws Exception {
+                    Logger.info("GENERATING CACHE!!!!!!!!!!!!!!!!!");
+                    List<model_repo> repos = store_local_db.get_all_repos();
+                    List<model_user> users = store_local_db.get_all_users();
+                    return ok(view_main.render("explore", view_repo_explore.render(repos, users)));
+                }
+            }, 120);
+        }
         List<model_repo> repos = store_local_db.get_all_repos();
         List<model_user> users = store_local_db.get_all_users();
         return ok(view_main.render("explore", view_repo_explore.render(repos, users)));

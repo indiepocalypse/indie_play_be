@@ -15,10 +15,16 @@ Current development principles:
        vs per repo policy e.g. minimal ownership needed to manage issues.
        the global policy if managed in app conf folder. The per repo
        policies are managed with a db model model_repo_policy
+11) models are always fully initialised!
 
 to remotely debug:
 
 activator -jvm-debug 9999 run
 (see here: http://stackoverflow.com/questions/24218341/how-to-run-play-framework-2-x-in-debug-mode-in-intellij-idea
 answer at the bottom)
+
+TODO: cloudflare?
+TODO: google analytics?
+TODO: cache everything: index / faq / help / explore (every few hrs or minutes) / etc
+// look here: https://www.playframework.com/documentation/2.0/JavaCache
 
