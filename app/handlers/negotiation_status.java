@@ -14,6 +14,7 @@ import java.util.*;
  */
 public class negotiation_status {
     public final BigDecimal ownership_currently_accepted;
+    public final List<model_user> users_currently_accepted;
     public final BigDecimal required_ownership_as_per_policy;
     public final BigDecimal requested_percent;
     public final BigDecimal required_for_acceptance_current_best_case;
@@ -22,6 +23,8 @@ public class negotiation_status {
                               List<model_offer_for_merge> offers,
                               model_repo_policy policy,
                               List<model_ownership> ownerships) {
+
+        users_currently_accepted = new ArrayList<>(5);
 
         Map<model_user, model_ownership> ownership_from_user = new HashMap<>(11);
         if (ownerships != null) {
@@ -55,6 +58,7 @@ public class negotiation_status {
             BigDecimal tmp_ownership_currently_accepted = new BigDecimal("0.0");
             for (model_offer_for_merge offer : offers) {
                 if (offer.amount_percent.compareTo(request.amount_percent) >= 0) {
+                    users_currently_accepted.add(offer.user);
                     tmp_ownership_currently_accepted = tmp_ownership_currently_accepted
                             .add(ownership_from_user.get(offer.user).percent);
                 }
