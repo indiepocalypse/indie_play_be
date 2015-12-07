@@ -141,7 +141,7 @@ public class negotiation_status {
             BigDecimal tmp_ownership = new BigDecimal("0.0");
             BigDecimal tmp_best_offer = null;
             for (model_offer_for_merge offer : offers) {
-                tmp_ownership.add(ownership_from_user.get(offer.user).percent);
+                tmp_ownership = tmp_ownership.add(ownership_from_user.get(offer.user).percent);
                 Logger.info(" ^^^^^^^^^^^^^ "+ownership_from_user.get(offer.user).percent.toString());
                 Logger.info("     tmp_ownership="+tmp_ownership.toString()+" policy="+policy.ownership_required_to_merge_pull_requests.toString());
                 if (tmp_ownership.compareTo(policy.ownership_required_to_merge_pull_requests) >= 0) {
