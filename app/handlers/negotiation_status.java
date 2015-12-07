@@ -5,6 +5,7 @@ import models_db_indie.model_offer_for_merge;
 import models_db_indie.model_ownership;
 import models_db_indie.model_repo_policy;
 import models_db_indie.model_request_for_merge;
+import play.Logger;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -18,6 +19,76 @@ public class negotiation_status {
     public final BigDecimal required_ownership_as_per_policy;
     public final BigDecimal requested_percent;
     public final BigDecimal required_for_acceptance_current_best_case;
+
+    public String toString() {
+        // TODO: turn this into a nicely formatted table
+        String res = "";
+
+        res += "ownership currently accepted: ";
+        if (ownership_currently_accepted!=null) {
+            res += ownership_currently_accepted.toString() + "%";
+        }
+        else {
+            res += "0%";
+        }
+        res += "\n";
+
+        res += "users currently accepted: ";
+        if ((users_currently_accepted!=null)&&(users_currently_accepted.size()>0)) {
+            int i=0;
+            for (model_user user: users_currently_accepted) {
+                i += 1;
+                res += "@"+user.user_name;
+                if (i<users_currently_accepted.size()) {
+                    res += ", ";
+                }
+            }
+        }
+        else {
+            res += "none";
+        }
+        res += "\n";
+
+        res += "required ownership for merge, per policy: ";
+        if (required_ownership_as_per_policy!=null) {
+            res += required_ownership_as_per_policy.toString() + "%";
+        }
+        else {
+            res += "(null? please report problem to admins!)";
+            // TODO: elaborate here, maybe repo name?
+            Logger.error("null required ownership to merge as per policy!");
+        }
+        res += "\n";
+
+        res += "requested ownership to merge: ";
+        if (requested_percent!=null) {
+            res += requested_percent.toString() + "%";
+        }
+        else {
+            res += "no request was made yet";
+        }
+        res += "\n";
+
+        res += "required for acceptance: ";
+        if (required_for_acceptance_current_best_case!=null) {
+            res += required_for_acceptance_current_best_case.toString() + "%";
+        }
+        else {
+            res += "not even for free ;)";
+        }
+        res += "\n";
+
+        res += "is negotiation succesful? ";
+        if (is_negotiation_succesful()) {
+            res += "yes!";
+        }
+        else {
+            res += "not yet";
+        }
+        res += "\n";
+
+        return res;
+    }
 
     public negotiation_status(model_request_for_merge request,
                               List<model_offer_for_merge> offers,
