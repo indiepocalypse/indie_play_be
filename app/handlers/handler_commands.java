@@ -2,10 +2,7 @@ package handlers;
 
 import commands.interface_command;
 import models_db_github.model_pull_request;
-import models_db_indie.model_admin;
-import models_db_indie.model_offer_for_merge;
-import models_db_indie.model_ownership;
-import models_db_indie.model_request_for_merge;
+import models_db_indie.*;
 import models_memory_github.interface_github_webhook;
 import models_memory_github.model_issue;
 import models_memory_indie.model_command;
@@ -257,7 +254,12 @@ public class handler_commands {
             store_local_db.update_request(current_request);
             result = "request for merge created as " + percent_amount + "%";
         }
-        // xxxxxxxxxxxxxxxx negotiations_status status = new negotiation_status(current_request, store_local_db.get_o);
+
+        List<model_offer_for_merge> offers = store_local_db.get_offers_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
+        model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo());
+        List<model_ownership> ownerships = store_local_db.get_ownerships_by_repo_name(hook.get_repo().repo_name);
+        negotiation_status status = new negotiation_status(current_request, offers, policy, ownerships);
+        result += "\nnego status:\n\n"+status.toString();
         return result;
     }
 
@@ -322,7 +324,13 @@ public class handler_commands {
             store_local_db.update_offer(current_offer);
             result = "request for merge created as " + percent_amount + "%";
         }
-        // xxxxxxxxxxxxxxxxxxxx negotiations_status status = new negotiation_status(current_request, store_local_db.get_o);
+
+        model_request_for_merge request = null;
+        List<model_offer_for_merge> offers = store_local_db.get_offers_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
+        model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo());
+        List<model_ownership> ownerships = store_local_db.get_ownerships_by_repo_name(hook.get_repo().repo_name);
+        negotiation_status status = new negotiation_status(request, offers, policy, ownerships);
+        result += "\nnego status:\n\n"+status.toString();
         return result;
     }
 
