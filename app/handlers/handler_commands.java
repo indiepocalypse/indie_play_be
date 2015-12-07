@@ -31,7 +31,7 @@ public class handler_commands {
         }
 
         // this method returns responses to be shown to users.
-        // all responses are encapsulated in a common header which includes the @user welcome or whateve
+        // all responses are encapsulated in a common header which includes the @user welcome or whatever
         ArrayList<String> responses = new ArrayList<>();
         boolean some_command_recognized = false;
         for (model_command command : model_command.from_text(hook.get_comment())) {
@@ -94,7 +94,7 @@ public class handler_commands {
             return "this is not a pull request, there are no offers here";
         }
 
-        String request_str = "";
+        String request_str;
         model_request_for_merge request = store_local_db.get_request_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
         if (request == null) {
             request_str = "no requested percentage for merging yet\n";
@@ -232,7 +232,7 @@ public class handler_commands {
 
         final boolean is_active = true;
         final boolean was_positively_accepted = false;
-        String result = "";
+        String result;
         if (current_request != null) {
             current_request = new model_request_for_merge(
                     current_request.user,
@@ -255,10 +255,10 @@ public class handler_commands {
             result = "request for merge created as " + percent_amount + "%";
         }
 
-        List<model_offer_for_merge> offers = store_local_db.get_offers_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
-        model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo());
-        List<model_ownership> ownerships = store_local_db.get_ownerships_by_repo_name(hook.get_repo().repo_name);
-        negotiation_status status = new negotiation_status(current_request, offers, policy, ownerships);
+        final List<model_offer_for_merge> offers = store_local_db.get_offers_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
+        final model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo());
+        final List<model_ownership> ownerships = store_local_db.get_ownerships_by_repo_name(hook.get_repo().repo_name);
+        final negotiation_status status = new negotiation_status(current_request, offers, policy, ownerships);
         result += "\nnego status:\n\n"+status.toString();
         return result;
     }
@@ -325,16 +325,16 @@ public class handler_commands {
             result = "request for merge created as " + percent_amount + "%";
         }
 
-        model_request_for_merge request = null;
-        List<model_offer_for_merge> offers = store_local_db.get_offers_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
-        model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo());
-        List<model_ownership> ownerships = store_local_db.get_ownerships_by_repo_name(hook.get_repo().repo_name);
-        negotiation_status status = new negotiation_status(request, offers, policy, ownerships);
+        final model_request_for_merge request = null;
+        final List<model_offer_for_merge> offers = store_local_db.get_offers_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
+        final model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo());
+        final List<model_ownership> ownerships = store_local_db.get_ownerships_by_repo_name(hook.get_repo().repo_name);
+        final negotiation_status status = new negotiation_status(request, offers, policy, ownerships);
         result += "\nnego status:\n\n"+status.toString();
         return result;
     }
 
-    public static String get_commands_good_looking_list(interface_github_webhook hook) {
+    public static String get_commands_good_looking_list() {
         String result = "";
         for (interface_command command : commands) {
             result += command.get_command_help() + "\n";
