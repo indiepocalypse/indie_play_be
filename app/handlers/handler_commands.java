@@ -111,7 +111,7 @@ public class handler_commands {
         BigDecimal total = new BigDecimal("0.0");
         for (model_offer_for_merge offer : offers) {
             offers_str += "@" + offer.user.user_name + "|" + offer.amount_percent.toString() + "\n";
-            total.add(offer.amount_percent);
+            total = total.add(offer.amount_percent);
         }
         offers_str += "*total* | " + total.toString() + "\n";
 

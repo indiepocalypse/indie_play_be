@@ -22,6 +22,9 @@ public class negotiation_status {
 
     public String toString() {
         // TODO: turn this into a nicely formatted table
+        // TODO: list accepted and unaccepted offers and ownership per user, etc.
+        // TODO: better wording
+
         String res = "";
 
         res += "ownership currently accepted: ";
@@ -101,14 +104,12 @@ public class negotiation_status {
         if (ownerships != null) {
             for (model_ownership ownership : ownerships) {
                 ownership_from_user.put(ownership.user, ownership);
-                Logger.info("***** user "+ownership.user.user_name+" owns "+ownership.percent.toString());
             }
         }
 
         if (offers != null) {
             // sort offers in descending order!
             Collections.sort(offers, (o1, o2) -> -o1.amount_percent.compareTo(o2.amount_percent));
-            Logger.info(" ******** length(offers)=="+Integer.toString(offers.size()));
         }
 
         if (policy != null) {
@@ -142,8 +143,6 @@ public class negotiation_status {
             BigDecimal tmp_best_offer = null;
             for (model_offer_for_merge offer : offers) {
                 tmp_ownership = tmp_ownership.add(ownership_from_user.get(offer.user).percent);
-                Logger.info(" ^^^^^^^^^^^^^ "+ownership_from_user.get(offer.user).percent.toString());
-                Logger.info("     tmp_ownership="+tmp_ownership.toString()+" policy="+policy.ownership_required_to_merge_pull_requests.toString());
                 if (tmp_ownership.compareTo(policy.ownership_required_to_merge_pull_requests) >= 0) {
                     tmp_best_offer = offer.amount_percent;
                     break;
