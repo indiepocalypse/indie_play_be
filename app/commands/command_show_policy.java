@@ -24,6 +24,7 @@ public class command_show_policy implements interface_command {
         String str = "";
         str += "minimal ownership for manaing issues is " + policy.ownership_required_to_manage_issues.toString() + "\n";
         str += "minimal ownership for changing policy is " + policy.ownership_required_to_change_policy.toString() + "\n";
+        str += "merging consesus chived with at least " + policy.ownership_required_to_merge_pull_requests.toString() + "% ownership\n";
         return str;
     }
 
