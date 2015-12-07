@@ -28,3 +28,6 @@ TODO: google analytics?
 TODO: cache everything: index / faq / help / explore (every few hrs or minutes) / etc
 // look here: https://www.playframework.com/documentation/2.0/JavaCache
 
+// TODO: a percentage transaction for the DB, recording status at the time of transaxction, tim of transaction,
+//   and ownership diff
+
