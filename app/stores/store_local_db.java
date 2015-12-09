@@ -109,6 +109,71 @@ public class store_local_db {
     }
 
     /********************************
+     * MERGE TRANSACTIONS!
+     ********************************/
+
+    public static void update_merge_transaction(model_merge_transaction merge_transaction) {
+        try {
+            merge_transaction.save();
+        } catch (Exception ignore) {
+            merge_transaction.update();
+        }
+    }
+
+    public static List<model_merge_transaction> get_merge_transactions_by_to_user(model_user to_user) {
+        try {
+            return model_merge_transaction.find
+                    .fetch("to_user")
+                    .fetch("from_user")
+                    .fetch("pull_request")
+                    .fetch("offer")
+                    .fetch("request")
+
+                    .where()
+                    .eq("to_user.user_name", to_user.user_name)
+                    .findList();
+        } catch (Exception ignore) {
+            return null;
+        }
+    }
+
+    public static List<model_merge_transaction> get_merge_transactions_by_from_user(model_user from_user) {
+        try {
+            return model_merge_transaction.find
+                    .fetch("to_user")
+                    .fetch("from_user")
+                    .fetch("pull_request")
+                    .fetch("offer")
+                    .fetch("request")
+
+                    .where()
+                    .eq("from_user.user_name", from_user.user_name)
+                    .findList();
+        } catch (Exception ignore) {
+            return null;
+        }
+    }
+
+    public static List<model_merge_transaction> get_merge_transactions_by_pull_request(model_pull_request pull_request) {
+        try {
+            // TODO: refactor all these fetches into the model itself
+            return model_merge_transaction.find
+                    .fetch("to_user")
+                    .fetch("from_user")
+                    .fetch("pull_request")
+                    .fetch("offer")
+                    .fetch("request")
+
+                    .where()
+                    .eq("pull_request.SHA", pull_request.SHA)
+                    .findList();
+        } catch (Exception ignore) {
+            return null;
+        }
+    }
+
+
+    /********************************
      * OWNERSHIP!
      ********************************/
 

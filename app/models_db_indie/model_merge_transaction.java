@@ -17,6 +17,7 @@ import java.util.Date;
 
 @Entity
 public class model_merge_transaction extends Model {
+    // TODO: integrate in local db store!
     public static final Finder<String, model_merge_transaction> find = new Finder<>(model_merge_transaction.class);
     @Id
     public final String id;
