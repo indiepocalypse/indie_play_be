@@ -259,7 +259,7 @@ public class handler_commands {
         final model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo());
         final List<model_ownership> ownerships = store_local_db.get_ownerships_by_repo_name(hook.get_repo().repo_name);
         final negotiation_status status = new negotiation_status(current_request, offers, policy, ownerships);
-        result += "\nnego status:\n\n"+status.toString();
+        result += "\nnego status:\n\n" + status.toString();
         return result;
     }
 
@@ -331,7 +331,7 @@ public class handler_commands {
         final model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo());
         final List<model_ownership> ownerships = store_local_db.get_ownerships_by_repo_name(hook.get_repo().repo_name);
         final negotiation_status status = new negotiation_status(request, offers, policy, ownerships);
-        result += "\nnego status:\n\n"+status.toString();
+        result += "\nnego status:\n\n" + status.toString();
         return result;
     }
 

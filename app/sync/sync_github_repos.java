@@ -3,17 +3,14 @@ package sync;
 import handlers.handler_general;
 import models_db_github.model_pull_request;
 import models_db_github.model_repo;
-import models_db_github.model_user;
 import play.Logger;
 import stores.github_io_exception;
 import stores.store_conf;
 import stores.store_github_api;
 import stores.store_local_db;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.function.Consumer;
 
 /**
  * Created by skariel on 06/10/15.
@@ -82,9 +79,8 @@ public class sync_github_repos {
             Logger.info(":: updating self repo " + repo.repo_name);
             try {
                 store_local_db.update_repo(repo);
-            }
-            catch (Exception e) {
-                Logger.error("could not sync repo "+repo.repo_name);
+            } catch (Exception e) {
+                Logger.error("could not sync repo " + repo.repo_name);
             }
             try {
                 store_github_api.create_webhook(repo);

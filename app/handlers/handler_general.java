@@ -146,8 +146,7 @@ public class handler_general {
         } catch (Exception e1) {
             try {
                 pull_request.update();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 Logger.error("cannot save pull request ", e1);
                 Logger.error("cannot update pull request ", e);
                 throw e;

@@ -2,8 +2,6 @@ package models_db_indie;
 
 import com.avaje.ebean.Model;
 import com.avaje.ebean.Query;
-import com.avaje.ebean.annotation.ConcurrencyMode;
-import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import models_db_github.model_pull_request;
 import models_db_github.model_user;
 

@@ -30,8 +30,7 @@ public class store_local_db {
         } catch (Exception e1) {
             try {
                 repo.update();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 Logger.error("cannot save repo ", e1);
                 Logger.error("could not update model_repo", e);
                 throw e;
@@ -69,8 +68,7 @@ public class store_local_db {
         } catch (Exception e1) {
             try {
                 user.update();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 Logger.error("cannot save user ", e1);
                 Logger.error("could not update model_user", e);
                 throw e;
@@ -84,8 +82,7 @@ public class store_local_db {
         } catch (Exception e1) {
             try {
                 admin.update();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 Logger.error("could not save admin ", e1);
                 Logger.error("could not update model_admin", e);
                 throw e;
@@ -140,8 +137,7 @@ public class store_local_db {
         } catch (Exception e1) {
             try {
                 merge_transaction.update();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 Logger.error("cannot save merge_transaction ", e1);
                 Logger.error("could not update merge transaction", e);
                 throw e;
@@ -191,8 +187,7 @@ public class store_local_db {
         } catch (Exception e1) {
             try {
                 ownership.update();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 Logger.error("cannot save ownership ", e1);
                 Logger.error("could not update ownership", e);
                 throw e;
@@ -263,8 +258,7 @@ public class store_local_db {
         } catch (Exception e1) {
             try {
                 offer.update();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 Logger.error("cannot save offer ", e1);
                 Logger.error("could not update offer", e);
                 throw e;
@@ -345,8 +339,7 @@ public class store_local_db {
         } catch (Exception e1) {
             try {
                 request.update();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 Logger.error("cannot save request ", e1);
                 Logger.error("could not update model_request_for_merge", e);
                 throw e;
@@ -412,8 +405,7 @@ public class store_local_db {
         } catch (Exception e1) {
             try {
                 policy.update();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 Logger.error("cannot save repo_policy ", e1);
                 Logger.error("could not update model_repo_policy", e);
                 throw e;

@@ -1,8 +1,6 @@
 package models_db_github;
 
 import com.avaje.ebean.Model;
-import com.avaje.ebean.annotation.ConcurrencyMode;
-import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import javax.persistence.Entity;

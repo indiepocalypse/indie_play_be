@@ -2,8 +2,6 @@ package models_db_github;
 
 import com.avaje.ebean.Model;
 import com.avaje.ebean.Query;
-import com.avaje.ebean.annotation.ConcurrencyMode;
-import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import javax.persistence.Entity;
@@ -105,16 +103,16 @@ public class model_pull_request extends Model {
         );
     }
 
-    public boolean is_closed() {
-        return !this.state.equals("open");
-    }
-
     public static Query<model_pull_request> fetch() {
         return find.fetch("user").fetch("repo");
     }
 
     public static void deleteById(String id) {
         find.deleteById(id);
+    }
+
+    public boolean is_closed() {
+        return !this.state.equals("open");
     }
 
 }

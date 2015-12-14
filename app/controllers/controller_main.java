@@ -44,7 +44,7 @@ public class controller_main extends Controller {
     public Result explore() {
         final String key = "exlpore_webpage_not_logged";
         if (!store_session.user_is_logged()) {
-            return (Status)Cache.getOrElse(key, new Callable<Object>() {
+            return (Status) Cache.getOrElse(key, new Callable<Object>() {
                 @Override
                 public Object call() throws Exception {
                     Logger.info("GENERATING CACHE!!!!!!!!!!!!!!!!!");
