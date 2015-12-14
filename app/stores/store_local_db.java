@@ -128,6 +128,8 @@ public class store_local_db {
                     .fetch("pull_request")
                     .fetch("offer")
                     .fetch("request")
+                    .fetch("from_user_ownership")
+                    .fetch("to_user_ownership")
 
                     .where()
                     .eq("to_user.user_name", to_user.user_name)
@@ -145,6 +147,8 @@ public class store_local_db {
                     .fetch("pull_request")
                     .fetch("offer")
                     .fetch("request")
+                    .fetch("from_user_ownership")
+                    .fetch("to_user_ownership")
 
                     .where()
                     .eq("from_user.user_name", from_user.user_name)
@@ -163,6 +167,8 @@ public class store_local_db {
                     .fetch("pull_request")
                     .fetch("offer")
                     .fetch("request")
+                    .fetch("from_user_ownership")
+                    .fetch("to_user_ownership")
 
                     .where()
                     .eq("pull_request.SHA", pull_request.SHA)
