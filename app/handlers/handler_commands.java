@@ -264,7 +264,7 @@ public class handler_commands {
         final List<model_offer_for_merge> offers = store_local_db.get_offers_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
         final model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo());
         final List<model_ownership> ownerships = store_local_db.get_ownerships_by_repo_name(hook.get_repo().repo_name);
-        final negotiation_status status = new negotiation_status(current_request, offers, policy, ownerships);
+        final negotiation_status status = new negotiation_status(current_request, offers, policy, ownerships, pull_request.repo);
         result += "\nnego status:\n\n" + status.toString();
         if (status.is_negotiation_succesful()) {
             result += "\nnegotiation succesful. Merging\n";
@@ -351,7 +351,7 @@ public class handler_commands {
         final List<model_offer_for_merge> offers = store_local_db.get_offers_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
         final model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo());
         final List<model_ownership> ownerships = store_local_db.get_ownerships_by_repo_name(hook.get_repo().repo_name);
-        final negotiation_status status = new negotiation_status(request, offers, policy, ownerships);
+        final negotiation_status status = new negotiation_status(request, offers, policy, ownerships, pull_request.repo);
         result += "\nnego status:\n\n" + status.toString();
         if (status.is_negotiation_succesful()) {
             result += "\nnegotiation succesful. Merging\n";

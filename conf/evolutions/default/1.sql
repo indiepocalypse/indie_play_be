@@ -24,6 +24,7 @@ create table model_merge_transaction (
   request_id                varchar(255),
   from_user_ownership_id    varchar(255),
   to_user_ownership_id      varchar(255),
+  repo_repo_name            varchar(255),
   amount_percent            decimal(5,2),
   date                      timestamp,
   constraint pk_model_merge_transaction primary key (id))
@@ -142,24 +143,26 @@ alter table model_merge_transaction add constraint fk_model_merge_transaction_fr
 create index ix_model_merge_transaction_fro_7 on model_merge_transaction (from_user_ownership_id);
 alter table model_merge_transaction add constraint fk_model_merge_transaction_to__8 foreign key (to_user_ownership_id) references model_ownership (id) on delete restrict on update restrict;
 create index ix_model_merge_transaction_to__8 on model_merge_transaction (to_user_ownership_id);
-alter table model_offer_for_merge add constraint fk_model_offer_for_merge_user_9 foreign key (user_user_name) references model_user (user_name) on delete restrict on update restrict;
-create index ix_model_offer_for_merge_user_9 on model_offer_for_merge (user_user_name);
-alter table model_offer_for_merge add constraint fk_model_offer_for_merge_pull_10 foreign key (pull_request_id) references model_pull_request (id) on delete restrict on update restrict;
-create index ix_model_offer_for_merge_pull_10 on model_offer_for_merge (pull_request_id);
-alter table model_ownership add constraint fk_model_ownership_user_11 foreign key (user_user_name) references model_user (user_name) on delete restrict on update restrict;
-create index ix_model_ownership_user_11 on model_ownership (user_user_name);
-alter table model_ownership add constraint fk_model_ownership_repo_12 foreign key (repo_repo_name) references model_repo (repo_name) on delete restrict on update restrict;
-create index ix_model_ownership_repo_12 on model_ownership (repo_repo_name);
-alter table model_pull_request add constraint fk_model_pull_request_user_13 foreign key (user_user_name) references model_user (user_name) on delete restrict on update restrict;
-create index ix_model_pull_request_user_13 on model_pull_request (user_user_name);
-alter table model_pull_request add constraint fk_model_pull_request_repo_14 foreign key (repo_repo_name) references model_repo (repo_name) on delete restrict on update restrict;
-create index ix_model_pull_request_repo_14 on model_pull_request (repo_repo_name);
-alter table model_repo_policy add constraint fk_model_repo_policy_repo_15 foreign key (repo_repo_name) references model_repo (repo_name) on delete restrict on update restrict;
-create index ix_model_repo_policy_repo_15 on model_repo_policy (repo_repo_name);
-alter table model_request_for_merge add constraint fk_model_request_for_merge_us_16 foreign key (user_user_name) references model_user (user_name) on delete restrict on update restrict;
-create index ix_model_request_for_merge_us_16 on model_request_for_merge (user_user_name);
-alter table model_request_for_merge add constraint fk_model_request_for_merge_pu_17 foreign key (pull_request_id) references model_pull_request (id) on delete restrict on update restrict;
-create index ix_model_request_for_merge_pu_17 on model_request_for_merge (pull_request_id);
+alter table model_merge_transaction add constraint fk_model_merge_transaction_rep_9 foreign key (repo_repo_name) references model_repo (repo_name) on delete restrict on update restrict;
+create index ix_model_merge_transaction_rep_9 on model_merge_transaction (repo_repo_name);
+alter table model_offer_for_merge add constraint fk_model_offer_for_merge_user_10 foreign key (user_user_name) references model_user (user_name) on delete restrict on update restrict;
+create index ix_model_offer_for_merge_user_10 on model_offer_for_merge (user_user_name);
+alter table model_offer_for_merge add constraint fk_model_offer_for_merge_pull_11 foreign key (pull_request_id) references model_pull_request (id) on delete restrict on update restrict;
+create index ix_model_offer_for_merge_pull_11 on model_offer_for_merge (pull_request_id);
+alter table model_ownership add constraint fk_model_ownership_user_12 foreign key (user_user_name) references model_user (user_name) on delete restrict on update restrict;
+create index ix_model_ownership_user_12 on model_ownership (user_user_name);
+alter table model_ownership add constraint fk_model_ownership_repo_13 foreign key (repo_repo_name) references model_repo (repo_name) on delete restrict on update restrict;
+create index ix_model_ownership_repo_13 on model_ownership (repo_repo_name);
+alter table model_pull_request add constraint fk_model_pull_request_user_14 foreign key (user_user_name) references model_user (user_name) on delete restrict on update restrict;
+create index ix_model_pull_request_user_14 on model_pull_request (user_user_name);
+alter table model_pull_request add constraint fk_model_pull_request_repo_15 foreign key (repo_repo_name) references model_repo (repo_name) on delete restrict on update restrict;
+create index ix_model_pull_request_repo_15 on model_pull_request (repo_repo_name);
+alter table model_repo_policy add constraint fk_model_repo_policy_repo_16 foreign key (repo_repo_name) references model_repo (repo_name) on delete restrict on update restrict;
+create index ix_model_repo_policy_repo_16 on model_repo_policy (repo_repo_name);
+alter table model_request_for_merge add constraint fk_model_request_for_merge_us_17 foreign key (user_user_name) references model_user (user_name) on delete restrict on update restrict;
+create index ix_model_request_for_merge_us_17 on model_request_for_merge (user_user_name);
+alter table model_request_for_merge add constraint fk_model_request_for_merge_pu_18 foreign key (pull_request_id) references model_pull_request (id) on delete restrict on update restrict;
+create index ix_model_request_for_merge_pu_18 on model_request_for_merge (pull_request_id);
 
 
 

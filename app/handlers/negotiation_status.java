@@ -1,6 +1,7 @@
 package handlers;
 
 import models_db_github.model_pull_request;
+import models_db_github.model_repo;
 import models_db_github.model_user;
 import models_db_indie.*;
 import play.Logger;
@@ -24,7 +25,8 @@ public class negotiation_status {
     public negotiation_status(model_request_for_merge request,
                               List<model_offer_for_merge> offers,
                               model_repo_policy policy,
-                              List<model_ownership> ownerships) {
+                              List<model_ownership> ownerships,
+                              model_repo p_repo) {
 
         users_currently_accepted = new ArrayList<>(5);
 
@@ -127,7 +129,8 @@ public class negotiation_status {
                         p_amount_percent,
                         p_date,
                         p_from_user_ownership,
-                        p_to_user_ownership);
+                        p_to_user_ownership,
+                        p_repo);
 
                 implied_transactions.add(merge_transaction);
 
