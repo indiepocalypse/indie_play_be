@@ -1,10 +1,8 @@
 package handlers;
 
+import models_db_github.model_pull_request;
 import models_db_github.model_user;
-import models_db_indie.model_offer_for_merge;
-import models_db_indie.model_ownership;
-import models_db_indie.model_repo_policy;
-import models_db_indie.model_request_for_merge;
+import models_db_indie.*;
 import play.Logger;
 
 import java.math.BigDecimal;
@@ -19,6 +17,9 @@ public class negotiation_status {
     public final BigDecimal required_ownership_as_per_policy;
     public final BigDecimal requested_percent;
     public final BigDecimal required_for_acceptance_current_best_case;
+    public final List<model_merge_transaction> implied_transactions;
+    public final List<model_user> users_with_more_ownership;
+    public final BigDecimal total_ownership_of_users_with_more_ownership;
 
     public negotiation_status(model_request_for_merge request,
                               List<model_offer_for_merge> offers,
@@ -28,9 +29,15 @@ public class negotiation_status {
         users_currently_accepted = new ArrayList<>(5);
 
         Map<model_user, model_ownership> ownership_from_user = new HashMap<>(11);
+        users_with_more_ownership = new ArrayList<>();
+        total_ownership_of_users_with_more_ownership = new BigDecimal("0.0");
         if (ownerships != null) {
             for (model_ownership ownership : ownerships) {
                 ownership_from_user.put(ownership.user, ownership);
+                if (ownership.percent.compareTo(request.amount_percent)>0) {
+                    users_with_more_ownership.add(ownership.user);
+                    total_ownership_of_users_with_more_ownership.add(ownership.percent);
+                }
             }
         }
 
@@ -78,6 +85,50 @@ public class negotiation_status {
             required_for_acceptance_current_best_case = tmp_best_offer;
         } else {
             required_for_acceptance_current_best_case = null;
+        }
+
+        implied_transactions = new ArrayList<>();
+        if (is_negotiation_succesful()) {
+
+            Map<model_user, model_offer_for_merge> offer_from_user = new HashMap<>(11);
+            for (model_offer_for_merge offer : offers) {
+                offer_from_user.put(offer.user, offer);
+            }
+
+
+
+            BigDecimal transaction_quanta = request.amount_percent.divide(total_ownership_of_users_with_more_ownership);
+            model_ownership to_ownership = ownership_from_user.get(request.user);
+            for (model_user user: users_with_more_ownership) {
+
+                final model_ownership ownership = ownership_from_user.get(user);
+                final BigDecimal user_ownership = ownership.percent;
+                final BigDecimal transaction_amount_for_user = transaction_quanta.multiply(user_ownership);
+
+                final model_user p_from_user = request.user;
+                final model_user p_to_user = user;
+                final model_offer_for_merge p_offer = offer_from_user.get(user);
+                final model_request_for_merge p_request = request;
+                final BigDecimal p_amount_percent = transaction_amount_for_user;
+                final Date p_date = new Date();
+                final model_ownership p_from_user_ownership = ownership;
+                final model_ownership p_to_user_ownership = to_ownership;
+                final model_pull_request p_pull_request = request.pull_request;
+
+                model_merge_transaction merge_transaction = new model_merge_transaction(
+                        p_from_user,
+                        p_to_user,
+                        p_pull_request,
+                        p_offer,
+                        p_request,
+                        p_amount_percent,
+                        p_date,
+                        p_from_user_ownership,
+                        p_to_user_ownership);
+
+                implied_transactions.add(merge_transaction);
+
+            }
         }
     }
 
