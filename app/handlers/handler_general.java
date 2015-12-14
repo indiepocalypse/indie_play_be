@@ -1,16 +1,18 @@
 package handlers;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import controllers.routes;
 import models_db_github.model_pull_request;
 import models_db_github.model_repo;
 import models_db_github.model_user;
-import models_db_indie.model_ownership;
-import models_db_indie.model_repo_policy;
+import models_db_indie.*;
 import play.Logger;
 import stores.*;
 import sync.sync_gmail;
 
 import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by skariel on 15/10/15.
@@ -154,4 +156,56 @@ public class handler_general {
         }
         return updated;
     }
+
+    public static void execute_single_merge_transaction(model_merge_transaction merge_transaction) {
+        final BigDecimal new_to_ownership_percent = merge_transaction.to_user_ownership.percent;
+        new_to_ownership_percent.add(merge_transaction.amount_percent);
+        final model_ownership new_to_ownership = new model_ownership(
+                merge_transaction.to_user,
+                merge_transaction.repo,
+                new_to_ownership_percent,
+                merge_transaction.to_user_ownership.is_creator);
+
+        final BigDecimal new_from_ownership_percent = merge_transaction.from_user_ownership.percent;
+        new_from_ownership_percent.subtract(merge_transaction.amount_percent);
+        final model_ownership new_from_ownership = new model_ownership(
+                merge_transaction.from_user,
+                merge_transaction.repo,
+                new_from_ownership_percent,
+                merge_transaction.from_user_ownership.is_creator);
+
+        Boolean is_active = false;
+        Boolean was_positively_accepted = true;
+        Date date_accepted = new Date();
+        final model_offer_for_merge new_offer = new model_offer_for_merge(
+                merge_transaction.offer.user,
+                merge_transaction.offer.pull_request,
+                merge_transaction.offer.amount_percent,
+                is_active,
+                was_positively_accepted,
+                merge_transaction.offer.date_created,
+                date_accepted);
+
+        final model_request_for_merge new_request = new model_request_for_merge(
+                merge_transaction.request.user,
+                merge_transaction.request.pull_request,
+                merge_transaction.request.amount_percent,
+                is_active,
+                was_positively_accepted,
+                merge_transaction.request.date_created,
+                date_accepted);
+
+        store_local_db.update_ownership(new_to_ownership);
+        store_local_db.update_ownership(new_from_ownership);
+        store_local_db.update_offer(new_offer);
+        store_local_db.update_request(new_request);
+    }
+
+    public static void execute_merge_transactions(List<model_merge_transaction> merge_transactions) {
+        for (model_merge_transaction merge_transaction: merge_transactions) {
+            execute_single_merge_transaction(merge_transaction);
+        }
+    }
 }
+
+

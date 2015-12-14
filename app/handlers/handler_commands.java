@@ -89,7 +89,7 @@ public class handler_commands {
     }
 
     public static String get_negotiations_good_looking_table(interface_github_webhook hook) {
-        // xxxxxxxxxxxxxxxxxxxxxxxx TODO: use the negotiation status class
+        // TODO: use the negotiation status class
         if (hook.get_pull_request() == null) {
             return "this is not a pull request, there are no offers here";
         }
@@ -144,7 +144,7 @@ public class handler_commands {
         return response;
     }
 
-    public static String handle_merge(interface_github_webhook hook) {
+    public static String handle_merge(interface_github_webhook hook, List<model_merge_transaction> merge_transactions) {
         // TODO: take care of ownership changes!
         // we have a merge command!
         // check whether its mergeable:
@@ -195,7 +195,7 @@ public class handler_commands {
             pull_request.mergeable = false; // TODO: should this actually change?
             pull_request.state = "closed";
             handler_general.locally_update_pull_request_and_clear_offers_if_necessary(pull_request);
-            handler_general.locally_update_pull_request_and_clear_offers_if_necessary(pull_request);
+            handler_general.execute_merge_transactions(merge_transactions);
             return "merged!\nThe new ownership structure:\n\n" + get_owners_good_looking_table(hook);
         } catch (github_io_exception e) {
             return "Some problem with merging. Please try again later, or contant an admin";
@@ -268,7 +268,7 @@ public class handler_commands {
         result += "\nnego status:\n\n" + status.toString();
         if (status.is_negotiation_succesful()) {
             result += "\nnegotiation succesful. Merging\n";
-            result += "\n"+handle_merge(hook)+"\n";
+            result += "\n"+handle_merge(hook, status.implied_transactions)+"\n";
         }
         return result;
     }
@@ -355,7 +355,7 @@ public class handler_commands {
         result += "\nnego status:\n\n" + status.toString();
         if (status.is_negotiation_succesful()) {
             result += "\nnegotiation succesful. Merging\n";
-            result += "\n"+handle_merge(hook)+"\n";
+            result += "\n"+handle_merge(hook, status.implied_transactions)+"\n";
         }
         return result;
     }

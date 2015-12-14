@@ -3,6 +3,7 @@ package models_db_indie;
 import com.avaje.ebean.Model;
 import com.avaje.ebean.Query;
 import models_db_github.model_pull_request;
+import models_db_github.model_repo;
 import models_db_github.model_user;
 
 import javax.persistence.Column;
@@ -35,6 +36,8 @@ public class model_merge_transaction extends Model {
     public final model_ownership from_user_ownership;
     @ManyToOne
     public final model_ownership to_user_ownership;
+    @ManyToOne
+    public final model_repo repo;
     @Column(precision = 5, scale = 2)
     public final BigDecimal amount_percent;
     final public Date date;
@@ -46,7 +49,7 @@ public class model_merge_transaction extends Model {
             model_request_for_merge p_request,
             BigDecimal p_amount_percent, Date p_date,
             model_ownership p_from_user_ownership,
-            model_ownership p_to_user_ownership) {
+            model_ownership p_to_user_ownership, model_repo p_repo) {
         id = "transaction_from_user_" + p_from_user.user_name + "_to_user " + p_to_user + "_for_pull_request_number_" + p_pull_request.number + "_for_repo_" + p_pull_request.repo.repo_name;
         this.to_user = p_to_user;
         this.from_user = p_from_user;
@@ -57,6 +60,7 @@ public class model_merge_transaction extends Model {
         this.date = p_date;
         this.from_user_ownership = p_from_user_ownership;
         this.to_user_ownership = p_to_user_ownership;
+        this.repo = p_repo;
     }
 
     public static Query<model_merge_transaction> fetch() {
@@ -67,7 +71,8 @@ public class model_merge_transaction extends Model {
                 .fetch("offer")
                 .fetch("request")
                 .fetch("from_user_ownership")
-                .fetch("to_user_ownership");
+                .fetch("to_user_ownership")
+                .fetch("repo");
     }
 
     public static void deleteById(String id) {
