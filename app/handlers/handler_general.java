@@ -199,6 +199,8 @@ public class handler_general {
         store_local_db.update_ownership(new_from_ownership);
         store_local_db.update_offer(new_offer);
         store_local_db.update_request(new_request);
+
+        store_local_db.update_merge_transaction(merge_transaction);
     }
 
     public static void execute_merge_transactions(List<model_merge_transaction> merge_transactions) {

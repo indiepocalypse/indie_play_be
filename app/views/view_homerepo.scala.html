@@ -1,5 +1,5 @@
 @(repo: models_db_github.model_repo)(owners: List[models_db_indie.model_ownership])(pull_requests: List[models_db_github.model_pull_request])
-
+<!--TODO: classify pull requests by open, close, or merged-->
 <div class="container col-md-6">
 
     @if(stores.store_session.pop_new_repo(repo.repo_name)){

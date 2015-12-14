@@ -31,7 +31,10 @@ TODO: cache everything: index / faq / help / explore (every few hrs or minutes) 
 
 Currenly working on:
 
-1) transactions - generate these based on pull requests
+1) transactions - kill some bugs:
+      - make a new ownership when opening a pull request
+      - etc.
+
 2) "blogpost"
 3) finding a name
 

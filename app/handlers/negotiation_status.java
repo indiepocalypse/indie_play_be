@@ -22,6 +22,7 @@ public class negotiation_status {
     public final List<model_user> users_with_more_ownership;
     public final BigDecimal total_ownership_of_users_with_more_ownership;
 
+    // we assume here to_user has ownership. This is taken care of in the hook checkin
     public negotiation_status(model_request_for_merge request,
                               List<model_offer_for_merge> offers,
                               model_repo_policy policy,
@@ -29,14 +30,22 @@ public class negotiation_status {
                               model_repo p_repo) {
 
         users_currently_accepted = new ArrayList<>(5);
-
-        Map<model_user, model_ownership> ownership_from_user = new HashMap<>(11);
+        final Map<model_user, model_ownership> ownership_from_user = new HashMap<>(11);
         users_with_more_ownership = new ArrayList<>();
         total_ownership_of_users_with_more_ownership = new BigDecimal("0.0");
+        model_ownership to_ownership = null;
         if (ownerships != null) {
             for (model_ownership ownership : ownerships) {
                 ownership_from_user.put(ownership.user, ownership);
-                if (ownership.percent.compareTo(request.amount_percent)>0) {
+            }
+            if (ownership_from_user.containsKey(request.user)) {
+                to_ownership = ownership_from_user.get(request.user);
+            }
+            else {
+                Logger.error("to_user \""+request.user.user_name+"\" has no ownership in pull request #"+request.pull_request.number+" for repo \""+p_repo.repo_name+"\", this should not happen!");
+            }
+            for (model_ownership ownership : ownerships) {
+                if (ownership.percent.compareTo(to_ownership.percent)>0) {
                     users_with_more_ownership.add(ownership.user);
                     total_ownership_of_users_with_more_ownership.add(ownership.percent);
                 }
@@ -100,10 +109,7 @@ public class negotiation_status {
                 offer_from_user.put(offer.user, offer);
             }
 
-
-
             BigDecimal transaction_quanta = request.amount_percent.divide(total_ownership_of_users_with_more_ownership);
-            model_ownership to_ownership = ownership_from_user.get(request.user);
             for (model_user user: users_with_more_ownership) {
 
                 final model_ownership ownership = ownership_from_user.get(user);

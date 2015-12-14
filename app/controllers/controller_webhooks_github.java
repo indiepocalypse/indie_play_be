@@ -3,6 +3,7 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import handlers.handler_commands;
 import handlers.handler_general;
+import models_db_indie.model_ownership;
 import models_memory_github.*;
 import play.Logger;
 import play.mvc.Controller;
@@ -11,6 +12,7 @@ import stores.github_io_exception;
 import stores.store_github_api;
 import stores.store_local_db;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**
@@ -48,6 +50,19 @@ public class controller_webhooks_github extends Controller {
             hook = model_webhook_issue_created.from_json(json);
         } else if (model_webhook_pull_request_created_or_updated.is_me(json)) {
             hook = model_webhook_pull_request_created_or_updated.from_json(json);
+            // create an ownership for this user if one is not existing
+            model_ownership ownership = null;
+            try {
+                store_local_db.get_ownerships_by_user_name_and_repo_name(hook.get_user(), hook.get_repo());
+            }
+            catch (Exception ignore) {
+            }
+            if (ownership==null) {
+                Boolean is_creator = false;
+                BigDecimal ownership_percent = new BigDecimal("0.0");
+                ownership = new model_ownership(hook.get_user(), hook.get_repo(), ownership_percent, is_creator);
+                store_local_db.update_ownership(ownership);
+            }
             if (handler_general.locally_update_pull_request_and_clear_offers_if_necessary(hook.get_pull_request())) {
                 // code in PR was updated. No comment was created, no command issued.
                 // store call was responsible to notify everybody
