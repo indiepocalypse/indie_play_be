@@ -144,7 +144,7 @@ public class handler_commands {
         return response;
     }
 
-    public static String handle_merge(interface_github_webhook hook, String commit_message) {
+    public static String handle_merge(interface_github_webhook hook) {
         // TODO: take care of ownership changes!
         // we have a merge command!
         // check whether its mergeable:
@@ -180,6 +180,12 @@ public class handler_commands {
 
         if (!pull_request.mergeable) {
             return "this pull request is not mergeable automatically (the merge button) maybe a rebase will solve the issue?";
+        }
+
+        // extract commit message
+        String commit_message = "this is the default commit message";
+        if (hook.get_pull_request().title != null) {
+            commit_message = hook.get_pull_request().title;
         }
 
         // try to merge!
@@ -260,7 +266,22 @@ public class handler_commands {
         final List<model_ownership> ownerships = store_local_db.get_ownerships_by_repo_name(hook.get_repo().repo_name);
         final negotiation_status status = new negotiation_status(current_request, offers, policy, ownerships);
         result += "\nnego status:\n\n" + status.toString();
+        if (status.is_negotiation_succesful()) {
+            result += "\nnegotiation succesful. Merging\n";
+            result += "\n"+handle_merge(hook)+"\n";
+        }
         return result;
+    }
+
+    // this is like handle_make_offer but offers an exact amount to accept the offer
+    public static String handle_tailor_offer(interface_github_webhook hook) {
+        try {
+            final model_request_for_merge request = store_local_db.get_request_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
+            return handle_make_offer(hook, request.amount_percent.toString());
+        }
+        catch (Exception ignore) {
+            return "cannot find the request. Please try again later, or contact an admin";
+        }
     }
 
     public static String handle_make_offer(interface_github_webhook hook, String percent_amount) {
@@ -332,6 +353,10 @@ public class handler_commands {
         final List<model_ownership> ownerships = store_local_db.get_ownerships_by_repo_name(hook.get_repo().repo_name);
         final negotiation_status status = new negotiation_status(request, offers, policy, ownerships);
         result += "\nnego status:\n\n" + status.toString();
+        if (status.is_negotiation_succesful()) {
+            result += "\nnegotiation succesful. Merging\n";
+            result += "\n"+handle_merge(hook)+"\n";
+        }
         return result;
     }
 

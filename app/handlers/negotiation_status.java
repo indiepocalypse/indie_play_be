@@ -88,6 +88,9 @@ public class negotiation_status {
         }
 
         implied_transactions = new ArrayList<>();
+
+        // generating transactions!
+
         if (is_negotiation_succesful()) {
 
             Map<model_user, model_offer_for_merge> offer_from_user = new HashMap<>(11);
