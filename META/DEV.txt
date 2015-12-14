@@ -34,3 +34,14 @@ Currenly working on:
 1) transactions - generate these based on pull requests
 2) "blogpost"
 3) finding a name
+
+Future:
+
+1) Web GUI
+2) feedback on teams
+3) blogging platform
+4) better webpage
+5) upload images and other stuff
+6) store
+7) ownership transactins w/o merging
+8) auto generated license or ownership doc

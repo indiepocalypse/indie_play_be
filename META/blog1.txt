@@ -1,0 +1,53 @@
+some preliminary thoughts--
+
+activation energy to create games, or just general sw is very low.
+
+gamedev barriers to entry are lower than ever
+
+unity, ue4, cryengine, etc.
+
+photoncloud, playfab, etc.
+
+web, consoles, desktop, mobile, etc.
+
+industry is making big money, perhavs more than movies!
+
+but making a living as an idie dev is still very hard
+
+one has to do everything alone. Team is very important but people are busy, how can you afford to pay?
+
+aaa teams are large. The human factor is their advantgae!
+
+current solutions: kickstarters, patreons, etc.
+
+downsides: kickstarter is mostly all or nothing. Still need to find team, pay and manage it all
+patreon won't suffice for a large team
+
+kosmos is a different solution.
+
+Instead of approaching end users approach the indie dev community
+
+contrubute to game projects and get your share of the revenu
+
+its not a talent and time for favor but rather talent and time for cash
+
+if a dev feels a game has a chance at making cash, she can consider contributing
+
+games that do not yet seem to have a good chance will not get much contributions.
+
+this method has many downsides:
+
+- code has to be visible
+- etc.
+
+but so does every method. This method may be a good fit for some developpers and genres.
+
+its like an experiment currently
+
+I'm sure some succesful games can grow
+
+we're dogfooding this whole project!
+
+
+
+
