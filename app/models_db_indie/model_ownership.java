@@ -1,13 +1,13 @@
 package models_db_indie;
 
 import com.avaje.ebean.Model;
+import com.avaje.ebean.Query;
+import com.avaje.ebean.annotation.ConcurrencyMode;
+import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import models_db_github.model_repo;
 import models_db_github.model_user;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 /**
@@ -16,7 +16,8 @@ import java.math.BigDecimal;
 
 @Entity
 public class model_ownership extends Model {
-    public static final Finder<String, model_ownership> find = new Finder<>(model_ownership.class);
+    static final Finder<String, model_ownership> find = new Finder<>(model_ownership.class);
+
     @Id
     public final String id;
     @ManyToOne
@@ -33,6 +34,17 @@ public class model_ownership extends Model {
         repo = p_repo;
         percent = p_percent;
         is_creator = p_is_creator;
+    }
+
+    // TODO: this solution is no good in the sense that it's not recursive...
+    public static Query<model_ownership> fetch() {
+        return find
+                .fetch("user")
+                .fetch("repo");
+    }
+
+    public static void deleteById(String id) {
+        find.deleteById(id);
     }
 }
 

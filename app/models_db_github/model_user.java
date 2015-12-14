@@ -1,6 +1,8 @@
 package models_db_github;
 
 import com.avaje.ebean.Model;
+import com.avaje.ebean.annotation.ConcurrencyMode;
+import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import javax.persistence.Entity;
@@ -12,7 +14,8 @@ import javax.persistence.Id;
 
 @Entity
 public class model_user extends Model {
-    public static final Finder<String, model_user> find = new Finder<>(model_user.class);
+    static final Finder<String, model_user> find = new Finder<>(model_user.class);
+
     @Id
     public final String user_name;
     public final String github_html_url;
@@ -31,5 +34,14 @@ public class model_user extends Model {
         return new model_user(
                 user_name, user_github_html_url, user_avatar_url);
     }
+
+    public static Finder<String, model_user> fetch() {
+        return find;
+    }
+
+    public static void deleteById(String id) {
+        find.deleteById(id);
+    }
+
 }
 

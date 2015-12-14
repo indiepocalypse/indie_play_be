@@ -1,6 +1,9 @@
 package models_db_indie;
 
 import com.avaje.ebean.Model;
+import com.avaje.ebean.Query;
+import com.avaje.ebean.annotation.ConcurrencyMode;
+import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import models_db_github.model_repo;
 import stores.store_conf;
 
@@ -16,8 +19,8 @@ import java.math.BigDecimal;
 
 @Entity
 public class model_repo_policy extends Model {
-    // TODO: integrate in db store
-    public static final Finder<String, model_repo_policy> find = new Finder<>(model_repo_policy.class);
+    static final Finder<String, model_repo_policy> find = new Finder<>(model_repo_policy.class);
+
     @Id
     public final String id;
     @ManyToOne
@@ -36,5 +39,16 @@ public class model_repo_policy extends Model {
         this.ownership_required_to_manage_issues = store_conf.get_policy_default_ownership_required_to_manage_issues();
         this.ownership_required_to_merge_pull_requests = store_conf.get_policy_default_ownership_required_to_merge_pull_request();
     }
+
+    public static Query<model_repo_policy> fetch() {
+        return find
+                .fetch("repo");
+    }
+
+    public static void deleteById(String id) {
+        find.deleteById(id);
+    }
+
+
 }
 

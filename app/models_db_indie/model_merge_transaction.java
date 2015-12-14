@@ -1,6 +1,9 @@
 package models_db_indie;
 
 import com.avaje.ebean.Model;
+import com.avaje.ebean.Query;
+import com.avaje.ebean.annotation.ConcurrencyMode;
+import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import models_db_github.model_pull_request;
 import models_db_github.model_user;
 
@@ -17,8 +20,7 @@ import java.util.Date;
 
 @Entity
 public class model_merge_transaction extends Model {
-    // TODO: integrate in local db store!
-    public static final Finder<String, model_merge_transaction> find = new Finder<>(model_merge_transaction.class);
+    static final Finder<String, model_merge_transaction> find = new Finder<>(model_merge_transaction.class);
     @Id
     public final String id;
     @ManyToOne
@@ -58,5 +60,22 @@ public class model_merge_transaction extends Model {
         this.from_user_ownership = p_from_user_ownership;
         this.to_user_ownership = p_to_user_ownership;
     }
+
+    public static Query<model_merge_transaction> fetch() {
+        return find
+                .fetch("from_user")
+                .fetch("to_user")
+                .fetch("pull_request")
+                .fetch("offer")
+                .fetch("request")
+                .fetch("from_user_ownership")
+                .fetch("to_user_ownership");
+    }
+
+    public static void deleteById(String id) {
+        find.deleteById(id);
+    }
+
+
 }
 

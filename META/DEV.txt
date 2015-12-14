@@ -15,7 +15,7 @@ Current development principles:
        vs per repo policy e.g. minimal ownership needed to manage issues.
        the global policy if managed in app conf folder. The per repo
        policies are managed with a db model model_repo_policy
-11) models are always fully initialised!
+11) models are always fully initialised! at least that is, one level deep. This should be done recursively, there's a todo about it
 
 to remotely debug:
 

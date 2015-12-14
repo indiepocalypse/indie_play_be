@@ -3,6 +3,7 @@ package sync;
 import handlers.handler_general;
 import models_db_github.model_pull_request;
 import models_db_github.model_repo;
+import models_db_github.model_user;
 import play.Logger;
 import stores.github_io_exception;
 import stores.store_conf;
@@ -12,6 +13,7 @@ import stores.store_local_db;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Consumer;
 
 /**
  * Created by skariel on 06/10/15.
@@ -58,7 +60,7 @@ public class sync_github_repos {
     }
 
     private static void sync() {
-        List<model_repo> repos = new ArrayList<>();
+        List<model_repo> repos;
         try {
             repos = store_github_api.get_indie_repositories();
         } catch (Exception e) {
@@ -78,7 +80,12 @@ public class sync_github_repos {
                 return;
             }
             Logger.info(":: updating self repo " + repo.repo_name);
-            store_local_db.update_repo(repo);
+            try {
+                store_local_db.update_repo(repo);
+            }
+            catch (Exception e) {
+                Logger.error("could not sync repo "+repo.repo_name);
+            }
             try {
                 store_github_api.create_webhook(repo);
             } catch (github_io_exception ignore) {
@@ -87,8 +94,11 @@ public class sync_github_repos {
             handler_general.create_default_readme(repo, check_first_for_existance);
             try {
                 List<model_pull_request> all_pull_requests_for_repo = store_github_api.get_all_pull_requests(repo);
-                all_pull_requests_for_repo.forEach(handler_general::locally_update_pull_request_and_clear_offers_if_necessary);
-            } catch (github_io_exception e) {
+                all_pull_requests_for_repo.forEach(pull_request -> {
+                    store_local_db.update_user(pull_request.user);
+                    handler_general.locally_update_pull_request_and_clear_offers_if_necessary(pull_request);
+                });
+            } catch (Exception e) {
                 Logger.error("could not get pull requests from repo " + repo.repo_name + " while syncing");
             }
         }

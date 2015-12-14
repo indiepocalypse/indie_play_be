@@ -1,6 +1,9 @@
 package models_db_github;
 
 import com.avaje.ebean.Model;
+import com.avaje.ebean.Query;
+import com.avaje.ebean.annotation.ConcurrencyMode;
+import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import javax.persistence.Entity;
@@ -12,7 +15,8 @@ import javax.persistence.Id;
 
 @Entity
 public class model_repo extends Model {
-    public static final Finder<String, model_repo> find = new Finder<>(model_repo.class);
+    static final Finder<String, model_repo> find = new Finder<>(model_repo.class);
+
     @Id
     public final String repo_name;
     public final String repo_description;
@@ -43,5 +47,14 @@ public class model_repo extends Model {
     public static model_repo from_name_desc_and_homepage(String name, String desc, String homepage) {
         return new model_repo(name, desc, homepage, "https://github.com/theindiepocalypse/" + name, 0, 0);
     }
+
+    public static Finder<String, model_repo> fetch() {
+        return find;
+    }
+
+    public static void deleteById(String id) {
+        find.deleteById(id);
+    }
+
 }
 

@@ -1,6 +1,9 @@
 package models_db_indie;
 
 import com.avaje.ebean.Model;
+import com.avaje.ebean.Query;
+import com.avaje.ebean.annotation.ConcurrencyMode;
+import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import models_db_github.model_user;
 
 import javax.persistence.Entity;
@@ -13,7 +16,8 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class model_admin extends Model {
-    public static final Finder<String, model_admin> find = new Finder<>(model_admin.class);
+    static final Finder<String, model_admin> find = new Finder<>(model_admin.class);
+
     @Id
     public final String id;
     @ManyToOne
@@ -23,5 +27,14 @@ public class model_admin extends Model {
         id = p_user.user_name + "@admins";
         user = p_user;
     }
+
+    public static Query<model_admin> fetch() {
+        return find.fetch("user");
+    }
+
+    public static void deleteById(String id) {
+        find.deleteById(id);
+    }
+
 }
 

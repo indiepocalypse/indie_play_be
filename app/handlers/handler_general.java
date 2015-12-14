@@ -104,7 +104,7 @@ public class handler_general {
 
     private static void __delete_repo(model_repo repo) {
         try {
-            model_repo.find.deleteById(repo.repo_name);
+            model_repo.fetch().deleteById(repo.repo_name);
         } catch (Exception e) {
             Logger.error("failed to delete repo " + repo.repo_name + ":\n", e);
         }
@@ -143,8 +143,15 @@ public class handler_general {
         // this is on purpose here and not in the store_local_db. Since every local update needs all the above logic
         try {
             pull_request.save();
-        } catch (Exception ignored) {
-            pull_request.update();
+        } catch (Exception e1) {
+            try {
+                pull_request.update();
+            }
+            catch (Exception e) {
+                Logger.error("cannot save pull request ", e1);
+                Logger.error("cannot update pull request ", e);
+                throw e;
+            }
         }
         return updated;
     }

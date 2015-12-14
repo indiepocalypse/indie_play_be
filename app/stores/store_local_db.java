@@ -27,14 +27,21 @@ public class store_local_db {
     public static void update_repo(model_repo repo) {
         try {
             repo.save();
-        } catch (Exception ignore) {
-            repo.update();
+        } catch (Exception e1) {
+            try {
+                repo.update();
+            }
+            catch (Exception e) {
+                Logger.error("cannot save repo ", e1);
+                Logger.error("could not update model_repo", e);
+                throw e;
+            }
         }
     }
 
     public static model_repo get_repo_by_name(String repo_name) {
         try {
-            return model_repo.find.byId(repo_name);
+            return model_repo.fetch().byId(repo_name);
         } catch (Exception ignore) {
             return null;
         }
@@ -42,7 +49,7 @@ public class store_local_db {
 
     public static List<model_repo> get_all_repos() {
         try {
-            return model_repo.find.all();
+            return model_repo.fetch().all();
         } catch (Exception ignore) {
             return new ArrayList<>();
         }
@@ -59,22 +66,37 @@ public class store_local_db {
     public static void update_user(model_user user) {
         try {
             user.save();
-        } catch (Exception ignore) {
-            user.update();
+        } catch (Exception e1) {
+            try {
+                user.update();
+            }
+            catch (Exception e) {
+                Logger.error("cannot save user ", e1);
+                Logger.error("could not update model_user", e);
+                throw e;
+            }
         }
     }
 
     public static void update_admin(model_admin admin) {
         try {
             admin.save();
-        } catch (Exception ignore) {
-            admin.update();
+        } catch (Exception e1) {
+            try {
+                admin.update();
+            }
+            catch (Exception e) {
+                Logger.error("could not save admin ", e1);
+                Logger.error("could not update model_admin", e);
+                throw e;
+            }
         }
     }
 
     public static model_admin get_admin_by_name(String name) {
         try {
-            return model_admin.find.fetch("user").where().idEq(name + "@admins").findUnique();
+            return model_admin.fetch()
+                    .where().idEq(name + "@admins").findUnique();
         } catch (Exception ignore) {
             return null;
         }
@@ -82,7 +104,7 @@ public class store_local_db {
 
     public static List<model_admin> get_all_admins() {
         try {
-            return model_admin.find.all();
+            return model_admin.fetch().findList();
         } catch (Exception ignore) {
             return new ArrayList<>();
         }
@@ -94,7 +116,7 @@ public class store_local_db {
 
     public static model_user get_user_by_name(String user_name) {
         try {
-            return model_user.find.byId(user_name);
+            return model_user.fetch().byId(user_name);
         } catch (Exception ignore) {
             return null;
         }
@@ -102,7 +124,7 @@ public class store_local_db {
 
     public static List<model_user> get_all_users() {
         try {
-            return model_user.find.all();
+            return model_user.fetch().all();
         } catch (Exception ignore) {
             return new ArrayList<>();
         }
@@ -115,23 +137,21 @@ public class store_local_db {
     public static void update_merge_transaction(model_merge_transaction merge_transaction) {
         try {
             merge_transaction.save();
-        } catch (Exception ignore) {
-            merge_transaction.update();
+        } catch (Exception e1) {
+            try {
+                merge_transaction.update();
+            }
+            catch (Exception e) {
+                Logger.error("cannot save merge_transaction ", e1);
+                Logger.error("could not update merge transaction", e);
+                throw e;
+            }
         }
     }
 
     public static List<model_merge_transaction> get_merge_transactions_by_to_user(model_user to_user) {
         try {
-            return model_merge_transaction.find
-                    .fetch("to_user")
-                    .fetch("from_user")
-                    .fetch("pull_request")
-                    .fetch("offer")
-                    .fetch("request")
-                    .fetch("from_user_ownership")
-                    .fetch("to_user_ownership")
-
-                    .where()
+            return model_merge_transaction.fetch().where()
                     .eq("to_user.user_name", to_user.user_name)
                     .findList();
         } catch (Exception ignore) {
@@ -141,16 +161,7 @@ public class store_local_db {
 
     public static List<model_merge_transaction> get_merge_transactions_by_from_user(model_user from_user) {
         try {
-            return model_merge_transaction.find
-                    .fetch("to_user")
-                    .fetch("from_user")
-                    .fetch("pull_request")
-                    .fetch("offer")
-                    .fetch("request")
-                    .fetch("from_user_ownership")
-                    .fetch("to_user_ownership")
-
-                    .where()
+            return model_merge_transaction.fetch().where()
                     .eq("from_user.user_name", from_user.user_name)
                     .findList();
         } catch (Exception ignore) {
@@ -161,16 +172,7 @@ public class store_local_db {
     public static List<model_merge_transaction> get_merge_transactions_by_pull_request(model_pull_request pull_request) {
         try {
             // TODO: refactor all these fetches into the model itself
-            return model_merge_transaction.find
-                    .fetch("to_user")
-                    .fetch("from_user")
-                    .fetch("pull_request")
-                    .fetch("offer")
-                    .fetch("request")
-                    .fetch("from_user_ownership")
-                    .fetch("to_user_ownership")
-
-                    .where()
+            return model_merge_transaction.fetch().where()
                     .eq("pull_request.SHA", pull_request.SHA)
                     .findList();
         } catch (Exception ignore) {
@@ -186,14 +188,21 @@ public class store_local_db {
     public static void update_ownership(model_ownership ownership) {
         try {
             ownership.save();
-        } catch (Exception e) {
-            ownership.update();
+        } catch (Exception e1) {
+            try {
+                ownership.update();
+            }
+            catch (Exception e) {
+                Logger.error("cannot save ownership ", e1);
+                Logger.error("could not update ownership", e);
+                throw e;
+            }
         }
     }
 
     public static List<model_ownership> get_ownerships_by_user_name(String user_name) {
         try {
-            return model_ownership.find.fetch("user").fetch("repo").where().eq("user.user_name", user_name).findList();
+            return model_ownership.fetch().where().eq("user.user_name", user_name).findList();
         } catch (Exception ignore) {
             return new ArrayList<>(0);
         }
@@ -201,7 +210,7 @@ public class store_local_db {
 
     public static model_ownership get_creator_by_repo(model_repo repo) {
         try {
-            return model_ownership.find.fetch("user").fetch("repo")
+            return model_ownership.fetch()
                     .where().eq("repo.repo_name", repo.repo_name)
                     .where().eq("is_creator", true)
                     .findUnique();
@@ -212,7 +221,7 @@ public class store_local_db {
 
     public static List<model_ownership> get_ownerships_by_repo_name(String repo_name) {
         try {
-            return model_ownership.find.fetch("user").fetch("repo").where().eq("repo.repo_name", repo_name).findList();
+            return model_ownership.fetch().where().eq("repo.repo_name", repo_name).findList();
         } catch (Exception ignore) {
             return new ArrayList<>(0);
         }
@@ -220,7 +229,7 @@ public class store_local_db {
 
     public static model_ownership get_ownerships_by_user_name_and_repo_name(model_user user, model_repo repo) {
         try {
-            return model_ownership.find.fetch("user").fetch("repo").where()
+            return model_ownership.fetch().where()
                     .eq("repo.repo_name", repo.repo_name)
                     .eq("user.user_name", user.user_name)
                     .findUnique();
@@ -232,11 +241,11 @@ public class store_local_db {
     public static void delete_ownerships_by_repo(model_repo repo) {
         try {
             // TODO: this delete one by one is bad. Fix it!
-            List<model_ownership> ownerships = model_ownership.find.fetch("repo")
+            List<model_ownership> ownerships = model_ownership.fetch()
                     .where().eq("repo.repo_name", repo.repo_name).findList();
             if (ownerships != null) {
                 for (model_ownership ownership : ownerships) {
-                    model_ownership.find.deleteById(ownership.id);
+                    model_ownership.deleteById(ownership.id);
                 }
             }
         } catch (Exception e) {
@@ -251,14 +260,21 @@ public class store_local_db {
     public static void update_offer(model_offer_for_merge offer) {
         try {
             offer.save();
-        } catch (Exception e) {
-            offer.update();
+        } catch (Exception e1) {
+            try {
+                offer.update();
+            }
+            catch (Exception e) {
+                Logger.error("cannot save offer ", e1);
+                Logger.error("could not update offer", e);
+                throw e;
+            }
         }
     }
 
     public static List<model_offer_for_merge> get_offers_by_user(String user_name) {
         try {
-            return model_offer_for_merge.find.fetch("user").fetch("pull_request").fetch("pull_request.repo")
+            return model_offer_for_merge.fetch()
                     .where().eq("user.user_name", user_name).findList();
         } catch (Exception ignore) {
             return new ArrayList<>(0);
@@ -267,7 +283,7 @@ public class store_local_db {
 
     public static List<model_offer_for_merge> get_offers_by_pull_request(String repo_name, String number) {
         try {
-            return model_offer_for_merge.find.fetch("user").fetch("pull_request").fetch("pull_request.repo")
+            return model_offer_for_merge.fetch()
                     .where().eq("pull_request.number", number)
                     .where().eq("pull_request.repo.repo_name", repo_name)
                     .findList();
@@ -278,7 +294,7 @@ public class store_local_db {
 
     public static model_offer_for_merge get_offer_by_user_by_pull_request(String user_name, String repo_name, String number) {
         try {
-            return model_offer_for_merge.find.fetch("user").fetch("pull_request").fetch("pull_request.repo")
+            return model_offer_for_merge.fetch()
                     .where().eq("user.user_name", user_name)
                     .where().eq("pull_request.number", number)
                     .where().eq("pull_request.repo.repo_name", repo_name)
@@ -291,12 +307,12 @@ public class store_local_db {
     public static void delete_offers_by_pull_request(String repo_name, String number) {
         try {
             // TODO: this delete one by one is bad. Fix it!
-            List<model_offer_for_merge> offers = model_offer_for_merge.find.fetch("user").fetch("pull_request").fetch("pull_request.repo")
+            List<model_offer_for_merge> offers = model_offer_for_merge.fetch()
                     .where().eq("pull_request.number", number)
                     .where().eq("pull_request.repo.repo_name", repo_name).findList();
             if (offers != null) {
                 for (model_offer_for_merge offer : offers) {
-                    model_offer_for_merge.find.deleteById(offer.id);
+                    model_offer_for_merge.deleteById(offer.id);
                 }
             }
         } catch (Exception e) {
@@ -307,11 +323,11 @@ public class store_local_db {
     public static void delete_offers_by_repo(model_repo repo) {
         try {
             // TODO: this delete one by one is bad. Fix it!
-            List<model_offer_for_merge> offers = model_offer_for_merge.find.fetch("pull_request").fetch("pull_request.repo")
+            List<model_offer_for_merge> offers = model_offer_for_merge.fetch()
                     .where().eq("pull_request.repo.repo_name", repo.repo_name).findList();
             if (offers != null) {
                 for (model_offer_for_merge offer : offers) {
-                    model_offer_for_merge.find.deleteById(offer.id);
+                    model_offer_for_merge.deleteById(offer.id);
                 }
             }
         } catch (Exception e) {
@@ -326,14 +342,21 @@ public class store_local_db {
     public static void update_request(model_request_for_merge request) {
         try {
             request.save();
-        } catch (Exception e) {
-            request.update();
+        } catch (Exception e1) {
+            try {
+                request.update();
+            }
+            catch (Exception e) {
+                Logger.error("cannot save request ", e1);
+                Logger.error("could not update model_request_for_merge", e);
+                throw e;
+            }
         }
     }
 
     public static List<model_request_for_merge> get_requests_by_user(String user_name) {
         try {
-            return model_request_for_merge.find.fetch("user").fetch("pull_request").fetch("pull_request.repo")
+            return model_request_for_merge.fetch()
                     .where().eq("user.user_name", user_name).findList();
         } catch (Exception ignore) {
             return new ArrayList<>(0);
@@ -342,7 +365,7 @@ public class store_local_db {
 
     public static model_request_for_merge get_request_by_pull_request(String repo_name, String number) {
         try {
-            return model_request_for_merge.find.fetch("user").fetch("pull_request").fetch("pull_request.repo")
+            return model_request_for_merge.fetch()
                     .where().eq("pull_request.number", number)
                     .where().eq("pull_request.repo.repo_name", repo_name)
                     .findUnique();
@@ -353,8 +376,7 @@ public class store_local_db {
 
     public static void delete_request_by_pull_request(String repo_name, String number) {
         try {
-            model_request_for_merge
-                    .find.fetch("user").fetch("pull_request").fetch("pull_request.repo")
+            model_request_for_merge.fetch()
                     .where().eq("pull_request.number", number)
                     .where().eq("pull_request.repo.repo_name", repo_name)
                     .findUnique().delete();
@@ -366,15 +388,13 @@ public class store_local_db {
     public static void delete_requests_by_repo(model_repo repo) {
         try {
             // TODO: this delete one by one is bad. Fix it!
-            List<model_request_for_merge> requests = model_request_for_merge.find
-                    .fetch("pull_request")
-                    .fetch("pull_request.repo")
+            List<model_request_for_merge> requests = model_request_for_merge.fetch()
                     .where()
                     .eq("pull_request.repo.repo_name", repo.repo_name)
                     .findList();
             if (requests != null) {
                 for (model_request_for_merge offer : requests) {
-                    model_request_for_merge.find.deleteById(offer.id);
+                    model_request_for_merge.deleteById(offer.id);
                 }
             }
         } catch (Exception e) {
@@ -389,14 +409,21 @@ public class store_local_db {
     public static void update_policy(model_repo_policy policy) {
         try {
             policy.save();
-        } catch (Exception e) {
-            policy.update();
+        } catch (Exception e1) {
+            try {
+                policy.update();
+            }
+            catch (Exception e) {
+                Logger.error("cannot save repo_policy ", e1);
+                Logger.error("could not update model_repo_policy", e);
+                throw e;
+            }
         }
     }
 
     public static model_repo_policy get_policy_by_repo(model_repo repo) {
         try {
-            return model_repo_policy.find.fetch("repo")
+            return model_repo_policy.fetch()
                     .where().eq("repo.repo_name", repo.repo_name).findUnique();
         } catch (Exception ignore) {
             return null;
@@ -406,11 +433,11 @@ public class store_local_db {
     public static void delete_policy_by_repo(model_repo repo) {
         try {
             // TODO: this delete one by one is bad. Fix it!
-            List<model_repo_policy> policies = model_repo_policy.find.fetch("repo")
+            List<model_repo_policy> policies = model_repo_policy.fetch()
                     .where().eq("repo.repo_name", repo.repo_name).findList();
             if (policies != null) {
                 for (model_repo_policy policy : policies) {
-                    model_repo_policy.find.deleteById(policy.id);
+                    model_repo_policy.deleteById(policy.id);
                 }
             }
         } catch (Exception e) {
@@ -441,7 +468,7 @@ public class store_local_db {
 
     public static model_pull_request get_pull_request_by_repo_name_and_number(String repo_name, String number) {
         try {
-            return model_pull_request.find.fetch("user").fetch("repo")
+            return model_pull_request.fetch()
                     .where().eq("repo.repo_name", repo_name)
                     .where().eq("number", number)
                     .findUnique();
@@ -452,7 +479,7 @@ public class store_local_db {
 
     public static List<model_pull_request> get_pull_requests_by_repo_name(String repo_name) {
         try {
-            return model_pull_request.find.fetch("user").fetch("repo")
+            return model_pull_request.fetch()
                     .where().eq("repo.repo_name", repo_name).findList();
         } catch (Exception ignore) {
             return new ArrayList<>(0);
@@ -462,7 +489,7 @@ public class store_local_db {
 
     public static List<model_pull_request> get_pull_requests_by_user_name(String user_name) {
         try {
-            return model_pull_request.find.fetch("user").fetch("repo")
+            return model_pull_request.fetch()
                     .where().eq("user.user_name", user_name).findList();
         } catch (Exception ignore) {
             return new ArrayList<>(0);
@@ -472,11 +499,11 @@ public class store_local_db {
     public static void delete_pull_requests_by_repo(model_repo repo) {
         try {
             // TODO: this delete one by one is bad. Fix it!
-            List<model_pull_request> pull_requests = model_pull_request.find.fetch("repo")
+            List<model_pull_request> pull_requests = model_pull_request.fetch()
                     .where().eq("repo.repo_name", repo.repo_name).findList();
             if (pull_requests != null) {
                 for (model_pull_request pull_request : pull_requests) {
-                    model_pull_request.find.deleteById(pull_request.id);
+                    model_pull_request.deleteById(pull_request.id);
                 }
             }
         } catch (Exception e) {

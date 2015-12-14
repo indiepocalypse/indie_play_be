@@ -1,6 +1,9 @@
 package models_db_indie;
 
 import com.avaje.ebean.Model;
+import com.avaje.ebean.Query;
+import com.avaje.ebean.annotation.ConcurrencyMode;
+import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import models_db_github.model_pull_request;
 import models_db_github.model_user;
 
@@ -17,7 +20,8 @@ import java.util.Date;
 
 @Entity
 public class model_request_for_merge extends Model {
-    public static final Finder<String, model_request_for_merge> find = new Finder<>(model_request_for_merge.class);
+    static final Finder<String, model_request_for_merge> find = new Finder<>(model_request_for_merge.class);
+
     @Id
     public final String id;
     @ManyToOne
@@ -41,5 +45,17 @@ public class model_request_for_merge extends Model {
         this.date_created = p_date_created;
         this.date_accepted_if_accepted = p_date_accepted_if_accepted;
     }
+
+    public static Query<model_request_for_merge> fetch() {
+        return find
+                .fetch("user")
+                .fetch("pull_request");
+    }
+
+    public static void deleteById(String id) {
+        find.deleteById(id);
+    }
+
+
 }
 
