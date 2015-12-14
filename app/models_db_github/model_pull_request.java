@@ -67,7 +67,6 @@ public class model_pull_request extends Model {
     }
 
     public static model_pull_request from_json(JsonNode json) {
-        // TODO: can an int json value be parsed as string? the way below seems... just too much
         String number = Integer.toString(json.get("number").asInt());
         String url = json.get("url").asText();
         Long github_id = json.get("id").asLong();

@@ -1,4 +1,4 @@
-Current development principles:
+Current development practices:
 
 1) only store_local_db touches db models
 2) stores can only READ from other stores
@@ -7,7 +7,7 @@ Current development principles:
 5) shared controller logic and specialized logic goes in handlers
 6) 3rd party tools go in vendors
 7) models are basically data-holders maybe plus some simple logic
-8) models are `smallest common denomoinator`, in the github api sense. ie
+8) github models are `smallest common denomoinator`, in the github api sense. ie
      all models can be built from the minial info in github api
 9) Sync classes are long running processes, they can organize data in the background
 
@@ -16,6 +16,7 @@ Current development principles:
        the global policy if managed in app conf folder. The per repo
        policies are managed with a db model model_repo_policy
 11) models are always fully initialised! at least that is, one level deep. This should be done recursively, there's a todo about it
+12) store_local_db only saves the 1st level in each model!
 
 to remotely debug:
 
@@ -28,6 +29,8 @@ TODO: google analytics?
 TODO: cache everything: index / faq / help / explore (every few hrs or minutes) / etc
 // look here: https://www.playframework.com/documentation/2.0/JavaCache
 
-// TODO: a percentage transaction for the DB, recording status at the time of transaxction, tim of transaction,
-//   and ownership diff
+Currenly working on:
 
+1) transactions - generate these based on pull requests
+2) "blogpost"
+3) finding a name

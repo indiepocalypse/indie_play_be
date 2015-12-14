@@ -19,7 +19,7 @@ import java.util.Random;
 
 public class sync_gmail {
     // TODO: refactor most of gmail functionality onto a store_gmail_api
-    // FIXME: there's a bug transferring `just_testing_game` it remains on skariel github account?
+    // FIXME: ?? there's a bug transferring `just_testing_game` it remains on skariel github account?
     public static int mail_count = 0;
     private static IMAPFolder inbox = null;
     private static Store mail_store = null;
@@ -242,8 +242,7 @@ public class sync_gmail {
             Message message = new MimeMessage(smtp_session);
             try {
                 message.setSubject(mail_subject);
-                // TODO: move this mail address to the configuration
-                InternetAddress address = new InternetAddress("qbresty@gmail.com");
+                InternetAddress address = new InternetAddress(store_conf.get_indie_mail_address());
                 address.setPersonal("theindiepocalypse");
                 message.setFrom(address);
                 message.setRecipients(Message.RecipientType.TO,

@@ -112,4 +112,8 @@ public class store_conf {
         return ConfigFactory.load().getBoolean("debug.should_send_mails");
     }
 
+    public static String get_indie_mail_address() {
+        return ConfigFactory.load().getString("indie.mail.address");
+    }
+
 }

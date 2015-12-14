@@ -50,7 +50,6 @@ public class model_issue {
         Long id = json.get("id").asLong();
         model_user user = model_user.from_json(json.get("user"));
         String body = json.get("body").asText();
-        // TODO: parsing a number as string, allowed? below seems just... too much
         String number = Integer.toString(json.get("number").asInt());
         int comments = json.get("comments").asInt();
         String title = json.get("title").asText();

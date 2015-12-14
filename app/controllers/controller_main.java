@@ -24,16 +24,10 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 public class controller_main extends Controller {
-    // TODO: cache the simple pages (e.g. the landing page)
     // TODO: use reverse routing so I don't repeat myself :) (done?!)
     // TODO: summarizing classes and models (like sync but internal, also cleaning stuff etc.)
     // TODO: is the save/update dichotomy in the store_local_db really necessary? maybe update is enough?
-    // TODO: when merging, update repo from github. If offers were cleared, deny merge
-    // TODO: integrate policy into merging
-    // TODO: integrate policy into issue lifecycle
-    // TODO: implement policy changing commands
-    // TODO: error handling: when requesting from github. Either use exceptions or return values. Currently we have both!
-    // TODO: error handling: when contacting github and the sb touch 1st github and only if success continue
+    // TODO: error handling: when contacting github and the db touch 1st github and only if success continue
     // TODO: pretty-print the BigDecimals
     // TODO: check the BigDecimals are in compliance with the number of digits etc. (e.g. 4 after the point, no more!)
 

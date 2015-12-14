@@ -32,7 +32,6 @@ public class model_webhook_pull_request_created_or_updated implements interface_
 
     public static model_webhook_pull_request_created_or_updated from_json(JsonNode json) {
         String action = json.get("action").asText();
-        // TODO: parsing a json int as a string allowed? the below seems... too much
         String number = Integer.toString(json.get("number").asInt());
         model_pull_request pull_request = model_pull_request.from_json(json.get("pull_request"));
         model_repo repo = model_repo.from_json(json.get("repository"));
