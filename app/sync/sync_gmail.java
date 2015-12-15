@@ -138,6 +138,9 @@ public class sync_gmail {
                     m_body = "just something";
                 }
                 m_from = m.getFrom()[0].toString();
+            } catch (FolderClosedException e) {
+                Logger.error("folder is close while handling gmail message, returning (error follows)\n",e);
+                return;
             } catch (Exception e) {
                 Logger.error("while reading message date...", e);
             }
@@ -317,6 +320,10 @@ public class sync_gmail {
             mail_count = inbox.getMessageCount();
             handle_messages(messages);
             Logger.info("mail_count" + Integer.toString(mail_count));
+            if (inbox==null) {
+                Logger.error("inbox null while reloading gmail messages, returning");
+                return;
+            }
             inbox.addMessageCountListener(new MessageCountListener() {
                 @Override
                 public void messagesAdded(MessageCountEvent messageCountEvent) {
