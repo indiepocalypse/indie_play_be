@@ -37,14 +37,19 @@
         background-repeat: no-repeat;
         color: white;
         }
-        body {
-        background: url(@routes.Assets.versioned("images/bkg.png"));
+        .nav > li > a.nav_center_vertical {
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+        .navbar-brand.nav_center_vertical {
+            padding-top: 20px;
+            padding-bottom: 20px;
         }
     </style>
 </head>
 
 <body>
-<nav class="navbar navbar-default navbar-static-top" style="min-height: 58px; padding-top: 2px;">
+<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -53,23 +58,23 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">
-            <strong><big>Indiepocalypse</big></strong>
+            <a class="navbar-brand nav_center_vertical" href="">
+            Indiepocalypse
             </a>
         </div>
 
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="/faq">FAQ</a></li>
-                <li><a href="/explore">Explore</a></li>
-                <li><a href="/blog">Blog</a></li>
+                <li class="active"><a class="nav_center_vertical" href="/faq">FAQ</a></li>
+                <li><a class="nav_center_vertical" href="/explore">Explore</a></li>
+                <li><a class="nav_center_vertical" href="/blog">Blog</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
 
             @if(stores.store_session.user_is_logged()) {
 
-            <li><a href="/newrepo" title="new repo">
+            <li><a class="nav_center_vertical" href="/newrepo" title="new repo">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"/>
             </a></li>
 
@@ -78,8 +83,8 @@
                     title="settings, profile & more">
                 <img src="@stores.store_session.get_avatar_url()"
                    alt="@stores.store_session.get_user_name()"
-                   style="width:30px;height:30px; margin-top:-3px;">
-                <span class="caret" style="margin-top:-3px;"></span>
+                   style="width:30px;height:30px;margin:0px;padding:0px;">
+                <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                     <li class="dropdown-header">logged in as <strong>@stores.store_session.get_user_name()</strong></li>
@@ -92,7 +97,7 @@
             </li>
 
             }else {
-            <li><a
+            <li><a class="nav_center_vertical"
                href=@stores.store_github_api.get_github_access_url(stores.store_session.get_state())>login with
                 github</a></li>
             }
