@@ -34,12 +34,19 @@ public class sync_github_users {
             public void run() {
                 while (!interrupted) {
                     try {
-                        sync();
-                        Random rand = new Random();
-                        int jitter = (int) (store_conf.get_github_user_sync_minimum_milis() +
-                                rand.nextFloat() * store_conf.get_github_user_sync_jitter_milis());
-                        Thread.sleep(store_conf.get_github_user_sync_delta_milis() + jitter);
-                        if (interrupted) {
+                        if (!interrupted) {
+                            sync();
+                        }
+                        else {
+                            return;
+                        }
+                        if (!interrupted) {
+                            Random rand = new Random();
+                            int jitter = (int) (store_conf.get_github_user_sync_minimum_milis() +
+                                    rand.nextFloat() * store_conf.get_github_user_sync_jitter_milis());
+                            Thread.sleep(store_conf.get_github_user_sync_delta_milis() + jitter);
+                        }
+                        else {
                             return;
                         }
                     } catch (Exception e) {
@@ -68,7 +75,12 @@ public class sync_github_users {
         Logger.info("syncing " + Integer.toString(users.size()) + " users with github");
         for (model_user user : users) {
             try {
-                Thread.sleep(store_conf.get_github_user_sync_jitter_small_milis());
+                if (!interrupted) {
+                    Thread.sleep(store_conf.get_github_user_sync_jitter_small_milis());
+                }
+                else {
+                    return;
+                }
             } catch (Exception e) {
                 if (!interrupted) {
                     Logger.error("while syncing user with github...", e);

@@ -31,8 +31,10 @@ public class sync_github_repos {
                         Random rand = new Random();
                         int jitter = (int) (store_conf.get_github_repo_sync_minimum_milis() +
                                 rand.nextFloat() * stores.store_conf.get_github_repo_sync_jitter_milis());
-                        Thread.sleep(store_conf.get_github_repo_sync_delta_milis() + jitter);
-                        if (interrupted) {
+                        if (!interrupted) {
+                            Thread.sleep(store_conf.get_github_repo_sync_delta_milis() + jitter);
+                        }
+                        else {
                             return;
                         }
                     } catch (Exception e) {
@@ -66,7 +68,12 @@ public class sync_github_repos {
         }
         for (model_repo repo : repos) {
             try {
-                Thread.sleep(stores.store_conf.get_github_repo_sync_jitter_small_milis());
+                if (!interrupted) {
+                    Thread.sleep(stores.store_conf.get_github_repo_sync_jitter_small_milis());
+                }
+                else {
+                    return;
+                }
             } catch (Exception e) {
                 if (!interrupted) {
                     Logger.error("while syncing github repos", e);

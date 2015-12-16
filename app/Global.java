@@ -17,9 +17,12 @@ public class Global extends GlobalSettings {
 
     @Override
     public void onStop(Application app) {
-        Logger.info("Stopping gmail idle poll...");
+        Logger.info("global stop called");
+        Logger.info("stopping gmail sync");
         sync_gmail.stop();
+        Logger.info("stopping github repos sync");
         sync_github_repos.stop();
+        Logger.info("stopping github users sync");
         sync_github_users.stop();
     }
 }

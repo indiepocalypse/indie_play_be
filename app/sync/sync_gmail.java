@@ -37,12 +37,18 @@ public class sync_gmail {
             public void run() {
                 while (!interrupted) {
                     try {
-                        Thread.sleep(store_conf.get_gmail_reload_sync_delta_milis());
-                        Random rand = new Random();
-                        int jitter = (int) (rand.nextFloat() * stores.store_conf.get_gmail_reload_sync_jitter_milis() +
-                                store_conf.get_gmail_reload_sync_minimum_milis());
-                        Thread.sleep(jitter);
-                        reload_folder();
+                        if (!interrupted) {
+                            Thread.sleep(store_conf.get_gmail_reload_sync_delta_milis());
+                        }
+                        if (!interrupted) {
+                            Random rand = new Random();
+                            int jitter = (int) (rand.nextFloat() * stores.store_conf.get_gmail_reload_sync_jitter_milis() +
+                                    store_conf.get_gmail_reload_sync_minimum_milis());
+                            Thread.sleep(jitter);
+                        }
+                        if (!interrupted) {
+                            reload_folder();
+                        }
                     } catch (Exception e) {
                         if (!interrupted) {
                             Logger.error("while sleeping to reload inbox...", e);
@@ -63,7 +69,12 @@ public class sync_gmail {
                             } else {
                                 // try to reopen...
                                 Logger.info("gmail inbox appears closed, trying to reopen...");
-                                Thread.sleep(1500);
+                                if (!interrupted) {
+                                    Thread.sleep(1500);
+                                }
+                                else {
+                                    return;
+                                }
                                 if (inbox.isOpen()) {
                                     Logger.info("folder is now open!");
                                     continue;
@@ -81,7 +92,12 @@ public class sync_gmail {
                         return;
                     }
                     try {
-                        Thread.sleep(50);
+                        if (!interrupted) {
+                            Thread.sleep(50);
+                        }
+                        else {
+                            return;
+                        }
                     } catch (Exception ignored) {
                     }
                 }
@@ -197,7 +213,12 @@ public class sync_gmail {
                             }
                             // delay needed to let github spread news that user wants to transfer repo
                             try {
-                                Thread.sleep(5100);
+                                if (!interrupted) {
+                                    Thread.sleep(5100);
+                                }
+                                else {
+                                    return;
+                                }
                             } catch (Exception ignored) {
                             }
                             if (!store_github_iojs.accept_transfer_repo(lt)) {
@@ -207,7 +228,12 @@ public class sync_gmail {
                             }
                             // all seems ok!
                             try {
-                                Thread.sleep(5100);
+                                if (!interrupted) {
+                                    Thread.sleep(5100);
+                                }
+                                else {
+                                    return;
+                                }
                             } catch (Exception ignored) {
                             }
                             // we need the above delay to let github spread the news that repo was transferred

@@ -21,22 +21,6 @@
     <!-- Bootstrap! -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <style>
-        .jumbotron h1 , .jumbotron p {
-        color: black;
-        text-shadow: white 0.1em 0.1em 0.3em;
-        }
-        .jumbotron p a {
-        color: white;
-        text-shadow: white 0.0em 0.0em 0.0em;
-        }
-        .jumbotron {
-        margin-bottom: 0px;
-        background-image: url(@routes.Assets.versioned("images/bkg.png"));
-        background-position: center center;
-        background-size: cover;
-        background-repeat: no-repeat;
-        color: white;
-        }
         .nav > li > a.nav_center_vertical {
             padding-top: 20px;
             padding-bottom: 20px;
@@ -44,6 +28,9 @@
         .navbar-brand.nav_center_vertical {
             padding-top: 20px;
             padding-bottom: 20px;
+        }
+        footer {
+            background-color: #f0fff0;
         }
     </style>
 </head>
@@ -58,7 +45,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand nav_center_vertical" href="">
+            <a class="navbar-brand nav_center_vertical" href="/">
             Indiepocalypse
             </a>
         </div>
@@ -75,7 +62,7 @@
             @if(stores.store_session.user_is_logged()) {
 
             <li><a class="nav_center_vertical" href="/newrepo" title="new repo">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"/>
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             </a></li>
 
             <li class="dropdown">
@@ -106,9 +93,17 @@
         </div>
     </div>
 </nav>
+<section id="content">
 <div class="container">
     @content
 </div>
+</section>
+
+<footer>
+    <div class="container">
+        sponsored by Crazyduck
+    </div>
+</footer>
 
 <!-- JQuery! -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" async="async"></script>
