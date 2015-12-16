@@ -18,6 +18,7 @@ import java.util.Random;
 public class sync_github_users {
     private static Thread t1 = null;
     private static boolean interrupted = false;
+    private static boolean initially_synced = false;
 
     static public void start() {
         stop();
@@ -34,8 +35,9 @@ public class sync_github_users {
             public void run() {
                 while (!interrupted) {
                     try {
-                        if (!interrupted) {
+                        if ((!initially_synced)&&(!interrupted)) {
                             sync();
+                            initially_synced = true;
                         }
                         else {
                             return;

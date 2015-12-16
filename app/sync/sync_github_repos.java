@@ -18,6 +18,7 @@ import java.util.Random;
 public class sync_github_repos {
     private static Thread t1 = null;
     private static boolean interrupted = false;
+    private static boolean initially_synced = false;
 
     static public void start() {
         // some defensive shit here :)
@@ -27,7 +28,10 @@ public class sync_github_repos {
             public void run() {
                 while (!interrupted) {
                     try {
-                        sync();
+                        if ((!initially_synced)&&(!interrupted)) {
+                            sync();
+                            initially_synced = true;
+                        }
                         Random rand = new Random();
                         int jitter = (int) (store_conf.get_github_repo_sync_minimum_milis() +
                                 rand.nextFloat() * stores.store_conf.get_github_repo_sync_jitter_milis());
@@ -66,6 +70,7 @@ public class sync_github_repos {
             Logger.error("while retrieving repos from github during a repo sync", e);
             return;
         }
+        Logger.info("syncing " + Integer.toString(repos.size()) + " github repos");
         for (model_repo repo : repos) {
             try {
                 if (!interrupted) {
@@ -105,6 +110,6 @@ public class sync_github_repos {
                 Logger.error("could not get pull requests from repo " + repo.repo_name + " while syncing");
             }
         }
-        Logger.info("syncing " + Integer.toString(repos.size()) + " github repos");
+        Logger.info("done syncing " + Integer.toString(repos.size()) + " github repos");
     }
 }
