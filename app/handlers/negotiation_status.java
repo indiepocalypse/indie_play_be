@@ -118,8 +118,8 @@ public class negotiation_status {
                 final BigDecimal user_ownership = ownership.percent;
                 final BigDecimal transaction_amount_for_user = transaction_quanta.multiply(user_ownership);
 
-                final model_user p_from_user = request.user;
-                final model_user p_to_user = user;
+                final model_user p_from_user = user;
+                final model_user p_to_user = request.user;
                 final model_offer_for_merge p_offer = offer_from_user.get(user);
                 final model_request_for_merge p_request = request;
                 final BigDecimal p_amount_percent = transaction_amount_for_user;
