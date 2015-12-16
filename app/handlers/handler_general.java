@@ -158,6 +158,8 @@ public class handler_general {
     }
 
     public static void execute_single_merge_transaction(model_merge_transaction merge_transaction) {
+        // FIXME: changes should flow to other transactions....
+        //
         BigDecimal new_to_ownership_percent = merge_transaction.to_user_ownership.percent;
         new_to_ownership_percent = new_to_ownership_percent.add(merge_transaction.amount_percent);
         final model_ownership new_to_ownership = new model_ownership(
