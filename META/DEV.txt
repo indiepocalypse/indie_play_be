@@ -48,3 +48,7 @@ Future:
 6) store
 7) ownership transactins w/o merging
 8) auto generated license or ownership doc
+9) slack integration
+10) feature suggesting and voting
+11) a "were working on" page
+
