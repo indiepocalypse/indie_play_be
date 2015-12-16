@@ -27,12 +27,12 @@
             margin: 0 0 0 0;
         }
         .nav > li > a.nav_center_vertical {
-            padding-top: 20px;
-            padding-bottom: 20px;
+            padding-top: 17px;
+            padding-bottom: 17px;
         }
         .navbar-brand.nav_center_vertical {
-            padding-top: 20px;
-            padding-bottom: 20px;
+            padding-top: 17px;
+            padding-bottom: 17px;
         }
         footer {
             padding-top: 50px;
@@ -47,12 +47,16 @@
             padding-top: 50px;
             padding-bottom: 90px;
         }
+        .container-fluid {
+            padding-left: 50px;
+            padding-right: 50px;
+        }
     </style>
 </head>
 
 <body>
 <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
-    <div class="container">
+    <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
@@ -85,7 +89,7 @@
                     title="settings, profile & more">
                 <img src="@stores.store_session.get_avatar_url()"
                    alt="@stores.store_session.get_user_name()"
-                   style="width:30px;height:30px;margin:0px;padding:0px;">
+                   style="width:30px;height:30px;margin:0px;margin-top:0px;">
                 <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">

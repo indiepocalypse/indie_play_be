@@ -23,7 +23,8 @@ public class negotiation_status {
     public final BigDecimal total_ownership_of_users_with_more_ownership;
 
     // we assume here to_user has ownership. This is taken care of in the hook checkin
-    public negotiation_status(model_request_for_merge request,
+    public negotiation_status(model_pull_request p_pull_request,
+                              model_request_for_merge request,
                               List<model_offer_for_merge> offers,
                               model_repo_policy policy,
                               List<model_ownership> ownerships,
@@ -38,11 +39,11 @@ public class negotiation_status {
             for (model_ownership ownership : ownerships) {
                 ownership_from_user.put(ownership.user, ownership);
             }
-            if (ownership_from_user.containsKey(request.user)) {
-                to_ownership = ownership_from_user.get(request.user);
+            if (ownership_from_user.containsKey(p_pull_request.user)) {
+                to_ownership = ownership_from_user.get(p_pull_request.user);
             }
             else {
-                Logger.error("to_user \""+request.user.user_name+"\" has no ownership in pull request #"+request.pull_request.number+" for repo \""+p_repo.repo_name+"\", this should not happen!");
+                Logger.error("to_user \""+p_pull_request.user.user_name+"\" has no ownership in pull request #"+p_pull_request.number+" for repo \""+p_repo.repo_name+"\", this should not happen!");
             }
             for (model_ownership ownership : ownerships) {
                 if (ownership.percent.compareTo(to_ownership.percent)>0) {
@@ -124,7 +125,6 @@ public class negotiation_status {
                 final Date p_date = new Date();
                 final model_ownership p_from_user_ownership = ownership;
                 final model_ownership p_to_user_ownership = to_ownership;
-                final model_pull_request p_pull_request = request.pull_request;
 
                 model_merge_transaction merge_transaction = new model_merge_transaction(
                         p_from_user,
