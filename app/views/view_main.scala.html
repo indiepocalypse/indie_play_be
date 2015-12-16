@@ -1,4 +1,4 @@
-@(title: String)(page_type: enum_main_page)(content: Object)
+@(title: String)(page_type: views.enum_main_page_type)(content: Object)
 <!--TODO: move inline css to external file-->
 
 <!DOCTYPE html>
@@ -67,9 +67,9 @@
 
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a class="nav_center_vertical" href="/faq">FAQ</a></li>
-                <li><a class="nav_center_vertical" href="/explore">Explore</a></li>
-                <li><a class="nav_center_vertical" href="/blog">Blog</a></li>
+                <li @if(page_type==views.enum_main_page_type.FAQ){class="active" }><a class="nav_center_vertical" href="/faq">FAQ</a></li>
+                <li @if(page_type==views.enum_main_page_type.EXPLORE){class="active" }><a class="nav_center_vertical" href="/explore">Explore</a></li>
+                <li @if(page_type==views.enum_main_page_type.BLOG){class="active" }><a class="nav_center_vertical" href="/blog">Blog</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">

@@ -6,6 +6,6 @@ package views;
 public enum enum_main_page_type {
     INDEX,
     FAQ,
-    EXPLRE,
+    EXPLORE,
     BLOG
 }
