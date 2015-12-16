@@ -1,4 +1,5 @@
 @(title: String)(content: Object)
+<!--TODO: move inline css to external file-->
 
 <!DOCTYPE html>
 
@@ -21,6 +22,10 @@
     <!-- Bootstrap! -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <style>
+        .navbar {
+            border-width: 0 0 0 0;
+            margin: 0 0 0 0;
+        }
         .nav > li > a.nav_center_vertical {
             padding-top: 20px;
             padding-bottom: 20px;
@@ -30,10 +35,17 @@
             padding-bottom: 20px;
         }
         footer {
-            background-color: #303030;
             padding-top: 50px;
             padding-bottom: 50px;
             color: #f0f0f0;
+        }
+        body {
+            background-color: #303030;
+        }
+        #content {
+            background-color: #FFFFFF;
+            padding-top: 50px;
+            padding-bottom: 90px;
         }
     </style>
 </head>
