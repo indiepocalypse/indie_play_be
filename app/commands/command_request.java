@@ -17,7 +17,7 @@ public class command_request implements interface_command {
             try {
                 // try to parse this
                 BigDecimal percent = utils_bigdecimal.from_percent_or_number(command.args.get(0));
-                if (percent.compareTo(new BigDecimal("0.0")) < 0) {
+                if (percent.compareTo(BigDecimal.ZERO) < 0) {
                     return false;
                 }
                 return percent.compareTo(new BigDecimal("100.0")) <= 0;

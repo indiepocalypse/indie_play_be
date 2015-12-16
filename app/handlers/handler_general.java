@@ -166,8 +166,8 @@ public class handler_general {
                 new_to_ownership_percent,
                 merge_transaction.to_user_ownership.is_creator);
 
-        final BigDecimal new_from_ownership_percent = merge_transaction.from_user_ownership.percent;
-        new_from_ownership_percent.subtract(merge_transaction.amount_percent);
+        BigDecimal new_from_ownership_percent = merge_transaction.from_user_ownership.percent;
+        new_from_ownership_percent = new_from_ownership_percent.subtract(merge_transaction.amount_percent);
         final model_ownership new_from_ownership = new model_ownership(
                 merge_transaction.from_user,
                 merge_transaction.repo,

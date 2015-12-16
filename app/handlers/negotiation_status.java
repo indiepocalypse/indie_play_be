@@ -33,7 +33,7 @@ public class negotiation_status {
         users_currently_accepted = new ArrayList<>(5);
         final Map<model_user, model_ownership> ownership_from_user = new HashMap<>(11);
         users_with_more_ownership = new ArrayList<>();
-        total_ownership_of_users_with_more_ownership = new BigDecimal("0.0");
+        BigDecimal tmp_total_ownership_of_users_with_more_ownership = new BigDecimal("0.0");
         model_ownership to_ownership = null;
         if (ownerships != null) {
             for (model_ownership ownership : ownerships) {
@@ -48,10 +48,11 @@ public class negotiation_status {
             for (model_ownership ownership : ownerships) {
                 if (ownership.percent.compareTo(to_ownership.percent)>0) {
                     users_with_more_ownership.add(ownership.user);
-                    total_ownership_of_users_with_more_ownership.add(ownership.percent);
+                    tmp_total_ownership_of_users_with_more_ownership = tmp_total_ownership_of_users_with_more_ownership.add(ownership.percent);
                 }
             }
         }
+        total_ownership_of_users_with_more_ownership = tmp_total_ownership_of_users_with_more_ownership;
 
         if (offers != null) {
             // sort offers in descending order!
@@ -103,7 +104,7 @@ public class negotiation_status {
 
         // generating transactions!
 
-        if (is_negotiation_succesful()) {
+        if ((is_negotiation_succesful())&&(total_ownership_of_users_with_more_ownership.compareTo(BigDecimal.ZERO)>0)) {
 
             Map<model_user, model_offer_for_merge> offer_from_user = new HashMap<>(11);
             for (model_offer_for_merge offer : offers) {
