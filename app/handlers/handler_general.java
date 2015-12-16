@@ -177,14 +177,21 @@ public class handler_general {
         Boolean is_active = false;
         Boolean was_positively_accepted = true;
         Date date_accepted = new Date();
-        final model_offer_for_merge new_offer = new model_offer_for_merge(
-                merge_transaction.offer.user,
-                merge_transaction.offer.pull_request,
-                merge_transaction.offer.amount_percent,
-                is_active,
-                was_positively_accepted,
-                merge_transaction.offer.date_created,
-                date_accepted);
+        final model_offer_for_merge new_offer;
+        // there may not be an offer from this user...
+        if (merge_transaction.offer!=null) {
+            new_offer = new model_offer_for_merge(
+                    merge_transaction.offer.user,
+                    merge_transaction.offer.pull_request,
+                    merge_transaction.offer.amount_percent,
+                    is_active,
+                    was_positively_accepted,
+                    merge_transaction.offer.date_created,
+                    date_accepted);
+        }
+        else {
+            new_offer = null;
+        }
 
         final model_request_for_merge new_request = new model_request_for_merge(
                 merge_transaction.request.user,
@@ -197,7 +204,9 @@ public class handler_general {
 
         store_local_db.update_ownership(new_to_ownership);
         store_local_db.update_ownership(new_from_ownership);
-        store_local_db.update_offer(new_offer);
+        if (new_offer!=null) {
+            store_local_db.update_offer(new_offer);
+        }
         store_local_db.update_request(new_request);
 
         store_local_db.update_merge_transaction(merge_transaction);
