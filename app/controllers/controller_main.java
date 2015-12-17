@@ -42,10 +42,10 @@ public class controller_main extends Controller {
         return ok(view_main.render("faq", enum_main_page_type.FAQ, view_faq.render()));
     }
 
+    final String EXPLORE_PAGE_CACHE_KEY = "exlpore_webpage_not_logged";
     public Result explore() {
-        final String key = "exlpore_webpage_not_logged";
         if (!store_session.user_is_logged()) {
-            return (Status) Cache.getOrElse(key, new Callable<Object>() {
+            return (Status) Cache.getOrElse(EXPLORE_PAGE_CACHE_KEY, new Callable<Object>() {
                 @Override
                 public Object call() throws Exception {
                     Logger.info("GENERATING CACHE!!!!!!!!!!!!!!!!!");
@@ -114,6 +114,8 @@ public class controller_main extends Controller {
                     create_webhook, check_for_existance_of_readme_before_creating_one,
                     delete_original_collaborators);
             store_session.set_new_repo(repo.repo_name);
+            // invalidate explore page cache
+            Cache.remove(EXPLORE_PAGE_CACHE_KEY);
             return redirect(routes.controller_main.repo_profile(repo_name));
         } catch (Exception e) {
             Logger.error("while creating repo...", e);
