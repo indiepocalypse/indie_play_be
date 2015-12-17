@@ -103,9 +103,10 @@
             </li>
 
             }else {
-            <li><a class="nav_center_vertical"
-               href=@stores.store_github_api.get_github_access_url(stores.store_session.get_state())>login with
-                github</a></li>
+                @stores.store_session.set_return_to(stores.store_session.get_path())
+                <li><a class="nav_center_vertical"
+                   href=@stores.store_github_api.get_github_access_url(stores.store_session.get_state())>login with
+                    github</a></li>
             }
 
             </ul>

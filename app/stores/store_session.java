@@ -19,6 +19,10 @@ public class store_session {
     private final static String github_code_session_key = "github_code";
     private final static String new_repo_session_key = "new_repo___";
 
+    public static String get_path() {
+        return controller_main.request().path();
+    }
+
     public static void set_new_repo(String name) {
         String key = new_repo_session_key + name;
         controller_main.session().put(key, "yep!");
