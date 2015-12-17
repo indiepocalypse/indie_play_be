@@ -222,7 +222,7 @@ public class store_local_db {
         }
     }
 
-    public static model_ownership get_ownerships_by_user_name_and_repo_name(model_user user, model_repo repo) {
+    public static model_ownership get_ownership_by_user_name_and_repo_name(model_user user, model_repo repo) {
         try {
             return model_ownership.fetch().where()
                     .eq("repo.repo_name", repo.repo_name)

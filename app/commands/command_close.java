@@ -30,7 +30,7 @@ public class command_close implements interface_command {
         if (!hook.get_user().user_name.equals(hook.get_issue().user.user_name)) {
             model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo());
             if (policy != null) {
-                model_ownership ownership = store_local_db.get_ownerships_by_user_name_and_repo_name(hook.get_user(), hook.get_repo());
+                model_ownership ownership = store_local_db.get_ownership_by_user_name_and_repo_name(hook.get_user(), hook.get_repo());
                 BigDecimal min_ownership = policy.ownership_required_to_manage_issues;
                 if (ownership == null) {
                     return "Only owners with more than " + min_ownership.toString() + "% ownership can close issues. You currently have no ownership at all...";

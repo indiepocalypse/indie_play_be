@@ -247,16 +247,23 @@ public class handler_commands {
                     is_active,
                     was_positively_accepted,
                     current_request.date_created,
-                    current_request.date_accepted_if_accepted
+                    current_request.date_accepted_if_accepted,
+                    current_request.user_ownership_percent
             );
             store_local_db.update_request(current_request);
             result = "request for merge updated to " + percent_amount + "%";
         } else {
             final Date date_accepted_if_accepted = null;
             final Date date_created = new Date();
+            final model_ownership user_ownership = store_local_db.get_ownership_by_user_name_and_repo_name(hook.get_user(), hook.get_repo());
             current_request = new model_request_for_merge(
-                    hook.get_user(), pull_request, utils_bigdecimal.from_percent_or_number(percent_amount),
-                    is_active, was_positively_accepted, date_created, date_accepted_if_accepted);
+                    hook.get_user(),
+                    pull_request,
+                    utils_bigdecimal.from_percent_or_number(percent_amount),
+                    is_active,
+                    was_positively_accepted,
+                    date_created, date_accepted_if_accepted,
+                    user_ownership.percent);
             store_local_db.update_request(current_request);
             result = "request for merge created as " + percent_amount + "%";
         }
@@ -298,7 +305,7 @@ public class handler_commands {
         if (hook.get_pull_request().is_closed()) {
             return "this pull request is closed, cannot place an offer";
         }
-        model_ownership user_ownership = store_local_db.get_ownerships_by_user_name_and_repo_name(hook.get_user(), hook.get_repo());
+        final model_ownership user_ownership = store_local_db.get_ownership_by_user_name_and_repo_name(hook.get_user(), hook.get_repo());
         if ((user_ownership == null) || (user_ownership.percent == null) ||
                 (user_ownership.percent.compareTo(BigDecimal.ZERO) <= 0)) {
             return "Only owners with ownership can make offers";
@@ -333,7 +340,8 @@ public class handler_commands {
                     is_active,
                     was_positively_accepted,
                     current_offer.date_created,
-                    current_offer.date_accepted_if_accepted
+                    current_offer.date_accepted_if_accepted,
+                    current_offer.user_ownership_percent
             );
             store_local_db.update_offer(current_offer);
             result = "offer for merge updated to " + percent_amount + "%";
@@ -341,8 +349,14 @@ public class handler_commands {
             final Date date_accepted_if_accepted = null;
             final Date date_created = new Date();
             current_offer = new model_offer_for_merge(
-                    hook.get_user(), pull_request, utils_bigdecimal.from_percent_or_number(percent_amount),
-                    is_active, was_positively_accepted, date_created, date_accepted_if_accepted);
+                    hook.get_user(),
+                    pull_request,
+                    utils_bigdecimal.from_percent_or_number(percent_amount),
+                    is_active,
+                    was_positively_accepted,
+                    date_created,
+                    date_accepted_if_accepted,
+                    user_ownership.percent);
             store_local_db.update_offer(current_offer);
             result = "offer for merge created as " + percent_amount + "%";
         }

@@ -28,12 +28,22 @@ public class model_offer_for_merge extends Model {
     public final model_pull_request pull_request;
     @Column(precision = 5, scale = 2)
     public final BigDecimal amount_percent;
+    @Column(precision = 5, scale = 2)
+    public final BigDecimal user_ownership_percent;
     final public Date date_accepted_if_accepted;
     final public Date date_created;
     final Boolean is_active;
     final Boolean was_positively_accepted;
 
-    public model_offer_for_merge(model_user p_user, model_pull_request p_pull_request, BigDecimal p_amount_percent, Boolean p_is_active, Boolean p_was_positively_accepted, Date p_date_created, Date p_date_accepted_if_accepted) {
+    public model_offer_for_merge(
+            model_user p_user,
+            model_pull_request p_pull_request,
+            BigDecimal p_amount_percent,
+            Boolean p_is_active,
+            Boolean p_was_positively_accepted,
+            Date p_date_created,
+            Date p_date_accepted_if_accepted,
+            BigDecimal p_user_ownership_percent) {
         id = "offer_for_merge_from_user_" + p_user.user_name + "_for_pull_request_number_" + p_pull_request.number + "_for_repo_" + p_pull_request.repo.repo_name;
         this.user = p_user;
         this.pull_request = p_pull_request;
@@ -42,6 +52,7 @@ public class model_offer_for_merge extends Model {
         this.was_positively_accepted = p_was_positively_accepted;
         this.date_created = p_date_created;
         this.date_accepted_if_accepted = p_date_accepted_if_accepted;
+        this.user_ownership_percent = p_user_ownership_percent;
     }
 
     public static model_offer_for_merge same_but_accepted_now(model_offer_for_merge model_offer_for_merge) {
@@ -58,7 +69,8 @@ public class model_offer_for_merge extends Model {
                 is_active,
                 was_positively_accepted,
                 model_offer_for_merge.date_created,
-                date_accepted_if_accepted
+                date_accepted_if_accepted,
+                model_offer_for_merge.user_ownership_percent
         );
     }
 
