@@ -137,7 +137,8 @@ public class negotiation_status {
                         p_date,
                         p_from_user_ownership,
                         p_to_user_ownership,
-                        p_repo);
+                        p_repo,
+                        p_from_user_ownership.percent);
 
                 implied_transactions.add(merge_transaction);
 

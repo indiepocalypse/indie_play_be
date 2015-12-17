@@ -26,6 +26,7 @@ create table model_merge_transaction (
   to_user_ownership_id      varchar(255),
   repo_repo_name            varchar(255),
   amount_percent            decimal(5,2),
+  from_user_ownership_percent decimal(5,2),
   date                      timestamp,
   constraint pk_model_merge_transaction primary key (id))
 ;
