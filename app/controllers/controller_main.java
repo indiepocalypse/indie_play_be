@@ -27,7 +27,9 @@ public class controller_main extends Controller {
     // TODO: is the save/update dichotomy in the store_local_db really necessary? maybe update is enough?
     // TODO: error handling: when contacting github and the db touch 1st github and only if success continue
     // TODO: pretty-print the BigDecimals
-    // TODO: check the BigDecimals are in compliance with the number of digits etc. (e.g. 4 after the point, no more!)
+    // TODO: fix double "%" printing when making an offer or request
+    // TODO: refactor out content pages into a handler, all cached. This controller should not touch caching
+    // TODO: rethink caching strategy
 
     private final static String main_title = "it's the Indiepocalypse!";
 
@@ -54,6 +56,7 @@ public class controller_main extends Controller {
     }
 
     public Result newrepo_get() {
+        // TODO: rate limit!
         if (!handler_policy.can_create_new_repo()) {
             return ok(view_main.render("new repo", enum_main_page_type.INDEX, view_newrepo_too_many.render()));
         }
@@ -64,6 +67,8 @@ public class controller_main extends Controller {
     }
 
     public Result newrepo_post() {
+        // TODO: rate limit!
+        // TODO: make sure user can actually make the repo, maybe use the newrepo_get to put some flag in the session, so no need to touch the db
         DynamicForm data = Form.form().bindFromRequest();
 
         String repo_name = "";
@@ -135,16 +140,19 @@ public class controller_main extends Controller {
     }
 
     public Result user_profile(String user_name) {
+        // TODO: caching!
         return ok(view_main.render(user_name, enum_main_page_type.INDEX, view_homeuser.render(store_local_db.get_user_by_name(user_name))));
     }
 
     public Result repo_profile(String repo_name) {
+        // TODO: caching!
         List<model_ownership> owners = store_local_db.get_ownerships_by_repo_name(repo_name);
         List<model_pull_request> pull_requests = store_local_db.get_pull_requests_by_repo_name(repo_name);
         return ok(view_main.render(repo_name, enum_main_page_type.INDEX, view_homerepo.render(store_local_db.get_repo_by_name(repo_name), owners, pull_requests)));
     }
 
     public Result pull_profile(String repo_name, Long pull_id) {
+        // TODO: caching!
         String pull_id_str = Long.toString(pull_id);
         return ok(view_main.render(repo_name + "@" + pull_id_str, enum_main_page_type.INDEX, "This is the pull id " + pull_id_str + " in repo " + repo_name));
     }
