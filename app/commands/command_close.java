@@ -26,15 +26,18 @@ public class command_close implements interface_command {
 
     @Override
     public String handle(model_command command, interface_github_webhook hook) {
-        model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo());
-        if (policy != null) {
-            model_ownership ownership = store_local_db.get_ownerships_by_user_name_and_repo_name(hook.get_user(), hook.get_repo());
-            BigDecimal min_ownership = policy.ownership_required_to_manage_issues;
-            if (ownership == null) {
-                return "Only owners with more than " + min_ownership.toString() + "% ownership can close issues. You currently have no ownership at all...";
-            }
-            if (ownership.percent.compareTo(store_conf.get_policy_default_ownership_required_to_manage_issues()) < 0) {
-                return "Only owners with more than " + min_ownership.toString() + "% ownership can close issues. You currently have " + ownership.percent.toString() + "%";
+        // check for percentage repo policy only if user is not user that opened issue
+        if (!hook.get_user().user_name.equals(hook.get_issue().user.user_name)) {
+            model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo());
+            if (policy != null) {
+                model_ownership ownership = store_local_db.get_ownerships_by_user_name_and_repo_name(hook.get_user(), hook.get_repo());
+                BigDecimal min_ownership = policy.ownership_required_to_manage_issues;
+                if (ownership == null) {
+                    return "Only owners with more than " + min_ownership.toString() + "% ownership can close issues. You currently have no ownership at all...";
+                }
+                if (ownership.percent.compareTo(store_conf.get_policy_default_ownership_required_to_manage_issues()) < 0) {
+                    return "Only owners with more than " + min_ownership.toString() + "% ownership can close issues. You currently have " + ownership.percent.toString() + "%";
+                }
             }
         }
 
