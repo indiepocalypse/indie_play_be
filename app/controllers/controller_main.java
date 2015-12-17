@@ -14,10 +14,7 @@ import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.twirl.api.Html;
-import stores.github_io_exception;
-import stores.store_github_api;
-import stores.store_local_db;
-import stores.store_session;
+import stores.*;
 import views.enum_main_page_type;
 import views.html.*;
 
@@ -42,22 +39,18 @@ public class controller_main extends Controller {
         return ok(view_main.render("faq", enum_main_page_type.FAQ, view_faq.render()));
     }
 
-    final String EXPLORE_PAGE_CACHE_KEY = "exlpore_webpage_not_logged";
+    final String EXPLORE_PAGE_CONTENT_CACHE_KEY = "exlpore_webpage_content";
     public Result explore() {
-        if (!store_session.user_is_logged()) {
-            return (Status) Cache.getOrElse(EXPLORE_PAGE_CACHE_KEY, new Callable<Object>() {
-                @Override
-                public Object call() throws Exception {
-                    Logger.info("GENERATING CACHE!!!!!!!!!!!!!!!!!");
-                    List<model_repo> repos = store_local_db.get_all_repos();
-                    List<model_user> users = store_local_db.get_all_users();
-                    return ok(view_main.render("explore", enum_main_page_type.EXPLORE, view_repo_explore.render(repos, users)));
-                }
-            }, 120);
-        }
-        List<model_repo> repos = store_local_db.get_all_repos();
-        List<model_user> users = store_local_db.get_all_users();
-        return ok(view_main.render("explore", enum_main_page_type.EXPLORE, view_repo_explore.render(repos, users)));
+        Html explore_page_content = (Html) Cache.getOrElse(EXPLORE_PAGE_CONTENT_CACHE_KEY, new Callable<Object>() {
+            @Override
+            public Object call() throws Exception {
+                Logger.info("GENERATING EXPLORE PAGE CONTENT CACHE!!!!!!!!!!!!!!!!!");
+                List<model_repo> repos = store_local_db.get_all_repos();
+                List<model_user> users = store_local_db.get_all_users();
+                return view_repo_explore.render(repos, users);
+            }
+        }, (int)store_conf.get_cache_webpage_delay_seconds());
+        return ok(view_main.render("explore", enum_main_page_type.EXPLORE, explore_page_content));
     }
 
     public Result newrepo_get() {
@@ -115,7 +108,7 @@ public class controller_main extends Controller {
                     delete_original_collaborators);
             store_session.set_new_repo(repo.repo_name);
             // invalidate explore page cache
-            Cache.remove(EXPLORE_PAGE_CACHE_KEY);
+            Cache.remove(EXPLORE_PAGE_CONTENT_CACHE_KEY);
             return redirect(routes.controller_main.repo_profile(repo_name));
         } catch (Exception e) {
             Logger.error("while creating repo...", e);

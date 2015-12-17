@@ -116,4 +116,8 @@ public class store_conf {
         return ConfigFactory.load().getString("indie.mail.address");
     }
 
+    public static long get_cache_webpage_delay_seconds() {
+        return ConfigFactory.load().getDuration("cache.webpage.delay.seconds", TimeUnit.SECONDS);
+    }
+
 }
