@@ -157,67 +157,43 @@ public class handler_general {
         return updated;
     }
 
-    public static void execute_single_merge_transaction(model_merge_transaction merge_transaction) {
-        // FIXME: changes should flow to other transactions....
-        //
-        BigDecimal new_to_ownership_percent = merge_transaction.to_user_ownership.percent;
-        new_to_ownership_percent = new_to_ownership_percent.add(merge_transaction.amount_percent);
-        final model_ownership new_to_ownership = new model_ownership(
-                merge_transaction.to_user,
-                merge_transaction.repo,
-                new_to_ownership_percent,
-                merge_transaction.to_user_ownership.is_creator);
-
-        BigDecimal new_from_ownership_percent = merge_transaction.from_user_ownership.percent;
-        new_from_ownership_percent = new_from_ownership_percent.subtract(merge_transaction.amount_percent);
-        final model_ownership new_from_ownership = new model_ownership(
-                merge_transaction.from_user,
-                merge_transaction.repo,
-                new_from_ownership_percent,
-                merge_transaction.from_user_ownership.is_creator);
-
-        Boolean is_active = false;
-        Boolean was_positively_accepted = true;
-        Date date_accepted = new Date();
-        final model_offer_for_merge new_offer;
-        // there may not be an offer from this user...
-        if (merge_transaction.offer!=null) {
-            new_offer = new model_offer_for_merge(
-                    merge_transaction.offer.user,
-                    merge_transaction.offer.pull_request,
-                    merge_transaction.offer.amount_percent,
-                    is_active,
-                    was_positively_accepted,
-                    merge_transaction.offer.date_created,
-                    date_accepted);
+    public static void consume_negotiation(negotiation_status negotiation_status) {
+        model_ownership to_user_ownership;
+        if (negotiation_status.implied_transactions.size()>0) {
+            to_user_ownership = negotiation_status.implied_transactions.get(0).to_user_ownership;
         }
         else {
-            new_offer = null;
+            return; // nothing to do, no transactions implied
         }
+        for (model_merge_transaction merge_transaction: negotiation_status.implied_transactions) {
 
-        final model_request_for_merge new_request = new model_request_for_merge(
-                merge_transaction.request.user,
-                merge_transaction.request.pull_request,
-                merge_transaction.request.amount_percent,
-                is_active,
-                was_positively_accepted,
-                merge_transaction.request.date_created,
-                date_accepted);
+            to_user_ownership = model_ownership.with_new_percent(
+                    to_user_ownership,
+                    to_user_ownership.percent.add(merge_transaction.amount_percent)
+            );
 
-        store_local_db.update_ownership(new_to_ownership);
-        store_local_db.update_ownership(new_from_ownership);
-        if (new_offer!=null) {
-            store_local_db.update_offer(new_offer);
+            final model_ownership new_from_ownership = model_ownership.with_new_percent(
+                    merge_transaction.from_user_ownership,
+                    merge_transaction.from_user_ownership.percent.subtract(merge_transaction.amount_percent)
+            );
+
+            final model_offer_for_merge new_offer = model_offer_for_merge
+                    .same_but_accepted_now(merge_transaction.offer);
+
+            final model_request_for_merge new_request = model_request_for_merge
+                    .same_but_accepted_now(merge_transaction.request);
+
+            store_local_db.update_ownership(new_from_ownership);
+            // the offer can actually be null...
+            if (new_offer!=null) {
+                store_local_db.update_offer(new_offer);
+            }
+            store_local_db.update_request(new_request);
+
+            store_local_db.update_merge_transaction(merge_transaction);
+
         }
-        store_local_db.update_request(new_request);
-
-        store_local_db.update_merge_transaction(merge_transaction);
-    }
-
-    public static void execute_merge_transactions(List<model_merge_transaction> merge_transactions) {
-        for (model_merge_transaction merge_transaction: merge_transactions) {
-            execute_single_merge_transaction(merge_transaction);
-        }
+        store_local_db.update_ownership(to_user_ownership);
     }
 }
 

@@ -44,6 +44,24 @@ public class model_offer_for_merge extends Model {
         this.date_accepted_if_accepted = p_date_accepted_if_accepted;
     }
 
+    public static model_offer_for_merge same_but_accepted_now(model_offer_for_merge model_offer_for_merge) {
+        if (model_offer_for_merge==null) {
+            return null;
+        }
+        boolean is_active = false;
+        boolean was_positively_accepted = true;
+        Date date_accepted_if_accepted = new Date();
+        return new model_offer_for_merge(
+                model_offer_for_merge.user,
+                model_offer_for_merge.pull_request,
+                model_offer_for_merge.amount_percent,
+                is_active,
+                was_positively_accepted,
+                model_offer_for_merge.date_created,
+                date_accepted_if_accepted
+        );
+    }
+
     public static Query<model_offer_for_merge> fetch() {
         return find
                 .fetch("user")

@@ -37,6 +37,15 @@ public class model_ownership extends Model {
         is_creator = p_is_creator;
     }
 
+    public static model_ownership with_new_percent(model_ownership base_ownership, BigDecimal new_percent) {
+        return new model_ownership(
+                base_ownership.user,
+                base_ownership.repo,
+                new_percent,
+                base_ownership.is_creator
+        );
+    }
+
     // TODO: this solution is no good in the sense that it's not recursive...
     public static Query<model_ownership> fetch() {
         return find
