@@ -35,12 +35,13 @@ public class handler_general {
         return user;
     }
 
-    public static void integrate_github_repo(String repo_name, String user_name, boolean create_webhook,
-                                             boolean check_for_existance_of_readme,
-                                             boolean delete_original_collaborators) throws github_io_exception {
+    public static void integrate_github_repo_that_was_transferred(String repo_name, String user_name, boolean create_webhook,
+                                                                  boolean check_for_existance_of_readme,
+                                                                  boolean delete_original_collaborators) throws github_io_exception {
         // this method assumes repo is not in DB!
         model_user user = get_integrate_github_user_by_name(user_name);
-        model_repo repo = store_github_api.get_repo_by_name(user_name, repo_name);
+        // we bring this repo from indie since it was transferred
+        model_repo repo = store_github_api.get_repo_by_name(store_credentials.github.name, repo_name);
         integrate_github_repo(repo, user, create_webhook, check_for_existance_of_readme, delete_original_collaborators);
     }
 

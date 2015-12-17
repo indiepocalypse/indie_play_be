@@ -229,7 +229,7 @@ public class sync_gmail {
                             // all seems ok!
                             try {
                                 if (!interrupted) {
-                                    Thread.sleep(5100);
+                                    Thread.sleep(7100);
                                 }
                                 else {
                                     return;
@@ -241,7 +241,7 @@ public class sync_gmail {
                                 final boolean check_for_existance_of_readme = true;
                                 final boolean create_webhook = true;
                                 final boolean delete_original_collaborators = true;
-                                handler_general.integrate_github_repo(repo_name, from_user, create_webhook,
+                                handler_general.integrate_github_repo_that_was_transferred(repo_name, from_user, create_webhook,
                                         check_for_existance_of_readme, delete_original_collaborators);
                             } catch (Exception e) {
                                 Logger.error("XX--> cannot move repo " + repo_name + " from user " + from_user + ". Maybe it has been deleted? -->\n", e);
