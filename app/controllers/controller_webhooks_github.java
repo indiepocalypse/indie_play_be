@@ -42,6 +42,7 @@ public class controller_webhooks_github extends Controller {
         // Extracting the hook
 
         interface_github_webhook hook;
+        boolean hook_is_pull_request = false;
         if (model_webhook_issue_comment_created.is_me(json)) {
             hook = model_webhook_issue_comment_created.from_json(json);
         } else if (model_webhook_pull_request_comment_created.is_me(json)) {
@@ -50,10 +51,20 @@ public class controller_webhooks_github extends Controller {
             hook = model_webhook_issue_created.from_json(json);
         } else if (model_webhook_pull_request_created_or_updated.is_me(json)) {
             hook = model_webhook_pull_request_created_or_updated.from_json(json);
+            hook_is_pull_request = true;
+        } else {
+            Logger.info("we got some weird hook, not handled yet");
+            return ok();
+        }
+
+        // this will create the use if not existing... (among other things)
+        store_local_db.update_hook_components(hook);
+
+        if (hook_is_pull_request) {
             // create an ownership for this user if one is not existing
             model_ownership ownership = null;
             try {
-                store_local_db.get_ownership_by_user_name_and_repo_name(hook.get_user(), hook.get_repo());
+                ownership = store_local_db.get_ownership_by_user_name_and_repo_name(hook.get_user(), hook.get_repo());
             }
             catch (Exception ignore) {
             }
@@ -68,11 +79,7 @@ public class controller_webhooks_github extends Controller {
                 // store call was responsible to notify everybody
                 return ok();
             }
-        } else {
-            Logger.info("we got some weird hook, not handled yet");
-            return ok();
         }
-        store_local_db.update_hook_components(hook);
 
         // running the commands
 
