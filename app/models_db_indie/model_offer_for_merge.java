@@ -2,6 +2,7 @@ package models_db_indie;
 
 import com.avaje.ebean.Model;
 import com.avaje.ebean.Query;
+import com.avaje.ebean.annotation.CacheStrategy;
 import models_db_github.model_pull_request;
 import models_db_github.model_user;
 
@@ -15,7 +16,7 @@ import java.util.Date;
 /**
  * Created by skariel on 29/09/15.
  */
-
+@CacheStrategy(readOnly = true, warmingQuery = "order by name")
 @Entity
 public class model_offer_for_merge extends Model {
     static final Finder<String, model_offer_for_merge> find = new Finder<>(model_offer_for_merge.class);
@@ -56,7 +57,7 @@ public class model_offer_for_merge extends Model {
     }
 
     public static model_offer_for_merge same_but_accepted_now(model_offer_for_merge model_offer_for_merge) {
-        if (model_offer_for_merge==null) {
+        if (model_offer_for_merge == null) {
             return null;
         }
         boolean is_active = false;

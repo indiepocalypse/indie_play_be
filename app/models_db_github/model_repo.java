@@ -1,6 +1,7 @@
 package models_db_github;
 
 import com.avaje.ebean.Model;
+import com.avaje.ebean.annotation.CacheStrategy;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import javax.persistence.Entity;
@@ -9,7 +10,7 @@ import javax.persistence.Id;
 /**
  * Created by skariel on 29/09/15.
  */
-
+@CacheStrategy(readOnly = true, warmingQuery = "order by name")
 @Entity
 public class model_repo extends Model {
     static final Finder<String, model_repo> find = new Finder<>(model_repo.class);

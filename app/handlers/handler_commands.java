@@ -273,7 +273,7 @@ public class handler_commands {
         result += "\nnego status:\n\n" + negotiation_status.toString();
         if (negotiation_status.is_negotiation_succesful()) {
             result += "\nnegotiation succesful. Merging\n";
-            result += "\n"+handle_merge(hook, negotiation_status)+"\n";
+            result += "\n" + handle_merge(hook, negotiation_status) + "\n";
         }
         return result;
     }
@@ -283,8 +283,7 @@ public class handler_commands {
         try {
             final model_request_for_merge request = store_local_db.get_request_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
             return handle_make_offer(hook, request.amount_percent.toString());
-        }
-        catch (Exception ignore) {
+        } catch (Exception ignore) {
             return "cannot find the request. Please try again later, or contact an admin";
         }
     }
@@ -367,7 +366,7 @@ public class handler_commands {
         result += "\nnego status:\n\n" + negotiation_status.toString();
         if (negotiation_status.is_negotiation_succesful()) {
             result += "\nnegotiation succesful. Merging\n";
-            result += "\n"+handle_merge(hook, negotiation_status)+"\n";
+            result += "\n" + handle_merge(hook, negotiation_status) + "\n";
         }
         return result;
     }

@@ -1,6 +1,7 @@
 package models_db_indie;
 
 import com.avaje.ebean.Model;
+import com.avaje.ebean.annotation.CacheStrategy;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,7 +10,7 @@ import java.util.Date;
 /**
  * Created by skariel on 29/09/15.
  */
-
+@CacheStrategy(readOnly = true, warmingQuery = "order by name")
 @Entity
 public class model_gmail_last_date_read extends Model {
     static final Finder<String, model_gmail_last_date_read> find = new Finder<>(model_gmail_last_date_read.class);

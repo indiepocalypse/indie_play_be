@@ -2,6 +2,7 @@ package models_db_indie;
 
 import com.avaje.ebean.Model;
 import com.avaje.ebean.Query;
+import com.avaje.ebean.annotation.CacheStrategy;
 import models_db_github.model_pull_request;
 import models_db_github.model_repo;
 import models_db_github.model_user;
@@ -16,7 +17,7 @@ import java.util.Date;
 /**
  * Created by skariel on 29/09/15.
  */
-
+@CacheStrategy(readOnly = true, warmingQuery = "order by name")
 @Entity
 public class model_merge_transaction extends Model {
     static final Finder<String, model_merge_transaction> find = new Finder<>(model_merge_transaction.class);

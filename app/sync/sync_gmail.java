@@ -71,8 +71,7 @@ public class sync_gmail {
                                 Logger.info("gmail inbox appears closed, trying to reopen...");
                                 if (!interrupted) {
                                     Thread.sleep(1500);
-                                }
-                                else {
+                                } else {
                                     return;
                                 }
                                 if (inbox.isOpen()) {
@@ -94,8 +93,7 @@ public class sync_gmail {
                     try {
                         if (!interrupted) {
                             Thread.sleep(50);
-                        }
-                        else {
+                        } else {
                             return;
                         }
                     } catch (Exception ignored) {
@@ -155,7 +153,7 @@ public class sync_gmail {
                 }
                 m_from = m.getFrom()[0].toString();
             } catch (FolderClosedException e) {
-                Logger.error("folder is close while handling gmail message, returning (error follows)\n",e);
+                Logger.error("folder is close while handling gmail message, returning (error follows)\n", e);
                 return;
             } catch (Exception e) {
                 Logger.error("while reading message date...", e);
@@ -215,8 +213,7 @@ public class sync_gmail {
                             try {
                                 if (!interrupted) {
                                     Thread.sleep(5100);
-                                }
-                                else {
+                                } else {
                                     return;
                                 }
                             } catch (Exception ignored) {
@@ -230,8 +227,7 @@ public class sync_gmail {
                             try {
                                 if (!interrupted) {
                                     Thread.sleep(7100);
-                                }
-                                else {
+                                } else {
                                     return;
                                 }
                             } catch (Exception ignored) {
@@ -346,7 +342,7 @@ public class sync_gmail {
             mail_count = inbox.getMessageCount();
             handle_messages(messages);
             Logger.info("mail_count" + Integer.toString(mail_count));
-            if (inbox==null) {
+            if (inbox == null) {
                 Logger.error("inbox null while reloading gmail messages, returning");
                 return;
             }

@@ -28,7 +28,7 @@ public class sync_github_repos {
             public void run() {
                 while (!interrupted) {
                     try {
-                        if ((!initially_synced)&&(!interrupted)) {
+                        if ((!initially_synced) && (!interrupted)) {
                             sync();
                             initially_synced = true;
                         }
@@ -37,8 +37,7 @@ public class sync_github_repos {
                                 rand.nextFloat() * stores.store_conf.get_github_repo_sync_jitter_milis());
                         if (!interrupted) {
                             Thread.sleep(store_conf.get_github_repo_sync_delta_milis() + jitter);
-                        }
-                        else {
+                        } else {
                             return;
                         }
                     } catch (Exception e) {
@@ -75,8 +74,7 @@ public class sync_github_repos {
             try {
                 if (!interrupted) {
                     Thread.sleep(stores.store_conf.get_github_repo_sync_jitter_small_milis());
-                }
-                else {
+                } else {
                     return;
                 }
             } catch (Exception e) {

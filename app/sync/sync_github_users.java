@@ -35,11 +35,10 @@ public class sync_github_users {
             public void run() {
                 while (!interrupted) {
                     try {
-                        if ((!initially_synced)&&(!interrupted)) {
+                        if ((!initially_synced) && (!interrupted)) {
                             sync();
                             initially_synced = true;
-                        }
-                        else {
+                        } else {
                             return;
                         }
                         if (!interrupted) {
@@ -47,8 +46,7 @@ public class sync_github_users {
                             int jitter = (int) (store_conf.get_github_user_sync_minimum_milis() +
                                     rand.nextFloat() * store_conf.get_github_user_sync_jitter_milis());
                             Thread.sleep(store_conf.get_github_user_sync_delta_milis() + jitter);
-                        }
-                        else {
+                        } else {
                             return;
                         }
                     } catch (Exception e) {
@@ -79,8 +77,7 @@ public class sync_github_users {
             try {
                 if (!interrupted) {
                     Thread.sleep(store_conf.get_github_user_sync_jitter_small_milis());
-                }
-                else {
+                } else {
                     return;
                 }
             } catch (Exception e) {

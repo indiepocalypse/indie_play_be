@@ -1,6 +1,5 @@
 package handlers;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import controllers.routes;
 import models_db_github.model_pull_request;
 import models_db_github.model_repo;
@@ -11,8 +10,6 @@ import stores.*;
 import sync.sync_gmail;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created by skariel on 15/10/15.
@@ -160,13 +157,12 @@ public class handler_general {
 
     public static void consume_negotiation(negotiation_status negotiation_status) {
         model_ownership to_user_ownership;
-        if (negotiation_status.implied_transactions.size()>0) {
+        if (negotiation_status.implied_transactions.size() > 0) {
             to_user_ownership = negotiation_status.implied_transactions.get(0).to_user_ownership;
-        }
-        else {
+        } else {
             return; // nothing to do, no transactions implied
         }
-        for (model_merge_transaction merge_transaction: negotiation_status.implied_transactions) {
+        for (model_merge_transaction merge_transaction : negotiation_status.implied_transactions) {
 
             to_user_ownership = model_ownership.with_new_percent(
                     to_user_ownership,
@@ -186,7 +182,7 @@ public class handler_general {
 
             store_local_db.update_ownership(new_from_ownership);
             // the offer can actually be null...
-            if (new_offer!=null) {
+            if (new_offer != null) {
                 store_local_db.update_offer(new_offer);
             }
             store_local_db.update_request(new_request);

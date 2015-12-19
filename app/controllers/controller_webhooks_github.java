@@ -65,10 +65,9 @@ public class controller_webhooks_github extends Controller {
             model_ownership ownership = null;
             try {
                 ownership = store_local_db.get_ownership_by_user_name_and_repo_name(hook.get_user(), hook.get_repo());
+            } catch (Exception ignore) {
             }
-            catch (Exception ignore) {
-            }
-            if (ownership==null) {
+            if (ownership == null) {
                 Boolean is_creator = false;
                 BigDecimal ownership_percent = new BigDecimal("0.0");
                 ownership = new model_ownership(hook.get_user(), hook.get_repo(), ownership_percent, is_creator);

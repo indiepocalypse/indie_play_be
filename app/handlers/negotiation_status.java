@@ -41,12 +41,11 @@ public class negotiation_status {
             }
             if (ownership_from_user.containsKey(p_pull_request.user)) {
                 to_ownership = ownership_from_user.get(p_pull_request.user);
-            }
-            else {
-                Logger.error("to_user \""+p_pull_request.user.user_name+"\" has no ownership in pull request #"+p_pull_request.number+" for repo \""+p_repo.repo_name+"\", this should not happen!");
+            } else {
+                Logger.error("to_user \"" + p_pull_request.user.user_name + "\" has no ownership in pull request #" + p_pull_request.number + " for repo \"" + p_repo.repo_name + "\", this should not happen!");
             }
             for (model_ownership ownership : ownerships) {
-                if (ownership.percent.compareTo(to_ownership.percent)>0) {
+                if (ownership.percent.compareTo(to_ownership.percent) > 0) {
                     users_with_more_ownership.add(ownership.user);
                     tmp_total_ownership_of_users_with_more_ownership = tmp_total_ownership_of_users_with_more_ownership.add(ownership.percent);
                 }
@@ -104,7 +103,7 @@ public class negotiation_status {
 
         // generating transactions!
 
-        if ((is_negotiation_succesful())&&(total_ownership_of_users_with_more_ownership.compareTo(BigDecimal.ZERO)>0)) {
+        if ((is_negotiation_succesful()) && (total_ownership_of_users_with_more_ownership.compareTo(BigDecimal.ZERO) > 0)) {
 
             Map<model_user, model_offer_for_merge> offer_from_user = new HashMap<>(11);
             for (model_offer_for_merge offer : offers) {
@@ -112,7 +111,7 @@ public class negotiation_status {
             }
 
             BigDecimal transaction_quanta = request.amount_percent.divide(total_ownership_of_users_with_more_ownership);
-            for (model_user user: users_with_more_ownership) {
+            for (model_user user : users_with_more_ownership) {
 
                 final model_ownership ownership = ownership_from_user.get(user);
                 final BigDecimal user_ownership = ownership.percent;

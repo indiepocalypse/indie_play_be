@@ -2,6 +2,7 @@ package models_db_github;
 
 import com.avaje.ebean.Model;
 import com.avaje.ebean.Query;
+import com.avaje.ebean.annotation.CacheStrategy;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import javax.persistence.ManyToOne;
 /**
  * Created by skariel on 17/10/15.
  */
+@CacheStrategy(readOnly = true, warmingQuery = "order by name")
 @Entity
 public class model_pull_request extends Model {
     static final Finder<String, model_pull_request> find = new Finder<>(model_pull_request.class);
@@ -64,41 +66,6 @@ public class model_pull_request extends Model {
         this.id = repo.repo_name + "/" + this.number;
     }
 
-    public model_pull_request same_but_clsoed() {
-        final String state = "closed";
-        return same_but_with_state_merged_and_mergeable(state, this.merged, this.mergeable);
-    }
-
-    public model_pull_request same_but_open() {
-        final String state = "open";
-        return same_but_with_state_merged_and_mergeable(state, this.merged, this.mergeable);
-    }
-
-    public model_pull_request same_but_merged() {
-        final String state = "closed";
-        final boolean merged = true;
-        final boolean mergeable = false;
-        return same_but_with_state_merged_and_mergeable(state, merged, mergeable);
-    }
-
-    public model_pull_request same_but_with_state_merged_and_mergeable(final String p_state, final boolean p_merged, final boolean p_mergeable) {
-        return new model_pull_request(
-                this.url,
-                this.github_id,
-                this.html_url,
-                p_state,
-                this.title,
-                this.user,
-                this.body,
-                p_merged,
-                p_mergeable,
-                this.comments_url,
-                this.repo,
-                this.number,
-                this.SHA
-        );
-    }
-
     public static model_pull_request from_json(JsonNode json) {
         String number = Integer.toString(json.get("number").asInt());
         String url = json.get("url").asText();
@@ -144,6 +111,41 @@ public class model_pull_request extends Model {
 
     public static void deleteById(String id) {
         find.deleteById(id);
+    }
+
+    public model_pull_request same_but_clsoed() {
+        final String state = "closed";
+        return same_but_with_state_merged_and_mergeable(state, this.merged, this.mergeable);
+    }
+
+    public model_pull_request same_but_open() {
+        final String state = "open";
+        return same_but_with_state_merged_and_mergeable(state, this.merged, this.mergeable);
+    }
+
+    public model_pull_request same_but_merged() {
+        final String state = "closed";
+        final boolean merged = true;
+        final boolean mergeable = false;
+        return same_but_with_state_merged_and_mergeable(state, merged, mergeable);
+    }
+
+    public model_pull_request same_but_with_state_merged_and_mergeable(final String p_state, final boolean p_merged, final boolean p_mergeable) {
+        return new model_pull_request(
+                this.url,
+                this.github_id,
+                this.html_url,
+                p_state,
+                this.title,
+                this.user,
+                this.body,
+                p_merged,
+                p_mergeable,
+                this.comments_url,
+                this.repo,
+                this.number,
+                this.SHA
+        );
     }
 
     public boolean is_closed() {
