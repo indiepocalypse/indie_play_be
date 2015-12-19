@@ -31,10 +31,7 @@ TODO: cache everything: index / faq / help / explore (every few hrs or minutes) 
 
 Currenly working on:
 
-1) transactions - kill some bugs:
-      - make a new ownership when opening a pull request
-      - etc.
-
+1) ebean L2 Caching
 2) "blogpost"
 3) finding a name
 
@@ -51,4 +48,16 @@ Future:
 9) slack integration
 10) feature suggesting and voting
 11) a "were working on" page
+
+nice blog design:
+
+http://www.monkeysnatchbanana.com/2015/12/19/inside-the-pony-tcp-stack/
+
+ebean L2 caching:
+
+ebean-orm.github.io/docs/features/l2caching
+
+indie delete query:
+
+stackoverflow.com/questions/21813138/how-do-i-perform-a-sql-batch-delete-with-the-playframework-2-ebean
 

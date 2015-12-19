@@ -145,7 +145,7 @@ public class handler_commands {
     }
 
     public static String handle_merge(interface_github_webhook hook, negotiation_status negotiation_status) {
-        // TODO: take care of ownership changes!
+        // TODO: Auto generate copyrights file on each transaction, etc.
         // we have a merge command!
         // check whether its mergeable:
         model_pull_request pull_request = hook.get_pull_request();
