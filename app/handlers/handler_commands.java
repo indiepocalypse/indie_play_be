@@ -191,9 +191,7 @@ public class handler_commands {
         // try to merge!
         try {
             store_github_api.merge_pull_request(pull_request, commit_message);
-            pull_request.merged = true;
-            pull_request.mergeable = false; // TODO: should this actually change?
-            pull_request.state = "closed";
+            pull_request = pull_request.same_but_merged();
             handler_general.locally_update_pull_request_and_clear_offers_if_necessary(pull_request);
             handler_general.consume_negotiation(negotiation_status);
             return "merged!\nThe new ownership structure:\n\n" + get_owners_good_looking_table(hook);

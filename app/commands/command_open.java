@@ -53,7 +53,7 @@ public class command_open implements interface_command {
             if (!pull_request.is_closed()) {
                 return "this pull request is open";
             }
-            pull_request.state = "open";
+            pull_request = pull_request.same_but_open();
             try {
                 store_github_api.update_pull_request(pull_request);
                 handler_general.locally_update_pull_request_and_clear_offers_if_necessary(pull_request);

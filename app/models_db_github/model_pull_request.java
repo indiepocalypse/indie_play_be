@@ -29,9 +29,9 @@ public class model_pull_request extends Model {
     public final model_repo repo;
     public final String title;
     public final String body;
-    public String state;
-    public Boolean merged;
-    public Boolean mergeable;
+    public final String state;
+    public final Boolean merged;
+    public final Boolean mergeable;
 
     public model_pull_request(
             String p_url,
@@ -62,6 +62,41 @@ public class model_pull_request extends Model {
         this.repo = p_repo;
         this.number = p_number;
         this.id = repo.repo_name + "/" + this.number;
+    }
+
+    public model_pull_request same_but_clsoed() {
+        final String state = "closed";
+        return same_but_with_state_merged_and_mergeable(state, this.merged, this.mergeable);
+    }
+
+    public model_pull_request same_but_open() {
+        final String state = "open";
+        return same_but_with_state_merged_and_mergeable(state, this.merged, this.mergeable);
+    }
+
+    public model_pull_request same_but_merged() {
+        final String state = "closed";
+        final boolean merged = true;
+        final boolean mergeable = false;
+        return same_but_with_state_merged_and_mergeable(state, merged, mergeable);
+    }
+
+    public model_pull_request same_but_with_state_merged_and_mergeable(final String p_state, final boolean p_merged, final boolean p_mergeable) {
+        return new model_pull_request(
+                this.url,
+                this.github_id,
+                this.html_url,
+                p_state,
+                this.title,
+                this.user,
+                this.body,
+                p_merged,
+                p_mergeable,
+                this.comments_url,
+                this.repo,
+                this.number,
+                this.SHA
+        );
     }
 
     public static model_pull_request from_json(JsonNode json) {
