@@ -8,6 +8,7 @@ import play.libs.F.*;
 import play.mvc.Http.*;
 import play.mvc.*;
 import views.enum_main_page_type;
+import views.html.view_error;
 import views.html.view_main;
 
 import javax.inject.*;
@@ -26,7 +27,7 @@ public class ErrorHandler extends DefaultHttpErrorHandler {
     protected F.Promise<Result> onBadRequest(RequestHeader request, String message) {
         if (environment.isProd()) {
             return Promise.<Result>pure(
-                    Results.badRequest(view_main.render("explore", enum_main_page_type.INDEX, message))
+                    Results.badRequest(view_main.render("explore", enum_main_page_type.INDEX, view_error.render(message)))
             );
         }
         else {
@@ -37,7 +38,7 @@ public class ErrorHandler extends DefaultHttpErrorHandler {
     protected F.Promise<Result> onForbidden(RequestHeader request, String message) {
         if (environment.isProd()) {
             return Promise.<Result>pure(
-                    Results.forbidden(view_main.render("explore", enum_main_page_type.INDEX, message))
+                    Results.forbidden(view_main.render("explore", enum_main_page_type.INDEX, view_error.render(message)))
             );
         }
         else {
@@ -48,7 +49,7 @@ public class ErrorHandler extends DefaultHttpErrorHandler {
     protected F.Promise<Result> onNotFound(RequestHeader request, String message){
         if (environment.isProd()) {
             return Promise.<Result>pure(
-                    Results.notFound(view_main.render("explore", enum_main_page_type.INDEX, message))
+                    Results.notFound(view_main.render("explore", enum_main_page_type.INDEX, view_error.render(message)))
             );
         } else {
             return super.onNotFound(request, message);
@@ -58,7 +59,7 @@ public class ErrorHandler extends DefaultHttpErrorHandler {
     protected F.Promise<Result> onOtherClientError(RequestHeader request, int statusCode, String message) {
         if (environment.isProd()) {
             return Promise.<Result>pure(
-                    Results.status(statusCode, view_main.render("explore", enum_main_page_type.INDEX, message))
+                    Results.status(statusCode, view_main.render("explore", enum_main_page_type.INDEX, view_error.render(message)))
             );
         }
         else {
@@ -69,7 +70,7 @@ public class ErrorHandler extends DefaultHttpErrorHandler {
 
     protected Promise<Result> onProdServerError(RequestHeader request, UsefulException exception) {
         return Promise.<Result>pure(
-                Results.internalServerError(view_main.render("explore", enum_main_page_type.EXPLORE, exception.getMessage()))
+                Results.internalServerError(view_main.render("explore", enum_main_page_type.EXPLORE, view_error.render(exception.getMessage())))
         );
     }
 }
