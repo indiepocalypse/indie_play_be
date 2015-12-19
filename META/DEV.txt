@@ -37,6 +37,7 @@ Currenly working on:
 
 Future:
 
+0) custom error page
 1) Web GUI
 2) feedback on teams
 3) blogging platform

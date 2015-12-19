@@ -114,14 +114,19 @@ public class handler_general {
 
 
     public static void delete_repo_from_github_and_db_and_also_related_ownership_policy_offers(model_repo repo) throws github_io_exception {
-        store_local_db.delete_requests_by_repo(repo);
-        store_local_db.delete_offers_by_repo(repo);
-        store_local_db.delete_ownerships_by_repo(repo);
-        store_local_db.delete_policy_by_repo(repo);
-        store_local_db.delete_pull_requests_by_repo(repo);
-        __delete_repo(repo);
-        store_github_api.delete_repo(repo);
-        Cache.remove(controller_main.EXPLORE_PAGE_CONTENT_CACHE_KEY);
+        try {
+            store_local_db.delete_requests_by_repo(repo);
+            store_local_db.delete_offers_by_repo(repo);
+            store_local_db.delete_ownerships_by_repo(repo);
+            store_local_db.delete_policy_by_repo(repo);
+            store_local_db.delete_pull_requests_by_repo(repo);
+            __delete_repo(repo);
+            store_github_api.delete_repo(repo);
+            Cache.remove(controller_main.EXPLORE_PAGE_CONTENT_CACHE_KEY);
+        }
+        catch (Exception e) {
+            Logger.error("XXXX: while deleting repo ", e);
+        }
     }
 
     public static boolean locally_update_pull_request_and_clear_offers_if_necessary(model_pull_request pull_request) {
