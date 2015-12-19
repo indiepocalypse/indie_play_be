@@ -108,7 +108,7 @@ public class handler_general {
         try {
             model_repo.deleteById(repo.repo_name);
         } catch (Exception e) {
-            Logger.error("failed to delete repo " + repo.repo_name + ":\n", e);
+            Logger.error("failed to delete repo " + repo.repo_name + " from DB:\n", e);
         }
     }
 

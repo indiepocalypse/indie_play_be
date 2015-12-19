@@ -357,7 +357,7 @@ public class store_github_api {
         WSRequest req = indie_auth_request(path).setMethod("DELETE");
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
         if (res.getStatus() != 204) {
-            Logger.error("while deleting repo " + repo.repo_name + "\n",
+            Logger.error("while deleting repo " + repo.repo_name + " status="+Integer.toString(res.getStatus())+"\n"+
                     res.asJson().toString());
             throw new github_io_exception("while trying to delete repo " + repo.repo_name);
         }
