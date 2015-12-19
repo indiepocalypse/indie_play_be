@@ -104,6 +104,9 @@ public class handler_general {
                 "PR updated, all offers cleared!\nplease place your new offers");
     }
 
+    // this method is on purpose here and not in the store.
+    // To delete a repo mean to delete many related things, and this
+    // is what the method below this one does
     private static void __delete_repo(model_repo repo) {
         try {
             model_repo.deleteById(repo.repo_name);
