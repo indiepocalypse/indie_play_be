@@ -26,7 +26,7 @@ public class command_delete_repo implements interface_command {
                 handler_general.delete_repo_from_github_and_db_and_also_related_ownership_policy_offers(hook.get_repo());
                 return "done!";
             } catch (github_io_exception e) {
-                Logger.error("error deleting repo " + hook.get_repo().repo_name);
+                Logger.error("error deleting repo " + hook.get_repo().repo_name, e);
                 return "problem deleting repo. Please contact staff";
             }
         } else {
