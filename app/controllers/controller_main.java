@@ -32,7 +32,7 @@ public class controller_main extends Controller {
     // TODO: rethink caching strategy
 
     private final static String main_title = "it's the Indiepocalypse!";
-    final String EXPLORE_PAGE_CONTENT_CACHE_KEY = "exlpore_webpage_content";
+    public final String EXPLORE_PAGE_CONTENT_CACHE_KEY = "exlpore_webpage_content";
 
     private boolean is_redirected_from_github_login() {
         return request().getQueryString("code") != null;

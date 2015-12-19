@@ -1,11 +1,13 @@
 package handlers;
 
+import controllers.controller_main;
 import controllers.routes;
 import models_db_github.model_pull_request;
 import models_db_github.model_repo;
 import models_db_github.model_user;
 import models_db_indie.*;
 import play.Logger;
+import play.cache.Cache;
 import stores.*;
 import sync.sync_gmail;
 
@@ -119,6 +121,7 @@ public class handler_general {
         store_local_db.delete_pull_requests_by_repo(repo);
         __delete_repo(repo);
         store_github_api.delete_repo(repo);
+        Cache.remove(controller_main.EXPLORE_PAGE_CONTENT_CACHE_KEY);
     }
 
     public static boolean locally_update_pull_request_and_clear_offers_if_necessary(model_pull_request pull_request) {
