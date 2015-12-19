@@ -28,7 +28,7 @@ public class model_admin extends Model {
     }
 
     public static Query<model_admin> fetch() {
-        return find.fetch("user");
+        return find.setUseQueryCache(true).fetch("user");
     }
 
     public static void deleteById(String id) {

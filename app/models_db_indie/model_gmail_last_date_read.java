@@ -1,7 +1,9 @@
 package models_db_indie;
 
 import com.avaje.ebean.Model;
+import com.avaje.ebean.Query;
 import com.avaje.ebean.annotation.CacheStrategy;
+import play.Logger;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -28,14 +30,15 @@ public class model_gmail_last_date_read extends Model {
     public static model_gmail_last_date_read get_a_copy_of_the_singleton() {
         model_gmail_last_date_read last_date_read_model = null;
         try {
-            last_date_read_model = model_gmail_last_date_read.fetch().byId(model_gmail_last_date_read.constid);
+            last_date_read_model = model_gmail_last_date_read.fetch().findUnique();
         } catch (Exception ignored) {
+            Logger.info("last_date_model not found in DB");
         }
         return last_date_read_model;
     }
 
-    public static Finder<String, model_gmail_last_date_read> fetch() {
-        return find;
+    public static Query<model_gmail_last_date_read> fetch() {
+        return find.setUseQueryCache(true);
     }
 
     public static void deleteById(String id) {

@@ -40,7 +40,7 @@ public class store_local_db {
 
     public static model_repo get_repo_by_name(String repo_name) {
         try {
-            return model_repo.fetch().byId(repo_name);
+            return model_repo.fetch().where().idEq(repo_name).findUnique();
         } catch (Exception ignore) {
             return null;
         }
@@ -48,7 +48,7 @@ public class store_local_db {
 
     public static List<model_repo> get_all_repos() {
         try {
-            return model_repo.fetch().all();
+            return model_repo.fetch().where().findList();
         } catch (Exception ignore) {
             return new ArrayList<>();
         }
@@ -113,7 +113,7 @@ public class store_local_db {
 
     public static model_user get_user_by_name(String user_name) {
         try {
-            return model_user.fetch().byId(user_name);
+            return model_user.fetch().where().idEq(user_name).findUnique();
         } catch (Exception ignore) {
             return null;
         }
@@ -121,7 +121,7 @@ public class store_local_db {
 
     public static List<model_user> get_all_users() {
         try {
-            return model_user.fetch().all();
+            return model_user.fetch().where().findList();
         } catch (Exception ignore) {
             return new ArrayList<>();
         }

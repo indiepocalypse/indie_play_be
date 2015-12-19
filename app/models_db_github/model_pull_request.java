@@ -106,7 +106,7 @@ public class model_pull_request extends Model {
     }
 
     public static Query<model_pull_request> fetch() {
-        return find.fetch("user").fetch("repo");
+        return find.setUseQueryCache(true).fetch("user").fetch("repo");
     }
 
     public static void deleteById(String id) {

@@ -1,6 +1,7 @@
 package models_db_github;
 
 import com.avaje.ebean.Model;
+import com.avaje.ebean.Query;
 import com.avaje.ebean.annotation.CacheStrategy;
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -34,8 +35,8 @@ public class model_user extends Model {
                 user_name, user_github_html_url, user_avatar_url);
     }
 
-    public static Finder<String, model_user> fetch() {
-        return find;
+    public static Query<model_user> fetch() {
+        return find.setUseQueryCache(true);
     }
 
     public static void deleteById(String id) {

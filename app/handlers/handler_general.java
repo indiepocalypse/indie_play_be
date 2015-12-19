@@ -104,7 +104,7 @@ public class handler_general {
 
     private static void __delete_repo(model_repo repo) {
         try {
-            model_repo.fetch().deleteById(repo.repo_name);
+            model_repo.deleteById(repo.repo_name);
         } catch (Exception e) {
             Logger.error("failed to delete repo " + repo.repo_name + ":\n", e);
         }

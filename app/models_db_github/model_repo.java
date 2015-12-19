@@ -1,6 +1,7 @@
 package models_db_github;
 
 import com.avaje.ebean.Model;
+import com.avaje.ebean.Query;
 import com.avaje.ebean.annotation.CacheStrategy;
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -46,8 +47,8 @@ public class model_repo extends Model {
         return new model_repo(name, desc, homepage, "https://github.com/theindiepocalypse/" + name, 0, 0);
     }
 
-    public static Finder<String, model_repo> fetch() {
-        return find;
+    public static Query<model_repo> fetch() {
+        return find.setUseQueryCache(true);
     }
 
     public static void deleteById(String id) {

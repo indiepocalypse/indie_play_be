@@ -77,7 +77,7 @@ public class model_request_for_merge extends Model {
     }
 
     public static Query<model_request_for_merge> fetch() {
-        return find
+        return find.setUseQueryCache(true)
                 .fetch("user")
                 .fetch("pull_request");
     }

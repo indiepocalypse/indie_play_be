@@ -71,7 +71,7 @@ public class model_merge_transaction extends Model {
     }
 
     public static Query<model_merge_transaction> fetch() {
-        return find
+        return find.setUseQueryCache(true)
                 .fetch("from_user")
                 .fetch("to_user")
                 .fetch("pull_request")

@@ -49,7 +49,7 @@ public class model_ownership extends Model {
 
     // TODO: this solution is no good in the sense that it's not recursive...
     public static Query<model_ownership> fetch() {
-        return find
+        return find.setUseQueryCache(true)
                 .fetch("user")
                 .fetch("repo");
     }

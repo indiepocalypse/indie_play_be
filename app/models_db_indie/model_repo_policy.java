@@ -50,7 +50,7 @@ public class model_repo_policy extends Model {
     }
 
     public static Query<model_repo_policy> fetch() {
-        return find
+        return find.setUseQueryCache(true)
                 .fetch("repo");
     }
 
