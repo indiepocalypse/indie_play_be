@@ -1,4 +1,3 @@
-import controllers.routes;
 import play.*;
 import play.api.OptionalSourceMapper;
 import play.api.UsefulException;
@@ -8,8 +7,6 @@ import play.libs.F;
 import play.libs.F.*;
 import play.mvc.Http.*;
 import play.mvc.*;
-import scala.*;
-import scala.Some;
 import views.enum_main_page_type;
 import views.html.view_main;
 
@@ -29,7 +26,7 @@ public class ErrorHandler extends DefaultHttpErrorHandler {
     protected F.Promise<Result> onBadRequest(RequestHeader request, String message) {
         if (environment.isProd()) {
             return Promise.<Result>pure(
-                    Results.badRequest(view_main.render("explore", enum_main_page_type.EXPLORE, message))
+                    Results.badRequest(view_main.render("explore", enum_main_page_type.INDEX, message))
             );
         }
         else {
@@ -40,7 +37,7 @@ public class ErrorHandler extends DefaultHttpErrorHandler {
     protected F.Promise<Result> onForbidden(RequestHeader request, String message) {
         if (environment.isProd()) {
             return Promise.<Result>pure(
-                    Results.forbidden(view_main.render("explore", enum_main_page_type.EXPLORE, message))
+                    Results.forbidden(view_main.render("explore", enum_main_page_type.INDEX, message))
             );
         }
         else {
@@ -51,7 +48,7 @@ public class ErrorHandler extends DefaultHttpErrorHandler {
     protected F.Promise<Result> onNotFound(RequestHeader request, String message){
         if (environment.isProd()) {
             return Promise.<Result>pure(
-                    Results.notFound(view_main.render("explore", enum_main_page_type.EXPLORE, message))
+                    Results.notFound(view_main.render("explore", enum_main_page_type.INDEX, message))
             );
         } else {
             return super.onNotFound(request, message);
@@ -61,7 +58,7 @@ public class ErrorHandler extends DefaultHttpErrorHandler {
     protected F.Promise<Result> onOtherClientError(RequestHeader request, int statusCode, String message) {
         if (environment.isProd()) {
             return Promise.<Result>pure(
-                    Results.status(statusCode, view_main.render("explore", enum_main_page_type.EXPLORE, message))
+                    Results.status(statusCode, view_main.render("explore", enum_main_page_type.INDEX, message))
             );
         }
         else {
