@@ -151,7 +151,7 @@ public class store_github_api {
         WSRequest req = indie_auth_request(path);
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
         if (res.getStatus() != 200) {
-            throw new github_io_exception("while creating girhub repo");
+            throw new github_io_exception("while creating github repo");
         }
         JsonNode json = play.libs.Json.parse(res.getBody());
         return model_repo.from_json(json);
