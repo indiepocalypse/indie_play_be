@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 /**
  * Created by skariel on 29/09/15.
  */
-@CacheStrategy(readOnly = true, warmingQuery = "order by name")
+@CacheStrategy(readOnly = true, warmingQuery = "order by id")
 @Entity
 public class model_ownership extends Model {
     static final Finder<String, model_ownership> find = new Finder<>(model_ownership.class);

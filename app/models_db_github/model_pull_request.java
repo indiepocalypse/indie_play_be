@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 /**
  * Created by skariel on 17/10/15.
  */
-@CacheStrategy(readOnly = true, warmingQuery = "order by name")
+@CacheStrategy(readOnly = true, warmingQuery = "order by id")
 @Entity
 public class model_pull_request extends Model {
     static final Finder<String, model_pull_request> find = new Finder<>(model_pull_request.class);

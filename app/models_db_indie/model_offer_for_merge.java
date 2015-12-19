@@ -16,7 +16,7 @@ import java.util.Date;
 /**
  * Created by skariel on 29/09/15.
  */
-@CacheStrategy(readOnly = true, warmingQuery = "order by name")
+@CacheStrategy(readOnly = true, warmingQuery = "order by id")
 @Entity
 public class model_offer_for_merge extends Model {
     static final Finder<String, model_offer_for_merge> find = new Finder<>(model_offer_for_merge.class);

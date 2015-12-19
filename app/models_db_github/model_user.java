@@ -10,7 +10,7 @@ import javax.persistence.Id;
 /**
  * Created by skariel on 29/09/15.
  */
-@CacheStrategy(readOnly = true, warmingQuery = "order by name")
+@CacheStrategy(readOnly = true, warmingQuery = "order by user_name")
 @Entity
 public class model_user extends Model {
     static final Finder<String, model_user> find = new Finder<>(model_user.class);
