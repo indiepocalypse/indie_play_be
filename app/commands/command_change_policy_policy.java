@@ -58,11 +58,11 @@ public class command_change_policy_policy implements interface_command {
 
         if (policy == null) {
             policy = new model_repo_policy(hook.get_repo());
-            policy.ownership_required_to_change_policy = new_percent;
+            policy = policy.same_but_with_different_policy_to_change_policy(new_percent);
             store_local_db.update_policy(policy);
             return "policy created";
         }
-        policy.ownership_required_to_manage_issues = new_percent;
+        policy = policy.same_but_with_different_policy_to_change_policy(new_percent);
         store_local_db.update_policy(policy);
         return "policy changed";
     }

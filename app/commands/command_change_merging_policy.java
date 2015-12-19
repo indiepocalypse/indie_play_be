@@ -56,11 +56,11 @@ public class command_change_merging_policy implements interface_command {
 
         if (policy == null) {
             policy = new model_repo_policy(hook.get_repo());
-            policy.ownership_required_to_merge_pull_requests = new_percent;
+            policy = policy.same_but_with_different_policy_to_merge_pull_requests(new_percent);
             store_local_db.update_policy(policy);
             return "policy created";
         }
-        policy.ownership_required_to_merge_pull_requests = new_percent;
+        policy = policy.same_but_with_different_policy_to_merge_pull_requests(new_percent);
         store_local_db.update_policy(policy);
         return "policy changed";
     }
