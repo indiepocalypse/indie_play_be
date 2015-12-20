@@ -10,7 +10,6 @@ import stores.store_github_api;
 import stores.store_local_db;
 
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by skariel on 06/10/15.

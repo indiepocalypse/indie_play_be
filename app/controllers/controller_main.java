@@ -31,8 +31,8 @@ public class controller_main extends Controller {
     // TODO: refactor out content pages into a handler, all cached. This controller should not touch caching
     // TODO: rethink caching strategy
 
-    private final static String main_title = "it's the Indiepocalypse!";
     public final static String EXPLORE_PAGE_CONTENT_CACHE_KEY = "exlpore_webpage_content";
+    private final static String main_title = "it's the Indiepocalypse!";
 
     private boolean is_redirected_from_github_login() {
         return request().getQueryString("code") != null;
@@ -43,14 +43,11 @@ public class controller_main extends Controller {
     }
 
     public Result explore() {
-        Html explore_page_content = (Html) Cache.getOrElse(EXPLORE_PAGE_CONTENT_CACHE_KEY, new Callable<Object>() {
-            @Override
-            public Object call() throws Exception {
-                Logger.info("GENERATING EXPLORE PAGE CONTENT CACHE!!!!!!!!!!!!!!!!!");
-                List<model_repo> repos = store_local_db.get_all_repos();
-                List<model_user> users = store_local_db.get_all_users();
-                return view_repo_explore.render(repos, users);
-            }
+        Html explore_page_content = (Html) Cache.getOrElse(EXPLORE_PAGE_CONTENT_CACHE_KEY, (Callable<Object>) () -> {
+            Logger.info("GENERATING EXPLORE PAGE CONTENT CACHE!!!!!!!!!!!!!!!!!");
+            List<model_repo> repos = store_local_db.get_all_repos();
+            List<model_user> users = store_local_db.get_all_users();
+            return view_repo_explore.render(repos, users);
         }, (int) store_conf.get_delay_L2_seconds());
         return ok(view_main.render("explore", enum_main_page_type.EXPLORE, explore_page_content));
     }

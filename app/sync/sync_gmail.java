@@ -15,7 +15,6 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.search.SearchTerm;
 import java.util.Date;
 import java.util.Properties;
-import java.util.Random;
 
 public class sync_gmail {
     // TODO: refactor most of gmail functionality onto a store_gmail_api

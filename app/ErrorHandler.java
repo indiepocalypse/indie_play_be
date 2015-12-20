@@ -1,17 +1,20 @@
-import play.*;
+import play.Configuration;
+import play.Environment;
 import play.api.OptionalSourceMapper;
 import play.api.UsefulException;
 import play.api.routing.Router;
 import play.http.DefaultHttpErrorHandler;
 import play.libs.F;
-import play.libs.F.*;
-import play.mvc.Http.*;
-import play.mvc.*;
+import play.libs.F.Promise;
+import play.mvc.Http.RequestHeader;
+import play.mvc.Result;
+import play.mvc.Results;
 import views.enum_main_page_type;
 import views.html.view_error;
 import views.html.view_main;
 
-import javax.inject.*;
+import javax.inject.Inject;
+import javax.inject.Provider;
 
 public class ErrorHandler extends DefaultHttpErrorHandler {
     private final Environment environment;
@@ -27,10 +30,9 @@ public class ErrorHandler extends DefaultHttpErrorHandler {
     protected F.Promise<Result> onBadRequest(RequestHeader request, String message) {
         if (environment.isProd()) {
             return Promise.<Result>pure(
-                    Results.badRequest(view_main.render("explore", enum_main_page_type.INDEX, view_error.render(message)))
+                    Results.badRequest(view_main.render("explore", enum_main_page_type.INDEX, view_error.render("Bad request")))
             );
-        }
-        else {
+        } else {
             return super.onBadRequest(request, message);
         }
     }
@@ -38,18 +40,17 @@ public class ErrorHandler extends DefaultHttpErrorHandler {
     protected F.Promise<Result> onForbidden(RequestHeader request, String message) {
         if (environment.isProd()) {
             return Promise.<Result>pure(
-                    Results.forbidden(view_main.render("explore", enum_main_page_type.INDEX, view_error.render(message)))
+                    Results.forbidden(view_main.render("explore", enum_main_page_type.INDEX, view_error.render("Forbidden")))
             );
-        }
-        else {
+        } else {
             return super.onForbidden(request, message);
         }
     }
 
-    protected F.Promise<Result> onNotFound(RequestHeader request, String message){
+    protected F.Promise<Result> onNotFound(RequestHeader request, String message) {
         if (environment.isProd()) {
             return Promise.<Result>pure(
-                    Results.notFound(view_main.render("explore", enum_main_page_type.INDEX, view_error.render(message)))
+                    Results.notFound(view_main.render("explore", enum_main_page_type.INDEX, view_error.render("Could bot find path " + request.path())))
             );
         } else {
             return super.onNotFound(request, message);
@@ -59,10 +60,9 @@ public class ErrorHandler extends DefaultHttpErrorHandler {
     protected F.Promise<Result> onOtherClientError(RequestHeader request, int statusCode, String message) {
         if (environment.isProd()) {
             return Promise.<Result>pure(
-                    Results.status(statusCode, view_main.render("explore", enum_main_page_type.INDEX, view_error.render(message)))
+                    Results.status(statusCode, view_main.render("explore", enum_main_page_type.INDEX, view_error.render("Client error")))
             );
-        }
-        else {
+        } else {
             return super.onOtherClientError(request, statusCode, message);
         }
     }

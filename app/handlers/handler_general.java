@@ -126,8 +126,7 @@ public class handler_general {
             __delete_repo(repo);
             store_github_api.delete_repo(repo);
             Cache.remove(controller_main.EXPLORE_PAGE_CONTENT_CACHE_KEY);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Logger.error("XXXX: while deleting repo ", e);
         }
     }

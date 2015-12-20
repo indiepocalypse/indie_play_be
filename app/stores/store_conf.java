@@ -13,7 +13,7 @@ public class store_conf {
 
     private static long __get_delay_with_jitter(long base, double jitter_frac) {
         Random rand = new Random();
-        return (long)(Math.abs(rand.nextGaussian())*base*jitter_frac + base);
+        return (long) (Math.abs(rand.nextGaussian()) * base * jitter_frac + base);
     }
 
     public static long get_delay_L1_milis() {
@@ -23,7 +23,7 @@ public class store_conf {
     }
 
     public static double get_delay_L1_seconds() {
-        return 0.001*get_delay_L1_milis();
+        return 0.001 * get_delay_L1_milis();
     }
 
     public static long get_delay_L2_milis() {
@@ -33,7 +33,7 @@ public class store_conf {
     }
 
     public static double get_delay_L2_seconds() {
-        return 0.001*get_delay_L2_milis();
+        return 0.001 * get_delay_L2_milis();
     }
 
     public static long get_delay_L3_milis() {
@@ -43,7 +43,7 @@ public class store_conf {
     }
 
     public static double get_delay_L3_seconds() {
-        return 0.001*get_delay_L3_milis();
+        return 0.001 * get_delay_L3_milis();
     }
 
     public static String get_url_heroku_root() {
