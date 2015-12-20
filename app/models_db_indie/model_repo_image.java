@@ -37,9 +37,7 @@ public class model_repo_image extends Model {
         this.repo = p_repo;
         this.image = p_image;
         this.uploaded_date = new Date();
-        // we assume length is larger than 3
-        final String last_three = file_name.substring(file_name.length()-3);
-        this.file_name = new utils.utils_random_string(12).nextString()+"."+last_three;
+        this.file_name = new utils.utils_random_string(12).nextString();
         Logger.info("FILE NAME: "+this.file_name);
         Logger.info("MODEL_USER_NAME: "+p_user.user_name);
     }
