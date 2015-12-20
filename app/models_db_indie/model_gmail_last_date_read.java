@@ -15,11 +15,11 @@ import java.util.Date;
 @CacheStrategy(readOnly = true, warmingQuery = "order by id")
 @Entity
 public class model_gmail_last_date_read extends Model {
-    static final Finder<String, model_gmail_last_date_read> find = new Finder<>(model_gmail_last_date_read.class);
+    private static final Finder<String, model_gmail_last_date_read> find = new Finder<>(model_gmail_last_date_read.class);
 
     private static final String constid = "gmail_last_message_date_read_id_1789627853";
     @Id
-    public final String id;
+    private final String id;
     public Date lastdate;
 
     public model_gmail_last_date_read(Date date) {
@@ -37,7 +37,7 @@ public class model_gmail_last_date_read extends Model {
         return last_date_read_model;
     }
 
-    public static Query<model_gmail_last_date_read> fetch() {
+    private static Query<model_gmail_last_date_read> fetch() {
         return find.setUseQueryCache(true);
     }
 

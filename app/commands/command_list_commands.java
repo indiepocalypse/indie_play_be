@@ -16,9 +16,8 @@ public class command_list_commands implements interface_command {
 
     @Override
     public String handle(model_command command, interface_github_webhook hook) {
-        String result = "the commands are listed in the following examples:\n" +
+        return "the commands are listed in the following examples:\n" +
                 handler_commands.get_commands_good_looking_list();
-        return result;
     }
 
     @Override

@@ -305,7 +305,6 @@ public class store_github_api {
                 .setMethod("GET")
                 .execute()
                 .get(60, TimeUnit.SECONDS);
-        JsonNode json = res.asJson();
         if (res.getStatus() == 200) {
             return true;
         }
@@ -363,7 +362,7 @@ public class store_github_api {
         }
     }
 
-    public static List<model_user> get_all_collaborators(model_repo repo) throws github_io_exception {
+    private static List<model_user> get_all_collaborators(model_repo repo) throws github_io_exception {
         WSResponse res = indie_auth_request("/repos/theindiepocalypse/" + repo.repo_name + "/collaborators")
                 .setMethod("GET")
                 .execute()
@@ -379,7 +378,7 @@ public class store_github_api {
         return collaborators;
     }
 
-    public static void delete_collaborator_from_repo(model_repo repo, model_user user) throws github_io_exception {
+    private static void delete_collaborator_from_repo(model_repo repo, model_user user) throws github_io_exception {
         WSResponse res = indie_auth_request("/repos/theindiepocalypse/" + repo.repo_name + "/collaborators/" + user.user_name)
                 .setMethod("DELETE")
                 .execute()

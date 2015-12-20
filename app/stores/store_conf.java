@@ -46,7 +46,7 @@ public class store_conf {
         return 0.001 * get_delay_L3_milis();
     }
 
-    public static String get_url_heroku_root() {
+    private static String get_url_heroku_root() {
         return ConfigFactory.load().getString("url.heroku.root");
     }
 

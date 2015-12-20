@@ -15,12 +15,11 @@ import javax.persistence.ManyToOne;
 @CacheStrategy(readOnly = true, warmingQuery = "order by id")
 @Entity
 public class model_admin extends Model {
-    static final Finder<String, model_admin> find = new Finder<>(model_admin.class);
-
-    @Id
-    public final String id;
+    private static final Finder<String, model_admin> find = new Finder<>(model_admin.class);
     @ManyToOne
     public final model_user user;
+    @Id
+    private final String id;
 
     public model_admin(model_user p_user) {
         id = p_user.user_name + "@admins";

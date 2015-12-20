@@ -15,27 +15,27 @@ import javax.persistence.ManyToOne;
 @CacheStrategy(readOnly = true, warmingQuery = "order by id")
 @Entity
 public class model_pull_request extends Model {
-    static final Finder<String, model_pull_request> find = new Finder<>(model_pull_request.class);
+    private static final Finder<String, model_pull_request> find = new Finder<>(model_pull_request.class);
 
     @Id
     public final String id;
-    public final String url;
-    public final Long github_id;
-    public final String html_url;
     public final String number;
     @ManyToOne
     public final model_user user;
-    public final String comments_url;
     public final String SHA;
     @ManyToOne
     public final model_repo repo;
     public final String title;
     public final String body;
-    public final String state;
     public final Boolean merged;
     public final Boolean mergeable;
+    private final String url;
+    private final Long github_id;
+    private final String html_url;
+    private final String comments_url;
+    private final String state;
 
-    public model_pull_request(
+    private model_pull_request(
             String p_url,
             Long p_github_id,
             String p_html_url,
@@ -130,7 +130,7 @@ public class model_pull_request extends Model {
         return same_but_with_state_merged_and_mergeable(state, merged, mergeable);
     }
 
-    public model_pull_request same_but_with_state_merged_and_mergeable(final String p_state, final boolean p_merged, final boolean p_mergeable) {
+    private model_pull_request same_but_with_state_merged_and_mergeable(final String p_state, final boolean p_merged, final boolean p_mergeable) {
         return new model_pull_request(
                 this.url,
                 this.github_id,

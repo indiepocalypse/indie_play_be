@@ -16,7 +16,7 @@ import views.html.view_main;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-public class ErrorHandler extends DefaultHttpErrorHandler {
+class ErrorHandler extends DefaultHttpErrorHandler {
     private final Environment environment;
 
     @Inject

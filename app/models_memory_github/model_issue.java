@@ -7,19 +7,19 @@ import models_db_github.model_user;
  * Created by skariel on 14/10/15.
  */
 public class model_issue {
-    // TODO: add labels, etc.
-    public final String url;
-    public final String html_url;
-    public final String comments_url;
-    public final Long id;
     public final model_user user;
     public final String number;
-    public final int comments;
     public final String body;
     public final String title;
+    // TODO: add labels, etc.
+    private final String url;
+    private final String html_url;
+    private final String comments_url;
+    private final Long id;
+    private final int comments;
     public String state;
 
-    public model_issue(
+    private model_issue(
             String p_url,
             String p_html_url,
             String p_comments_url,

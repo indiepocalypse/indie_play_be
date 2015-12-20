@@ -7,14 +7,14 @@ import models_db_github.model_user;
  * Created by skariel on 14/10/15.
  */
 public class model_comment {
-    public final String url;
-    public final String html_url;
-    public final String issue_url;
-    public final Long id;
-    public final model_user user;
     public final String body;
+    private final String url;
+    private final String html_url;
+    private final String issue_url;
+    private final Long id;
+    private final model_user user;
 
-    public model_comment(
+    private model_comment(
             String p_url,
             String p_html_url,
             String p_issue_url,

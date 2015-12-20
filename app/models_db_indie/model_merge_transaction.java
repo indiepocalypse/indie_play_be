@@ -20,15 +20,7 @@ import java.util.Date;
 @CacheStrategy(readOnly = true, warmingQuery = "order by id")
 @Entity
 public class model_merge_transaction extends Model {
-    static final Finder<String, model_merge_transaction> find = new Finder<>(model_merge_transaction.class);
-    @Id
-    public final String id;
-    @ManyToOne
-    public final model_user from_user;
-    @ManyToOne
-    public final model_user to_user;
-    @ManyToOne
-    public final model_pull_request pull_request;
+    private static final Finder<String, model_merge_transaction> find = new Finder<>(model_merge_transaction.class);
     @ManyToOne
     public final model_offer_for_merge offer;
     @ManyToOne
@@ -37,15 +29,23 @@ public class model_merge_transaction extends Model {
     public final model_ownership from_user_ownership;
     @ManyToOne
     public final model_ownership to_user_ownership;
-    @ManyToOne
-    public final model_repo repo;
     @Column(precision = 5, scale = 2)
     public final BigDecimal amount_percent;
+    @Id
+    private final String id;
+    @ManyToOne
+    private final model_user from_user;
+    @ManyToOne
+    private final model_user to_user;
+    @ManyToOne
+    private final model_pull_request pull_request;
+    @ManyToOne
+    private final model_repo repo;
     // the field below is needed since offer can be null
     // request on the other hand cannot be null, it already contains this data
     @Column(precision = 5, scale = 2)
-    public final BigDecimal from_user_ownership_percent;
-    final public Date date;
+    private final BigDecimal from_user_ownership_percent;
+    private final Date date;
 
     public model_merge_transaction(
             model_user p_from_user, model_user p_to_user,

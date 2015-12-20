@@ -90,7 +90,7 @@ public class store_local_db {
         }
     }
 
-    public static model_admin get_admin_by_name(String name) {
+    private static model_admin get_admin_by_name(String name) {
         try {
             return model_admin.fetch()
                     .where().idEq(name + "@admins").findUnique();

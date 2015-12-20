@@ -58,7 +58,7 @@ public class sync_github_users {
         t1.start();
     }
 
-    static public void stop() {
+    private static void stop() {
         interrupted = true;
         if (t1 != null) {
             t1.interrupt();

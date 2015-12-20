@@ -10,12 +10,12 @@ import utils.utils_github_webhooks;
  * Created by skariel on 14/10/15.
  */
 public class model_webhook_issue_created implements interface_github_webhook {
-    public final enum_webhook_action action;
-    public final model_issue issue;
-    public final model_repo repo;
-    public final model_user user;
+    private final enum_webhook_action action;
+    private final model_issue issue;
+    private final model_repo repo;
+    private final model_user user;
 
-    public model_webhook_issue_created(
+    private model_webhook_issue_created(
             String p_action,
             model_issue p_issue,
             model_repo p_repo,

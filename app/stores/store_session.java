@@ -90,7 +90,7 @@ public class store_session {
         controller_main.session().clear();
     }
 
-    public static String get_token() {
+    private static String get_token() {
         return controller_main.session().get(token_session_key);
     }
 

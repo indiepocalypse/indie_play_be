@@ -14,14 +14,14 @@ import javax.persistence.Id;
 @CacheStrategy(readOnly = true, warmingQuery = "order by user_name")
 @Entity
 public class model_user extends Model {
-    static final Finder<String, model_user> find = new Finder<>(model_user.class);
+    private static final Finder<String, model_user> find = new Finder<>(model_user.class);
 
     @Id
     public final String user_name;
     public final String github_html_url;
     public final String avatar_url;
 
-    public model_user(String p_user_name, String p_github_html_url, String p_avatar_url) {
+    private model_user(String p_user_name, String p_github_html_url, String p_avatar_url) {
         this.user_name = p_user_name;
         this.github_html_url = p_github_html_url;
         this.avatar_url = p_avatar_url;

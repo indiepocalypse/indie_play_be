@@ -174,7 +174,7 @@ public class controller_main extends Controller {
                 }
                 // user has logged in!
                 store_session.set_token(token);
-                model_user user = null;
+                model_user user;
                 try {
                     user = store_github_api.get_user_by_token(token);
                 } catch (github_io_exception e) {

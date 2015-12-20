@@ -19,20 +19,20 @@ import java.math.BigDecimal;
 @CacheStrategy(readOnly = true, warmingQuery = "order by id")
 @Entity
 public class model_repo_policy extends Model {
-    static final Finder<String, model_repo_policy> find = new Finder<>(model_repo_policy.class);
+    private static final Finder<String, model_repo_policy> find = new Finder<>(model_repo_policy.class);
 
     @Id
     public final String id;
-    @ManyToOne
-    public final model_repo repo;
     @Column(precision = 5, scale = 2)
     public final BigDecimal ownership_required_to_change_policy;
     @Column(precision = 5, scale = 2)
     public final BigDecimal ownership_required_to_manage_issues; // close/label/etc.
     @Column(precision = 5, scale = 2)
     public final BigDecimal ownership_required_to_merge_pull_requests;
+    @ManyToOne
+    private final model_repo repo;
 
-    public model_repo_policy(model_repo p_repo, BigDecimal change, BigDecimal manage, BigDecimal merge) {
+    private model_repo_policy(model_repo p_repo, BigDecimal change, BigDecimal manage, BigDecimal merge) {
         id = p_repo.repo_name + "@policy";
         this.repo = p_repo;
         this.ownership_required_to_change_policy = change;
@@ -58,7 +58,7 @@ public class model_repo_policy extends Model {
         find.deleteById(id);
     }
 
-    public model_repo_policy same_but_with_different_change_manage_and_merge_policies(BigDecimal change, BigDecimal manage, BigDecimal merge) {
+    private model_repo_policy same_but_with_different_change_manage_and_merge_policies(BigDecimal change, BigDecimal manage, BigDecimal merge) {
         return new model_repo_policy(
                 this.repo,
                 change,

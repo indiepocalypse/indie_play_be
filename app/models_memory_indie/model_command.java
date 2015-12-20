@@ -13,9 +13,9 @@ import java.util.regex.Pattern;
 public class model_command {
     public final ArrayList<String> args;
     public String command;
-    public String joined_args;
+    private String joined_args;
 
-    public model_command() {
+    private model_command() {
         this.command = "";
         this.joined_args = "";
         this.args = new ArrayList<>();

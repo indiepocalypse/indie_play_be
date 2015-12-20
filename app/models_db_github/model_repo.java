@@ -14,17 +14,17 @@ import javax.persistence.Id;
 @CacheStrategy(readOnly = true, warmingQuery = "order by repo_name")
 @Entity
 public class model_repo extends Model {
-    static final Finder<String, model_repo> find = new Finder<>(model_repo.class);
+    private static final Finder<String, model_repo> find = new Finder<>(model_repo.class);
 
     @Id
     public final String repo_name;
     public final String repo_description;
-    public final String repo_homepage;
     public final String github_html_url;
-    public final Integer stars_count;
-    public final Integer forks_count;
+    private final String repo_homepage;
+    private final Integer stars_count;
+    private final Integer forks_count;
 
-    public model_repo(String repo_name, String repo_description, String repo_homepage, String github_html_url, Integer stars_count, Integer forks_count) {
+    private model_repo(String repo_name, String repo_description, String repo_homepage, String github_html_url, Integer stars_count, Integer forks_count) {
         this.repo_name = repo_name;
         this.repo_description = repo_description;
         this.repo_homepage = repo_homepage;

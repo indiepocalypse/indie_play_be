@@ -18,7 +18,7 @@ import java.math.BigDecimal;
 @CacheStrategy(readOnly = true, warmingQuery = "order by id")
 @Entity
 public class model_ownership extends Model {
-    static final Finder<String, model_ownership> find = new Finder<>(model_ownership.class);
+    private static final Finder<String, model_ownership> find = new Finder<>(model_ownership.class);
 
     @Id
     public final String id;
@@ -28,7 +28,7 @@ public class model_ownership extends Model {
     public final model_repo repo;
     @Column(precision = 5, scale = 2)
     public final BigDecimal percent;
-    public final boolean is_creator;
+    private final boolean is_creator;
 
     public model_ownership(model_user p_user, model_repo p_repo, BigDecimal p_percent, boolean p_is_creator) {
         id = "ownershio@" + p_user.user_name + "@" + p_repo.repo_name;

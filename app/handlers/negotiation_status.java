@@ -12,15 +12,15 @@ import java.util.*;
 /**
  * Created by skariel on 23/11/15.
  */
-public class negotiation_status {
-    public final BigDecimal ownership_currently_accepted;
-    public final List<model_user> users_currently_accepted;
-    public final BigDecimal required_ownership_as_per_policy;
-    public final BigDecimal requested_percent;
-    public final BigDecimal required_for_acceptance_current_best_case;
+class negotiation_status {
     public final List<model_merge_transaction> implied_transactions;
-    public final List<model_user> users_with_more_ownership;
-    public final BigDecimal total_ownership_of_users_with_more_ownership;
+    private final BigDecimal ownership_currently_accepted;
+    private final List<model_user> users_currently_accepted;
+    private final BigDecimal required_ownership_as_per_policy;
+    private final BigDecimal requested_percent;
+    private final BigDecimal required_for_acceptance_current_best_case;
+    private final List<model_user> users_with_more_ownership;
+    private final BigDecimal total_ownership_of_users_with_more_ownership;
 
     // we assume here to_user has ownership. This is taken care of in the hook checkin
     public negotiation_status(model_pull_request p_pull_request,
@@ -110,6 +110,7 @@ public class negotiation_status {
                 offer_from_user.put(offer.user, offer);
             }
 
+            assert request != null;
             BigDecimal transaction_quanta = request.amount_percent.divide(total_ownership_of_users_with_more_ownership);
             for (model_user user : users_with_more_ownership) {
 

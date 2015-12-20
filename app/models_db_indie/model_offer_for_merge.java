@@ -19,22 +19,22 @@ import java.util.Date;
 @CacheStrategy(readOnly = true, warmingQuery = "order by id")
 @Entity
 public class model_offer_for_merge extends Model {
-    static final Finder<String, model_offer_for_merge> find = new Finder<>(model_offer_for_merge.class);
+    private static final Finder<String, model_offer_for_merge> find = new Finder<>(model_offer_for_merge.class);
 
     @Id
     public final String id;
     @ManyToOne
     public final model_user user;
-    @ManyToOne
-    public final model_pull_request pull_request;
     @Column(precision = 5, scale = 2)
     public final BigDecimal amount_percent;
     @Column(precision = 5, scale = 2)
     public final BigDecimal user_ownership_percent;
     final public Date date_accepted_if_accepted;
     final public Date date_created;
-    final Boolean is_active;
-    final Boolean was_positively_accepted;
+    @ManyToOne
+    private final model_pull_request pull_request;
+    private Boolean is_active;
+    private Boolean was_positively_accepted;
 
     public model_offer_for_merge(
             model_user p_user,
@@ -60,9 +60,9 @@ public class model_offer_for_merge extends Model {
         if (model_offer_for_merge == null) {
             return null;
         }
-        boolean is_active = false;
-        boolean was_positively_accepted = true;
-        Date date_accepted_if_accepted = new Date();
+        final boolean is_active = false;
+        final boolean was_positively_accepted = true;
+        final Date date_accepted_if_accepted = new Date();
         return new model_offer_for_merge(
                 model_offer_for_merge.user,
                 model_offer_for_merge.pull_request,

@@ -10,13 +10,13 @@ import utils.utils_github_webhooks;
  * Created by skariel on 14/10/15.
  */
 public class model_webhook_pull_request_created_or_updated implements interface_github_webhook {
-    public final enum_webhook_action action;
-    public final String number;
-    public final model_pull_request pull_request;
-    public final model_repo repo;
-    public final model_user user;
+    private final enum_webhook_action action;
+    private final String number;
+    private final model_pull_request pull_request;
+    private final model_repo repo;
+    private final model_user user;
 
-    public model_webhook_pull_request_created_or_updated(
+    private model_webhook_pull_request_created_or_updated(
             String p_action,
             String p_number,
             model_pull_request p_pull_request,
@@ -52,7 +52,7 @@ public class model_webhook_pull_request_created_or_updated implements interface_
                 json.has("sender") && json.size() == 5;
     }
 
-    public boolean is_update() {
+    private boolean is_update() {
         return this.action.equals(enum_webhook_action.SYNCHRONIZE);
     }
 

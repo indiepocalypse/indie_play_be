@@ -19,7 +19,7 @@ import java.util.Properties;
 public class sync_gmail {
     // TODO: refactor most of gmail functionality onto a store_gmail_api
     // FIXME: ?? there's a bug transferring `just_testing_game` it remains on skariel github account?
-    public static int mail_count = 0;
+    private static int mail_count = 0;
     private static IMAPFolder inbox = null;
     private static Store mail_store = null;
     private static Thread t1 = null;
@@ -100,7 +100,7 @@ public class sync_gmail {
         t1.start();
     }
 
-    public static void stop() {
+    private static void stop() {
         interrupted = true;
         if (t1 != null) {
             t1.interrupt();
@@ -169,7 +169,7 @@ public class sync_gmail {
                     String repo_name = m_subject.split("/")[1].split("\\)")[0];
                     if (!handler_policy.can_create_new_repo(from_user)) {
                         Logger.info("cannot transfer repo " + repo_name + " from user: " + from_user + " because of policy of maximum repos with more than 50% ownership.");
-                        String user_mail = null;
+                        String user_mail;
                         try {
                             user_mail = store_github_api.get_user_mail(from_user);
                         } catch (github_io_exception e) {

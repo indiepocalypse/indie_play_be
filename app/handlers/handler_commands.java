@@ -144,7 +144,7 @@ public class handler_commands {
         return response;
     }
 
-    public static String handle_merge(interface_github_webhook hook, negotiation_status negotiation_status) {
+    private static String handle_merge(interface_github_webhook hook, negotiation_status negotiation_status) {
         // TODO: Auto generate copyrights file on each transaction, etc.
         // we have a merge command!
         // check whether its mergeable:
@@ -254,16 +254,21 @@ public class handler_commands {
             final Date date_accepted_if_accepted = null;
             final Date date_created = new Date();
             final model_ownership user_ownership = store_local_db.get_ownership_by_user_name_and_repo_name(hook.get_user(), hook.get_repo());
-            current_request = new model_request_for_merge(
-                    hook.get_user(),
-                    pull_request,
-                    utils_bigdecimal.from_percent_or_number(percent_amount),
-                    is_active,
-                    was_positively_accepted,
-                    date_created, date_accepted_if_accepted,
-                    user_ownership.percent);
-            store_local_db.update_request(current_request);
-            result = "request for merge created as " + percent_amount + "%";
+            if (user_ownership != null) {
+                current_request = new model_request_for_merge(
+                        hook.get_user(),
+                        pull_request,
+                        utils_bigdecimal.from_percent_or_number(percent_amount),
+                        is_active,
+                        was_positively_accepted,
+                        date_created, date_accepted_if_accepted,
+                        user_ownership.percent);
+                store_local_db.update_request(current_request);
+                result = "request for merge created as " + percent_amount + "%";
+            } else {
+                Logger.error("user that made request has no ownership, that should not happen");
+                result = "some internal error ocurred. Please contact admins";
+            }
         }
 
         final List<model_offer_for_merge> offers = store_local_db.get_offers_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
@@ -328,7 +333,7 @@ public class handler_commands {
         model_offer_for_merge current_offer = store_local_db.get_offer_by_user_by_pull_request(hook.get_user().user_name, hook.get_repo().repo_name, hook.get_issue_num());
         final boolean is_active = true;
         final boolean was_positively_accepted = false;
-        String result = "";
+        String result;
         if (current_offer != null) {
             current_offer = new model_offer_for_merge(
                     current_offer.user,
