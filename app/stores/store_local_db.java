@@ -541,7 +541,8 @@ public class store_local_db {
             return model_repo_image.fetch()
                     .where().idEq(file_name)
                     .findUnique();
-        } catch (Exception ignore) {
+        } catch (Exception e) {
+            Logger.error("WHILE FETCHING IMAGE WITH NAME "+file_name+": ", e);
             return null;
         }
     }

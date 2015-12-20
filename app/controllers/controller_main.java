@@ -124,7 +124,8 @@ public class controller_main extends Controller {
 
     public Result repo_image(String file_name) {
         model_repo_image model_repo_image = store_local_db.get_repo_image_by_file_name(file_name);
-        return ok(model_repo_image.image);
+        response().setHeader("Content-Type", "image");
+        return ok(model_repo_image.getImage());
     }
 
     public Result repo_image_upload_get(String repo_name) {
@@ -144,14 +145,14 @@ public class controller_main extends Controller {
             model_user user = store_local_db.get_user_by_name(store_session.get_user_name());
             byte[] bytes = null;
             try {
-                 bytes = java.nio.file.Files.readAllBytes(file.toPath());
+                bytes = java.nio.file.Files.readAllBytes(file.toPath());
                 Logger.info("XXXXXXX lenbytes="+Integer.toString(bytes.length));
             }
             catch (Exception e) {
             }
             model_repo_image repo_image = new model_repo_image(repo, user, bytes, file_name);
             store_local_db.update_repo_image(repo_image);
-            return ok("File uploaded");
+            return ok("File uploaded, user name is "+user.user_name+" file name: "+repo_image.file_name);
         } else {
             flash("error", "Missing file");
             return badRequest();
