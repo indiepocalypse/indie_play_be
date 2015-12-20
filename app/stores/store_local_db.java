@@ -517,4 +517,53 @@ public class store_local_db {
             handler_general.locally_update_pull_request_and_clear_offers_if_necessary(hook.get_pull_request());
         }
     }
+
+    /********************************
+     * IMAGES!
+     ********************************/
+
+    public static void update_repo_image(model_repo_image model_repo_image) {
+        try {
+            model_repo_image.save();
+        } catch (Exception e1) {
+            try {
+                model_repo_image.update();
+            } catch (Exception e) {
+                Logger.error("cannot save repo_image ", e1);
+                Logger.error("could not update model_repo_image", e);
+                throw e;
+            }
+        }
+    }
+
+    public static model_repo_image get_repo_image_by_file_name(String file_name) {
+        try {
+            return model_repo_image.fetch()
+                    .where().idEq(file_name)
+                    .findUnique();
+        } catch (Exception ignore) {
+            return null;
+        }
+    }
+
+    public static List<model_repo_image> get_all_repo_images(String repo_name) {
+        try {
+            return model_repo_image.fetch()
+                    .where().eq("repo.repo_name", repo_name)
+                    .findList();
+        } catch (Exception ignore) {
+            return null;
+        }
+    }
+
+    public static List<Object> get_all_repo_images_id(String repo_name) {
+        try {
+            return model_repo_image.fetch()
+                    .where().eq("repo.repo_name", repo_name)
+                    .findIds();
+        } catch (Exception ignore) {
+            return null;
+        }
+    }
+
 }

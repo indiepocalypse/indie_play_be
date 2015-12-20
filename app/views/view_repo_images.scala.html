@@ -1,0 +1,15 @@
+@(repo_images_id: List[Object])(repo_name: String)
+
+
+<!--EXPLORE REPOS!-->
+<div class="container col-md-8">
+    <h1>@repo_name images!</h1>
+    @repo_images_id.map{repo_image_id=>
+    @defining("/r/"+repo_name+"/i/"+repo_image_id.toString) { image_html_url =>
+    <div class="container col-md-6">
+        <img src="@image_html_url" width="150px">
+    </div>
+    }
+    }
+</div>
+

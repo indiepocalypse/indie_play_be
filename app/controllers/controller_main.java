@@ -6,6 +6,7 @@ import models_db_github.model_pull_request;
 import models_db_github.model_repo;
 import models_db_github.model_user;
 import models_db_indie.model_ownership;
+import models_db_indie.model_repo_image;
 import org.markdown4j.Markdown4jProcessor;
 import play.Logger;
 import play.cache.Cache;
@@ -118,6 +119,42 @@ public class controller_main extends Controller {
                     "this is the reported result:\n\n" + e.getMessage();
             // TODO: report a better arror, at least format it or whatever...
             return ok(view_main.render("new repo", enum_main_page_type.INDEX, view_newrepo.render(repo_name, repo_homepage, repo_description, err)));
+        }
+    }
+
+    public Result repo_image(String file_name) {
+        model_repo_image model_repo_image = store_local_db.get_repo_image_by_file_name(file_name);
+        return ok(model_repo_image.image);
+    }
+
+    public Result repo_image_upload_get(String repo_name) {
+        return ok(view_main.render("upload_image", enum_main_page_type.INDEX, view_repo_image_upload.render()));
+    }
+
+    public Result repo_image_upload_post(String repo_name) {
+        play.mvc.Http.MultipartFormData body = request().body().asMultipartFormData();
+        play.mvc.Http.MultipartFormData.FilePart image = body.getFile("image");
+        if (image != null) {
+            String file_name = image.getFilename();
+            String contentType = image.getContentType();
+            java.io.File file = image.getFile();
+            // TODO: limit file size!
+            // TODO: check user can actually upload to that repo...
+            model_repo repo = store_local_db.get_repo_by_name(repo_name);
+            model_user user = store_local_db.get_user_by_name(store_session.get_user_name());
+            byte[] bytes = null;
+            try {
+                 bytes = java.nio.file.Files.readAllBytes(file.toPath());
+                Logger.info("XXXXXXX lenbytes="+Integer.toString(bytes.length));
+            }
+            catch (Exception e) {
+            }
+            model_repo_image repo_image = new model_repo_image(repo, user, bytes, file_name);
+            store_local_db.update_repo_image(repo_image);
+            return ok("File uploaded");
+        } else {
+            flash("error", "Missing file");
+            return badRequest();
         }
     }
 
