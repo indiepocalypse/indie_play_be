@@ -62,3 +62,6 @@ indie delete query:
 
 stackoverflow.com/questions/21813138/how-do-i-perform-a-sql-batch-delete-with-the-playframework-2-ebean
 
+uploading files:
+
+https://www.playframework.com/documentation/2.4.x/JavaFileUpload

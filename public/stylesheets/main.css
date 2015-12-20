@@ -1,0 +1,30 @@
+.navbar {
+    border-width: 0 0 0 0;
+    margin: 0 0 0 0;
+}
+.nav > li > a.nav_center_vertical {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.navbar-brand.nav_center_vertical {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+footer {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    color: #f0f0f0;
+}
+body {
+    background-color: #303030;
+}
+#content {
+    background-color: #FFFFFF;
+    padding-top: 50px;
+    padding-bottom: 90px;
+    min-height: 700px;
+}
+.container-fluid {
+    padding-left: 50px;
+    padding-right: 50px;
+}
