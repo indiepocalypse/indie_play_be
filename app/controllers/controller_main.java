@@ -51,7 +51,7 @@ public class controller_main extends Controller {
                 List<model_user> users = store_local_db.get_all_users();
                 return view_repo_explore.render(repos, users);
             }
-        }, (int) store_conf.get_cache_webpage_delay_seconds());
+        }, (int) store_conf.get_delay_L2_seconds());
         return ok(view_main.render("explore", enum_main_page_type.EXPLORE, explore_page_content));
     }
 

@@ -3,65 +3,37 @@ package stores;
 import com.typesafe.config.ConfigFactory;
 
 import java.math.BigDecimal;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
  * Created by skariel on 11/10/15.
  */
 public class store_conf {
-    public static long get_github_repo_sync_delta_milis() {
-        return ConfigFactory.load().getDuration("sync.github.repo.delta_milis", TimeUnit.MILLISECONDS);
 
+    private static long __get_delay_with_jitter(long base, double jitter_frac) {
+        Random rand = new Random();
+        return (long)(Math.abs(rand.nextGaussian())*base*jitter_frac + base);
     }
 
-    public static long get_github_repo_sync_jitter_milis() {
-        return ConfigFactory.load().getDuration("sync.github.repo.jitter_milis", TimeUnit.MILLISECONDS);
-
+    public static long get_delay_L1_milis() {
+        long base = ConfigFactory.load().getDuration("delay.L1", TimeUnit.MILLISECONDS);
+        double jitter_frac = ConfigFactory.load().getDouble("delay.jitter.fraction");
+        return __get_delay_with_jitter(base, jitter_frac);
     }
 
-    public static long get_github_repo_sync_jitter_small_milis() {
-        return ConfigFactory.load().getDuration("sync.github.repo.jitter_small_milis", TimeUnit.MILLISECONDS);
-
+    public static double get_delay_L1_seconds() {
+        return 0.001*get_delay_L1_milis();
     }
 
-    public static long get_github_repo_sync_minimum_milis() {
-        return ConfigFactory.load().getDuration("sync.github.repo.minimum_milis", TimeUnit.MILLISECONDS);
-
+    public static double get_delay_L2_seconds() {
+        return 0.001*get_delay_L2_milis();
     }
 
-    public static long get_github_user_sync_delta_milis() {
-        return ConfigFactory.load().getDuration("sync.github.user.delta_milis", TimeUnit.MILLISECONDS);
-
-    }
-
-    public static long get_github_user_sync_jitter_milis() {
-        return ConfigFactory.load().getDuration("sync.github.user.jitter_milis", TimeUnit.MILLISECONDS);
-
-    }
-
-    public static long get_github_user_sync_jitter_small_milis() {
-        return ConfigFactory.load().getDuration("sync.github.user.jitter_small_milis", TimeUnit.MILLISECONDS);
-
-    }
-
-    public static long get_github_user_sync_minimum_milis() {
-        return ConfigFactory.load().getDuration("sync.github.user.minimum_milis", TimeUnit.MILLISECONDS);
-    }
-
-    public static long get_gmail_reload_sync_delta_milis() {
-        return ConfigFactory.load().getDuration("sync.gmail.reload.delta_milis", TimeUnit.MILLISECONDS);
-    }
-
-    public static long get_gmail_reload_sync_jitter_milis() {
-        return ConfigFactory.load().getDuration("sync.gmail.reload.jitter_milis", TimeUnit.MILLISECONDS);
-    }
-
-    public static long get_gmail_reload_sync_jitter_small_milis() {
-        return ConfigFactory.load().getDuration("sync.gmail.reload.jitter_small_milis", TimeUnit.MILLISECONDS);
-    }
-
-    public static long get_gmail_reload_sync_minimum_milis() {
-        return ConfigFactory.load().getDuration("sync.gmail.reload.minimum_milis", TimeUnit.MILLISECONDS);
+    public static long get_delay_L2_milis() {
+        long base = ConfigFactory.load().getDuration("delay.L2", TimeUnit.MILLISECONDS);
+        double jitter_frac = ConfigFactory.load().getDouble("delay.jitter.fraction");
+        return __get_delay_with_jitter(base, jitter_frac);
     }
 
     public static String get_url_heroku_root() {
@@ -115,9 +87,4 @@ public class store_conf {
     public static String get_indie_mail_address() {
         return ConfigFactory.load().getString("indie.mail.address");
     }
-
-    public static long get_cache_webpage_delay_seconds() {
-        return ConfigFactory.load().getDuration("cache.webpage.delay.seconds", TimeUnit.SECONDS);
-    }
-
 }

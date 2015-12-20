@@ -38,13 +38,7 @@ public class sync_gmail {
                 while (!interrupted) {
                     try {
                         if (!interrupted) {
-                            Thread.sleep(store_conf.get_gmail_reload_sync_delta_milis());
-                        }
-                        if (!interrupted) {
-                            Random rand = new Random();
-                            int jitter = (int) (rand.nextFloat() * stores.store_conf.get_gmail_reload_sync_jitter_milis() +
-                                    store_conf.get_gmail_reload_sync_minimum_milis());
-                            Thread.sleep(jitter);
+                            Thread.sleep(store_conf.get_delay_L2_milis());
                         }
                         if (!interrupted) {
                             reload_folder();
@@ -70,7 +64,7 @@ public class sync_gmail {
                                 // try to reopen...
                                 Logger.info("gmail inbox appears closed, trying to reopen...");
                                 if (!interrupted) {
-                                    Thread.sleep(1500);
+                                    Thread.sleep(store_conf.get_delay_L1_milis());
                                 } else {
                                     return;
                                 }
@@ -92,7 +86,7 @@ public class sync_gmail {
                     }
                     try {
                         if (!interrupted) {
-                            Thread.sleep(50);
+                            Thread.sleep(store_conf.get_delay_L1_milis());
                         } else {
                             return;
                         }
@@ -212,7 +206,7 @@ public class sync_gmail {
                             // delay needed to let github spread news that user wants to transfer repo
                             try {
                                 if (!interrupted) {
-                                    Thread.sleep(5100);
+                                    Thread.sleep(store_conf.get_delay_L1_milis());
                                 } else {
                                     return;
                                 }
@@ -226,7 +220,7 @@ public class sync_gmail {
                             // all seems ok!
                             try {
                                 if (!interrupted) {
-                                    Thread.sleep(7100);
+                                    Thread.sleep(store_conf.get_delay_L1_milis());
                                 } else {
                                     return;
                                 }

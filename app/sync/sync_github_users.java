@@ -42,10 +42,7 @@ public class sync_github_users {
                             return;
                         }
                         if (!interrupted) {
-                            Random rand = new Random();
-                            int jitter = (int) (store_conf.get_github_user_sync_minimum_milis() +
-                                    rand.nextFloat() * store_conf.get_github_user_sync_jitter_milis());
-                            Thread.sleep(store_conf.get_github_user_sync_delta_milis() + jitter);
+                            Thread.sleep(store_conf.get_delay_L2_milis());
                         } else {
                             return;
                         }
@@ -76,7 +73,7 @@ public class sync_github_users {
         for (model_user user : users) {
             try {
                 if (!interrupted) {
-                    Thread.sleep(store_conf.get_github_user_sync_jitter_small_milis());
+                    Thread.sleep(store_conf.get_delay_L1_milis());
                 } else {
                     return;
                 }

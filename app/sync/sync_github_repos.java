@@ -32,11 +32,8 @@ public class sync_github_repos {
                             sync();
                             initially_synced = true;
                         }
-                        Random rand = new Random();
-                        int jitter = (int) (store_conf.get_github_repo_sync_minimum_milis() +
-                                rand.nextFloat() * stores.store_conf.get_github_repo_sync_jitter_milis());
                         if (!interrupted) {
-                            Thread.sleep(store_conf.get_github_repo_sync_delta_milis() + jitter);
+                            Thread.sleep(store_conf.get_delay_L2_milis());
                         } else {
                             return;
                         }
@@ -73,7 +70,7 @@ public class sync_github_repos {
         for (model_repo repo : repos) {
             try {
                 if (!interrupted) {
-                    Thread.sleep(stores.store_conf.get_github_repo_sync_jitter_small_milis());
+                    Thread.sleep(stores.store_conf.get_delay_L1_milis());
                 } else {
                     return;
                 }
