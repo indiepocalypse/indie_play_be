@@ -37,13 +37,13 @@ public class store_conf {
     }
 
     public static long get_delay_L3_milis() {
-        long base = ConfigFactory.load().getDuration("delay.L2", TimeUnit.MILLISECONDS);
+        long base = ConfigFactory.load().getDuration("delay.L3", TimeUnit.MILLISECONDS);
         double jitter_frac = ConfigFactory.load().getDouble("delay.jitter.fraction");
         return __get_delay_with_jitter(base, jitter_frac);
     }
 
     public static double get_delay_L3_seconds() {
-        return 0.001*get_delay_L2_milis();
+        return 0.001*get_delay_L3_milis();
     }
 
     public static String get_url_heroku_root() {
