@@ -33,7 +33,7 @@ public class sync_github_repos {
                             initially_synced = true;
                         }
                         if (!interrupted) {
-                            Thread.sleep(store_conf.get_delay_L2_milis());
+                            Thread.sleep(store_conf.get_delay_L3_milis());
                         } else {
                             return;
                         }

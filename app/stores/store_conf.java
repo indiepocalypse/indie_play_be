@@ -26,14 +26,24 @@ public class store_conf {
         return 0.001*get_delay_L1_milis();
     }
 
-    public static double get_delay_L2_seconds() {
-        return 0.001*get_delay_L2_milis();
-    }
-
     public static long get_delay_L2_milis() {
         long base = ConfigFactory.load().getDuration("delay.L2", TimeUnit.MILLISECONDS);
         double jitter_frac = ConfigFactory.load().getDouble("delay.jitter.fraction");
         return __get_delay_with_jitter(base, jitter_frac);
+    }
+
+    public static double get_delay_L2_seconds() {
+        return 0.001*get_delay_L2_milis();
+    }
+
+    public static long get_delay_L3_milis() {
+        long base = ConfigFactory.load().getDuration("delay.L2", TimeUnit.MILLISECONDS);
+        double jitter_frac = ConfigFactory.load().getDouble("delay.jitter.fraction");
+        return __get_delay_with_jitter(base, jitter_frac);
+    }
+
+    public static double get_delay_L3_seconds() {
+        return 0.001*get_delay_L2_milis();
     }
 
     public static String get_url_heroku_root() {
