@@ -122,7 +122,7 @@ public class controller_main extends Controller {
         }
     }
 
-    public Result repo_image(String file_name) {
+    public Result repo_image_get(String file_name) {
         model_repo_image model_repo_image = store_local_db.get_repo_image_by_file_name(file_name);
         response().setHeader("Content-Type", "image");
         return ok(model_repo_image.getImage());
