@@ -20,6 +20,7 @@ body {
 }
 #content {
     background-color: #FFFFFF;
+    background-image: url('../images/bkg.png');
     padding-top: 50px;
     padding-bottom: 90px;
     min-height: 700px;

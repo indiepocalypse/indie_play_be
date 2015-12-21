@@ -233,7 +233,6 @@ public class controller_main extends Controller {
                 model_user_interaction model_user_interaction = models_db_indie.model_user_interaction.from_web(user.user_name, enum_user_interaction_web_type.LOGIN);
                 store_local_db.update_user_interaction(model_user_interaction);
 
-
                 return index();
             }
             return unauthorized();
