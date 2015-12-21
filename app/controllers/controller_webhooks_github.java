@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import handlers.handler_commands;
 import handlers.handler_general;
 import models_db_indie.model_ownership;
+import models_db_indie.model_user_interaction;
 import models_memory_github.*;
 import play.Logger;
 import play.mvc.Controller;

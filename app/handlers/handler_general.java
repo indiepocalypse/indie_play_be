@@ -42,6 +42,9 @@ public class handler_general {
         // we bring this repo from indie since it was transferred
         model_repo repo = store_github_api.get_repo_by_name(store_credentials.github.name, repo_name);
         integrate_github_repo(repo, user, create_webhook, check_for_existance_of_readme, delete_original_collaborators);
+        // register the interaction
+        model_user_interaction model_user_interaction = models_db_indie.model_user_interaction.from_mail(user_name, enum_user_interaction_mail_type.REPO_TRANSFERED, repo_name);
+        store_local_db.update_user_interaction(model_user_interaction);
     }
 
     public static void integrate_github_repo(model_repo repo, model_user user, boolean create_webhook,

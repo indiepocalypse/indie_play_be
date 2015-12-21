@@ -567,4 +567,36 @@ public class store_local_db {
         }
     }
 
+    /********************************
+     * USER INTERACTIONS!
+     ********************************/
+
+    public static void update_user_interaction(model_user_interaction model_user_interaction) {
+        try {
+            model_user_interaction.save();
+        } catch (Exception e1) {
+            try {
+                model_user_interaction.update();
+            } catch (Exception e) {
+                Logger.error("cannot save model_user_interaction ", e1);
+                Logger.error("could not update model_user_interaction", e);
+                throw e;
+            }
+        }
+    }
+
+    // TODO: elaborate on the user_interaction functions.
+    // for e.g.: get interactions dates or number of interactions since some date
+    //           also filter interactions, etc.
+    public static List<model_user_interaction> get_user_interactions(String user_name) {
+        try {
+            return model_user_interaction.fetch()
+                    .where().eq("user_name", user_name)
+                    .findList();
+        } catch (Exception e) {
+            Logger.error("WHILE FETCHING USER INTERACTIONS FOR "+user_name+": ", e);
+            return null;
+        }
+    }
+
 }

@@ -5,8 +5,10 @@ import handlers.handler_policy;
 import models_db_github.model_pull_request;
 import models_db_github.model_repo;
 import models_db_github.model_user;
+import models_db_indie.enum_user_interaction_web_type;
 import models_db_indie.model_ownership;
 import models_db_indie.model_repo_image;
+import models_db_indie.model_user_interaction;
 import org.markdown4j.Markdown4jProcessor;
 import play.Logger;
 import play.cache.Cache;
@@ -112,6 +114,11 @@ public class controller_main extends Controller {
             store_session.set_new_repo(repo.repo_name);
             // invalidate explore page cache
             Cache.remove(EXPLORE_PAGE_CONTENT_CACHE_KEY);
+
+            // register the interaction
+            model_user_interaction model_user_interaction = models_db_indie.model_user_interaction.from_web(store_session.get_user_name(), enum_user_interaction_web_type.NEW_REPO);
+            store_local_db.update_user_interaction(model_user_interaction);
+
             return redirect(routes.controller_main.repo_profile(repo_name));
         } catch (Exception e) {
             Logger.error("while creating repo...", e);
@@ -221,6 +228,12 @@ public class controller_main extends Controller {
                 store_session.set_admin(store_local_db.is_admin(user.user_name));
                 store_session.set_current_user(user);
                 store_local_db.update_user(user);
+
+                // register interaction
+                model_user_interaction model_user_interaction = models_db_indie.model_user_interaction.from_web(user.user_name, enum_user_interaction_web_type.LOGIN);
+                store_local_db.update_user_interaction(model_user_interaction);
+
+
                 return index();
             }
             return unauthorized();
@@ -234,6 +247,12 @@ public class controller_main extends Controller {
     }
 
     public Result logout() {
+        String user_name = store_session.get_user_name();
+        if (user_name!=null) {
+            // register interaction
+            model_user_interaction model_user_interaction = models_db_indie.model_user_interaction.from_web(user_name, enum_user_interaction_web_type.LOGOUT);
+            store_local_db.update_user_interaction(model_user_interaction);
+        }
         store_session.clear();
         return redirect("/");
     }

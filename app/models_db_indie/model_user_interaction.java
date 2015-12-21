@@ -74,11 +74,11 @@ public class model_user_interaction extends Model {
     }
 
     public static Query<model_user_interaction> fetch() {
-        return find.setUseQueryCache(true));
+        return find.setUseQueryCache(true);
     }
 
     // TODO: make a more fine grained resolution here... ie a method for specific commands
-    public model_user_interaction from_general_command(final interface_command command, final interface_github_webhook hook) {
+    public static model_user_interaction from_general_command(final interface_command command, final interface_github_webhook hook) {
         final String p_user_name = hook.get_user().user_name;
         final enum_user_interaction_hook_type p_hook_interaction_type = enum_user_interaction_hook_type.I_DONT_CHECK_YET_BECAUSE_IM_LAZY;
         final enum_user_interaction_web_type p_web_interaction_type = enum_user_interaction_web_type.NONE;
@@ -113,7 +113,7 @@ public class model_user_interaction extends Model {
     }
 
     // TODO: extract more data here: file_name if uploaded, repo name if created, etc.
-    public model_user_interaction from_web(final String p_user_name, final enum_user_interaction_web_type web_interaction_type) {
+    public static model_user_interaction from_web(final String p_user_name, final enum_user_interaction_web_type web_interaction_type) {
         final enum_user_interaction_hook_type p_hook_interaction_type = enum_user_interaction_hook_type.NONE;
         final enum_user_interaction_web_type p_web_interaction_type = web_interaction_type;
         final enum_user_interaction_mail_type p_mail_interaction_type = enum_user_interaction_mail_type.NONE;
@@ -141,13 +141,13 @@ public class model_user_interaction extends Model {
         );
     }
 
-    xxxxxxxxxxxxxxxxxxxxxxx // TODO: implement this one
-    public model_user_interaction from_mail(final String p_user_name, final enum_user_interaction_web_type web_interaction_type) {
+    // TODO: elaborate here... extract more info!
+    public static model_user_interaction from_mail(final String p_user_name, final enum_user_interaction_mail_type mail_interaction_type, String repo_name) {
         final enum_user_interaction_hook_type p_hook_interaction_type = enum_user_interaction_hook_type.NONE;
-        final enum_user_interaction_web_type p_web_interaction_type = web_interaction_type;
-        final enum_user_interaction_mail_type p_mail_interaction_type = enum_user_interaction_mail_type.NONE;
-        final String p_p1 = null;
-        final String p_p1_desc = null;
+        final enum_user_interaction_web_type p_web_interaction_type = enum_user_interaction_web_type.NONE;
+        final enum_user_interaction_mail_type p_mail_interaction_type = mail_interaction_type;
+        final String p_p1 = repo_name;
+        final String p_p1_desc = "repo name";
         final String p_p2 = null;
         final String p_p2_desc = null;
         final String p_p3 = null;

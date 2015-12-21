@@ -43,6 +43,9 @@ public class handler_commands {
             for (interface_command command_handler : commands) {
                 if (command_handler.is_recognized(command)) {
                     responses.add(command_handler.handle(command, hook));
+                    // registering interaction
+                    model_user_interaction model_user_interaction = models_db_indie.model_user_interaction.from_general_command(command_handler, hook);
+                    store_local_db.update_user_interaction(model_user_interaction);
                     some_command_recognized = true;
                     break;
                 }
