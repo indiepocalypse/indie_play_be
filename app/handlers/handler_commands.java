@@ -201,6 +201,7 @@ public class handler_commands {
     }
 
     public static String handle_make_request(interface_github_webhook hook, String percent_amount) {
+        percent_amount = percent_amount.replace("%", "");
         if (hook.get_pull_request() == null) {
             return "this is no pull request, cannot make a request for merge here";
         }
