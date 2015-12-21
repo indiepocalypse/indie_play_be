@@ -95,6 +95,7 @@ create table model_repo_policy (
   ownership_required_to_change_policy decimal(5,2),
   ownership_required_to_manage_issues decimal(5,2),
   ownership_required_to_merge_pull_requests decimal(5,2),
+  ownership_required_to_manage_repo decimal(5,2),
   repo_repo_name            varchar(255),
   constraint pk_model_repo_policy primary key (id))
 ;
@@ -119,6 +120,29 @@ create table model_user (
   constraint pk_model_user primary key (user_name))
 ;
 
+create table model_user_interaction (
+  id                        varchar(255) not null,
+  user_name                 varchar(255),
+  date_performed            timestamp,
+  hook_interaction_type     integer,
+  web_interaction_type      integer,
+  mail_interaction_type     integer,
+  p1                        varchar(255),
+  p1_desc                   varchar(255),
+  p2                        varchar(255),
+  p2_desc                   varchar(255),
+  p3                        varchar(255),
+  p3_desc                   varchar(255),
+  p4                        varchar(255),
+  p4_desc                   varchar(255),
+  p5                        varchar(255),
+  p5_desc                   varchar(255),
+  constraint ck_model_user_interaction_hook_interaction_type check (hook_interaction_type in (0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19)),
+  constraint ck_model_user_interaction_web_interaction_type check (web_interaction_type in (0,1,2,3,4)),
+  constraint ck_model_user_interaction_mail_interaction_type check (mail_interaction_type in (0,1)),
+  constraint pk_model_user_interaction primary key (id))
+;
+
 create sequence model_admin_seq;
 
 create sequence model_gmail_last_date_read_seq;
@@ -140,6 +164,8 @@ create sequence model_repo_policy_seq;
 create sequence model_request_for_merge_seq;
 
 create sequence model_user_seq;
+
+create sequence model_user_interaction_seq;
 
 alter table model_admin add constraint fk_model_admin_user_1 foreign key (user_user_name) references model_user (user_name) on delete restrict on update restrict;
 create index ix_model_admin_user_1 on model_admin (user_user_name);
@@ -210,6 +236,8 @@ drop table if exists model_request_for_merge;
 
 drop table if exists model_user;
 
+drop table if exists model_user_interaction;
+
 SET REFERENTIAL_INTEGRITY TRUE;
 
 drop sequence if exists model_admin_seq;
@@ -233,4 +261,6 @@ drop sequence if exists model_repo_policy_seq;
 drop sequence if exists model_request_for_merge_seq;
 
 drop sequence if exists model_user_seq;
+
+drop sequence if exists model_user_interaction_seq;
 

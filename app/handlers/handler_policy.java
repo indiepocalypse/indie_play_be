@@ -28,7 +28,8 @@ public class handler_policy {
         return total_repos < store_conf.get_policy_maximum_number_of_repos_per_user();
     }
 
-    public static boolean is_rate_limited(String user_name) {
-        xxxxxxxxList<model_ownership> ownerships = store_local_db.get_ownerships_by_user_name(user_name);
-    }
+// TODO: integrate user_interaction for rate limiting, etc.
+//    public static boolean is_rate_limited(String user_name) {
+//        xxxxxxxxList<model_ownership> ownerships = store_local_db.get_ownerships_by_user_name(user_name);
+//    }
 }
