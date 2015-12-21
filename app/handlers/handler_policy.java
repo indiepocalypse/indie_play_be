@@ -24,8 +24,11 @@ public class handler_policy {
             if (ownership.percent.compareTo(new BigDecimal("50.0")) >= 0) {
                 total_repos += 1;
             }
-
         }
         return total_repos < store_conf.get_policy_maximum_number_of_repos_per_user();
+    }
+
+    public static boolean is_rate_limited(String user_name) {
+        xxxxxxxxList<model_ownership> ownerships = store_local_db.get_ownerships_by_user_name(user_name);
     }
 }
