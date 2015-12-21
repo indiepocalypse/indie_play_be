@@ -90,6 +90,14 @@ public class store_conf {
         return new BigDecimal(ConfigFactory.load().getString("policy.floor_ownership_to_merge_pull_request_policy"));
     }
 
+    public static BigDecimal get_policy_default_ownership_required_to_manage_repo() {
+        return new BigDecimal(ConfigFactory.load().getString("policy.default_ownership_to_manage_repo"));
+    }
+
+    public static BigDecimal get_policy_floor_ownership_required_to_manage_repo() {
+        return new BigDecimal(ConfigFactory.load().getString("policy.floor_ownership_to_manage_repo"));
+    }
+
     public static boolean get_debug_should_send_mails() {
         return ConfigFactory.load().getBoolean("debug.should_send_mails");
     }

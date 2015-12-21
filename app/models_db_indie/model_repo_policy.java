@@ -29,15 +29,18 @@ public class model_repo_policy extends Model {
     public final BigDecimal ownership_required_to_manage_issues; // close/label/etc.
     @Column(precision = 5, scale = 2)
     public final BigDecimal ownership_required_to_merge_pull_requests;
+    @Column(precision = 5, scale = 2)
+    public final BigDecimal ownership_required_to_manage_repo; // upload images, etc.
     @ManyToOne
     private final model_repo repo;
 
-    private model_repo_policy(model_repo p_repo, BigDecimal change, BigDecimal manage, BigDecimal merge) {
+    private model_repo_policy(model_repo p_repo, BigDecimal change, BigDecimal manage_issue, BigDecimal merge, BigDecimal manage_repo) {
         id = p_repo.repo_name + "@policy";
         this.repo = p_repo;
         this.ownership_required_to_change_policy = change;
-        this.ownership_required_to_manage_issues = manage;
+        this.ownership_required_to_manage_issues = manage_issue;
         this.ownership_required_to_merge_pull_requests = merge;
+        this.ownership_required_to_manage_repo = manage_repo;
     }
 
     // constructor with some default values from global conf file:
@@ -45,7 +48,8 @@ public class model_repo_policy extends Model {
         this(p_repo,
                 store_conf.get_policy_default_ownership_required_to_change_policy(),
                 store_conf.get_policy_default_ownership_required_to_manage_issues(),
-                store_conf.get_policy_default_ownership_required_to_merge_pull_request()
+                store_conf.get_policy_default_ownership_required_to_merge_pull_request(),
+                store_conf.get_policy_default_ownership_required_to_manage_repo()
         );
     }
 
@@ -58,12 +62,13 @@ public class model_repo_policy extends Model {
         find.deleteById(id);
     }
 
-    private model_repo_policy same_but_with_different_change_manage_and_merge_policies(BigDecimal change, BigDecimal manage, BigDecimal merge) {
+    private model_repo_policy same_but_with_different_change_manage_and_merge_policies(BigDecimal change, BigDecimal manage_issue, BigDecimal merge, BigDecimal manage_repo) {
         return new model_repo_policy(
                 this.repo,
                 change,
-                manage,
-                merge
+                manage_issue,
+                merge,
+                manage_repo
         );
     }
 
@@ -71,7 +76,8 @@ public class model_repo_policy extends Model {
         return this.same_but_with_different_change_manage_and_merge_policies(
                 change_policy,
                 this.ownership_required_to_manage_issues,
-                this.ownership_required_to_merge_pull_requests
+                this.ownership_required_to_merge_pull_requests,
+                this.ownership_required_to_manage_repo
         );
     }
 
@@ -79,7 +85,8 @@ public class model_repo_policy extends Model {
         return this.same_but_with_different_change_manage_and_merge_policies(
                 this.ownership_required_to_change_policy,
                 issues_policy,
-                this.ownership_required_to_merge_pull_requests
+                this.ownership_required_to_merge_pull_requests,
+                this.ownership_required_to_manage_repo
         );
     }
 
@@ -87,7 +94,17 @@ public class model_repo_policy extends Model {
         return this.same_but_with_different_change_manage_and_merge_policies(
                 this.ownership_required_to_change_policy,
                 this.ownership_required_to_manage_issues,
-                merge_policy
+                merge_policy,
+                this.ownership_required_to_manage_repo
+        );
+    }
+
+    public model_repo_policy same_but_with_different_policy_to_manage_repo(BigDecimal manage_repo_policy) {
+        return this.same_but_with_different_change_manage_and_merge_policies(
+                this.ownership_required_to_change_policy,
+                this.ownership_required_to_manage_issues,
+                this.ownership_required_to_merge_pull_requests,
+                manage_repo_policy
         );
     }
 
