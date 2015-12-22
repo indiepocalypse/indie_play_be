@@ -1,5 +1,6 @@
 package stores;
 
+import com.avaje.ebean.PagedList;
 import handlers.handler_general;
 import models_db_github.model_pull_request;
 import models_db_github.model_repo;
@@ -9,6 +10,7 @@ import models_memory_github.interface_github_webhook;
 import play.Logger;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -585,17 +587,46 @@ public class store_local_db {
         }
     }
 
-    // TODO: elaborate on the user_interaction functions.
-    // for e.g.: get interactions dates or number of interactions since some date
-    //           also filter interactions, etc.
     public static List<model_user_interaction> get_user_interactions(String user_name) {
         try {
             return model_user_interaction.fetch()
-                    .where().eq("user_name", user_name)
+                    .where()
+                    .eq("user_name", user_name)
+                    .orderBy("date_performed")
                     .findList();
         } catch (Exception e) {
             Logger.error("WHILE FETCHING USER INTERACTIONS FOR "+user_name+": ", e);
             return null;
+        }
+    }
+
+    public static PagedList<model_user_interaction> get_user_interactions_paginated(String user_name, int per_page, int page_num) {
+        try {
+            PagedList<model_user_interaction> result = model_user_interaction.fetch()
+                    .where()
+                    .eq("user_name", user_name)
+                    .orderBy("date_performed")
+                    .findPagedList(page_num, per_page);
+            return result;
+        } catch (Exception e) {
+            Logger.error("WHILE FETCHING USER INTERACTIONS FOR "+user_name+": ", e);
+            return null;
+        }
+    }
+
+    public static int get_user_interactions_count_during_last_milis(String user_name, long milis) {
+        Date past_date = new Date();
+        past_date.setTime(past_date.getTime()-milis);
+        try {
+            return model_user_interaction.fetch()
+                    .where()
+                    .eq("user_name", user_name)
+                    .ge("date_performed", past_date)
+                    .findRowCount();
+        }
+        catch (Exception e) {
+            Logger.error("WHILE COUNTING USER INTERACTIONS FOR "+user_name+": ", e);
+            return -1;
         }
     }
 

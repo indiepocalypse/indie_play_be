@@ -1,6 +1,7 @@
 package handlers;
 
 import models_db_indie.model_ownership;
+import play.Logger;
 import stores.store_conf;
 import stores.store_local_db;
 import stores.store_session;
@@ -28,8 +29,18 @@ public class handler_policy {
         return total_repos < store_conf.get_policy_maximum_number_of_repos_per_user();
     }
 
-// TODO: integrate user_interaction for rate limiting, etc.
-//    public static boolean is_rate_limited(String user_name) {
-//        xxxxxxxxList<model_ownership> ownerships = store_local_db.get_ownerships_by_user_name(user_name);
-//    }
+    public static boolean is_rate_limited(String user_name) {
+        if (user_name==null) {
+            // not logged in user will always be rate limited
+            return true;
+        }
+        int number_of_actions_in_relevant_timeframe = store_local_db.get_user_interactions_count_during_last_milis(user_name, store_conf.get_delay_L2_milis());
+        if (number_of_actions_in_relevant_timeframe<0) {
+            // could not find number of actions, user should be rate limited
+            return true;
+        }
+        Logger.info("rate limit for user "+user_name+" checked, current value is "+Integer.toString(number_of_actions_in_relevant_timeframe)+" allowed "+Integer.toString(store_conf.get_rate_limit_for_L2_delay()));
+        return number_of_actions_in_relevant_timeframe > store_conf.get_rate_limit_for_L2_delay();
+    }
+
 }
