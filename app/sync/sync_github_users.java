@@ -26,9 +26,9 @@ public class sync_github_users {
         model_user indiepocalypse = handler_general.get_integrate_github_user_by_name(store_credentials.github.name);
         model_user skariel = handler_general.get_integrate_github_user_by_name("skariel");
         final boolean indiepocalypse_is_admin = true;
-        model_user_extended_info extended_info_indiepocalypse = new model_user_extended_info.create(indiepocalypse, indiepocalypse_is_admin);
+        model_user_extended_info extended_info_indiepocalypse = model_user_extended_info.create(indiepocalypse, indiepocalypse_is_admin);
         final boolean skariel_is_admin = true;
-        model_user_extended_info extended_info_skariel = new model_user_extended_info.create(skariel, skariel_is_admin);
+        model_user_extended_info extended_info_skariel = model_user_extended_info.create(skariel, skariel_is_admin);
         store_local_db.update_admin(extended_info_indiepocalypse);
         store_local_db.update_admin(extended_info_skariel);
 
