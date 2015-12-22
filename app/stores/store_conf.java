@@ -102,6 +102,10 @@ public class store_conf {
         return ConfigFactory.load().getBoolean("debug.should_send_mails");
     }
 
+    public static boolean get_debug_should_check_mails() {
+        return ConfigFactory.load().getBoolean("debug.should_check_mails");
+    }
+
     public static int get_rate_limit_for_L2_delay() {
         return ConfigFactory.load().getInt("ratelimit.maximum_for_L2_delay");
     }
