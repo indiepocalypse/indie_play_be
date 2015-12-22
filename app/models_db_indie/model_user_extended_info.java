@@ -24,10 +24,14 @@ public class model_user_extended_info extends Model {
     public final boolean rate_limit_was_communicated_to_user_via_github_comment;
 
     private model_user_extended_info(final model_user p_user, final boolean p_is_admin, final boolean p_rate_limit_communicated_to_user_via_github_comment) {
-        id = p_user.user_name + "@extended_info";
+        id = get_id_by_user_name(p_user.user_name);
         user = p_user;
         this.is_admin = p_is_admin;
         this.rate_limit_was_communicated_to_user_via_github_comment = p_rate_limit_communicated_to_user_via_github_comment;
+    }
+
+    public static String get_id_by_user_name(final String user_name) {
+        return user_name + "@extended_info";
     }
 
     public static model_user_extended_info create(final model_user p_user, final boolean p_is_admin) {

@@ -29,8 +29,8 @@ public class sync_github_users {
         model_user_extended_info extended_info_indiepocalypse = model_user_extended_info.create(indiepocalypse, indiepocalypse_is_admin);
         final boolean skariel_is_admin = true;
         model_user_extended_info extended_info_skariel = model_user_extended_info.create(skariel, skariel_is_admin);
-        store_local_db.update_admin(extended_info_indiepocalypse);
-        store_local_db.update_admin(extended_info_skariel);
+        store_local_db.update_user_extended_info(extended_info_indiepocalypse);
+        store_local_db.update_user_extended_info(extended_info_skariel);
 
         t1 = new Thread() {
             public void run() {

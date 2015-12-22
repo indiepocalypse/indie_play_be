@@ -78,41 +78,6 @@ public class store_local_db {
         }
     }
 
-    public static void update_admin(model_user_extended_info admin) {
-        try {
-            admin.save();
-        } catch (Exception e1) {
-            try {
-                admin.update();
-            } catch (Exception e) {
-                Logger.error("could not save admin ", e1);
-                Logger.error("could not update model_admin", e);
-                throw e;
-            }
-        }
-    }
-
-    private static model_user_extended_info get_admin_by_name(String name) {
-        try {
-            return model_user_extended_info.fetch()
-                    .where().idEq(name + "@admins").findUnique();
-        } catch (Exception ignore) {
-            return null;
-        }
-    }
-
-    public static List<model_user_extended_info> get_all_admins() {
-        try {
-            return model_user_extended_info.fetch().findList();
-        } catch (Exception ignore) {
-            return new ArrayList<>();
-        }
-    }
-
-    public static boolean is_admin(String user_name) {
-        return (get_admin_by_name(user_name) != null);
-    }
-
     public static model_user get_user_by_name(String user_name) {
         try {
             return model_user.fetch().where().idEq(user_name).findUnique();
@@ -332,7 +297,7 @@ public class store_local_db {
     }
 
     /********************************
-     * REQUESTS FOR PRS!
+     * REQUESTS FOR PRs!
      ********************************/
 
     public static void update_request(model_request_for_merge request) {
@@ -628,6 +593,49 @@ public class store_local_db {
             Logger.error("WHILE COUNTING USER INTERACTIONS FOR "+user_name+": ", e);
             return -1;
         }
+    }
+
+    /********************************
+     * USER_EXTENDED_INFO
+     ********************************/
+
+    public static void update_user_extended_info(model_user_extended_info user_extended_info) {
+        try {
+            user_extended_info.save();
+        } catch (Exception e1) {
+            try {
+                user_extended_info.update();
+            } catch (Exception e) {
+                Logger.error("cannot save user_extended_info ", e1);
+                Logger.error("could not update model_user_extended_info", e);
+                throw e;
+            }
+        }
+    }
+
+    private static model_user_extended_info get_user_extended_info(String user_name) {
+        try {
+            return model_user_extended_info.fetch()
+                    .where()
+                    .idEq(model_user_extended_info.get_id_by_user_name(user_name))
+                    .findUnique();
+        } catch (Exception ignore) {
+            return null;
+        }
+    }
+    public static List<model_user_extended_info> get_all_admins() {
+        try {
+            return model_user_extended_info.fetch().
+                    where().eq("is_admin", true)
+                    .findList();
+        } catch (Exception ignore) {
+            return new ArrayList<>();
+        }
+    }
+
+    public static boolean is_admin(String user_name) {
+        model_user_extended_info user_extended_info = get_user_extended_info(user_name);
+        return ((user_extended_info==null) || (user_extended_info.is_admin));
     }
 
 }
