@@ -31,16 +31,18 @@ TODO: cache everything: index / faq / help / explore (every few hrs or minutes) 
 
 Currenly working on:
 
-1) refactoring model_admin into model_user_meta_info
+1) rate limit hooks
+1.5) move cache to store_cache
+1.6) refactor faq into docs
+1.7) a news feed
 2) "blogpost"
 3) finding a name
 
 Future:
 
 1) Web GUI
-2) feedback on teams
 3) blogging platform
-4) better webpage
+4) styling
 5) upload images and other stuff
 6) store
 7) ownership transactins w/o merging
