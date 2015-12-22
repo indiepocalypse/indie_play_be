@@ -32,9 +32,7 @@ TODO: limit image size
 
 Currenly working on:
 
-1) rate limit hooks
 1.5) move cache to store_cache
-1.6) refactor faq into docs
 1.7) a news feed
 2) "blogpost"
 3) finding a name

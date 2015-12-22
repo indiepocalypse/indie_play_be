@@ -75,7 +75,7 @@ public class handler_general {
                 Logger.info("user " + user.user_name + " removed from collaborators to " + ownership1.repo.repo_name);
                 final String user_mail = store_github_api.get_user_mail(user.user_name);
                 final String mail_subject = "You were removed as collaborator from repository (" + repo.repo_name + ")";
-                final String mail_body = "The reason is that this repo was transferred to thindipocalypse user and it is now managed through its api.\n see the FAQ here:\n" + store_conf.get_absolute_url(routes.controller_main.faq().url());
+                final String mail_body = "The reason is that this repo was transferred to thindipocalypse user and it is now managed through its api.\n see the docs here:\n" + store_conf.get_absolute_url(routes.controller_main.docs().url());
                 sync_gmail.sendmail(user_mail, mail_subject, mail_body);
             } catch (github_io_exception e) {
                 Logger.error("could not remove user " + user.user_name + " removed from collaborators to " + ownership1.repo.repo_name);

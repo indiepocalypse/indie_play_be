@@ -4,7 +4,7 @@
 
 GET     /                                                      controllers.controller_main.index()
 GET     /logout                                                controllers.controller_main.logout()
-GET     /faq                                                   controllers.controller_main.faq()
+GET     /docs                                                  controllers.controller_main.docs()
 GET     /explore                                               controllers.controller_main.explore()
 GET     /blog                                                  controllers.controller_main.blog()
 GET     /settings                                              controllers.controller_main.settings()

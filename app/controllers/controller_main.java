@@ -41,8 +41,8 @@ public class controller_main extends Controller {
         return request().getQueryString("code") != null;
     }
 
-    public Result faq() {
-        return ok(view_main.render("faq", enum_main_page_type.FAQ, view_faq.render()));
+    public Result docs() {
+        return ok(view_main.render("docs", enum_main_page_type.DOCS, view_docs.render()));
     }
 
     public Result explore() {
