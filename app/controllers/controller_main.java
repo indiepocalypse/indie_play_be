@@ -60,6 +60,9 @@ public class controller_main extends Controller {
         if (!handler_policy.can_create_new_repo()) {
             return ok(view_main.render("new repo", enum_main_page_type.INDEX, view_newrepo_too_many.render()));
         }
+        if ((store_session.user_is_logged()) && (handler_policy.is_rate_limited(store_session.get_user_name()))) {
+            return ok(view_main.render("new repo", enum_main_page_type.INDEX, view_newrepo_rate_limited.render()));
+        }
         String def_repo_name = "";
         String def_repo_homepage = "";
         String def_repo_description = "";
