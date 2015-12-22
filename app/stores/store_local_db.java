@@ -613,7 +613,7 @@ public class store_local_db {
         }
     }
 
-    private static model_user_extended_info get_user_extended_info(String user_name) {
+    public static model_user_extended_info get_user_extended_info(String user_name) {
         try {
             return model_user_extended_info.fetch()
                     .where()

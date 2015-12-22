@@ -105,8 +105,11 @@ public class store_conf {
     public static int get_rate_limit_for_L2_delay() {
         return ConfigFactory.load().getInt("ratelimit.maximum_for_L2_delay");
     }
-
     public static String get_indie_mail_address() {
         return ConfigFactory.load().getString("indie.mail.address");
+    }
+
+    public static int get_rate_limit_maximum_commands_per_comment() {
+        return ConfigFactory.load().getInt("ratelimit.maximum_commands_per_comment");
     }
 }

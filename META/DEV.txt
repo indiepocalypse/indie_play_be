@@ -27,6 +27,7 @@ answer at the bottom)
 TODO: cloudflare?
 TODO: google analytics?
 TODO: cache everything: index / faq / help / explore (every few hrs or minutes) / etc
+TODO: limit image size
 // look here: https://www.playframework.com/documentation/2.0/JavaCache
 
 Currenly working on:

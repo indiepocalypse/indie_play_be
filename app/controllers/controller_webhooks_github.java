@@ -3,8 +3,9 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import handlers.handler_commands;
 import handlers.handler_general;
+import handlers.handler_policy;
 import models_db_indie.model_ownership;
-import models_db_indie.model_user_interaction;
+import models_db_indie.model_user_extended_info;
 import models_memory_github.*;
 import play.Logger;
 import play.mvc.Controller;
@@ -81,8 +82,49 @@ public class controller_webhooks_github extends Controller {
             }
         }
 
-        // running the commands
+        // rate limiting
+        boolean is_rate_limited = false;
+        if ((hook.get_comment()!=null)&&(hook.get_comment().contains("@theindiepocalypse"))) {
+            model_user_extended_info user_extended_info = store_local_db.get_user_extended_info(hook.get_user().user_name);
+            if (user_extended_info==null) {
+                final boolean is_admin = false;
+                user_extended_info = model_user_extended_info.create(hook.get_user(), is_admin);
+                store_local_db.update_user_extended_info(user_extended_info);
+            }
 
+            is_rate_limited = handler_policy.is_rate_limited(hook.get_user().user_name);
+
+            if ((is_rate_limited) && (user_extended_info.rate_limit_was_communicated_to_user_via_github_comment)) {
+                return ok();
+            }
+
+            if ((is_rate_limited) && (!user_extended_info.rate_limit_was_communicated_to_user_via_github_comment)) {
+                user_extended_info = user_extended_info.set_ratelimit_communicated_to_user_via_github_comment(is_rate_limited);
+                store_local_db.update_user_extended_info(user_extended_info);
+
+                String response = response_header;
+                if (!response.trim().equals("")) {
+                    response += "\n\n";
+                }
+                response += "you hit the command rate limit, please try again in a few moments" + "\n\n";
+                response += response_footer;
+                response = "@" + sender_name + ": " + response;
+                try {
+                    store_github_api.comment_on_issue(hook.get_repo(), hook.get_issue_num(), response);
+                } catch (github_io_exception e) {
+                    Logger.info("problem communicating rate limit to user "+hook.get_user().user_name+" through github comment");
+                }
+                return ok();
+            }
+
+            if (user_extended_info.rate_limit_was_communicated_to_user_via_github_comment) {
+                // not rate limited, need to update so user can be communicated in the future about rate limiting
+                user_extended_info = user_extended_info.set_ratelimit_communicated_to_user_via_github_comment(is_rate_limited);
+                store_local_db.update_user_extended_info(user_extended_info);
+            }
+        }
+
+        // running the commands
         ArrayList<String> command_responses = handler_commands.handle_commands_from_hook(hook);
 
         // assembling response

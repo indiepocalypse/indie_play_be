@@ -9,6 +9,7 @@ import models_memory_indie.model_command;
 import org.reflections.Reflections;
 import play.Logger;
 import stores.github_io_exception;
+import stores.store_conf;
 import stores.store_github_api;
 import stores.store_local_db;
 import utils.utils_bigdecimal;
@@ -26,9 +27,7 @@ public class handler_commands {
     private static ArrayList<interface_command> commands = null;
 
     public static ArrayList<String> handle_commands_from_hook(interface_github_webhook hook) {
-        if (commands == null) {
-            dynamically_initialize_commands();
-        }
+        dynamically_initialize_commands();
 
         // this method returns responses to be shown to users.
         // all responses are encapsulated in a common header which includes the @user welcome or whatever
@@ -40,8 +39,15 @@ public class handler_commands {
                 Logger.info("         arg: " + arg + " length=" + Integer.toString(arg.length()));
             }
 
+            int recognized_commands_in_comment = 0;
             for (interface_command command_handler : commands) {
                 if (command_handler.is_recognized(command)) {
+                    recognized_commands_in_comment += 1;
+                    if (recognized_commands_in_comment > store_conf.get_rate_limit_maximum_commands_per_comment()) {
+                        responses.add("Maximum "+Integer.toString(store_conf.get_rate_limit_maximum_commands_per_comment())+
+                            "commands per comment");
+                        return responses;
+                    }
                     responses.add(command_handler.handle(command, hook));
                     // registering interaction
                     model_user_interaction model_user_interaction = models_db_indie.model_user_interaction.from_general_command(command_handler, hook);
@@ -51,7 +57,7 @@ public class handler_commands {
                 }
             }
         }
-        if ((!some_command_recognized) && (hook.get_comment().contains("@theindiepocalypse"))) {
+        if ((!some_command_recognized) && (hook.get_comment()!=null) && (hook.get_comment().contains("@theindiepocalypse"))) {
             // @theindipocalypse was mentioned but no command was parsed!
             // TODO: give actual help (say, a link to the help page?)
             // TODO: this will show up only if no command was recognized. What if some were but some weren't?
@@ -61,19 +67,21 @@ public class handler_commands {
     }
 
     private static void dynamically_initialize_commands() {
-        Logger.info("dynamically initializing commands");
-        commands = new ArrayList<>(100);
-        Reflections reflections = new Reflections("commands");
-        for (Class command : reflections.getSubTypesOf(interface_command.class)) {
-            try {
-                commands.add((interface_command) command.newInstance());
-            } catch (Exception e) {
-                Logger.error("while dynamically loading commands", e);
+        if (commands==null) {
+            Logger.info("dynamically initializing commands");
+            commands = new ArrayList<>(100);
+            Reflections reflections = new Reflections("commands");
+            for (Class command : reflections.getSubTypesOf(interface_command.class)) {
+                try {
+                    commands.add((interface_command) command.newInstance());
+                } catch (Exception e) {
+                    Logger.error("while dynamically loading commands", e);
+                }
             }
-        }
-        // just testing
-        for (interface_command command : commands) {
-            Logger.info("found command: " + command.get_command_name());
+            // just for debug
+            for (interface_command command : commands) {
+                Logger.info("found command: " + command.get_command_name());
+            }
         }
     }
 
