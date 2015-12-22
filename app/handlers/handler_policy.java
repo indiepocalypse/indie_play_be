@@ -35,7 +35,7 @@ public class handler_policy {
             return true;
         }
         int number_of_actions_in_relevant_timeframe = store_local_db.get_user_interactions_count_during_last_milis(user_name, store_conf.get_delay_L2_milis());
-        if (number_of_actions_in_relevant_timeframe<0) {
+        if (number_of_actions_in_relevant_timeframe<=0) {
             // could not find number of actions, user should be rate limited
             return true;
         }
