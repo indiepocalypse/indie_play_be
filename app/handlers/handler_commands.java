@@ -124,13 +124,13 @@ public class handler_commands {
     public static String get_admins_good_looking_list(interface_github_webhook hook) {
         // TODO: improve response wording, etc.
         String response = " ";
-        List<model_admin> admins = store_local_db.get_all_admins();
+        List<model_user_extended_info> admins = store_local_db.get_all_admins();
         if (admins.size() == 0) {
             return "there are no admins";
         }
         boolean more_than_one_admin = admins.size() > 1;
         boolean you_are_included = false;
-        for (model_admin admin : admins) {
+        for (model_user_extended_info admin : admins) {
             if (hook.get_user().user_name.equals(admin.user.user_name)) {
                 you_are_included = true;
                 continue;

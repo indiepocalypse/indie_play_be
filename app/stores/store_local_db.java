@@ -78,7 +78,7 @@ public class store_local_db {
         }
     }
 
-    public static void update_admin(model_admin admin) {
+    public static void update_admin(model_user_extended_info admin) {
         try {
             admin.save();
         } catch (Exception e1) {
@@ -92,18 +92,18 @@ public class store_local_db {
         }
     }
 
-    private static model_admin get_admin_by_name(String name) {
+    private static model_user_extended_info get_admin_by_name(String name) {
         try {
-            return model_admin.fetch()
+            return model_user_extended_info.fetch()
                     .where().idEq(name + "@admins").findUnique();
         } catch (Exception ignore) {
             return null;
         }
     }
 
-    public static List<model_admin> get_all_admins() {
+    public static List<model_user_extended_info> get_all_admins() {
         try {
-            return model_admin.fetch().findList();
+            return model_user_extended_info.fetch().findList();
         } catch (Exception ignore) {
             return new ArrayList<>();
         }

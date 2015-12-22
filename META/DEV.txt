@@ -31,13 +31,12 @@ TODO: cache everything: index / faq / help / explore (every few hrs or minutes) 
 
 Currenly working on:
 
-1) ebean L2 Caching
+1) refactoring model_admin into model_user_meta_info
 2) "blogpost"
 3) finding a name
 
 Future:
 
-0) custom error page
 1) Web GUI
 2) feedback on teams
 3) blogging platform

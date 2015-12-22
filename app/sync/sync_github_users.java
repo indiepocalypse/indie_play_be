@@ -2,7 +2,7 @@ package sync;
 
 import handlers.handler_general;
 import models_db_github.model_user;
-import models_db_indie.model_admin;
+import models_db_indie.model_user_extended_info;
 import play.Logger;
 import stores.store_conf;
 import stores.store_credentials;
@@ -25,10 +25,12 @@ public class sync_github_users {
         // some hard coded data
         model_user indiepocalypse = handler_general.get_integrate_github_user_by_name(store_credentials.github.name);
         model_user skariel = handler_general.get_integrate_github_user_by_name("skariel");
-        model_admin admin_indiepocalypse = new model_admin(indiepocalypse);
-        model_admin admin_skariel = new model_admin(skariel);
-        store_local_db.update_admin(admin_indiepocalypse);
-        store_local_db.update_admin(admin_skariel);
+        final boolean indiepocalypse_is_admin = true;
+        model_user_extended_info extended_info_indiepocalypse = new model_user_extended_info.create(indiepocalypse, indiepocalypse_is_admin);
+        final boolean skariel_is_admin = true;
+        model_user_extended_info extended_info_skariel = new model_user_extended_info.create(skariel, skariel_is_admin);
+        store_local_db.update_admin(extended_info_indiepocalypse);
+        store_local_db.update_admin(extended_info_skariel);
 
         t1 = new Thread() {
             public void run() {
