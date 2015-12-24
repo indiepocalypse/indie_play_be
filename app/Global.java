@@ -15,7 +15,7 @@ public class Global extends GlobalSettings {
         super.onStart(app);
 
         // sjust debugging somethig XXXXXXXXXXXX
-        File directory = new File("/");
+        File directory = new File("/app");
         File[] fList = directory.listFiles();
         for (File file : fList){
             Logger.info(" ------ "+file.getPath()+" ---------- " + file.getName());
