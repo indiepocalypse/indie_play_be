@@ -65,3 +65,7 @@ stackoverflow.com/questions/21813138/how-do-i-perform-a-sql-batch-delete-with-th
 uploading files:
 
 https://www.playframework.com/documentation/2.4.x/JavaFileUpload
+
+internal assets:
+
+http://stackoverflow.com/questions/15072493/private-assets-in-play-2-1
