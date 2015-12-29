@@ -93,7 +93,7 @@ public class handler_commands {
             return "thre are no owners";
         }
         for (model_ownership ownership : ownerships) {
-            response += "@" + ownership.user.user_name + "|" + ownership.percent.toString() + "\n";
+            response += "@" + ownership.user_name + "|" + ownership.percent.toString() + "\n";
         }
         response += "*total* | 100.0\n";
         return response;

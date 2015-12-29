@@ -74,9 +74,7 @@ public class model_offer_for_merge extends Model {
     }
 
     public static Query<model_offer_for_merge> fetch() {
-        return find.setUseQueryCache(true)
-                .fetch("user")
-                .fetch("pull_request");
+        return find.setUseQueryCache(true);
     }
 
     public static void deleteById(String id) {

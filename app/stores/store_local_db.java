@@ -9,9 +9,7 @@ import models_db_indie.*;
 import models_memory_github.interface_github_webhook;
 import play.Logger;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by skariel on 05/10/15.
@@ -186,6 +184,14 @@ public class store_local_db {
             return model_ownership.fetch().where().eq("repo_name", repo_name).findList();
         } catch (Exception ignore) {
             return new ArrayList<>(0);
+        }
+    }
+
+    public static Map<model_user, model_ownership> get_users_and_ownerships_by_repo_name(String repo_name) {
+        try {
+            return model_ownership.fetch().where().eq("repo_name", repo_name).findMap("user_name", model_user.class);
+        } catch (Exception ignore) {
+            return new HashMap<>(0);
         }
     }
 

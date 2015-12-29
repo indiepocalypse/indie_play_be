@@ -1,4 +1,4 @@
-@(repo: models_db_github.model_repo)(owners: List[models_db_indie.model_ownership])(pull_requests: List[models_db_github.model_pull_request])
+@(repo: models_db_github.model_repo)(owners: Map[models_db_github.model_user, models_db_indie.model_ownership])(pull_requests: List[models_db_github.model_pull_request])
 <!--TODO: classify pull requests by open, close, or merged-->
 <div class="container col-md-6">
 
@@ -24,13 +24,13 @@
     </h1>
 
     @owners.map{owner=>
-    @defining("/u/"+owner.user.user_name) { indie_html_url =>
+    @defining("/u/"+owner._1.user_name) { indie_html_url =>
     <div class="container col-md-6">
-        <h3><a href="@indie_html_url">@owner.user.user_name</a></h3>
-        <a href="@owner.user.github_html_url">see in github</a>
-        <img src="@owner.user.avatar_url" width="50px">
+        <h3><a href="@indie_html_url">@owner._1.user_name</a></h3>
+        <a href="@owner._1.github_html_url">see in github</a>
+        <img src="@owner._1.avatar_url" width="50px">
 
-        <h2>@owner.percent</h2>
+        <h2>@owner._2.percent</h2>
     </div>
     }
     }

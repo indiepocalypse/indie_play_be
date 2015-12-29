@@ -72,7 +72,7 @@ public class controller_webhooks_github extends Controller {
             if (ownership == null) {
                 final boolean is_creator = false;
                 final BigDecimal ownership_percent = new BigDecimal("0.0");
-                ownership = new model_ownership(hook.get_user(), hook.get_repo(), ownership_percent, is_creator);
+                ownership = new model_ownership(hook.get_user().user_name, hook.get_repo().repo_name, ownership_percent, is_creator);
                 store_local_db.update_ownership(ownership);
             }
             if (handler_general.locally_update_pull_request_and_clear_offers_if_necessary(hook.get_pull_request())) {

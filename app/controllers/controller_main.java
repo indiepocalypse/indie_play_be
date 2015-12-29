@@ -22,6 +22,7 @@ import views.enum_main_page_type;
 import views.html.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 public class controller_main extends Controller {
@@ -194,7 +195,7 @@ public class controller_main extends Controller {
 
     public Result repo_profile(String repo_name) {
         // TODO: caching!
-        List<model_ownership> owners = store_local_db.get_ownerships_by_repo_name(repo_name);
+        Map<model_user, model_ownership> owners = store_local_db.get_users_and_ownerships_by_repo_name(repo_name);
         List<model_pull_request> pull_requests = store_local_db.get_pull_requests_by_repo_name(repo_name);
         return ok(view_main.render(repo_name, enum_main_page_type.INDEX, view_homerepo.render(store_local_db.get_repo_by_name(repo_name), owners, pull_requests)));
     }

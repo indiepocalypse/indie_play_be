@@ -362,13 +362,13 @@ public class store_github_api {
         }
     }
 
-    private static List<model_user> get_all_collaborators(model_repo repo) throws github_io_exception {
-        WSResponse res = indie_auth_request("/repos/theindiepocalypse/" + repo.repo_name + "/collaborators")
+    private static List<model_user> get_all_collaborators(String repo_name) throws github_io_exception {
+        WSResponse res = indie_auth_request("/repos/theindiepocalypse/" + repo_name + "/collaborators")
                 .setMethod("GET")
                 .execute()
                 .get(60, TimeUnit.SECONDS);
         if (res.getStatus() != 200) {
-            throw new github_io_exception("while trying to get a list of all collaborator for repo " + repo.repo_name);
+            throw new github_io_exception("while trying to get a list of all collaborator for repo " + repo_name);
         }
         JsonNode json = res.asJson();
         ArrayList<model_user> collaborators = new ArrayList<>(json.size());
@@ -378,27 +378,27 @@ public class store_github_api {
         return collaborators;
     }
 
-    private static void delete_collaborator_from_repo(model_repo repo, model_user user) throws github_io_exception {
-        WSResponse res = indie_auth_request("/repos/theindiepocalypse/" + repo.repo_name + "/collaborators/" + user.user_name)
+    private static void delete_collaborator_from_repo(String repo_name, model_user user) throws github_io_exception {
+        WSResponse res = indie_auth_request("/repos/theindiepocalypse/" + repo_name + "/collaborators/" + user.user_name)
                 .setMethod("DELETE")
                 .execute()
                 .get(60, TimeUnit.SECONDS);
         if (res.getStatus() != 204) {
-            throw new github_io_exception("while trying to delete collaborator " + user.user_name + " from repo " + repo.repo_name);
+            throw new github_io_exception("while trying to delete collaborator " + user.user_name + " from repo " + repo_name);
         }
     }
 
-    public static void delete_all_collaborators_from_repo(model_repo repo) throws github_io_exception {
+    public static void delete_all_collaborators_from_repo(String repo_name) throws github_io_exception {
         boolean ok = true;
-        for (model_user user : get_all_collaborators(repo)) {
+        for (model_user user : get_all_collaborators(repo_name)) {
             try {
-                delete_collaborator_from_repo(repo, user);
+                delete_collaborator_from_repo(repo_name, user);
             } catch (github_io_exception e) {
                 ok = false;
             }
         }
         if (!ok) {
-            throw new github_io_exception("while trying to delete all collaborators from repo " + repo.repo_name);
+            throw new github_io_exception("while trying to delete all collaborators from repo " + repo_name);
         }
     }
 }

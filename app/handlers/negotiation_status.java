@@ -38,7 +38,7 @@ class negotiation_status {
     private final BigDecimal required_ownership_as_per_policy;
     private final BigDecimal requested_percent;
     private final BigDecimal required_for_acceptance_current_best_case;
-    private final List<model_user> users_with_more_ownership;
+    private final List<String /* user name */> users_name_with_more_ownership;
     private final BigDecimal total_ownership_of_users_with_more_ownership;
 
     // we assume here to_user has ownership. This is taken care of in the hook checkin
@@ -53,12 +53,12 @@ class negotiation_status {
 
         users_name_currently_accepted = new ArrayList<>(5);
         final Map<String /* user_name */, model_ownership> ownership_from_user_name = new HashMap<>(11);
-        users_with_more_ownership = new ArrayList<>();
+        users_name_with_more_ownership = new ArrayList<>();
         BigDecimal tmp_total_ownership_of_users_with_more_ownership = new BigDecimal("0.0");
         model_ownership to_ownership = null;
         if (ownerships != null) {
             for (model_ownership ownership : ownerships) {
-                ownership_from_user_name.put(ownership.user.user_name, ownership);
+                ownership_from_user_name.put(ownership.user_name, ownership);
             }
             if (ownership_from_user_name.containsKey(p_pull_request.user_name)) {
                 to_ownership = ownership_from_user_name.get(p_pull_request.user_name);
@@ -67,7 +67,7 @@ class negotiation_status {
             }
             for (model_ownership ownership : ownerships) {
                 if (ownership.percent.compareTo(to_ownership.percent) > 0) {
-                    users_with_more_ownership.add(ownership.user);
+                    users_name_with_more_ownership.add(ownership.user_name);
                     tmp_total_ownership_of_users_with_more_ownership = tmp_total_ownership_of_users_with_more_ownership.add(ownership.percent);
                 }
             }
@@ -133,23 +133,23 @@ class negotiation_status {
 
             assert p_request != null;
             BigDecimal transaction_quanta = p_request.amount_percent.divide(total_ownership_of_users_with_more_ownership);
-            for (model_user user : users_with_more_ownership) {
+            for (String user_name : users_name_with_more_ownership) {
 
-                final model_ownership ownership = ownership_from_user_name.get(user);
+                final model_ownership ownership = ownership_from_user_name.get(user_name);
                 final BigDecimal user_ownership = ownership.percent;
                 final BigDecimal transaction_amount_for_user = transaction_quanta.multiply(user_ownership);
 
-                final model_user p_from_user = user;
-                final model_user p_to_user = p_request.user;
-                final model_offer_for_merge p_offer = offer_from_user_name.get(user);
+                final String p_from_user_name = user_name;
+                final String p_to_user_name = p_request.user.user_name;
+                final model_offer_for_merge p_offer = offer_from_user_name.get(user_name);
                 final BigDecimal p_amount_percent = transaction_amount_for_user;
                 final Date p_date = new Date();
                 final model_ownership p_from_user_ownership = ownership;
                 final model_ownership p_to_user_ownership = to_ownership;
 
                 model_merge_transaction merge_transaction = new model_merge_transaction(
-                        p_from_user.user_name,
-                        p_to_user.user_name,
+                        p_from_user_name,
+                        p_to_user_name,
                         p_pull_request.id,
                         p_offer.id,
                         p_request.id,

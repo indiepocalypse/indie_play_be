@@ -22,26 +22,24 @@ public class model_ownership extends Model {
 
     @Id
     public final String id;
-    @ManyToOne
-    public final model_user user;
-    @ManyToOne
-    public final model_repo repo;
+    public final String user_name;
+    public final String repo_name;
     @Column(precision = 5, scale = 2)
     public final BigDecimal percent;
     private final boolean is_creator;
 
-    public model_ownership(model_user p_user, model_repo p_repo, BigDecimal p_percent, boolean p_is_creator) {
-        id = "ownershio@" + p_user.user_name + "@" + p_repo.repo_name;
-        user = p_user;
-        repo = p_repo;
-        percent = p_percent;
-        is_creator = p_is_creator;
+    public model_ownership(String p_user_name, String p_repo_name, BigDecimal p_percent, boolean p_is_creator) {
+        this.id = "ownershio@" + p_user_name + "@" + p_repo_name;
+        this.user_name = p_user_name;
+        this.repo_name = p_repo_name;
+        this.percent = p_percent;
+        this.is_creator = p_is_creator;
     }
 
     public static model_ownership with_new_percent(model_ownership base_ownership, BigDecimal new_percent) {
         return new model_ownership(
-                base_ownership.user,
-                base_ownership.repo,
+                base_ownership.user_name,
+                base_ownership.repo_name,
                 new_percent,
                 base_ownership.is_creator
         );
@@ -49,9 +47,7 @@ public class model_ownership extends Model {
 
     // TODO: this solution is no good in the sense that it's not recursive...
     public static Query<model_ownership> fetch() {
-        return find.setUseQueryCache(true)
-                .fetch("user")
-                .fetch("repo");
+        return find.setUseQueryCache(true);
     }
 
     public static void deleteById(String id) {

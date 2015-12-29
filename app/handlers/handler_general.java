@@ -57,10 +57,10 @@ public class handler_general {
         BigDecimal indie_ownership_percent = store_conf.get_default_indie_ownership_percent();
         BigDecimal user_ownership_percent = new BigDecimal("100.0").subtract(indie_ownership_percent);
         final boolean is_creator = true;
-        model_ownership ownership1 = new model_ownership(user, repo, user_ownership_percent, is_creator);
+        model_ownership ownership1 = new model_ownership(user.user_name, repo.repo_name, user_ownership_percent, is_creator);
         model_user theindiepocalypse = store_local_db.get_user_by_name("theindiepocalypse");
         final boolean indiepocalypse_is_creator = false;
-        model_ownership ownership2 = new model_ownership(theindiepocalypse, repo, indie_ownership_percent, indiepocalypse_is_creator);
+        model_ownership ownership2 = new model_ownership(theindiepocalypse.user_name, repo.repo_name, indie_ownership_percent, indiepocalypse_is_creator);
         store_local_db.update_ownership(ownership1);
         store_local_db.update_ownership(ownership2);
         // TODO: should return the policy too?
@@ -71,14 +71,14 @@ public class handler_general {
 
         if (delete_original_collaborators) {
             try {
-                store_github_api.delete_all_collaborators_from_repo(ownership1.repo);
-                Logger.info("user " + user.user_name + " removed from collaborators to " + ownership1.repo.repo_name);
+                store_github_api.delete_all_collaborators_from_repo(ownership1.repo_name);
+                Logger.info("user " + user.user_name + " removed from collaborators to " + ownership1.repo_name);
                 final String user_mail = store_github_api.get_user_mail(user.user_name);
                 final String mail_subject = "You were removed as collaborator from repository (" + repo.repo_name + ")";
                 final String mail_body = "The reason is that this repo was transferred to thindipocalypse user and it is now managed through its api.\n see the docs here:\n" + store_conf.get_absolute_url(routes.controller_main.docs().url());
                 sync_gmail.sendmail(user_mail, mail_subject, mail_body);
             } catch (github_io_exception e) {
-                Logger.error("could not remove user " + user.user_name + " removed from collaborators to " + ownership1.repo.repo_name);
+                Logger.error("could not remove user " + user.user_name + " removed from collaborators to " + ownership1.repo_name);
             }
 
         }
