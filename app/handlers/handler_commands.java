@@ -171,7 +171,7 @@ public class handler_commands {
             return "this pull request is closed, please reopen to merge";
         }
         // always update pull request before merge! so we have offers/pull version aligned!
-        String repo_name = hook.get_pull_request().repo.repo_name;
+        String repo_name = hook.get_pull_request().repo_name;
         String number = hook.get_pull_request().number;
         Logger.info("updating pull request #" + number + " for repo " + repo_name);
 
@@ -216,7 +216,7 @@ public class handler_commands {
         if (hook.get_pull_request() == null) {
             return "this is no pull request, cannot make a request for merge here";
         }
-        if (!hook.get_user().user_name.equals(hook.get_pull_request().user.user_name)) {
+        if (!hook.get_user().user_name.equals(hook.get_pull_request().user_name)) {
             return "only the user making the pull request can make a request for merge";
         }
         if (hook.get_pull_request().merged) {
@@ -229,7 +229,7 @@ public class handler_commands {
 
 
         try {
-            pull_request = store_github_api.get_pull_request_by_repo_by_number(pull_request.repo.repo_name, pull_request.number);
+            pull_request = store_github_api.get_pull_request_by_repo_by_number(pull_request.repo_name, pull_request.number);
         } catch (github_io_exception e) {
             return "cannot get updated pull request. cannot open request for merge";
         }
@@ -286,7 +286,7 @@ public class handler_commands {
         final List<model_offer_for_merge> offers = store_local_db.get_offers_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
         final model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo());
         final List<model_ownership> ownerships = store_local_db.get_ownerships_by_repo_name(hook.get_repo().repo_name);
-        final negotiation_status negotiation_status = new negotiation_status(pull_request, current_request, offers, policy, ownerships, pull_request.repo);
+        final negotiation_status negotiation_status = new negotiation_status(pull_request, current_request, offers, policy, ownerships, hook.get_repo());
         result += "\nnego status:\n\n" + negotiation_status.toString();
         if (negotiation_status.is_negotiation_succesful()) {
             result += "\nnegotiation succesful. Merging\n";
@@ -310,7 +310,7 @@ public class handler_commands {
         if (hook.get_pull_request() == null) {
             return "this is no pull request, cannot make an offer for merge";
         }
-        if (hook.get_user().user_name.equals(hook.get_pull_request().user.user_name)) {
+        if (hook.get_user().user_name.equals(hook.get_pull_request().user_name)) {
             return "only users not creating the pull request can make an offer for merge";
         }
         if (hook.get_pull_request().merged) {
@@ -328,7 +328,7 @@ public class handler_commands {
         model_pull_request pull_request = hook.get_pull_request();
 
         try {
-            pull_request = store_github_api.get_pull_request_by_repo_by_number(pull_request.repo.repo_name, pull_request.number);
+            pull_request = store_github_api.get_pull_request_by_repo_by_number(pull_request.repo_name, pull_request.number);
         } catch (github_io_exception e) {
             return "cannot get updated pull request. cannot place offer";
         }
@@ -379,7 +379,7 @@ public class handler_commands {
         final List<model_offer_for_merge> offers = store_local_db.get_offers_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
         final model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo());
         final List<model_ownership> ownerships = store_local_db.get_ownerships_by_repo_name(hook.get_repo().repo_name);
-        final negotiation_status negotiation_status = new negotiation_status(pull_request, request, offers, policy, ownerships, pull_request.repo);
+        final negotiation_status negotiation_status = new negotiation_status(pull_request, request, offers, policy, ownerships, hook.get_repo());
         result += "\nnego status:\n\n" + negotiation_status.toString();
         if (negotiation_status.is_negotiation_succesful()) {
             result += "\nnegotiation succesful. Merging\n";

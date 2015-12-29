@@ -56,7 +56,7 @@ public class model_merge_transaction extends Model {
             model_ownership p_from_user_ownership,
             model_ownership p_to_user_ownership, model_repo p_repo,
             BigDecimal p_from_user_ownership_percent) {
-        id = "transaction_from_user_" + p_from_user.user_name + "_to_user " + p_to_user + "_for_pull_request_number_" + p_pull_request.number + "_for_repo_" + p_pull_request.repo.repo_name;
+        id = "transaction_from_user_" + p_from_user.user_name + "_to_user " + p_to_user + "_for_pull_request_number_" + p_pull_request.number + "_for_repo_" + p_pull_request.repo_name;
         this.to_user = p_to_user;
         this.from_user = p_from_user;
         this.pull_request = p_pull_request;

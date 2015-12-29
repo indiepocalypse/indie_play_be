@@ -20,11 +20,9 @@ public class model_pull_request extends Model {
     @Id
     public final String id;
     public final String number;
-    @ManyToOne
-    public final model_user user;
+    public final String user_name;
     public final String SHA;
-    @ManyToOne
-    public final model_repo repo;
+    public final String repo_name;
     public final String title;
     public final String body;
     public final Boolean merged;
@@ -41,12 +39,12 @@ public class model_pull_request extends Model {
             String p_html_url,
             String p_state,
             String p_title,
-            model_user p_user,
+            String p_user_name,
             String p_body,
             Boolean p_merged,
             Boolean p_mergeable,
             String p_comments_url,
-            model_repo p_repo,
+            String p_repo_name,
             String p_number,
             String p_SHA
     ) {
@@ -55,18 +53,18 @@ public class model_pull_request extends Model {
         this.html_url = p_html_url;
         this.state = p_state;
         this.title = p_title;
-        this.user = p_user;
+        this.user_name = p_user_name;
         this.body = p_body;
         this.merged = p_merged;
         this.mergeable = p_mergeable;
         this.comments_url = p_comments_url;
         this.SHA = p_SHA;
-        this.repo = p_repo;
+        this.repo_name = p_repo_name;
         this.number = p_number;
-        this.id = repo.repo_name + "/" + this.number;
+        this.id = repo_name + "/" + this.number;
     }
 
-    public static model_pull_request from_json(JsonNode json) {
+    public static model_pull_request from_webhook_json(JsonNode json) {
         String number = Integer.toString(json.get("number").asInt());
         String url = json.get("url").asText();
         Long github_id = json.get("id").asLong();
@@ -94,19 +92,19 @@ public class model_pull_request extends Model {
                 html_url,
                 state,
                 title,
-                user,
+                user.user_name,
                 body,
                 merged,
                 mergeable,
                 comments_url,
-                repo,
+                repo.repo_name,
                 number,
                 SHA
         );
     }
 
     public static Query<model_pull_request> fetch() {
-        return find.setUseQueryCache(true).fetch("user").fetch("repo");
+        return find.setUseQueryCache(true);
     }
 
     public static void deleteById(String id) {
@@ -137,12 +135,12 @@ public class model_pull_request extends Model {
                 this.html_url,
                 p_state,
                 this.title,
-                this.user,
+                this.user_name,
                 this.body,
                 p_merged,
                 p_mergeable,
                 this.comments_url,
-                this.repo,
+                this.repo_name,
                 this.number,
                 this.SHA
         );

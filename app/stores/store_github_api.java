@@ -214,18 +214,18 @@ public class store_github_api {
         throw new github_io_exception("while creating github webhook for repo " + repo.repo_name);
     }
 
-    public static void comment_on_issue(model_repo repo, String issue_num, String comment_body) throws github_io_exception {
+    public static void comment_on_issue(final String repo_name, String issue_num, String comment_body) throws github_io_exception {
         // returns success as usual...
         JsonNode json = JsonNodeFactory.instance.objectNode().put("body", comment_body);
         String path = "/repos/__OWNER__/__REPO__/issues/__NUMBER__/comments"
                 .replace("__OWNER__", store_credentials.github.name)
-                .replace("__REPO__", repo.repo_name)
+                .replace("__REPO__", repo_name)
                 .replace("__NUMBER__", issue_num);
         WSRequest req = post_indie_auth_request(path, json);
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
         boolean success = (res.getStatus() == 201) && (res.getBody().contains("created"));
         if (!success) {
-            Logger.error("while commenting on issue #" + issue_num + " at repo " + repo.repo_name, res.asJson().toString());
+            Logger.error("while commenting on issue #" + issue_num + " at repo " + repo_name, res.asJson().toString());
             throw new github_io_exception("while trying to comment");
         }
     }
@@ -260,7 +260,7 @@ public class store_github_api {
                 .put("body", pull_request.body);
         String path = "/repos/__OWNER__/__REPO__/pulls/__NUMBER__"
                 .replace("__OWNER__", store_credentials.github.name)
-                .replace("__REPO__", pull_request.repo.repo_name)
+                .replace("__REPO__", pull_request.repo_name)
                 .replace("__NUMBER__", pull_request.number);
         WSRequest req = indie_auth_request(path)
                 .setMethod("PATCH")
@@ -268,8 +268,8 @@ public class store_github_api {
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
         boolean success = (res.getStatus() == 200) && (res.getBody().contains("body"));
         if (!success) {
-            Logger.error("while updating pull request #" + pull_request.number + " at repo " + pull_request.repo.repo_name, res.asJson().toString());
-            throw new github_io_exception("while updating pull request number " + pull_request.number + " on repo " + pull_request.repo.repo_name);
+            Logger.error("while updating pull request #" + pull_request.number + " at repo " + pull_request.repo_name, res.asJson().toString());
+            throw new github_io_exception("while updating pull request number " + pull_request.number + " on repo " + pull_request.repo_name);
         }
     }
 
@@ -280,7 +280,7 @@ public class store_github_api {
         if (res.getStatus() != 200) {
             throw new github_io_exception("while reading repo " + repo_name + " from github");
         }
-        return model_pull_request.from_json(res.asJson());
+        return model_pull_request.from_webhook_json(res.asJson());
     }
 
     public static List<model_pull_request> get_all_pull_requests(model_repo repo) throws github_io_exception {
@@ -295,7 +295,7 @@ public class store_github_api {
         ArrayList<model_pull_request> pull_requests = new ArrayList<>(json.size());
         for (int i = 0; i < json.size(); i++) {
             JsonNode json_pull_request = json.get(i);
-            pull_requests.add(model_pull_request.from_json(json_pull_request));
+            pull_requests.add(model_pull_request.from_webhook_json(json_pull_request));
         }
         return pull_requests;
     }
@@ -337,14 +337,14 @@ public class store_github_api {
                 .put("sha", pull_request.SHA);
         String path = "/repos/__OWNER__/__REPO__/pulls/__NUMBER__/merge"
                 .replace("__OWNER__", store_credentials.github.name)
-                .replace("__REPO__", pull_request.repo.repo_name)
+                .replace("__REPO__", pull_request.repo_name)
                 .replace("__NUMBER__", pull_request.number);
         WSRequest req = put_indie_auth_request(path, json);
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
         if (res.getStatus() != 200) {
-            Logger.error("while mergin pull request for repo " + pull_request.repo.repo_name + " #" + pull_request.number + ":\n",
+            Logger.error("while mergin pull request for repo " + pull_request.repo_name + " #" + pull_request.number + ":\n",
                     res.asJson().toString());
-            throw new github_io_exception("while trying to merge pull request " + pull_request.number + " on repo " + pull_request.repo.repo_name);
+            throw new github_io_exception("while trying to merge pull request " + pull_request.number + " on repo " + pull_request.repo_name);
         }
     }
 

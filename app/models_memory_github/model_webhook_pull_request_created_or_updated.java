@@ -33,7 +33,7 @@ public class model_webhook_pull_request_created_or_updated implements interface_
     public static model_webhook_pull_request_created_or_updated from_json(JsonNode json) {
         String action = json.get("action").asText();
         String number = Integer.toString(json.get("number").asInt());
-        model_pull_request pull_request = model_pull_request.from_json(json.get("pull_request"));
+        model_pull_request pull_request = model_pull_request.from_webhook_json(json.get("pull_request"));
         model_repo repo = model_repo.from_json(json.get("repository"));
         model_user user = model_user.from_json(json.get("sender"));
         return new model_webhook_pull_request_created_or_updated(

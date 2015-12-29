@@ -110,7 +110,7 @@ public class controller_webhooks_github extends Controller {
                 response += response_footer;
                 response = "@" + sender_name + ": " + response;
                 try {
-                    store_github_api.comment_on_issue(hook.get_repo(), hook.get_issue_num(), response);
+                    store_github_api.comment_on_issue(hook.get_repo().repo_name, hook.get_issue_num(), response);
                 } catch (github_io_exception e) {
                     Logger.info("problem communicating rate limit to user "+hook.get_user().user_name+" through github comment");
                 }
@@ -143,7 +143,7 @@ public class controller_webhooks_github extends Controller {
         }
         response = "@" + sender_name + ": " + response;
         try {
-            store_github_api.comment_on_issue(hook.get_repo(), hook.get_issue_num(), response);
+            store_github_api.comment_on_issue(hook.get_repo().repo_name, hook.get_issue_num(), response);
         } catch (github_io_exception e) {
             Logger.info("problem commenting...");
         }

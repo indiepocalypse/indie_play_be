@@ -31,18 +31,18 @@ class negotiation_status {
                               model_repo p_repo) {
 
         users_currently_accepted = new ArrayList<>(5);
-        final Map<model_user, model_ownership> ownership_from_user = new HashMap<>(11);
+        final Map<String /* user_name */, model_ownership> ownership_from_user_name = new HashMap<>(11);
         users_with_more_ownership = new ArrayList<>();
         BigDecimal tmp_total_ownership_of_users_with_more_ownership = new BigDecimal("0.0");
         model_ownership to_ownership = null;
         if (ownerships != null) {
             for (model_ownership ownership : ownerships) {
-                ownership_from_user.put(ownership.user, ownership);
+                ownership_from_user_name.put(ownership.user.user_name, ownership);
             }
-            if (ownership_from_user.containsKey(p_pull_request.user)) {
-                to_ownership = ownership_from_user.get(p_pull_request.user);
+            if (ownership_from_user_name.containsKey(p_pull_request.user_name)) {
+                to_ownership = ownership_from_user_name.get(p_pull_request.user_name);
             } else {
-                Logger.error("to_user \"" + p_pull_request.user.user_name + "\" has no ownership in pull request #" + p_pull_request.number + " for repo \"" + p_repo.repo_name + "\", this should not happen!");
+                Logger.error("to_user \"" + p_pull_request.user_name + "\" has no ownership in pull request #" + p_pull_request.number + " for repo \"" + p_repo.repo_name + "\", this should not happen!");
             }
             for (model_ownership ownership : ownerships) {
                 if (ownership.percent.compareTo(to_ownership.percent) > 0) {
@@ -75,7 +75,7 @@ class negotiation_status {
                 if (offer.amount_percent.compareTo(request.amount_percent) >= 0) {
                     users_currently_accepted.add(offer.user);
                     tmp_ownership_currently_accepted = tmp_ownership_currently_accepted
-                            .add(ownership_from_user.get(offer.user).percent);
+                            .add(ownership_from_user_name.get(offer.user).percent);
                 }
             }
             ownership_currently_accepted = tmp_ownership_currently_accepted;
@@ -88,7 +88,7 @@ class negotiation_status {
             BigDecimal tmp_ownership = new BigDecimal("0.0");
             BigDecimal tmp_best_offer = null;
             for (model_offer_for_merge offer : offers) {
-                tmp_ownership = tmp_ownership.add(ownership_from_user.get(offer.user).percent);
+                tmp_ownership = tmp_ownership.add(ownership_from_user_name.get(offer.user).percent);
                 if (tmp_ownership.compareTo(policy.ownership_required_to_merge_pull_requests) >= 0) {
                     tmp_best_offer = offer.amount_percent;
                     break;
@@ -114,7 +114,7 @@ class negotiation_status {
             BigDecimal transaction_quanta = request.amount_percent.divide(total_ownership_of_users_with_more_ownership);
             for (model_user user : users_with_more_ownership) {
 
-                final model_ownership ownership = ownership_from_user.get(user);
+                final model_ownership ownership = ownership_from_user_name.get(user);
                 final BigDecimal user_ownership = ownership.percent;
                 final BigDecimal transaction_amount_for_user = transaction_quanta.multiply(user_ownership);
 

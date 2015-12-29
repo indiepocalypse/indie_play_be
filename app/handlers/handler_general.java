@@ -103,7 +103,7 @@ public class handler_general {
     }
 
     private static void notify_by_comment_that_pr_changed_and_offers_are_removed(model_pull_request pull_request) throws github_io_exception {
-        store_github_api.comment_on_issue(pull_request.repo, pull_request.number,
+        store_github_api.comment_on_issue(pull_request.repo_name, pull_request.number,
                 "PR updated, all offers cleared!\nplease place your new offers");
     }
 
@@ -137,12 +137,12 @@ public class handler_general {
         // return whether update was a real update, in the sense that offers were cleared
         boolean updated = false;
         // check previous pull request, the one we are about to override:
-        model_pull_request old_pull_request = store_local_db.get_pull_request_by_repo_name_and_number(pull_request.repo.repo_name, pull_request.number);
+        model_pull_request old_pull_request = store_local_db.get_pull_request_by_repo_name_and_number(pull_request.repo_name, pull_request.number);
         if ((old_pull_request != null) && (!old_pull_request.SHA.equals(pull_request.SHA))) {
             updated = true;
             // updated pull requests contains different code, all previous offers rendered irrelevant
-            store_local_db.delete_request_by_pull_request(pull_request.repo.repo_name, pull_request.number);
-            store_local_db.delete_offers_by_pull_request(pull_request.repo.repo_name, pull_request.number);
+            store_local_db.delete_request_by_pull_request(pull_request.repo_name, pull_request.number);
+            store_local_db.delete_offers_by_pull_request(pull_request.repo_name, pull_request.number);
             // notify users
             try {
                 notify_by_comment_that_pr_changed_and_offers_are_removed(pull_request);

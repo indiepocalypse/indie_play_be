@@ -45,7 +45,7 @@ public class model_offer_for_merge extends Model {
             Date p_date_created,
             Date p_date_accepted_if_accepted,
             BigDecimal p_user_ownership_percent) {
-        id = "offer_for_merge_from_user_" + p_user.user_name + "_for_pull_request_number_" + p_pull_request.number + "_for_repo_" + p_pull_request.repo.repo_name;
+        id = "offer_for_merge_from_user_" + p_user.user_name + "_for_pull_request_number_" + p_pull_request.number + "_for_repo_" + p_pull_request.repo_name;
         this.user = p_user;
         this.pull_request = p_pull_request;
         this.amount_percent = p_amount_percent;
