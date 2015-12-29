@@ -121,7 +121,7 @@ public class handler_commands {
         }
         BigDecimal total = new BigDecimal("0.0");
         for (model_offer_for_merge offer : offers) {
-            offers_str += "@" + offer.user.user_name + "|" + offer.amount_percent.toString() + "\n";
+            offers_str += "@" + offer.user_name + "|" + offer.amount_percent.toString() + "\n";
             total = total.add(offer.amount_percent);
         }
         offers_str += "*total* | " + total.toString() + "\n";
@@ -348,8 +348,8 @@ public class handler_commands {
         String result;
         if (current_offer != null) {
             current_offer = new model_offer_for_merge(
-                    current_offer.user,
-                    pull_request,
+                    current_offer.user_name,
+                    pull_request.id,
                     utils_bigdecimal.from_percent_or_number(percent_amount),
                     is_active,
                     was_positively_accepted,
@@ -363,8 +363,8 @@ public class handler_commands {
             final Date date_accepted_if_accepted = null;
             final Date date_created = new Date();
             current_offer = new model_offer_for_merge(
-                    hook.get_user(),
-                    pull_request,
+                    hook.get_user().user_name,
+                    pull_request.id,
                     utils_bigdecimal.from_percent_or_number(percent_amount),
                     is_active,
                     was_positively_accepted,

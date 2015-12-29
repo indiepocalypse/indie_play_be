@@ -34,7 +34,7 @@ class negotiation_status {
     public final model_ownership to_user_ownership;
 
     private final BigDecimal ownership_currently_accepted;
-    private final List<model_user> users_currently_accepted;
+    private final List<String> users_name_currently_accepted;
     private final BigDecimal required_ownership_as_per_policy;
     private final BigDecimal requested_percent;
     private final BigDecimal required_for_acceptance_current_best_case;
@@ -51,7 +51,7 @@ class negotiation_status {
 
         request = p_request;
 
-        users_currently_accepted = new ArrayList<>(5);
+        users_name_currently_accepted = new ArrayList<>(5);
         final Map<String /* user_name */, model_ownership> ownership_from_user_name = new HashMap<>(11);
         users_with_more_ownership = new ArrayList<>();
         BigDecimal tmp_total_ownership_of_users_with_more_ownership = new BigDecimal("0.0");
@@ -94,9 +94,9 @@ class negotiation_status {
             BigDecimal tmp_ownership_currently_accepted = new BigDecimal("0.0");
             for (model_offer_for_merge offer : offers) {
                 if (offer.amount_percent.compareTo(p_request.amount_percent) >= 0) {
-                    users_currently_accepted.add(offer.user);
+                    users_name_currently_accepted.add(offer.user_name);
                     tmp_ownership_currently_accepted = tmp_ownership_currently_accepted
-                            .add(ownership_from_user_name.get(offer.user).percent);
+                            .add(ownership_from_user_name.get(offer.user_name).percent);
                 }
             }
             ownership_currently_accepted = tmp_ownership_currently_accepted;
@@ -109,7 +109,7 @@ class negotiation_status {
             BigDecimal tmp_ownership = new BigDecimal("0.0");
             BigDecimal tmp_best_offer = null;
             for (model_offer_for_merge offer : offers) {
-                tmp_ownership = tmp_ownership.add(ownership_from_user_name.get(offer.user).percent);
+                tmp_ownership = tmp_ownership.add(ownership_from_user_name.get(offer.user_name).percent);
                 if (tmp_ownership.compareTo(policy.ownership_required_to_merge_pull_requests) >= 0) {
                     tmp_best_offer = offer.amount_percent;
                     break;
@@ -126,9 +126,9 @@ class negotiation_status {
 
         if ((is_negotiation_succesful()) && (total_ownership_of_users_with_more_ownership.compareTo(BigDecimal.ZERO) > 0)) {
 
-            Map<model_user, model_offer_for_merge> offer_from_user = new HashMap<>(11);
+            Map<String /* user name */, model_offer_for_merge> offer_from_user_name = new HashMap<>(11);
             for (model_offer_for_merge offer : offers) {
-                offer_from_user.put(offer.user, offer);
+                offer_from_user_name.put(offer.user_name, offer);
             }
 
             assert p_request != null;
@@ -141,7 +141,7 @@ class negotiation_status {
 
                 final model_user p_from_user = user;
                 final model_user p_to_user = p_request.user;
-                final model_offer_for_merge p_offer = offer_from_user.get(user);
+                final model_offer_for_merge p_offer = offer_from_user_name.get(user);
                 final BigDecimal p_amount_percent = transaction_amount_for_user;
                 final Date p_date = new Date();
                 final model_ownership p_from_user_ownership = ownership;
@@ -183,12 +183,12 @@ class negotiation_status {
         res += "\n";
 
         res += "users currently accepted: ";
-        if ((users_currently_accepted != null) && (users_currently_accepted.size() > 0)) {
+        if ((users_name_currently_accepted != null) && (users_name_currently_accepted.size() > 0)) {
             int i = 0;
-            for (model_user user : users_currently_accepted) {
+            for (String user_name : users_name_currently_accepted) {
                 i += 1;
-                res += "@" + user.user_name;
-                if (i < users_currently_accepted.size()) {
+                res += "@" + user_name;
+                if (i < users_name_currently_accepted.size()) {
                     res += ", ";
                 }
             }

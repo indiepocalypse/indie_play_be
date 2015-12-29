@@ -23,31 +23,29 @@ public class model_offer_for_merge extends Model {
 
     @Id
     public final String id;
-    @ManyToOne
-    public final model_user user;
+    public final String user_name;
     @Column(precision = 5, scale = 2)
     public final BigDecimal amount_percent;
     @Column(precision = 5, scale = 2)
     public final BigDecimal user_ownership_percent;
     final public Date date_accepted_if_accepted;
     final public Date date_created;
-    @ManyToOne
-    private final model_pull_request pull_request;
+    private final String pull_request_id;
     private Boolean is_active;
     private Boolean was_positively_accepted;
 
     public model_offer_for_merge(
-            model_user p_user,
-            model_pull_request p_pull_request,
+            String p_user_name,
+            String p_pull_request_id,
             BigDecimal p_amount_percent,
             Boolean p_is_active,
             Boolean p_was_positively_accepted,
             Date p_date_created,
             Date p_date_accepted_if_accepted,
             BigDecimal p_user_ownership_percent) {
-        id = "offer_for_merge_from_user_" + p_user.user_name + "_for_pull_request_number_" + p_pull_request.number + "_for_repo_" + p_pull_request.repo_name;
-        this.user = p_user;
-        this.pull_request = p_pull_request;
+        this.id = "offer_for_merge_from_user_" + p_user_name + "_for_pull_request_id_" + p_pull_request_id;
+        this.user_name = p_user_name;
+        this.pull_request_id = p_pull_request_id;
         this.amount_percent = p_amount_percent;
         this.is_active = p_is_active;
         this.was_positively_accepted = p_was_positively_accepted;
@@ -64,8 +62,8 @@ public class model_offer_for_merge extends Model {
         final boolean was_positively_accepted = true;
         final Date date_accepted_if_accepted = new Date();
         return new model_offer_for_merge(
-                model_offer_for_merge.user,
-                model_offer_for_merge.pull_request,
+                model_offer_for_merge.user_name,
+                model_offer_for_merge.pull_request_id,
                 model_offer_for_merge.amount_percent,
                 is_active,
                 was_positively_accepted,
