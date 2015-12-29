@@ -22,10 +22,10 @@ public class command_show_creator implements interface_command {
         if (creator == null) {
             return "this repo has no creator";
         }
-        if (creator.user.user_name.equals(store_session.get_user_name())) {
+        if (creator.user_name.equals(store_session.get_user_name())) {
             return "the creator of this repo is you!";
         }
-        return "the creator of this repo is @" + creator.user.user_name;
+        return "the creator of this repo is @" + creator.user_name;
     }
 
     @Override

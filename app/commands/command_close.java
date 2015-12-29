@@ -52,7 +52,7 @@ public class command_close implements interface_command {
                 store_github_api.update_pull_request(pull_request);
                 handler_general.locally_update_pull_request_and_clear_offers_if_necessary(pull_request);
             } catch (github_io_exception e) {
-                Logger.error("could not close pull request #" + pull_request.number + " on repo " + pull_request.repo.repo_name);
+                Logger.error("could not close pull request #" + pull_request.number + " on repo " + pull_request.repo_name);
             }
         } else {
             // we have an issue
