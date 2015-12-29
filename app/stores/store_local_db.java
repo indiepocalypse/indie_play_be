@@ -196,18 +196,11 @@ public class store_local_db {
             final String c2 = model_user.class.getName().split("\\.")[1];
 
             final String sql = "select * from "+c1+" inner join "+c2+" on "+c1+".user_name="+c2+".user_name where repo_name='"+repo_name+"'";
-            Logger.info("XXXXXXXXXXXX =========> "+sql);
             Map<model_user, model_ownership> map = new HashMap<>(3);
-
-            Logger.info("XXXXXXXXXXXXX ========> before");
             List<SqlRow> rows = Ebean.createSqlQuery(sql).findList();
-            Logger.info("XXXXXXXXXXXXX ========> after");
-
-
             for (SqlRow row: rows) {
                 map.put(model_user.from_sqlrow(row), model_ownership.from_sqlrow(row));
             }
-            Logger.info("XXXXXXXXXXXX =========> "+map.size());
             return map;
         } catch (Exception ignore) {
             return new HashMap<>(0);
