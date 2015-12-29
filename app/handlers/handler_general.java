@@ -164,41 +164,42 @@ public class handler_general {
         return updated;
     }
 
-    public static void consume_negotiation(negotiation_status negotiation_status) {
-        model_ownership to_user_ownership;
-        if (negotiation_status.implied_transactions.size() > 0) {
-            to_user_ownership = negotiation_status.implied_transactions.get(0).to_user_ownership;
-        } else {
-            return; // nothing to do, no transactions implied
+    public static void consume_succesful_negotiation(negotiation_status negotiation_status) {
+
+        assert negotiation_status.is_negotiation_succesful();
+        if ((negotiation_status.implied_transactions_mem==null) || (negotiation_status.implied_transactions_mem.size()==0)) {
+            return;
         }
-        for (model_merge_transaction merge_transaction : negotiation_status.implied_transactions) {
+
+        model_ownership to_user_ownership = negotiation_status.to_user_ownership;
+        for (negotiation_status.transaction_info_mem transaction_info : negotiation_status.implied_transactions_mem) {
 
             to_user_ownership = model_ownership.with_new_percent(
                     to_user_ownership,
-                    to_user_ownership.percent.add(merge_transaction.amount_percent)
+                    to_user_ownership.percent.add(transaction_info.transaction.amount_percent)
             );
 
             final model_ownership new_from_ownership = model_ownership.with_new_percent(
-                    merge_transaction.from_user_ownership,
-                    merge_transaction.from_user_ownership.percent.subtract(merge_transaction.amount_percent)
+                    transaction_info.from_user_ownership,
+                    transaction_info.from_user_ownership.percent.subtract(transaction_info.transaction.amount_percent)
             );
 
             final model_offer_for_merge new_offer = model_offer_for_merge
-                    .same_but_accepted_now(merge_transaction.offer);
+                    .same_but_accepted_now(transaction_info.offer);
 
-            final model_request_for_merge new_request = model_request_for_merge
-                    .same_but_accepted_now(merge_transaction.request);
 
             store_local_db.update_ownership(new_from_ownership);
             // the offer can actually be null...
             if (new_offer != null) {
                 store_local_db.update_offer(new_offer);
             }
-            store_local_db.update_request(new_request);
 
-            store_local_db.update_merge_transaction(merge_transaction);
+            store_local_db.update_merge_transaction(transaction_info.transaction);
 
         }
+        final model_request_for_merge new_request = negotiation_status.request
+                .same_but_accepted_now(negotiation_status.request);
+        store_local_db.update_request(new_request);
         store_local_db.update_ownership(to_user_ownership);
     }
 }
