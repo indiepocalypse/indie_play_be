@@ -31,12 +31,11 @@ public class model_repo_policy extends Model {
     public final BigDecimal ownership_required_to_merge_pull_requests;
     @Column(precision = 5, scale = 2)
     public final BigDecimal ownership_required_to_manage_repo; // upload images, etc.
-    @ManyToOne
-    private final model_repo repo;
+    private final String repo_name;
 
-    private model_repo_policy(model_repo p_repo, BigDecimal change, BigDecimal manage_issue, BigDecimal merge, BigDecimal manage_repo) {
-        id = p_repo.repo_name + "@policy";
-        this.repo = p_repo;
+    private model_repo_policy(String p_repo_name, BigDecimal change, BigDecimal manage_issue, BigDecimal merge, BigDecimal manage_repo) {
+        this.id = p_repo_name + "@policy";
+        this.repo_name = p_repo_name;
         this.ownership_required_to_change_policy = change;
         this.ownership_required_to_manage_issues = manage_issue;
         this.ownership_required_to_merge_pull_requests = merge;
@@ -45,7 +44,7 @@ public class model_repo_policy extends Model {
 
     // constructor with some default values from global conf file:
     public model_repo_policy(model_repo p_repo) {
-        this(p_repo,
+        this(p_repo.repo_name,
                 store_conf.get_policy_default_ownership_required_to_change_policy(),
                 store_conf.get_policy_default_ownership_required_to_manage_issues(),
                 store_conf.get_policy_default_ownership_required_to_merge_pull_request(),
@@ -54,8 +53,7 @@ public class model_repo_policy extends Model {
     }
 
     public static Query<model_repo_policy> fetch() {
-        return find.setUseQueryCache(true)
-                .fetch("repo");
+        return find.setUseQueryCache(true);
     }
 
     public static void deleteById(String id) {
@@ -64,7 +62,7 @@ public class model_repo_policy extends Model {
 
     private model_repo_policy same_but_with_different_change_manage_and_merge_policies(BigDecimal change, BigDecimal manage_issue, BigDecimal merge, BigDecimal manage_repo) {
         return new model_repo_policy(
-                this.repo,
+                this.repo_name,
                 change,
                 manage_issue,
                 merge,
