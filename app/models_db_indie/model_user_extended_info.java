@@ -16,16 +16,15 @@ import javax.persistence.ManyToOne;
 @Entity
 public class model_user_extended_info extends Model {
     private static final Finder<String, model_user_extended_info> find = new Finder<>(model_user_extended_info.class);
-    @ManyToOne
-    public final model_user user;
+    public final String user_name;
     @Id
     private final String id;
     public final boolean is_admin;
     public final boolean rate_limit_was_communicated_to_user_via_github_comment;
 
-    private model_user_extended_info(final model_user p_user, final boolean p_is_admin, final boolean p_rate_limit_communicated_to_user_via_github_comment) {
-        id = get_id_by_user_name(p_user.user_name);
-        user = p_user;
+    private model_user_extended_info(final String p_user_name, final boolean p_is_admin, final boolean p_rate_limit_communicated_to_user_via_github_comment) {
+        this.id = get_id_by_user_name(p_user_name);
+        this.user_name = p_user_name;
         this.is_admin = p_is_admin;
         this.rate_limit_was_communicated_to_user_via_github_comment = p_rate_limit_communicated_to_user_via_github_comment;
     }
@@ -34,21 +33,21 @@ public class model_user_extended_info extends Model {
         return user_name + "@extended_info";
     }
 
-    public static model_user_extended_info create(final model_user p_user, final boolean p_is_admin) {
+    public static model_user_extended_info create(final String p_user_name, final boolean p_is_admin) {
         final boolean rate_limit_was_communicated_to_user_via_github_comment = false;
-        return new model_user_extended_info(p_user, p_is_admin, rate_limit_was_communicated_to_user_via_github_comment);
+        return new model_user_extended_info(p_user_name, p_is_admin, rate_limit_was_communicated_to_user_via_github_comment);
     }
 
     public model_user_extended_info set_ratelimit_communicated_to_user_via_github_comment(final boolean newstatus) {
-        return new model_user_extended_info(user, is_admin, newstatus);
+        return new model_user_extended_info(user_name, is_admin, newstatus);
     }
 
     public model_user_extended_info set_admin(final boolean newstatus) {
-        return new model_user_extended_info(user, newstatus, rate_limit_was_communicated_to_user_via_github_comment);
+        return new model_user_extended_info(user_name, newstatus, rate_limit_was_communicated_to_user_via_github_comment);
     }
 
     public static Query<model_user_extended_info> fetch() {
-        return find.setUseQueryCache(true).fetch("user");
+        return find.setUseQueryCache(true);
     }
 
     public static void deleteById(String id) {

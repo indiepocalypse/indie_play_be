@@ -88,7 +88,7 @@ public class controller_webhooks_github extends Controller {
             model_user_extended_info user_extended_info = store_local_db.get_user_extended_info(hook.get_user().user_name);
             if (user_extended_info==null) {
                 final boolean is_admin = false;
-                user_extended_info = model_user_extended_info.create(hook.get_user(), is_admin);
+                user_extended_info = model_user_extended_info.create(hook.get_user().user_name, is_admin);
                 store_local_db.update_user_extended_info(user_extended_info);
             }
 

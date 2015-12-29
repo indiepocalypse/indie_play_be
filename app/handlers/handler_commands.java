@@ -139,11 +139,11 @@ public class handler_commands {
         boolean more_than_one_admin = admins.size() > 1;
         boolean you_are_included = false;
         for (model_user_extended_info admin : admins) {
-            if (hook.get_user().user_name.equals(admin.user.user_name)) {
+            if (hook.get_user().user_name.equals(admin.user_name)) {
                 you_are_included = true;
                 continue;
             }
-            response += "@" + admin.user.user_name + " ";
+            response += "@" + admin.user_name + " ";
         }
         if ((more_than_one_admin) && (you_are_included)) {
             response += "and you, are admins";
