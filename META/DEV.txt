@@ -24,6 +24,8 @@ activator -jvm-debug 9999 run
 (see here: http://stackoverflow.com/questions/24218341/how-to-run-play-framework-2-x-in-debug-mode-in-intellij-idea
 answer at the bottom)
 
+TODO: `final` in many places, method parameters
+TODO: ebean L2 update
 TODO: cloudflare?
 TODO: google analytics?
 TODO: cache everything: index / faq / help / explore (every few hrs or minutes) / etc

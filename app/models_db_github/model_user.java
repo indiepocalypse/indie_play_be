@@ -21,7 +21,7 @@ public class model_user extends Model {
     public final String github_html_url;
     public final String avatar_url;
 
-    private model_user(String p_user_name, String p_github_html_url, String p_avatar_url) {
+    public model_user(String p_user_name, String p_github_html_url, String p_avatar_url) {
         this.user_name = p_user_name;
         this.github_html_url = p_github_html_url;
         this.avatar_url = p_avatar_url;

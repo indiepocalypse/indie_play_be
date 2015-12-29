@@ -18,6 +18,7 @@ public class store_session {
     private final static String token_session_key = "token";
     private final static String github_code_session_key = "github_code";
     private final static String new_repo_session_key = "new_repo___";
+    private final static String user_github_html_url_key = "user_github_html_url_key___";
 
     public static String get_path() {
         return controller_main.request().path();
@@ -44,6 +45,7 @@ public class store_session {
     public static void set_current_user(model_user user) {
         controller_main.session().put(avatar_url_session_key, user.avatar_url);
         controller_main.session().put(user_name_session_key, user.user_name);
+        controller_main.session().put(user_github_html_url_key, user.github_html_url);
     }
 
 
@@ -54,11 +56,22 @@ public class store_session {
         return controller_main.session().get(avatar_url_session_key);
     }
 
+    public static String get_user_github_html_url() {
+        if (!user_is_logged()) {
+            return null;
+        }
+        return controller_main.session().get(user_github_html_url_key);
+    }
+
     public static String get_user_name() {
         if (!user_is_logged()) {
             return null;
         }
         return controller_main.session().get(user_name_session_key);
+    }
+
+    public model_user get_user() {
+        return new model_user(get_user_name(), get_user_github_html_url(), get_avatar_url());
     }
 
     public static String get_state() {
