@@ -16,6 +16,7 @@ import javax.persistence.Id;
 public class model_repo extends Model {
     private static final Finder<String, model_repo> find = new Finder<>(model_repo.class);
 
+    // TODO: notnull annotations!
     @Id
     public final String repo_name;
     public final String repo_description;
@@ -25,6 +26,13 @@ public class model_repo extends Model {
     private final Integer forks_count;
 
     private model_repo(String repo_name, String repo_description, String repo_homepage, String github_html_url, Integer stars_count, Integer forks_count) {
+        assert repo_name != null;
+        assert repo_description != null;
+        assert repo_homepage != null;
+        assert github_html_url != null;
+        assert stars_count != null;
+        assert forks_count != null;
+
         this.repo_name = repo_name;
         this.repo_description = repo_description;
         this.repo_homepage = repo_homepage;

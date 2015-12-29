@@ -2,6 +2,7 @@ package models_db_indie;
 
 import com.avaje.ebean.Model;
 import com.avaje.ebean.Query;
+import com.avaje.ebean.SqlRow;
 import com.avaje.ebean.annotation.CacheStrategy;
 import models_db_github.model_repo;
 import models_db_github.model_user;
@@ -28,7 +29,12 @@ public class model_ownership extends Model {
     public final BigDecimal percent;
     private final boolean is_creator;
 
-    public model_ownership(String p_user_name, String p_repo_name, BigDecimal p_percent, boolean p_is_creator) {
+    public model_ownership(String p_user_name, String p_repo_name, BigDecimal p_percent, Boolean p_is_creator) {
+        assert p_user_name != null;
+        assert p_repo_name != null;
+        assert p_percent != null;
+        assert p_is_creator != null;
+
         this.id = "ownershio@" + p_user_name + "@" + p_repo_name;
         this.user_name = p_user_name;
         this.repo_name = p_repo_name;
@@ -42,6 +48,15 @@ public class model_ownership extends Model {
                 base_ownership.repo_name,
                 new_percent,
                 base_ownership.is_creator
+        );
+    }
+
+    public static model_ownership from_sqlrow(SqlRow row) {
+        return new model_ownership(
+                row.getString("user_name"),
+                row.getString("repo_name"),
+                row.getBigDecimal("percent"),
+                row.getBoolean("is_creator")
         );
     }
 

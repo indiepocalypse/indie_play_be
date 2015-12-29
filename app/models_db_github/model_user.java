@@ -2,6 +2,7 @@ package models_db_github;
 
 import com.avaje.ebean.Model;
 import com.avaje.ebean.Query;
+import com.avaje.ebean.SqlRow;
 import com.avaje.ebean.annotation.CacheStrategy;
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -22,6 +23,11 @@ public class model_user extends Model {
     public final String avatar_url;
 
     public model_user(String p_user_name, String p_github_html_url, String p_avatar_url) {
+        // TODO: asserts for all models
+        assert p_user_name != null;
+        assert p_github_html_url != null;
+        assert p_avatar_url != null;
+
         this.user_name = p_user_name;
         this.github_html_url = p_github_html_url;
         this.avatar_url = p_avatar_url;
@@ -43,5 +49,13 @@ public class model_user extends Model {
         find.deleteById(id);
     }
 
+    public static model_user from_sqlrow(SqlRow row) {
+        // TODO: there must be an automatic way to do this...
+        return new model_user(
+                row.getString("user_name"),
+                row.getString("github_html_url"),
+                row.getString("avatar_url")
+        );
+    }
 }
 

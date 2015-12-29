@@ -48,6 +48,21 @@ public class model_pull_request extends Model {
             String p_number,
             String p_SHA
     ) {
+        assert p_url != null;
+        assert p_url != null;
+        assert p_github_id != null;
+        assert p_html_url != null;
+        assert p_state != null;
+        assert p_title != null;
+        assert p_user_name != null;
+        assert p_body != null;
+        assert p_merged != null;
+        assert p_mergeable != null;
+        assert p_comments_url != null;
+        assert p_SHA != null;
+        assert p_repo_name != null;
+        assert p_number != null;
+
         this.url = p_url;
         this.github_id = p_github_id;
         this.html_url = p_html_url;

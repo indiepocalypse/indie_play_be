@@ -1,6 +1,9 @@
 package stores;
 
+import com.avaje.ebean.Ebean;
 import com.avaje.ebean.PagedList;
+import com.avaje.ebean.RawSqlBuilder;
+import com.avaje.ebean.SqlRow;
 import handlers.handler_general;
 import models_db_github.model_pull_request;
 import models_db_github.model_repo;
@@ -189,7 +192,20 @@ public class store_local_db {
 
     public static Map<model_user, model_ownership> get_users_and_ownerships_by_repo_name(String repo_name) {
         try {
-            return model_ownership.fetch().where().eq("repo_name", repo_name).findMap("user_name", model_user.class);
+            final String c1 = model_ownership.class.getName();
+            final String c2 = model_user.class.getName();
+
+            final String sql = "select * from "+c1+" inner join "+c2+" on "+c1+".user_name="+c2+".user_name";
+            Map<model_user, model_ownership> map = new HashMap<>(3);
+
+            List<SqlRow> rows = Ebean.createSqlQuery(sql).findList();
+
+            for (SqlRow row: rows) {
+                map.put(model_user.from_sqlrow(row), model_ownership.from_sqlrow(row));
+            }
+            Logger.info("XXXXXXXXXXXX =========> "+sql);
+            Logger.info("XXXXXXXXXXXX =========> "+map.size());
+            return map;
         } catch (Exception ignore) {
             return new HashMap<>(0);
         }
