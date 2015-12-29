@@ -251,8 +251,8 @@ public class handler_commands {
         String result;
         if (current_request != null) {
             current_request = new model_request_for_merge(
-                    current_request.user,
-                    pull_request,
+                    current_request.user_name,
+                    pull_request.id,
                     utils_bigdecimal.from_percent_or_number(percent_amount),
                     is_active,
                     was_positively_accepted,
@@ -268,8 +268,8 @@ public class handler_commands {
             final model_ownership user_ownership = store_local_db.get_ownership_by_user_name_and_repo_name(hook.get_user(), hook.get_repo());
             if (user_ownership != null) {
                 current_request = new model_request_for_merge(
-                        hook.get_user(),
-                        pull_request,
+                        hook.get_user().user_name,
+                        pull_request.id,
                         utils_bigdecimal.from_percent_or_number(percent_amount),
                         is_active,
                         was_positively_accepted,

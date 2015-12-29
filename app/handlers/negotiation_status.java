@@ -140,7 +140,7 @@ class negotiation_status {
                 final BigDecimal transaction_amount_for_user = transaction_quanta.multiply(user_ownership);
 
                 final String p_from_user_name = user_name;
-                final String p_to_user_name = p_request.user.user_name;
+                final String p_to_user_name = p_request.user_name;
                 final model_offer_for_merge p_offer = offer_from_user_name.get(user_name);
                 final BigDecimal p_amount_percent = transaction_amount_for_user;
                 final Date p_date = new Date();
