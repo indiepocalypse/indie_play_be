@@ -21,31 +21,29 @@ import java.util.List;
 @CacheStrategy(readOnly = true, warmingQuery = "order by file_name")
 @Entity
 public class model_repo_image extends Model {
+    // TODO: split into image model and repo pointer to it
+    // TODO: maybe use a repo extended info... like for users
     private static final Finder<String, model_repo_image> find = new Finder<>(model_repo_image.class);
     @Id
     public final String file_name;
-    @ManyToOne
-    public final model_repo repo;
+    public final String repo_name;
     @Lob
     private final byte[] image;
     public final Date uploaded_date;
-    @ManyToOne
-    public final model_user uploaded_by_user;
+    public final String uploaded_by_user_name;
 
-    public model_repo_image(model_repo p_repo, model_user p_user, byte[] p_image, String file_name) {
-        this.uploaded_by_user = p_user;
-        this.repo = p_repo;
+    public model_repo_image(String p_repo_name, String p_user_name, byte[] p_image) {
+        this.uploaded_by_user_name = p_user_name;
+        this.repo_name = p_repo_name;
         this.image = p_image;
         this.uploaded_date = new Date();
         this.file_name = new utils.utils_random_string(12).nextString();
         Logger.info("FILE NAME: "+this.file_name);
-        Logger.info("MODEL_USER_NAME: "+p_user.user_name);
+        Logger.info("MODEL_USER_NAME: "+p_user_name);
     }
 
     public static Query<model_repo_image> fetch() {
-        return find.setUseQueryCache(true)
-                .fetch("repo")
-                .fetch("uploaded_by_user");
+        return find.setUseQueryCache(true);
     }
 
     public byte[] getImage() {

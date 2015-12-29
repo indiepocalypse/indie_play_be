@@ -155,8 +155,6 @@ public class controller_main extends Controller {
             java.io.File file = image.getFile();
             // TODO: limit file size!
             // TODO: check user can actually upload to that repo...
-            model_repo repo = store_local_db.get_repo_by_name(repo_name);
-            model_user user = store_local_db.get_user_by_name(store_session.get_user_name());
             byte[] bytes = null;
             try {
                 bytes = java.nio.file.Files.readAllBytes(file.toPath());
@@ -164,9 +162,9 @@ public class controller_main extends Controller {
             }
             catch (Exception e) {
             }
-            model_repo_image repo_image = new model_repo_image(repo, user, bytes, file_name);
+            model_repo_image repo_image = new model_repo_image(repo_name, store_session.get_user_name(), bytes);
             store_local_db.update_repo_image(repo_image);
-            return ok("File uploaded, user name is "+user.user_name+" file name: "+repo_image.file_name);
+            return ok("File uploaded, user name is "+store_session.get_user_name()+" file name: "+repo_image.file_name);
         } else {
             flash("error", "Missing file");
             return badRequest();
