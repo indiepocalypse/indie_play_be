@@ -51,7 +51,19 @@ public class model_merge_transaction extends Model {
             String p_to_user_ownership_id,
             String p_repo_name,
             BigDecimal p_from_user_ownership_percent) {
-        id = "transaction_from_user_" + p_from_user_name + "_to_user " + p_to_user_name + "_for_pull_request_id_" + p_pull_request_id + "_for_repo_" + p_repo_name;
+        assert p_to_user_name != null;
+        assert p_from_user_name != null;
+        assert p_pull_request_id != null;
+        assert p_amount_percent != null;
+        assert p_offer_id != null;
+        assert p_request_id != null;
+        assert p_date != null;
+        assert p_from_user_ownership_id != null;
+        assert p_to_user_ownership_id != null;
+        assert p_repo_name != null;
+        assert p_from_user_ownership_percent != null;
+
+        this.id = "transaction_from_user_" + p_from_user_name + "_to_user " + p_to_user_name + "_for_pull_request_id_" + p_pull_request_id + "_for_repo_" + p_repo_name;
         this.to_user_name = p_to_user_name;
         this.from_user_name = p_from_user_name;
         this.pull_request_id = p_pull_request_id;

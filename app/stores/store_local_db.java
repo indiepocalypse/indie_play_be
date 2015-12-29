@@ -195,7 +195,7 @@ public class store_local_db {
             final String c1 = model_ownership.class.getName().split("\\.")[1];
             final String c2 = model_user.class.getName().split("\\.")[1];
 
-            final String sql = "select * from "+c1+" inner join "+c2+" on "+c1+".user_name="+c2+".user_name where repo_name="+repo_name;
+            final String sql = "select * from "+c1+" inner join "+c2+" on "+c1+".user_name="+c2+".user_name where repo_name='"+repo_name+"'";
             Logger.info("XXXXXXXXXXXX =========> "+sql);
             Map<model_user, model_ownership> map = new HashMap<>(3);
 
