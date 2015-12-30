@@ -115,7 +115,7 @@ public class store_local_db {
     public static List<model_merge_transaction> get_merge_transactions_by_to_user(model_user to_user) {
         try {
             return model_merge_transaction.fetch().where()
-                    .eq("to_user.user_name", to_user.user_name)
+                    .eq("to_user_name", to_user.user_name)
                     .findList();
         } catch (Exception ignore) {
             return null;
@@ -125,7 +125,7 @@ public class store_local_db {
     public static List<model_merge_transaction> get_merge_transactions_by_from_user(model_user from_user) {
         try {
             return model_merge_transaction.fetch().where()
-                    .eq("from_user.user_name", from_user.user_name)
+                    .eq("from_user_name", from_user.user_name)
                     .findList();
         } catch (Exception ignore) {
             return null;
@@ -136,7 +136,7 @@ public class store_local_db {
         try {
             // TODO: refactor all these fetches into the model itself
             return model_merge_transaction.fetch().where()
-                    .eq("pull_request.SHA", pull_request.SHA)
+                    .eq("pull_request_id", pull_request.id)
                     .findList();
         } catch (Exception ignore) {
             return null;
@@ -262,29 +262,27 @@ public class store_local_db {
     public static List<model_offer_for_merge> get_offers_by_user(String user_name) {
         try {
             return model_offer_for_merge.fetch()
-                    .where().eq("user.user_name", user_name).findList();
+                    .where().eq("user_name", user_name).findList();
         } catch (Exception ignore) {
             return new ArrayList<>(0);
         }
     }
 
-    public static List<model_offer_for_merge> get_offers_by_pull_request(String repo_name, String number) {
+    public static List<model_offer_for_merge> get_offers_by_pull_request(model_pull_request pull_request) {
         try {
             return model_offer_for_merge.fetch()
-                    .where().eq("pull_request.number", number)
-                    .where().eq("pull_request.repo.repo_name", repo_name)
+                    .where().eq("pull_request_id", pull_request.id)
                     .findList();
         } catch (Exception ignore) {
             return new ArrayList<>(0);
         }
     }
 
-    public static model_offer_for_merge get_offer_by_user_by_pull_request(String user_name, String repo_name, String number) {
+    public static model_offer_for_merge get_offer_by_user_by_pull_request(String user_name, model_pull_request pull_request) {
         try {
             return model_offer_for_merge.fetch()
-                    .where().eq("user.user_name", user_name)
-                    .where().eq("pull_request.number", number)
-                    .where().eq("pull_request.repo.repo_name", repo_name)
+                    .where().eq("user_name", user_name)
+                    .where().eq("pull_request_id", pull_request.id)
                     .findUnique();
         } catch (Exception ignore) {
             return null;
@@ -300,6 +298,7 @@ public class store_local_db {
         }
     }
 
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXX
     public static void delete_offers_by_pull_request(String repo_name, String number) {
         try {
             // TODO: this delete one by one is bad. Fix it!

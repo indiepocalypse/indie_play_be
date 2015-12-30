@@ -116,7 +116,7 @@ public class handler_commands {
 
         String offers_str = "\n\nOwner | Current offer\n" +
                 "-------|---------\n";
-        List<model_offer_for_merge> offers = store_local_db.get_offers_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
+        List<model_offer_for_merge> offers = store_local_db.get_offers_by_pull_request(hook.get_pull_request());
         if (offers.size() == 0) {
             return request_str + "thre are no offers";
         }
@@ -281,7 +281,7 @@ public class handler_commands {
             }
         }
 
-        final List<model_offer_for_merge> offers = store_local_db.get_offers_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
+        final List<model_offer_for_merge> offers = store_local_db.get_offers_by_pull_request(hook.get_pull_request());
         final model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo());
         final List<model_ownership> ownerships = store_local_db.get_ownerships_by_repo_name(hook.get_repo().repo_name);
         try {
@@ -347,7 +347,7 @@ public class handler_commands {
 
         // we can make or update the user offer...
 
-        model_offer_for_merge current_offer = store_local_db.get_offer_by_user_by_pull_request(hook.get_user().user_name, hook.get_repo().repo_name, hook.get_issue_num());
+        model_offer_for_merge current_offer = store_local_db.get_offer_by_user_by_pull_request(hook.get_user().user_name, hook.get_pull_request());
         final boolean is_active = true;
         final boolean was_positively_accepted = false;
         String result;
@@ -381,7 +381,7 @@ public class handler_commands {
         }
 
         final model_request_for_merge request = store_local_db.get_request_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
-        final List<model_offer_for_merge> offers = store_local_db.get_offers_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
+        final List<model_offer_for_merge> offers = store_local_db.get_offers_by_pull_request(hook.get_pull_request());
         final model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo());
         final List<model_ownership> ownerships = store_local_db.get_ownerships_by_repo_name(hook.get_repo().repo_name);
         try {
