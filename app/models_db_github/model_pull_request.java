@@ -112,10 +112,8 @@ public class model_pull_request extends Model {
         String comments_url = json.get("comments_url").asText();
         JsonNode head = json.get("head");
         model_repo repo = model_repo.from_json(json.get("base").get("repo"));
-        String SHA = null;
-        if (head != null) {
-            SHA = head.get("sha").asText();
-        }
+        @Nonnull final String SHA = head.get("sha").asText();
+        assert SHA!=null;
         return new model_pull_request(
                 url,
                 github_id,
@@ -162,8 +160,9 @@ public class model_pull_request extends Model {
     private model_pull_request same_but_with_state_merged_and_mergeable(
             @Nonnull final String p_state,
             final boolean p_merged,
-            final boolean p_mergeable) {
+            @Nonnull final Boolean p_mergeable) {
         assert p_state != null;
+        assert p_mergeable != null;
         return new model_pull_request(
                 this.url,
                 this.github_id,

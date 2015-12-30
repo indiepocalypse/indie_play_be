@@ -295,10 +295,11 @@ public class handler_commands {
 
     // this is like handle_make_offer but offers an exact amount to accept the offer
     public static String handle_tailor_offer(interface_github_webhook hook) {
-        try {
-            final model_request_for_merge request = store_local_db.get_request_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
+        final model_request_for_merge request = store_local_db.get_request_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
+        if (request!=null) {
             return handle_make_offer(hook, request.amount_percent.toString());
-        } catch (Exception ignore) {
+        }
+        else {
             return "cannot find the request. Please try again later, or contact an admin";
         }
     }
@@ -318,7 +319,7 @@ public class handler_commands {
             return "this pull request is closed, cannot place an offer";
         }
         final model_ownership user_ownership = store_local_db.get_ownership_by_user_name_and_repo_name(hook.get_user(), hook.get_repo());
-        if ((user_ownership == null) || (user_ownership.percent == null) ||
+        if ((user_ownership == null) ||
                 (user_ownership.percent.compareTo(BigDecimal.ZERO) <= 0)) {
             return "Only owners with ownership can make offers";
         }

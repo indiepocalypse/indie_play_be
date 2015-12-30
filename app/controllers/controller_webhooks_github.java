@@ -48,7 +48,14 @@ public class controller_webhooks_github extends Controller {
         if (model_webhook_issue_comment_created.is_me(json)) {
             hook = model_webhook_issue_comment_created.from_json(json);
         } else if (model_webhook_pull_request_comment_created.is_me(json)) {
-            hook = model_webhook_pull_request_comment_created.from_json(json);
+            try {
+                hook = model_webhook_pull_request_comment_created.from_json(json);
+            }
+            catch (Exception e) {
+                Logger.error("cannot create hook for comment on pull request: ", e);
+                // TODO: make this error better. Maybe we can reply as comment to the user? we have the repo name and issue number... maybe return these in a custom error?
+                return internalServerError();
+            }
         } else if (model_webhook_issue_created.is_me(json)) {
             hook = model_webhook_issue_created.from_json(json);
         } else if (model_webhook_pull_request_created_or_updated.is_me(json)) {

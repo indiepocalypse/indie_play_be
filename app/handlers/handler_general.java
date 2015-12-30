@@ -36,7 +36,7 @@ public class handler_general {
 
     public static void integrate_github_repo_that_was_transferred(String repo_name, String user_name, boolean create_webhook,
                                                                   boolean check_for_existance_of_readme,
-                                                                  boolean delete_original_collaborators) throws github_io_exception {
+                                                                  boolean delete_original_collaborators) throws Exception {
         // this method assumes repo is not in DB!
         model_user user = get_integrate_github_user_by_name(user_name);
         // we bring this repo from indie since it was transferred
@@ -49,7 +49,7 @@ public class handler_general {
 
     public static void integrate_github_repo(model_repo repo, model_user user, boolean create_webhook,
                                              boolean check_for_existance_first,
-                                             boolean delete_original_collaborators) throws github_io_exception {
+                                             boolean delete_original_collaborators) throws Exception {
         store_local_db.update_repo(repo);
         if (create_webhook) {
             store_github_api.create_webhook(repo);
@@ -59,6 +59,11 @@ public class handler_general {
         final boolean is_creator = true;
         model_ownership ownership1 = new model_ownership(user.user_name, repo.repo_name, user_ownership_percent, is_creator);
         model_user theindiepocalypse = store_local_db.get_user_by_name("theindiepocalypse");
+        if (theindiepocalypse==null) {
+            final String message = "cannot integrate repo "+repo.repo_name+" since cannot find indie user!";
+            Logger.error(message);
+            throw new Error(message);
+        }
         final boolean indiepocalypse_is_creator = false;
         model_ownership ownership2 = new model_ownership(theindiepocalypse.user_name, repo.repo_name, indie_ownership_percent, indiepocalypse_is_creator);
         store_local_db.update_ownership(ownership1);
@@ -170,7 +175,7 @@ public class handler_general {
     public static void consume_succesful_negotiation(negotiation_status negotiation_status) {
 
         assert negotiation_status.is_negotiation_succesful();
-        if ((negotiation_status.implied_transactions_mem == null) || (negotiation_status.implied_transactions_mem.size() == 0)) {
+        if (negotiation_status.implied_transactions_mem.size() == 0) {
             return;
         }
 

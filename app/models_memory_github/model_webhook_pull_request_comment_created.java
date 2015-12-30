@@ -5,6 +5,7 @@ import models_db_github.model_pull_request;
 import models_db_github.model_repo;
 import models_db_github.model_user;
 import play.Logger;
+import play.api.libs.iteratee.Error;
 import stores.store_local_db;
 import utils.utils_github_webhooks;
 
@@ -33,7 +34,7 @@ public class model_webhook_pull_request_comment_created implements interface_git
             @Nonnull model_comment p_comment,
             @Nonnull model_repo p_repo,
             @Nonnull model_user p_user
-    ) {
+    ) throws Exception {
         assert p_action != null;
         assert p_issue != null;
         assert p_comment != null;
@@ -45,13 +46,18 @@ public class model_webhook_pull_request_comment_created implements interface_git
         this.comment = p_comment;
         this.repo = p_repo;
         this.user = p_user;
-        this.pull_request = store_local_db.get_pull_request_by_repo_name_and_number(repo.repo_name, issue.number);
-        if (pull_request == null) {
-            Logger.error("while creating a model_pull_request for repo " + repo.repo_name + " #" + issue.number + ":\n", "couldn't find repo in local db!");
+        final model_pull_request tmp_pull_request = store_local_db.get_pull_request_by_repo_name_and_number(repo.repo_name, issue.number);
+        if (tmp_pull_request==null) {
+            // TODO: should we try to sync the repo from github?
+            String message = "trying to create a comment on pull request but cannot get the PR from the DB. repo_name is "+repo.repo_name+" issue #"+p_issue.number;
+            Logger.error(message);
+            // TODO: make a better custom error, using the info that we have
+            throw new Exception(message);
         }
+        this.pull_request = tmp_pull_request;
     }
 
-    public static model_webhook_pull_request_comment_created from_json(@Nonnull JsonNode json) {
+    public static model_webhook_pull_request_comment_created from_json(@Nonnull JsonNode json) throws Exception {
         assert json != null;
         String action = json.get("action").asText();
         model_issue issue = model_issue.from_json(json.get("issue"));

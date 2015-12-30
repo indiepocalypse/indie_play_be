@@ -18,14 +18,11 @@ public class Global extends GlobalSettings {
 
         // TODO: this is just stub. DOC files should be parsed and generate some nice html, etc.
         File directory = app.getFile("./conf/internal_resources/docs"); //new File("/app");
-        @Nonnull final File[] fList = directory.listFiles();
-        assert fList != null;
-        try {
+        final File[] fList = directory.listFiles();
+        if (fList != null) {
             for (File file : fList) {
                 Logger.info(" ------ " + file.getPath() + " ---------- " + file.getName());
             }
-        } catch (NullPointerException e) {
-            Logger.error("While listing files in interbal resources. This should not happen");
         }
 
 

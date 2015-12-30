@@ -15,9 +15,9 @@ import java.util.*;
  */
 class negotiation_status {
 
-    public final List<transaction_info_mem> implied_transactions_mem;
-    public final model_request_for_merge request;
-    public final model_ownership to_user_ownership;
+    @Nonnull public final List<transaction_info_mem> implied_transactions_mem;
+    @Nonnull public final model_request_for_merge request;
+    @Nonnull public final model_ownership to_user_ownership;
     private final BigDecimal ownership_currently_accepted;
     private final List<String> users_name_currently_accepted;
     private final BigDecimal required_ownership_as_per_policy;

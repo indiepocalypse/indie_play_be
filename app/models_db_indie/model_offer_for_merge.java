@@ -5,6 +5,7 @@ import com.avaje.ebean.Query;
 import com.avaje.ebean.annotation.CacheStrategy;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -30,8 +31,8 @@ public class model_offer_for_merge extends Model {
     @Column(precision = 5, scale = 2)
     @Nonnull
     public final BigDecimal user_ownership_percent;
-    @Nonnull
-    final public Date date_accepted_if_accepted;
+    @Nullable
+    final public Date date_accepted_if_accepted; // null if not yet accepted
     @Nonnull
     final public Date date_created;
     @Nonnull
@@ -48,7 +49,7 @@ public class model_offer_for_merge extends Model {
             @Nonnull Boolean p_is_active,
             @Nonnull Boolean p_was_positively_accepted,
             @Nonnull Date p_date_created,
-            @Nonnull Date p_date_accepted_if_accepted,
+            @Nullable Date p_date_accepted_if_accepted,
             @Nonnull BigDecimal p_user_ownership_percent) {
         assert p_user_name != null;
         assert p_pull_request_id != null;
@@ -56,7 +57,6 @@ public class model_offer_for_merge extends Model {
         assert p_is_active != null;
         assert p_was_positively_accepted != null;
         assert p_date_created != null;
-        assert p_date_accepted_if_accepted != null;
         assert p_user_ownership_percent != null;
 
         this.id = "offer_for_merge_from_user_" + p_user_name + "_for_pull_request_id_" + p_pull_request_id;

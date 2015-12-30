@@ -145,13 +145,7 @@ public class controller_main extends Controller {
             return ok("no image for this repo");
         }
         response().setHeader("Content-Type", "image");
-        try {
-            return ok(model_repo_image.getImage());
-        }
-        catch (NullPointerException e) {
-            Logger.error("this should not happen: ", e);
-            return internalServerError();
-        }
+        return ok(model_repo_image.getImage());
     }
 
     public Result repo_image_upload_get(String repo_name) {
