@@ -418,7 +418,7 @@ public class store_local_db {
     public static model_repo_policy get_policy_by_repo(model_repo repo) {
         try {
             return model_repo_policy.fetch()
-                    .where().eq("repo.repo_name", repo.repo_name).findUnique();
+                    .where().eq("repo_name", repo.repo_name).findUnique();
         } catch (Exception ignore) {
             return null;
         }
@@ -428,7 +428,7 @@ public class store_local_db {
         try {
             // TODO: this delete one by one is bad. Fix it!
             List<model_repo_policy> policies = model_repo_policy.fetch()
-                    .where().eq("repo.repo_name", repo.repo_name).findList();
+                    .where().eq("repo_name", repo.repo_name).findList();
             if (policies != null) {
                 for (model_repo_policy policy : policies) {
                     model_repo_policy.deleteById(policy.id);
