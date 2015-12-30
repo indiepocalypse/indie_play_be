@@ -12,13 +12,17 @@ import java.util.regex.Pattern;
  */
 public class model_command {
     public final ArrayList<String> args;
-    public String command;
-    private String joined_args;
+    public final String command;
+    private final String joined_args;
 
-    private model_command() {
-        this.command = "";
-        this.joined_args = "";
-        this.args = new ArrayList<>();
+    private model_command(ArrayList<String> p_args, String p_command, String p_joined_args) {
+        assert p_command != null;
+        assert p_joined_args != null;
+        assert p_args != null;
+
+        this.command = p_command;
+        this.joined_args = p_joined_args;
+        this.args = p_args;
     }
 
     public static ArrayList<model_command> from_text(String text) {
@@ -40,12 +44,15 @@ public class model_command {
             if (splitted.length == 0) {
                 continue;
             }
-            model_command command = new model_command();
-            command.command = splitted[0];
+            ArrayList<String> args = new ArrayList<>(3);
+            String cmd = "";
+            String joined_args = "";
+            cmd = splitted[0];
             if (splitted2.length > 1) {
-                command.joined_args = splitted2[1];
+                joined_args = splitted2[1];
             }
-            command.args.addAll(Arrays.asList(splitted).subList(1, splitted.length));
+            args.addAll(Arrays.asList(splitted).subList(1, splitted.length));
+            model_command command = new model_command(args, cmd, joined_args);
             commands.add(command);
         }
         return commands;

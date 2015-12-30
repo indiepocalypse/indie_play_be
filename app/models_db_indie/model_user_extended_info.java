@@ -23,6 +23,8 @@ public class model_user_extended_info extends Model {
     public final boolean rate_limit_was_communicated_to_user_via_github_comment;
 
     private model_user_extended_info(final String p_user_name, final boolean p_is_admin, final boolean p_rate_limit_communicated_to_user_via_github_comment) {
+        assert p_user_name != null;
+
         this.id = get_id_by_user_name(p_user_name);
         this.user_name = p_user_name;
         this.is_admin = p_is_admin;

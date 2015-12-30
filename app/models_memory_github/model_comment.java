@@ -22,6 +22,13 @@ public class model_comment {
             model_user p_user,
             String p_body
     ) {
+        assert p_url != null;
+        assert p_html_url != null;
+        assert p_issue_url != null;
+        assert p_id != null;
+        assert p_user != null;
+        assert p_body != null;
+
         this.url = p_url;
         this.html_url = p_html_url;
         this.issue_url = p_issue_url;

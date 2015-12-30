@@ -44,6 +44,15 @@ public class model_request_for_merge extends Model {
             Date p_date_created,
             Date p_date_accepted_if_accepted,
             BigDecimal p_user_ownership_percent) {
+        assert p_user_name != null;
+        assert p_pull_request_id != null;
+        assert p_amount_percent != null;
+        assert p_is_active != null;
+        assert p_was_positively_accepted != null;
+        assert p_date_created != null;
+        assert p_date_accepted_if_accepted != null;
+        assert p_user_ownership_percent != null;
+
         id = "request_for_merge_from_user_" + p_user_name + "_for_pull_request_id_" + p_pull_request_id;
         this.user_name = p_user_name;
         this.pull_request_id = p_pull_request_id;

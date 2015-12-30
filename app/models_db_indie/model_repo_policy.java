@@ -34,6 +34,12 @@ public class model_repo_policy extends Model {
     private final String repo_name;
 
     private model_repo_policy(String p_repo_name, BigDecimal change, BigDecimal manage_issue, BigDecimal merge, BigDecimal manage_repo) {
+        assert p_repo_name != null;
+        assert change != null;
+        assert manage_issue != null;
+        assert merge != null;
+        assert manage_repo != null;
+
         this.id = p_repo_name + "@policy";
         this.repo_name = p_repo_name;
         this.ownership_required_to_change_policy = change;

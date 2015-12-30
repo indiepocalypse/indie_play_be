@@ -56,6 +56,11 @@ public class model_user_interaction extends Model {
     ) {
         this.date_performed = new Date();
         // yeah, the user could make two actions at the same time (say if the server clock is manipulated, reset, or whatever). That's good enough though...
+        assert p_user_name != null;
+        assert p_hook_interaction_type != null;
+        assert p_web_interaction_type != null;
+        assert p_mail_interaction_type != null;
+
         this.id = p_user_name + "@action@" + date_performed.toString();
         this.user_name = p_user_name;
         this.hook_interaction_type = p_hook_interaction_type;

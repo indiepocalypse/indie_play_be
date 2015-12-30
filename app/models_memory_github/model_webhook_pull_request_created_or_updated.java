@@ -23,6 +23,12 @@ public class model_webhook_pull_request_created_or_updated implements interface_
             model_repo p_repo,
             model_user p_user
     ) {
+        assert p_action != null;
+        assert p_number != null;
+        assert p_pull_request != null;
+        assert p_repo != null;
+        assert p_user != null;
+
         this.action = utils_github_webhooks.from_string(p_action);
         this.number = p_number;
         this.pull_request = p_pull_request;

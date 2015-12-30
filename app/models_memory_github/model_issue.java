@@ -16,7 +16,7 @@ public class model_issue {
     private final String html_url;
     private final String comments_url;
     private final Long id;
-    private final int comments;
+    private final String comments;
     public String state;
 
     private model_issue(
@@ -27,10 +27,21 @@ public class model_issue {
             model_user p_user,
             String p_body,
             String p_number,
-            int p_comments,
+            String p_comments,
             String p_title,
             String p_state
     ) {
+        assert p_url != null;
+        assert p_html_url != null;
+        assert p_comments_url != null;
+        assert p_id != null;
+        assert p_user != null;
+        assert p_body != null;
+        assert p_number != null;
+        assert p_comments != null;
+        assert p_title != null;
+        assert p_state != null;
+
         this.url = p_url;
         this.html_url = p_html_url;
         this.comments_url = p_comments_url;
@@ -51,7 +62,7 @@ public class model_issue {
         model_user user = model_user.from_json(json.get("user"));
         String body = json.get("body").asText();
         String number = Integer.toString(json.get("number").asInt());
-        int comments = json.get("comments").asInt();
+        String comments = json.get("comments").asText();
         String title = json.get("title").asText();
         String state = json.get("state").asText();
         return new model_issue(

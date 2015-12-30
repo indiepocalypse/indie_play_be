@@ -21,6 +21,11 @@ public class model_webhook_issue_created implements interface_github_webhook {
             model_repo p_repo,
             model_user p_user
     ) {
+        assert p_action != null;
+        assert p_issue != null;
+        assert p_repo != null;
+        assert p_user != null;
+
         this.action = utils_github_webhooks.from_string(p_action);
         this.issue = p_issue;
         this.repo = p_repo;
