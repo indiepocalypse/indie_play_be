@@ -3,16 +3,12 @@ package models_db_indie;
 import com.avaje.ebean.Model;
 import com.avaje.ebean.Query;
 import com.avaje.ebean.annotation.CacheStrategy;
-import models_db_github.model_pull_request;
-import models_db_github.model_repo;
-import models_db_github.model_user;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
 import java.util.Date;
 

@@ -17,8 +17,8 @@ public class Global extends GlobalSettings {
         // sjust debugging somethig XXXXXXXXXXXX
         File directory = app.getFile("./conf/internal_resources/docs"); //new File("/app");
         File[] fList = directory.listFiles();
-        for (File file : fList){
-            Logger.info(" ------ "+file.getPath()+" ---------- " + file.getName());
+        for (File file : fList) {
+            Logger.info(" ------ " + file.getPath() + " ---------- " + file.getName());
         }
 
 
@@ -26,8 +26,7 @@ public class Global extends GlobalSettings {
         if (store_conf.get_debug_should_check_mails()) {
             Logger.info("starting gmail sync");
             sync_gmail.start();
-        }
-        else {
+        } else {
             Logger.info("skipping gmail sync due to debug env option");
         }
         Logger.info("starting github repos sync");

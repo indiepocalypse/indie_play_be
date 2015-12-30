@@ -101,9 +101,8 @@ public class sync_github_repos {
                     try {
                         final model_user user = store_github_api.get_user_by_name(pull_request.user_name);
                         store_local_db.update_user(user);
-                    }
-                    catch (github_io_exception e) {
-                        Logger.error("could not update user named "+pull_request.user_name+" during updating repo named "+repo.repo_name);
+                    } catch (github_io_exception e) {
+                        Logger.error("could not update user named " + pull_request.user_name + " during updating repo named " + repo.repo_name);
                     }
                     handler_general.locally_update_pull_request_and_clear_offers_if_necessary(pull_request);
                 });

@@ -22,9 +22,6 @@ public class model_user_interaction extends Model {
     private static final Finder<String, model_user_interaction> find = new Finder<>(model_user_interaction.class);
     @Nonnull
     public final String user_name;
-    @Id
-    @Nonnull
-    private final String id;
     @Nonnull
     final Date date_performed;
     @Nonnull
@@ -44,6 +41,9 @@ public class model_user_interaction extends Model {
     final String p4_desc;
     final String p5;
     final String p5_desc;
+    @Id
+    @Nonnull
+    private final String id;
 
     private model_user_interaction(
             @Nonnull final String p_user_name,
@@ -106,7 +106,7 @@ public class model_user_interaction extends Model {
         final String p_p3 = hook.get_issue().number;
         final String p_p3_desc = "issue number";
         String tmp1 = null;
-        if (hook.get_pull_request()!=null) {
+        if (hook.get_pull_request() != null) {
             tmp1 = "true";
         }
 
@@ -116,15 +116,15 @@ public class model_user_interaction extends Model {
         final String p_p5_desc = null;
 
         return new model_user_interaction(
-            p_user_name,
-            p_hook_interaction_type,
-            p_web_interaction_type,
-            p_mail_interaction_type,
-            p_p1, p_p1_desc,
-            p_p2, p_p2_desc,
-            p_p3, p_p3_desc,
-            p_p4, p_p4_desc,
-            p_p5, p_p5_desc
+                p_user_name,
+                p_hook_interaction_type,
+                p_web_interaction_type,
+                p_mail_interaction_type,
+                p_p1, p_p1_desc,
+                p_p2, p_p2_desc,
+                p_p3, p_p3_desc,
+                p_p4, p_p4_desc,
+                p_p5, p_p5_desc
         );
     }
 
@@ -149,15 +149,15 @@ public class model_user_interaction extends Model {
         final String p_p5_desc = null;
 
         return new model_user_interaction(
-            p_user_name,
-            p_hook_interaction_type,
-            p_web_interaction_type,
-            p_mail_interaction_type,
-            p_p1, p_p1_desc,
-            p_p2, p_p2_desc,
-            p_p3, p_p3_desc,
-            p_p4, p_p4_desc,
-            p_p5, p_p5_desc
+                p_user_name,
+                p_hook_interaction_type,
+                p_web_interaction_type,
+                p_mail_interaction_type,
+                p_p1, p_p1_desc,
+                p_p2, p_p2_desc,
+                p_p3, p_p3_desc,
+                p_p4, p_p4_desc,
+                p_p5, p_p5_desc
         );
     }
 
@@ -185,15 +185,15 @@ public class model_user_interaction extends Model {
         final String p_p5_desc = null;
 
         return new model_user_interaction(
-            p_user_name,
-            p_hook_interaction_type,
-            p_web_interaction_type,
-            p_mail_interaction_type,
-            p_p1, p_p1_desc,
-            p_p2, p_p2_desc,
-            p_p3, p_p3_desc,
-            p_p4, p_p4_desc,
-            p_p5, p_p5_desc
+                p_user_name,
+                p_hook_interaction_type,
+                p_web_interaction_type,
+                p_mail_interaction_type,
+                p_p1, p_p1_desc,
+                p_p2, p_p2_desc,
+                p_p3, p_p3_desc,
+                p_p4, p_p4_desc,
+                p_p5, p_p5_desc
         );
     }
 }

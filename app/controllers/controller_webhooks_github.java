@@ -84,9 +84,9 @@ public class controller_webhooks_github extends Controller {
 
         // rate limiting
         boolean is_rate_limited = false;
-        if ((hook.get_comment()!=null)&&(hook.get_comment().contains("@theindiepocalypse"))) {
+        if ((hook.get_comment() != null) && (hook.get_comment().contains("@theindiepocalypse"))) {
             model_user_extended_info user_extended_info = store_local_db.get_user_extended_info(hook.get_user().user_name);
-            if (user_extended_info==null) {
+            if (user_extended_info == null) {
                 final boolean is_admin = false;
                 user_extended_info = model_user_extended_info.create(hook.get_user().user_name, is_admin);
                 store_local_db.update_user_extended_info(user_extended_info);
@@ -112,7 +112,7 @@ public class controller_webhooks_github extends Controller {
                 try {
                     store_github_api.comment_on_issue(hook.get_repo().repo_name, hook.get_issue_num(), response);
                 } catch (github_io_exception e) {
-                    Logger.info("problem communicating rate limit to user "+hook.get_user().user_name+" through github comment");
+                    Logger.info("problem communicating rate limit to user " + hook.get_user().user_name + " through github comment");
                 }
                 return ok();
             }

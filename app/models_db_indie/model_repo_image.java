@@ -3,19 +3,13 @@ package models_db_indie;
 import com.avaje.ebean.Model;
 import com.avaje.ebean.Query;
 import com.avaje.ebean.annotation.CacheStrategy;
-import edu.umd.cs.findbugs.annotations.NonNull;
-import models_db_github.model_repo;
-import models_db_github.model_user;
 import play.Logger;
-import scala.Int;
 
 import javax.annotation.Nonnull;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by skariel on 29/09/15.
@@ -32,13 +26,13 @@ public class model_repo_image extends Model {
     public final String file_name;
     @Nonnull
     public final String repo_name;
-    @Lob
-    @Nonnull
-    private final byte[] image;
     @Nonnull
     public final Date uploaded_date;
     @Nonnull
     public final String uploaded_by_user_name;
+    @Lob
+    @Nonnull
+    private final byte[] image;
 
     public model_repo_image(
             @Nonnull String p_repo_name,
@@ -53,15 +47,19 @@ public class model_repo_image extends Model {
         this.image = p_image;
         this.uploaded_date = new Date();
         this.file_name = new utils.utils_random_string(12).nextString();
-        Logger.info("FILE NAME: "+this.file_name);
-        Logger.info("MODEL_USER_NAME: "+p_user_name);
+        Logger.info("FILE NAME: " + this.file_name);
+        Logger.info("MODEL_USER_NAME: " + p_user_name);
     }
 
-    public @Nonnull static Query<model_repo_image> fetch() {
+    public
+    @Nonnull
+    static Query<model_repo_image> fetch() {
         return find.setUseQueryCache(true);
     }
 
-    public @Nonnull byte[] getImage() {
+    public
+    @Nonnull
+    byte[] getImage() {
         return this.image;
     }
 

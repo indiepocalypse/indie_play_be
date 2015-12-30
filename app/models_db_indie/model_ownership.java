@@ -4,14 +4,11 @@ import com.avaje.ebean.Model;
 import com.avaje.ebean.Query;
 import com.avaje.ebean.SqlRow;
 import com.avaje.ebean.annotation.CacheStrategy;
-import models_db_github.model_repo;
-import models_db_github.model_user;
 
 import javax.annotation.Nonnull;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
 
 /**

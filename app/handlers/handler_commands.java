@@ -44,8 +44,8 @@ public class handler_commands {
                 if (command_handler.is_recognized(command)) {
                     recognized_commands_in_comment += 1;
                     if (recognized_commands_in_comment > store_conf.get_rate_limit_maximum_commands_per_comment()) {
-                        responses.add("Maximum "+Integer.toString(store_conf.get_rate_limit_maximum_commands_per_comment())+
-                            "commands per comment");
+                        responses.add("Maximum " + Integer.toString(store_conf.get_rate_limit_maximum_commands_per_comment()) +
+                                "commands per comment");
                         return responses;
                     }
                     responses.add(command_handler.handle(command, hook));
@@ -57,7 +57,7 @@ public class handler_commands {
                 }
             }
         }
-        if ((!some_command_recognized) && (hook.get_comment()!=null) && (hook.get_comment().contains("@theindiepocalypse"))) {
+        if ((!some_command_recognized) && (hook.get_comment() != null) && (hook.get_comment().contains("@theindiepocalypse"))) {
             // @theindipocalypse was mentioned but no command was parsed!
             // TODO: give actual help (say, a link to the help page?)
             // TODO: this will show up only if no command was recognized. What if some were but some weren't?
@@ -67,7 +67,7 @@ public class handler_commands {
     }
 
     private static void dynamically_initialize_commands() {
-        if (commands==null) {
+        if (commands == null) {
             Logger.info("dynamically initializing commands");
             commands = new ArrayList<>(100);
             Reflections reflections = new Reflections("commands");

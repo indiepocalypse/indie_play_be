@@ -167,7 +167,7 @@ public class handler_general {
     public static void consume_succesful_negotiation(negotiation_status negotiation_status) {
 
         assert negotiation_status.is_negotiation_succesful();
-        if ((negotiation_status.implied_transactions_mem==null) || (negotiation_status.implied_transactions_mem.size()==0)) {
+        if ((negotiation_status.implied_transactions_mem == null) || (negotiation_status.implied_transactions_mem.size() == 0)) {
             return;
         }
 
@@ -184,7 +184,7 @@ public class handler_general {
                     transaction_info.from_user_ownership.percent.subtract(transaction_info.transaction.amount_percent)
             );
 
-            if (transaction_info.offer!=null) {
+            if (transaction_info.offer != null) {
                 final model_offer_for_merge new_offer = model_offer_for_merge
                         .same_but_accepted_now(transaction_info.offer);
                 store_local_db.update_offer(new_offer);

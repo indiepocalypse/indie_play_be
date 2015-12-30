@@ -5,11 +5,9 @@ import com.avaje.ebean.Query;
 import com.avaje.ebean.annotation.CacheStrategy;
 import com.fasterxml.jackson.databind.JsonNode;
 
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 /**
  * Created by skariel on 17/10/15.

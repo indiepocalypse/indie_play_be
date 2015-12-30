@@ -2,7 +2,6 @@ package handlers;
 
 import models_db_github.model_pull_request;
 import models_db_github.model_repo;
-import models_db_github.model_user;
 import models_db_indie.*;
 import play.Logger;
 
@@ -14,25 +13,9 @@ import java.util.*;
  */
 class negotiation_status {
 
-    public class transaction_info_mem {
-        public model_merge_transaction transaction;
-        public model_offer_for_merge offer;
-        public model_ownership from_user_ownership;
-        public transaction_info_mem(
-                model_merge_transaction p_transaction,
-                model_offer_for_merge p_offer,
-                model_ownership p_from_user_ownership
-        ) {
-            this.transaction = p_transaction;
-            this.offer = p_offer;
-            this.from_user_ownership = p_from_user_ownership;
-        }
-    }
-
     public final List<transaction_info_mem> implied_transactions_mem;
     public final model_request_for_merge request;
     public final model_ownership to_user_ownership;
-
     private final BigDecimal ownership_currently_accepted;
     private final List<String> users_name_currently_accepted;
     private final BigDecimal required_ownership_as_per_policy;
@@ -40,7 +23,6 @@ class negotiation_status {
     private final BigDecimal required_for_acceptance_current_best_case;
     private final List<String /* user name */> users_name_with_more_ownership;
     private final BigDecimal total_ownership_of_users_with_more_ownership;
-
     // we assume here to_user has ownership. This is taken care of in the hook checkin
     public negotiation_status(model_pull_request p_pull_request,
                               model_request_for_merge p_request,
@@ -147,7 +129,7 @@ class negotiation_status {
                 final model_ownership p_from_user_ownership = ownership;
                 final model_ownership p_to_user_ownership = to_ownership;
 
-                final String p_offer_id = p_offer==null? null : p_offer.id;
+                final String p_offer_id = p_offer == null ? null : p_offer.id;
 
                 model_merge_transaction merge_transaction = new model_merge_transaction(
                         p_from_user_name,
@@ -244,5 +226,21 @@ class negotiation_status {
             return false;
         }
         return ownership_currently_accepted.compareTo(required_ownership_as_per_policy) >= 0;
+    }
+
+    public class transaction_info_mem {
+        public model_merge_transaction transaction;
+        public model_offer_for_merge offer;
+        public model_ownership from_user_ownership;
+
+        public transaction_info_mem(
+                model_merge_transaction p_transaction,
+                model_offer_for_merge p_offer,
+                model_ownership p_from_user_ownership
+        ) {
+            this.transaction = p_transaction;
+            this.offer = p_offer;
+            this.from_user_ownership = p_from_user_ownership;
+        }
     }
 }

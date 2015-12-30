@@ -70,10 +70,6 @@ public class store_session {
         return controller_main.session().get(user_name_session_key);
     }
 
-    public model_user get_user() {
-        return new model_user(get_user_name(), get_user_github_html_url(), get_avatar_url());
-    }
-
     public static String get_state() {
         return controller_main.session().get(state_session_key);
     }
@@ -126,5 +122,9 @@ public class store_session {
     public static boolean user_is_admin() {
         return (get_token() != null) && (controller_main.session().containsKey(user_is_admin_session_key)) &&
                 (Boolean.parseBoolean(controller_main.session().get(user_is_admin_session_key)));
+    }
+
+    public model_user get_user() {
+        return new model_user(get_user_name(), get_user_github_html_url(), get_avatar_url());
     }
 }

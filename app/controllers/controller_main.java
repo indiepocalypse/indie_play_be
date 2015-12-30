@@ -158,13 +158,12 @@ public class controller_main extends Controller {
             byte[] bytes = null;
             try {
                 bytes = java.nio.file.Files.readAllBytes(file.toPath());
-                Logger.info("XXXXXXX lenbytes="+Integer.toString(bytes.length));
-            }
-            catch (Exception e) {
+                Logger.info("XXXXXXX lenbytes=" + Integer.toString(bytes.length));
+            } catch (Exception e) {
             }
             model_repo_image repo_image = new model_repo_image(repo_name, store_session.get_user_name(), bytes);
             store_local_db.update_repo_image(repo_image);
-            return ok("File uploaded, user name is "+store_session.get_user_name()+" file name: "+repo_image.file_name);
+            return ok("File uploaded, user name is " + store_session.get_user_name() + " file name: " + repo_image.file_name);
         } else {
             flash("error", "Missing file");
             return badRequest();
@@ -252,7 +251,7 @@ public class controller_main extends Controller {
 
     public Result logout() {
         String user_name = store_session.get_user_name();
-        if (user_name!=null) {
+        if (user_name != null) {
             // register interaction
             model_user_interaction model_user_interaction = models_db_indie.model_user_interaction.from_web(user_name, enum_user_interaction_web_type.LOGOUT);
             store_local_db.update_user_interaction(model_user_interaction);

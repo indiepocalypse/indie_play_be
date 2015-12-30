@@ -2,7 +2,6 @@ package stores;
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.PagedList;
-import com.avaje.ebean.RawSqlBuilder;
 import com.avaje.ebean.SqlRow;
 import handlers.handler_general;
 import models_db_github.model_pull_request;
@@ -195,10 +194,10 @@ public class store_local_db {
             final String c1 = model_ownership.class.getName().split("\\.")[1];
             final String c2 = model_user.class.getName().split("\\.")[1];
 
-            final String sql = "select * from "+c1+" inner join "+c2+" on "+c1+".user_name="+c2+".user_name where repo_name='"+repo_name+"'";
+            final String sql = "select * from " + c1 + " inner join " + c2 + " on " + c1 + ".user_name=" + c2 + ".user_name where repo_name='" + repo_name + "'";
             Map<model_user, model_ownership> map = new HashMap<>(3);
             List<SqlRow> rows = Ebean.createSqlQuery(sql).findList();
-            for (SqlRow row: rows) {
+            for (SqlRow row : rows) {
                 map.put(model_user.from_sqlrow(row), model_ownership.from_sqlrow(row));
             }
             return map;
@@ -545,7 +544,7 @@ public class store_local_db {
                     .where().idEq(file_name)
                     .findUnique();
         } catch (Exception e) {
-            Logger.error("WHILE FETCHING IMAGE WITH NAME "+file_name+": ", e);
+            Logger.error("WHILE FETCHING IMAGE WITH NAME " + file_name + ": ", e);
             return null;
         }
     }
@@ -596,7 +595,7 @@ public class store_local_db {
                     .orderBy("date_performed")
                     .findList();
         } catch (Exception e) {
-            Logger.error("WHILE FETCHING USER INTERACTIONS FOR "+user_name+": ", e);
+            Logger.error("WHILE FETCHING USER INTERACTIONS FOR " + user_name + ": ", e);
             return null;
         }
     }
@@ -610,23 +609,22 @@ public class store_local_db {
                     .findPagedList(page_num, per_page);
             return result;
         } catch (Exception e) {
-            Logger.error("WHILE FETCHING USER INTERACTIONS FOR "+user_name+": ", e);
+            Logger.error("WHILE FETCHING USER INTERACTIONS FOR " + user_name + ": ", e);
             return null;
         }
     }
 
     public static int get_user_interactions_count_during_last_milis(String user_name, long milis) {
         Date past_date = new Date();
-        past_date.setTime(past_date.getTime()-milis);
+        past_date.setTime(past_date.getTime() - milis);
         try {
             return model_user_interaction.fetch()
                     .where()
                     .eq("user_name", user_name)
                     .ge("date_performed", past_date)
                     .findRowCount();
-        }
-        catch (Exception e) {
-            Logger.error("WHILE COUNTING USER INTERACTIONS FOR "+user_name+": ", e);
+        } catch (Exception e) {
+            Logger.error("WHILE COUNTING USER INTERACTIONS FOR " + user_name + ": ", e);
             return -1;
         }
     }
@@ -659,6 +657,7 @@ public class store_local_db {
             return null;
         }
     }
+
     public static List<model_user_extended_info> get_all_admins() {
         try {
             return model_user_extended_info.fetch().
@@ -671,7 +670,7 @@ public class store_local_db {
 
     public static boolean is_admin(String user_name) {
         model_user_extended_info user_extended_info = get_user_extended_info(user_name);
-        return ((user_extended_info==null) || (user_extended_info.is_admin));
+        return ((user_extended_info == null) || (user_extended_info.is_admin));
     }
 
 }

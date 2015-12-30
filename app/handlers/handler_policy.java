@@ -7,7 +7,6 @@ import stores.store_local_db;
 import stores.store_session;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,16 +30,16 @@ public class handler_policy {
     }
 
     public static boolean is_rate_limited(String user_name) {
-        if (user_name==null) {
+        if (user_name == null) {
             // not logged in user will always be rate limited
             return true;
         }
         int number_of_actions_in_relevant_timeframe = store_local_db.get_user_interactions_count_during_last_milis(user_name, store_conf.get_delay_L2_milis());
-        if (number_of_actions_in_relevant_timeframe<=0) {
+        if (number_of_actions_in_relevant_timeframe <= 0) {
             // could not find number of actions, user should be rate limited
             return true;
         }
-        Logger.info("rate limit for user "+user_name+" checked, current value is "+Integer.toString(number_of_actions_in_relevant_timeframe)+" allowed "+Integer.toString(store_conf.get_rate_limit_for_L2_delay()));
+        Logger.info("rate limit for user " + user_name + " checked, current value is " + Integer.toString(number_of_actions_in_relevant_timeframe) + " allowed " + Integer.toString(store_conf.get_rate_limit_for_L2_delay()));
         return number_of_actions_in_relevant_timeframe > store_conf.get_rate_limit_for_L2_delay();
     }
 
