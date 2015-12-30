@@ -32,11 +32,13 @@ public class handler_policy {
     public static boolean is_rate_limited(String user_name) {
         if (user_name == null) {
             // not logged in user will always be rate limited
+            Logger.info("Rate limit checked, user_name==null, so ratelimiting!");
             return true;
         }
         int number_of_actions_in_relevant_timeframe = store_local_db.get_user_interactions_count_during_last_milis(user_name, store_conf.get_delay_L2_milis());
-        if (number_of_actions_in_relevant_timeframe <= 0) {
+        if (number_of_actions_in_relevant_timeframe < 0) {
             // could not find number of actions, user should be rate limited
+            Logger.info("Rate limit checked for user "+user_name+" could not retrieve number of actions in timeframe, hence ratelimiting");
             return true;
         }
         Logger.info("rate limit for user " + user_name + " checked, current value is " + Integer.toString(number_of_actions_in_relevant_timeframe) + " allowed " + Integer.toString(store_conf.get_rate_limit_for_L2_delay()));
