@@ -20,13 +20,13 @@ import java.util.Date;
 public class model_merge_transaction extends Model {
     private static final Finder<String, model_merge_transaction> find = new Finder<>(model_merge_transaction.class);
     @Nullable
-    public final String offer_id; // can be null since even if user didn't make an offer he is involved in the transaction
+    private final String offer_id; // can be null since even if user didn't make an offer he is involved in the transaction
     @Nonnull
-    public final String request_id;
+    private final String request_id;
     @Nonnull
-    public final String from_user_ownership_id;
+    private final String from_user_ownership_id;
     @Nonnull
-    public final String to_user_ownership_id;
+    private final String to_user_ownership_id;
     @Column(precision = 5, scale = 2)
     @Nonnull
     public final BigDecimal amount_percent;

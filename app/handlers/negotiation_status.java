@@ -5,6 +5,8 @@ import models_db_github.model_repo;
 import models_db_indie.*;
 import play.Logger;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -21,8 +23,7 @@ class negotiation_status {
     private final BigDecimal required_ownership_as_per_policy;
     private final BigDecimal requested_percent;
     private final BigDecimal required_for_acceptance_current_best_case;
-    private final List<String /* user name */> users_name_with_more_ownership;
-    private final BigDecimal total_ownership_of_users_with_more_ownership;
+
     // we assume here to_user has ownership. This is taken care of in the hook checkin
     public negotiation_status(model_pull_request p_pull_request,
                               model_request_for_merge p_request,
@@ -35,7 +36,7 @@ class negotiation_status {
 
         users_name_currently_accepted = new ArrayList<>(5);
         final Map<String /* user_name */, model_ownership> ownership_from_user_name = new HashMap<>(11);
-        users_name_with_more_ownership = new ArrayList<>();
+        List<String> users_name_with_more_ownership = new ArrayList<>();
         BigDecimal tmp_total_ownership_of_users_with_more_ownership = new BigDecimal("0.0");
         model_ownership to_ownership = null;
         if (ownerships != null) {
@@ -54,7 +55,7 @@ class negotiation_status {
                 }
             }
         }
-        total_ownership_of_users_with_more_ownership = tmp_total_ownership_of_users_with_more_ownership;
+        BigDecimal total_ownership_of_users_with_more_ownership = tmp_total_ownership_of_users_with_more_ownership;
 
         if (offers != null) {
             // sort offers in descending order!
@@ -229,14 +230,17 @@ class negotiation_status {
     }
 
     public class transaction_info_mem {
-        public model_merge_transaction transaction;
-        public model_offer_for_merge offer;
-        public model_ownership from_user_ownership;
+        @Nonnull
+        final public model_merge_transaction transaction;
+        @Nullable
+        final public model_offer_for_merge offer;
+        @Nonnull
+        final public model_ownership from_user_ownership;
 
         public transaction_info_mem(
-                model_merge_transaction p_transaction,
-                model_offer_for_merge p_offer,
-                model_ownership p_from_user_ownership
+                @Nonnull model_merge_transaction p_transaction,
+                @Nullable model_offer_for_merge p_offer,
+                @Nonnull model_ownership p_from_user_ownership
         ) {
             this.transaction = p_transaction;
             this.offer = p_offer;

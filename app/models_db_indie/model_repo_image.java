@@ -25,11 +25,11 @@ public class model_repo_image extends Model {
     @Nonnull
     public final String file_name;
     @Nonnull
-    public final String repo_name;
+    private final String repo_name;
     @Nonnull
-    public final Date uploaded_date;
+    private final Date uploaded_date;
     @Nonnull
-    public final String uploaded_by_user_name;
+    private final String uploaded_by_user_name;
     @Lob
     @Nonnull
     private final byte[] image;

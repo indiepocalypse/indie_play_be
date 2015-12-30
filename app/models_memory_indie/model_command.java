@@ -16,19 +16,14 @@ public class model_command {
     public final ArrayList<String> args;
     @Nonnull
     public final String command;
-    @Nonnull
-    private final String joined_args;
 
     private model_command(
             @Nonnull ArrayList<String> p_args,
-            @Nonnull String p_command,
-            @Nonnull String p_joined_args) {
+            @Nonnull String p_command) {
         assert p_command != null;
-        assert p_joined_args != null;
         assert p_args != null;
 
         this.command = p_command;
-        this.joined_args = p_joined_args;
         this.args = p_args;
     }
 
@@ -61,7 +56,7 @@ public class model_command {
                 joined_args = splitted2[1];
             }
             args.addAll(Arrays.asList(splitted).subList(1, splitted.length));
-            model_command command = new model_command(args, cmd, joined_args);
+            model_command command = new model_command(args, cmd);
             commands.add(command);
         }
         return commands;

@@ -14,6 +14,7 @@ import stores.store_github_api;
 import stores.store_local_db;
 import utils.utils_bigdecimal;
 
+import javax.annotation.Nonnull;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -194,10 +195,7 @@ public class handler_commands {
         }
 
         // extract commit message
-        String commit_message = "this is the default commit message";
-        if (hook.get_pull_request().title != null) {
-            commit_message = hook.get_pull_request().title;
-        }
+        @Nonnull final String commit_message = hook.get_pull_request().title;
 
         // try to merge!
         try {

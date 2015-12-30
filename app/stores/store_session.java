@@ -3,6 +3,8 @@ package stores;
 import controllers.controller_main;
 import models_db_github.model_user;
 
+import javax.annotation.Nonnull;
+
 /**
  * Created by skariel on 11/10/15.
  */
@@ -63,11 +65,11 @@ public class store_session {
         return controller_main.session().get(user_github_html_url_key);
     }
 
-    public static String get_user_name() {
-        if (!user_is_logged()) {
-            return null;
-        }
-        return controller_main.session().get(user_name_session_key);
+    public static @Nonnull String get_user_name() {
+        assert user_is_logged();
+        @Nonnull final String user_name = controller_main.session().get(user_name_session_key);
+        assert user_name != null;
+        return user_name;
     }
 
     public static String get_state() {

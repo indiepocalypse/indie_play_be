@@ -17,9 +17,7 @@ public class model_user_extended_info extends Model {
     private static final Finder<String, model_user_extended_info> find = new Finder<>(model_user_extended_info.class);
     @Nonnull
     public final String user_name;
-    @Nonnull
     public final boolean is_admin;
-    @Nonnull
     public final boolean rate_limit_was_communicated_to_user_via_github_comment;
     @Id
     private final String id;

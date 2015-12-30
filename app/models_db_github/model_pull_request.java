@@ -6,6 +6,7 @@ import com.avaje.ebean.annotation.CacheStrategy;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -34,8 +35,8 @@ public class model_pull_request extends Model {
     public final String body;
     @Nonnull
     public final Boolean merged;
-    @Nonnull
-    public final Boolean mergeable;
+    @Nullable
+    public final Boolean mergeable; // yeah, might be null per github api. Only while mergeability was not calculated
     @Nonnull
     private final String url;
     @Nonnull
@@ -56,7 +57,7 @@ public class model_pull_request extends Model {
             @Nonnull String p_user_name,
             @Nonnull String p_body,
             @Nonnull Boolean p_merged,
-            @Nonnull Boolean p_mergeable,
+            @Nullable Boolean p_mergeable,
             @Nonnull String p_comments_url,
             @Nonnull String p_repo_name,
             @Nonnull String p_number,
@@ -71,7 +72,6 @@ public class model_pull_request extends Model {
         assert p_user_name != null;
         assert p_body != null;
         assert p_merged != null;
-        assert p_mergeable != null;
         assert p_comments_url != null;
         assert p_SHA != null;
         assert p_repo_name != null;

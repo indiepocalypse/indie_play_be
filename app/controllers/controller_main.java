@@ -21,8 +21,10 @@ import stores.*;
 import views.enum_main_page_type;
 import views.html.*;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 
 public class controller_main extends Controller {
@@ -123,6 +125,7 @@ public class controller_main extends Controller {
             Cache.remove(EXPLORE_PAGE_CONTENT_CACHE_KEY);
 
             // register the interaction
+            assert store_session.user_is_logged();
             model_user_interaction model_user_interaction = models_db_indie.model_user_interaction.from_web(store_session.get_user_name(), enum_user_interaction_web_type.NEW_REPO);
             store_local_db.update_user_interaction(model_user_interaction);
 
@@ -138,11 +141,21 @@ public class controller_main extends Controller {
 
     public Result repo_image_get(String file_name) {
         model_repo_image model_repo_image = store_local_db.get_repo_image_by_file_name(file_name);
+        if (model_repo_image==null) {
+            return ok("no image for this repo");
+        }
         response().setHeader("Content-Type", "image");
-        return ok(model_repo_image.getImage());
+        try {
+            return ok(model_repo_image.getImage());
+        }
+        catch (NullPointerException e) {
+            Logger.error("this should not happen: ", e);
+            return internalServerError();
+        }
     }
 
     public Result repo_image_upload_get(String repo_name) {
+        // TODO: use the parameter
         return ok(view_main.render("upload_image", enum_main_page_type.INDEX, view_repo_image_upload.render()));
     }
 
@@ -155,15 +168,18 @@ public class controller_main extends Controller {
             java.io.File file = image.getFile();
             // TODO: limit file size!
             // TODO: check user can actually upload to that repo...
-            byte[] bytes = null;
             try {
-                bytes = java.nio.file.Files.readAllBytes(file.toPath());
+                @Nonnull final byte[] bytes = java.nio.file.Files.readAllBytes(file.toPath());
+                assert bytes != null;
                 Logger.info("XXXXXXX lenbytes=" + Integer.toString(bytes.length));
+                model_repo_image repo_image = new model_repo_image(repo_name, store_session.get_user_name(), bytes);
+                store_local_db.update_repo_image(repo_image);
+                return ok("File uploaded, user name is " + store_session.get_user_name() + " file name: " + repo_image.file_name);
             } catch (Exception e) {
+                Logger.error("while reading all byte from image ", e);
+                // TODO: make a dedicated error page for this stuff. It's all over the place
+                return internalServerError();
             }
-            model_repo_image repo_image = new model_repo_image(repo_name, store_session.get_user_name(), bytes);
-            store_local_db.update_repo_image(repo_image);
-            return ok("File uploaded, user name is " + store_session.get_user_name() + " file name: " + repo_image.file_name);
         } else {
             flash("error", "Missing file");
             return badRequest();
@@ -250,12 +266,15 @@ public class controller_main extends Controller {
     }
 
     public Result logout() {
-        String user_name = store_session.get_user_name();
-        if (user_name != null) {
-            // register interaction
-            model_user_interaction model_user_interaction = models_db_indie.model_user_interaction.from_web(user_name, enum_user_interaction_web_type.LOGOUT);
-            store_local_db.update_user_interaction(model_user_interaction);
+        // we have to check. Otherwise get_user_name below will throw
+        if (!store_session.user_is_logged()) {
+            return redirect("/");
         }
+        @Nonnull final String user_name = store_session.get_user_name();
+        // register interaction
+        model_user_interaction model_user_interaction = models_db_indie.model_user_interaction.from_web(user_name, enum_user_interaction_web_type.LOGOUT);
+        store_local_db.update_user_interaction(model_user_interaction);
+
         store_session.clear();
         return redirect("/");
     }

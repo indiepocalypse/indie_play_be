@@ -1,3 +1,4 @@
+import com.typesafe.config.ConfigException;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
@@ -6,6 +7,7 @@ import sync.sync_github_repos;
 import sync.sync_github_users;
 import sync.sync_gmail;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 
 public class Global extends GlobalSettings {
@@ -14,11 +16,16 @@ public class Global extends GlobalSettings {
     public void onStart(Application app) {
         super.onStart(app);
 
-        // sjust debugging somethig XXXXXXXXXXXX
+        // TODO: this is just stub. DOC files should be parsed and generate some nice html, etc.
         File directory = app.getFile("./conf/internal_resources/docs"); //new File("/app");
-        File[] fList = directory.listFiles();
-        for (File file : fList) {
-            Logger.info(" ------ " + file.getPath() + " ---------- " + file.getName());
+        @Nonnull final File[] fList = directory.listFiles();
+        assert fList != null;
+        try {
+            for (File file : fList) {
+                Logger.info(" ------ " + file.getPath() + " ---------- " + file.getName());
+            }
+        } catch (NullPointerException e) {
+            Logger.error("While listing files in interbal resources. This should not happen");
         }
 
 

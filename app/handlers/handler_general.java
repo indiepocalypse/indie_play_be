@@ -87,9 +87,12 @@ public class handler_general {
     public static void create_default_readme(model_repo repo, boolean check_for_existance_first) {
         if (check_for_existance_first) {
             try {
-                store_github_api.has_readme(repo.repo_name);
+                if (store_github_api.has_readme(repo.repo_name)) {
+                    Logger.info("repo " + repo.repo_name + " already has a readme. Skipping creation of default one");
+                    return;
+                }
             } catch (github_io_exception e) {
-                Logger.info("repo " + repo.repo_name + " already has a readme. Skipping creation of default one");
+                Logger.error("error while checking if repo " + repo.repo_name + " has a readme. Skipping creation of default one. The error is: ", e);
                 return;
             }
         }
@@ -196,7 +199,7 @@ public class handler_general {
             store_local_db.update_merge_transaction(transaction_info.transaction);
 
         }
-        final model_request_for_merge new_request = negotiation_status.request
+        final model_request_for_merge new_request = model_request_for_merge
                 .same_but_accepted_now(negotiation_status.request);
         store_local_db.update_request(new_request);
         store_local_db.update_ownership(to_user_ownership);

@@ -602,12 +602,11 @@ public class store_local_db {
 
     public static PagedList<model_user_interaction> get_user_interactions_paginated(String user_name, int per_page, int page_num) {
         try {
-            PagedList<model_user_interaction> result = model_user_interaction.fetch()
+            return model_user_interaction.fetch()
                     .where()
                     .eq("user_name", user_name)
                     .orderBy("date_performed")
                     .findPagedList(page_num, per_page);
-            return result;
         } catch (Exception e) {
             Logger.error("WHILE FETCHING USER INTERACTIONS FOR " + user_name + ": ", e);
             return null;
