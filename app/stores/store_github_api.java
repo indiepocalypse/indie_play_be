@@ -17,6 +17,7 @@ import play.libs.ws.WSResponse;
 import utils.utils_general;
 import utils.utils_random_string;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -126,17 +127,17 @@ public class store_github_api {
         return repos;
     }
 
-    public static model_repo create_new_repo(String repo_name, String repo_homepage, String repo_description) throws github_io_exception {
+    public static model_repo create_new_repo(
+            @Nonnull String repo_name,
+            @Nonnull String repo_homepage,
+            @Nonnull String repo_description) throws github_io_exception {
+        assert repo_name != null;
+        assert repo_homepage != null;
+        assert repo_description != null;
         ObjectNode json = JsonNodeFactory.instance.objectNode();
-        if (repo_name != null) {
-            json.put("name", repo_name);
-        }
-        if (repo_description != null) {
-            json.put("description", repo_description);
-        }
-        if (repo_homepage != null) {
-            json.put("homepage", repo_homepage);
-        }
+        json.put("name", repo_name);
+        json.put("description", repo_description);
+        json.put("homepage", repo_homepage);
         json.put("has_wiki", false);
         json.put("has_downloads", false);
         WSResponse res = post_indie_auth_request("/user/repos", json).execute().get(60, TimeUnit.SECONDS);

@@ -78,9 +78,9 @@ create table model_repo (
 create table model_repo_image (
   file_name                 varchar(255) not null,
   repo_name                 varchar(255),
-  image                     bytea,
   uploaded_date             timestamp,
   uploaded_by_user_name     varchar(255),
+  image                     bytea,
   constraint pk_model_repo_image primary key (file_name))
 ;
 

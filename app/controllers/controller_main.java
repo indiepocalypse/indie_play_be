@@ -24,7 +24,6 @@ import views.html.*;
 import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.Callable;
 
 public class controller_main extends Controller {
@@ -77,24 +76,36 @@ public class controller_main extends Controller {
         // TODO: make sure user can actually make the repo, maybe use the newrepo_get to put some flag in the session, so no need to touch the db
         DynamicForm data = Form.form().bindFromRequest();
 
-        String repo_name = "";
+        @Nonnull String repo_name = "";
         try {
             repo_name = data.get(store_session.repo_name_name);
         } catch (Exception ignore) {
         }
+        if (repo_name==null) {
+            return ok(view_main.render("new repo", enum_main_page_type.INDEX, view_newrepo.render("", "", "", "repo name field is missing")));
+        }
+        assert repo_name != null;
 
-        String repo_homepage = "";
+        @Nonnull String repo_homepage = "";
         try {
             repo_homepage = data.get(store_session.repo_homepage_name);
         } catch (Exception ignore) {
         }
+        if (repo_homepage==null) {
+            return ok(view_main.render("new repo", enum_main_page_type.INDEX, view_newrepo.render("", "", "", "repo homepage field is missing")));
+        }
+        assert repo_homepage != null;
 
-        String repo_description = "";
+        @Nonnull String repo_description = "";
         try {
             repo_description = data.get(store_session.repo_description_name);
         } catch (Exception ignore) {
-
         }
+        if (repo_description==null) {
+            return ok(view_main.render("new repo", enum_main_page_type.INDEX, view_newrepo.render("", "", "", "repo description field is missing")));
+        }
+        assert repo_description != null;
+
         if (!store_session.user_is_logged()) {
             return ok(view_main.render("new repo", enum_main_page_type.INDEX, view_newrepo.render(repo_name, repo_homepage, repo_description, "")));
         }

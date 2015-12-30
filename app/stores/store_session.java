@@ -52,17 +52,17 @@ public class store_session {
 
 
     public static String get_avatar_url() {
-        if (!user_is_logged()) {
-            return null;
-        }
-        return controller_main.session().get(avatar_url_session_key);
+        assert user_is_logged();
+        @Nonnull final String avatar_url = controller_main.session().get(avatar_url_session_key);
+        assert avatar_url != null;
+        return avatar_url;
     }
 
     public static String get_user_github_html_url() {
-        if (!user_is_logged()) {
-            return null;
-        }
-        return controller_main.session().get(user_github_html_url_key);
+        assert user_is_logged();
+        @Nonnull final String user_github_html_url = controller_main.session().get(user_github_html_url_key);
+        assert user_github_html_url != null;
+        return user_github_html_url;
     }
 
     public static @Nonnull String get_user_name() {

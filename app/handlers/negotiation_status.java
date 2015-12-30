@@ -30,7 +30,7 @@ class negotiation_status {
                               List<model_offer_for_merge> offers,
                               model_repo_policy policy,
                               List<model_ownership> ownerships,
-                              model_repo p_repo) {
+                              model_repo p_repo) throws Exception {
 
         request = p_request;
 
@@ -46,8 +46,12 @@ class negotiation_status {
             if (ownership_from_user_name.containsKey(p_pull_request.user_name)) {
                 to_ownership = ownership_from_user_name.get(p_pull_request.user_name);
             } else {
-                Logger.error("to_user \"" + p_pull_request.user_name + "\" has no ownership in pull request #" + p_pull_request.number + " for repo \"" + p_repo.repo_name + "\", this should not happen!");
+                final String message = "to_user \"" + p_pull_request.user_name + "\" has no ownership in pull request #" + p_pull_request.number + " for repo \"" + p_repo.repo_name + "\", this should not happen!";
+                throw new Exception(message);
             }
+
+            assert to_ownership != null;
+
             for (model_ownership ownership : ownerships) {
                 if (ownership.percent.compareTo(to_ownership.percent) > 0) {
                     users_name_with_more_ownership.add(ownership.user_name);
@@ -107,6 +111,9 @@ class negotiation_status {
 
         // generating transactions!
 
+        assert offers != null;
+        assert to_ownership != null;
+
         if ((is_negotiation_succesful()) && (total_ownership_of_users_with_more_ownership.compareTo(BigDecimal.ZERO) > 0)) {
 
             Map<String /* user name */, model_offer_for_merge> offer_from_user_name = new HashMap<>(11);
@@ -115,6 +122,7 @@ class negotiation_status {
             }
 
             assert p_request != null;
+
             BigDecimal transaction_quanta = p_request.amount_percent.divide(total_ownership_of_users_with_more_ownership);
             for (String user_name : users_name_with_more_ownership) {
 

@@ -5,7 +5,6 @@ import models_db_github.model_pull_request;
 import models_db_github.model_repo;
 import models_db_github.model_user;
 import play.Logger;
-import play.api.libs.iteratee.Error;
 import stores.store_local_db;
 import utils.utils_github_webhooks;
 

@@ -1,4 +1,3 @@
-import com.typesafe.config.ConfigException;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
@@ -7,7 +6,6 @@ import sync.sync_github_repos;
 import sync.sync_github_users;
 import sync.sync_gmail;
 
-import javax.annotation.Nonnull;
 import java.io.File;
 
 public class Global extends GlobalSettings {

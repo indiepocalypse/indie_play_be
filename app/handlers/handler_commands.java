@@ -284,11 +284,17 @@ public class handler_commands {
         final List<model_offer_for_merge> offers = store_local_db.get_offers_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
         final model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo());
         final List<model_ownership> ownerships = store_local_db.get_ownerships_by_repo_name(hook.get_repo().repo_name);
-        final negotiation_status negotiation_status = new negotiation_status(pull_request, current_request, offers, policy, ownerships, hook.get_repo());
-        result += "\nnego status:\n\n" + negotiation_status.toString();
-        if (negotiation_status.is_negotiation_succesful()) {
-            result += "\nnegotiation succesful. Merging\n";
-            result += "\n" + handle_merge(hook, negotiation_status) + "\n";
+        try {
+            final negotiation_status negotiation_status = new negotiation_status(pull_request, current_request, offers, policy, ownerships, hook.get_repo());
+            result += "\nnego status:\n\n" + negotiation_status.toString();
+            if (negotiation_status.is_negotiation_succesful()) {
+                result += "\nnegotiation succesful. Merging\n";
+                result += "\n" + handle_merge(hook, negotiation_status) + "\n";
+            }
+        }
+        catch (Exception e) {
+            Logger.error("while handle_make_request, creation of negotiation_status failed: ", e);
+            return "There a problem creating the negotiation status, please try again later or contact an admin";
         }
         return result;
     }
@@ -378,11 +384,17 @@ public class handler_commands {
         final List<model_offer_for_merge> offers = store_local_db.get_offers_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
         final model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo());
         final List<model_ownership> ownerships = store_local_db.get_ownerships_by_repo_name(hook.get_repo().repo_name);
-        final negotiation_status negotiation_status = new negotiation_status(pull_request, request, offers, policy, ownerships, hook.get_repo());
-        result += "\nnego status:\n\n" + negotiation_status.toString();
-        if (negotiation_status.is_negotiation_succesful()) {
-            result += "\nnegotiation succesful. Merging\n";
-            result += "\n" + handle_merge(hook, negotiation_status) + "\n";
+        try {
+            final negotiation_status negotiation_status = new negotiation_status(pull_request, request, offers, policy, ownerships, hook.get_repo());
+            result += "\nnego status:\n\n" + negotiation_status.toString();
+            if (negotiation_status.is_negotiation_succesful()) {
+                result += "\nnegotiation succesful. Merging\n";
+                result += "\n" + handle_merge(hook, negotiation_status) + "\n";
+            }
+        }
+        catch (Exception e) {
+            Logger.error("while handle_make_offer, creation of negotiation_status failed: ", e);
+            return "There a problem creating the negotiation status, please try again later or contact an admin";
         }
         return result;
     }
