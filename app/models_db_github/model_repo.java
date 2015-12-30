@@ -5,6 +5,7 @@ import com.avaje.ebean.Query;
 import com.avaje.ebean.annotation.CacheStrategy;
 import com.fasterxml.jackson.databind.JsonNode;
 
+import javax.annotation.Nonnull;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -18,14 +19,26 @@ public class model_repo extends Model {
 
     // TODO: notnull annotations!
     @Id
+    @Nonnull
     public final String repo_name;
+    @Nonnull
     public final String repo_description;
+    @Nonnull
     public final String github_html_url;
+    @Nonnull
     private final String repo_homepage;
+    @Nonnull
     private final Integer stars_count;
+    @Nonnull
     private final Integer forks_count;
 
-    private model_repo(String repo_name, String repo_description, String repo_homepage, String github_html_url, Integer stars_count, Integer forks_count) {
+    private model_repo(
+            @Nonnull String repo_name,
+            @Nonnull String repo_description,
+            @Nonnull String repo_homepage,
+            @Nonnull String github_html_url,
+            @Nonnull Integer stars_count,
+            @Nonnull Integer forks_count) {
         assert repo_name != null;
         assert repo_description != null;
         assert repo_homepage != null;
@@ -41,7 +54,8 @@ public class model_repo extends Model {
         this.forks_count = forks_count;
     }
 
-    public static model_repo from_json(JsonNode json_repo) {
+    public static model_repo from_json(@Nonnull JsonNode json_repo) {
+        assert json_repo != null;
         String name = json_repo.get("name").asText();
         String description = json_repo.get("description").asText();
         String github_html_url = json_repo.get("html_url").asText();
@@ -51,7 +65,10 @@ public class model_repo extends Model {
         return new model_repo(name, description, homepage, github_html_url, stars_count, forks_count);
     }
 
-    public static model_repo from_name_desc_and_homepage(String name, String desc, String homepage) {
+    public static model_repo from_name_desc_and_homepage(@Nonnull String name, @Nonnull String desc, @Nonnull String homepage) {
+        assert name != null;
+        assert desc != null;
+        assert homepage != null;
         return new model_repo(name, desc, homepage, "https://github.com/theindiepocalypse/" + name, 0, 0);
     }
 
@@ -59,7 +76,8 @@ public class model_repo extends Model {
         return find.setUseQueryCache(true);
     }
 
-    public static void deleteById(String id) {
+    public static void deleteById(@Nonnull String id) {
+        assert id != null;
         find.deleteById(id);
     }
 

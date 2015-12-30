@@ -6,22 +6,29 @@ import models_db_github.model_repo;
 import models_db_github.model_user;
 import utils.utils_github_webhooks;
 
+import javax.annotation.Nonnull;
+
 /**
  * Created by skariel on 14/10/15.
  */
 public class model_webhook_issue_comment_created implements interface_github_webhook {
+    @Nonnull
     private final enum_webhook_action action;
+    @Nonnull
     private final model_issue issue;
+    @Nonnull
     private final model_comment comment;
+    @Nonnull
     private final model_repo repo;
+    @Nonnull
     private final model_user user;
 
     private model_webhook_issue_comment_created(
-            String p_action,
-            model_issue p_issue,
-            model_comment p_comment,
-            model_repo p_repo,
-            model_user p_user
+            @Nonnull String p_action,
+            @Nonnull model_issue p_issue,
+            @Nonnull model_comment p_comment,
+            @Nonnull model_repo p_repo,
+            @Nonnull model_user p_user
     ) {
         assert p_action != null;
         assert p_issue != null;
@@ -36,7 +43,8 @@ public class model_webhook_issue_comment_created implements interface_github_web
         this.user = p_user;
     }
 
-    public static model_webhook_issue_comment_created from_json(JsonNode json) {
+    public static model_webhook_issue_comment_created from_json(@Nonnull JsonNode json) {
+        assert json != null;
         String action = json.get("action").asText();
         model_issue issue = model_issue.from_json(json.get("issue"));
         model_comment comment = model_comment.from_json(json.get("comment"));
@@ -51,7 +59,8 @@ public class model_webhook_issue_comment_created implements interface_github_web
         );
     }
 
-    public static boolean is_me(JsonNode json) {
+    public static boolean is_me(@Nonnull JsonNode json) {
+        assert json != null;
         return json.has("action") && json.get("action").asText().equals("created") &&
                 json.has("issue") && json.has("comment") &&
                 json.has("repository") && json.has("sender") &&

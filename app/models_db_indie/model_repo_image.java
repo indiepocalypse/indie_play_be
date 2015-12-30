@@ -3,11 +3,13 @@ package models_db_indie;
 import com.avaje.ebean.Model;
 import com.avaje.ebean.Query;
 import com.avaje.ebean.annotation.CacheStrategy;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import models_db_github.model_repo;
 import models_db_github.model_user;
 import play.Logger;
 import scala.Int;
 
+import javax.annotation.Nonnull;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
@@ -23,16 +25,29 @@ import java.util.List;
 public class model_repo_image extends Model {
     // TODO: split into image model and repo pointer to it
     // TODO: maybe use a repo extended info... like for users
+    @Nonnull
     private static final Finder<String, model_repo_image> find = new Finder<>(model_repo_image.class);
     @Id
+    @Nonnull
     public final String file_name;
+    @Nonnull
     public final String repo_name;
     @Lob
+    @Nonnull
     private final byte[] image;
+    @Nonnull
     public final Date uploaded_date;
+    @Nonnull
     public final String uploaded_by_user_name;
 
-    public model_repo_image(String p_repo_name, String p_user_name, byte[] p_image) {
+    public model_repo_image(
+            @Nonnull String p_repo_name,
+            @Nonnull String p_user_name,
+            @Nonnull byte[] p_image) {
+        assert p_user_name != null;
+        assert p_repo_name != null;
+        assert p_image != null;
+
         this.uploaded_by_user_name = p_user_name;
         this.repo_name = p_repo_name;
         this.image = p_image;
@@ -42,11 +57,11 @@ public class model_repo_image extends Model {
         Logger.info("MODEL_USER_NAME: "+p_user_name);
     }
 
-    public static Query<model_repo_image> fetch() {
+    public @Nonnull static Query<model_repo_image> fetch() {
         return find.setUseQueryCache(true);
     }
 
-    public byte[] getImage() {
+    public @Nonnull byte[] getImage() {
         return this.image;
     }
 

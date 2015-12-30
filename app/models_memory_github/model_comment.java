@@ -3,24 +3,32 @@ package models_memory_github;
 import com.fasterxml.jackson.databind.JsonNode;
 import models_db_github.model_user;
 
+import javax.annotation.Nonnull;
+
 /**
  * Created by skariel on 14/10/15.
  */
 public class model_comment {
+    @Nonnull
     public final String body;
+    @Nonnull
     private final String url;
+    @Nonnull
     private final String html_url;
+    @Nonnull
     private final String issue_url;
+    @Nonnull
     private final Long id;
+    @Nonnull
     private final model_user user;
 
     private model_comment(
-            String p_url,
-            String p_html_url,
-            String p_issue_url,
-            Long p_id,
-            model_user p_user,
-            String p_body
+            @Nonnull String p_url,
+            @Nonnull String p_html_url,
+            @Nonnull String p_issue_url,
+            @Nonnull Long p_id,
+            @Nonnull model_user p_user,
+            @Nonnull String p_body
     ) {
         assert p_url != null;
         assert p_html_url != null;
@@ -37,7 +45,8 @@ public class model_comment {
         this.body = p_body;
     }
 
-    public static model_comment from_json(JsonNode json) {
+    public static model_comment from_json(@Nonnull JsonNode json) {
+        assert json != null;
         String url = json.get("url").asText();
         String html_url = json.get("html_url").asText();
         String issue_url = json.get("issue_url").asText();

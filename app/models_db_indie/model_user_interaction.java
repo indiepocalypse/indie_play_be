@@ -6,6 +6,7 @@ import com.avaje.ebean.annotation.CacheStrategy;
 import commands.interface_command;
 import models_memory_github.interface_github_webhook;
 
+import javax.annotation.Nonnull;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Date;
@@ -19,12 +20,18 @@ public class model_user_interaction extends Model {
     // no relations in this class to not break schemas. This class is a historic record, its a bit special!
     // ie other entities can be safely deleted, while these stay on the DB
     private static final Finder<String, model_user_interaction> find = new Finder<>(model_user_interaction.class);
+    @Nonnull
     public final String user_name;
     @Id
+    @Nonnull
     private final String id;
+    @Nonnull
     final Date date_performed;
+    @Nonnull
     final enum_user_interaction_hook_type hook_interaction_type;
+    @Nonnull
     final enum_user_interaction_web_type web_interaction_type;
+    @Nonnull
     final enum_user_interaction_mail_type mail_interaction_type;
     // some free parameters :)
     final String p1;
@@ -39,10 +46,10 @@ public class model_user_interaction extends Model {
     final String p5_desc;
 
     private model_user_interaction(
-            final String p_user_name,
-            final enum_user_interaction_hook_type p_hook_interaction_type,
-            final enum_user_interaction_web_type p_web_interaction_type,
-            final enum_user_interaction_mail_type p_mail_interaction_type,
+            @Nonnull final String p_user_name,
+            @Nonnull final enum_user_interaction_hook_type p_hook_interaction_type,
+            @Nonnull final enum_user_interaction_web_type p_web_interaction_type,
+            @Nonnull final enum_user_interaction_mail_type p_mail_interaction_type,
             final String p_p1,
             final String p_p1_desc,
             final String p_p2,
@@ -83,7 +90,11 @@ public class model_user_interaction extends Model {
     }
 
     // TODO: make a more fine grained resolution here... ie a method for specific commands
-    public static model_user_interaction from_general_command(final interface_command command, final interface_github_webhook hook) {
+    public static model_user_interaction from_general_command(
+            @Nonnull final interface_command command,
+            @Nonnull final interface_github_webhook hook) {
+        assert command != null;
+        assert hook != null;
         final String p_user_name = hook.get_user().user_name;
         final enum_user_interaction_hook_type p_hook_interaction_type = enum_user_interaction_hook_type.I_DONT_CHECK_YET_BECAUSE_IM_LAZY;
         final enum_user_interaction_web_type p_web_interaction_type = enum_user_interaction_web_type.NONE;
@@ -118,7 +129,11 @@ public class model_user_interaction extends Model {
     }
 
     // TODO: extract more data here: file_name if uploaded, repo name if created, etc.
-    public static model_user_interaction from_web(final String p_user_name, final enum_user_interaction_web_type web_interaction_type) {
+    public static model_user_interaction from_web(
+            @Nonnull final String p_user_name,
+            @Nonnull final enum_user_interaction_web_type web_interaction_type) {
+        assert p_user_name != null;
+        assert web_interaction_type != null;
         final enum_user_interaction_hook_type p_hook_interaction_type = enum_user_interaction_hook_type.NONE;
         final enum_user_interaction_web_type p_web_interaction_type = web_interaction_type;
         final enum_user_interaction_mail_type p_mail_interaction_type = enum_user_interaction_mail_type.NONE;
@@ -147,7 +162,14 @@ public class model_user_interaction extends Model {
     }
 
     // TODO: elaborate here... extract more info!
-    public static model_user_interaction from_mail(final String p_user_name, final enum_user_interaction_mail_type mail_interaction_type, String repo_name) {
+    public static model_user_interaction from_mail(
+            @Nonnull final String p_user_name,
+            @Nonnull final enum_user_interaction_mail_type mail_interaction_type,
+            @Nonnull String repo_name) {
+        assert p_user_name != null;
+        assert mail_interaction_type != null;
+        assert repo_name != null;
+
         final enum_user_interaction_hook_type p_hook_interaction_type = enum_user_interaction_hook_type.NONE;
         final enum_user_interaction_web_type p_web_interaction_type = enum_user_interaction_web_type.NONE;
         final enum_user_interaction_mail_type p_mail_interaction_type = mail_interaction_type;

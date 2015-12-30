@@ -5,6 +5,8 @@ import com.avaje.ebean.Query;
 import com.avaje.ebean.annotation.CacheStrategy;
 import com.fasterxml.jackson.databind.JsonNode;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -18,35 +20,49 @@ public class model_pull_request extends Model {
     private static final Finder<String, model_pull_request> find = new Finder<>(model_pull_request.class);
 
     @Id
+    @Nonnull
     public final String id;
+    @Nonnull
     public final String number;
+    @Nonnull
     public final String user_name;
+    @Nonnull
     public final String SHA;
+    @Nonnull
     public final String repo_name;
+    @Nonnull
     public final String title;
+    @Nonnull
     public final String body;
+    @Nonnull
     public final Boolean merged;
+    @Nonnull
     public final Boolean mergeable;
+    @Nonnull
     private final String url;
+    @Nonnull
     private final Long github_id;
+    @Nonnull
     private final String html_url;
+    @Nonnull
     private final String comments_url;
+    @Nonnull
     private final String state;
 
     private model_pull_request(
-            String p_url,
-            Long p_github_id,
-            String p_html_url,
-            String p_state,
-            String p_title,
-            String p_user_name,
-            String p_body,
-            Boolean p_merged,
-            Boolean p_mergeable,
-            String p_comments_url,
-            String p_repo_name,
-            String p_number,
-            String p_SHA
+            @Nonnull String p_url,
+            @Nonnull Long p_github_id,
+            @Nonnull String p_html_url,
+            @Nonnull String p_state,
+            @Nonnull String p_title,
+            @Nonnull String p_user_name,
+            @Nonnull String p_body,
+            @Nonnull Boolean p_merged,
+            @Nonnull Boolean p_mergeable,
+            @Nonnull String p_comments_url,
+            @Nonnull String p_repo_name,
+            @Nonnull String p_number,
+            @Nonnull String p_SHA
     ) {
         assert p_url != null;
         assert p_url != null;
@@ -79,7 +95,8 @@ public class model_pull_request extends Model {
         this.id = repo_name + "/" + this.number;
     }
 
-    public static model_pull_request from_webhook_json(JsonNode json) {
+    public static model_pull_request from_webhook_json(@Nonnull JsonNode json) {
+        assert json != null;
         String number = Integer.toString(json.get("number").asInt());
         String url = json.get("url").asText();
         Long github_id = json.get("id").asLong();
@@ -122,7 +139,8 @@ public class model_pull_request extends Model {
         return find.setUseQueryCache(true);
     }
 
-    public static void deleteById(String id) {
+    public static void deleteById(@Nonnull String id) {
+        assert id != null;
         find.deleteById(id);
     }
 
@@ -143,7 +161,11 @@ public class model_pull_request extends Model {
         return same_but_with_state_merged_and_mergeable(state, merged, mergeable);
     }
 
-    private model_pull_request same_but_with_state_merged_and_mergeable(final String p_state, final boolean p_merged, final boolean p_mergeable) {
+    private model_pull_request same_but_with_state_merged_and_mergeable(
+            @Nonnull final String p_state,
+            final boolean p_merged,
+            final boolean p_mergeable) {
+        assert p_state != null;
         return new model_pull_request(
                 this.url,
                 this.github_id,

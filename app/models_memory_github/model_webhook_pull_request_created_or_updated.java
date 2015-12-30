@@ -6,22 +6,29 @@ import models_db_github.model_repo;
 import models_db_github.model_user;
 import utils.utils_github_webhooks;
 
+import javax.annotation.Nonnull;
+
 /**
  * Created by skariel on 14/10/15.
  */
 public class model_webhook_pull_request_created_or_updated implements interface_github_webhook {
+    @Nonnull
     private final enum_webhook_action action;
+    @Nonnull
     private final String number;
+    @Nonnull
     private final model_pull_request pull_request;
+    @Nonnull
     private final model_repo repo;
+    @Nonnull
     private final model_user user;
 
     private model_webhook_pull_request_created_or_updated(
-            String p_action,
-            String p_number,
-            model_pull_request p_pull_request,
-            model_repo p_repo,
-            model_user p_user
+            @Nonnull String p_action,
+            @Nonnull String p_number,
+            @Nonnull model_pull_request p_pull_request,
+            @Nonnull model_repo p_repo,
+            @Nonnull model_user p_user
     ) {
         assert p_action != null;
         assert p_number != null;
@@ -36,7 +43,8 @@ public class model_webhook_pull_request_created_or_updated implements interface_
         this.user = p_user;
     }
 
-    public static model_webhook_pull_request_created_or_updated from_json(JsonNode json) {
+    public static model_webhook_pull_request_created_or_updated from_json(@Nonnull JsonNode json) {
+        assert json != null;
         String action = json.get("action").asText();
         String number = Integer.toString(json.get("number").asInt());
         model_pull_request pull_request = model_pull_request.from_webhook_json(json.get("pull_request"));
@@ -51,7 +59,8 @@ public class model_webhook_pull_request_created_or_updated implements interface_
         );
     }
 
-    public static boolean is_me(JsonNode json) {
+    public static boolean is_me(@Nonnull JsonNode json) {
+        assert json != null;
         return json.has("action") &&
                 ((json.get("action").asText().equals("opened")) || (json.get("action").asText().equals("synchronize"))) &&
                 json.has("number") && json.has("pull_request") && json.has("repository") &&

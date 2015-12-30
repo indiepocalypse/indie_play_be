@@ -147,11 +147,13 @@ class negotiation_status {
                 final model_ownership p_from_user_ownership = ownership;
                 final model_ownership p_to_user_ownership = to_ownership;
 
+                final String p_offer_id = p_offer==null? null : p_offer.id;
+
                 model_merge_transaction merge_transaction = new model_merge_transaction(
                         p_from_user_name,
                         p_to_user_name,
                         p_pull_request.id,
-                        p_offer.id,
+                        p_offer_id,          // p_offer is nullable!
                         p_request.id,
                         p_amount_percent,
                         p_date,

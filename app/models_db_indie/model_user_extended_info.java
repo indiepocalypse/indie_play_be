@@ -5,6 +5,7 @@ import com.avaje.ebean.Query;
 import com.avaje.ebean.annotation.CacheStrategy;
 import models_db_github.model_user;
 
+import javax.annotation.Nonnull;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -16,13 +17,16 @@ import javax.persistence.ManyToOne;
 @Entity
 public class model_user_extended_info extends Model {
     private static final Finder<String, model_user_extended_info> find = new Finder<>(model_user_extended_info.class);
+    @Nonnull
     public final String user_name;
     @Id
     private final String id;
+    @Nonnull
     public final boolean is_admin;
+    @Nonnull
     public final boolean rate_limit_was_communicated_to_user_via_github_comment;
 
-    private model_user_extended_info(final String p_user_name, final boolean p_is_admin, final boolean p_rate_limit_communicated_to_user_via_github_comment) {
+    private model_user_extended_info(@Nonnull final String p_user_name, final boolean p_is_admin, final boolean p_rate_limit_communicated_to_user_via_github_comment) {
         assert p_user_name != null;
 
         this.id = get_id_by_user_name(p_user_name);
@@ -31,7 +35,8 @@ public class model_user_extended_info extends Model {
         this.rate_limit_was_communicated_to_user_via_github_comment = p_rate_limit_communicated_to_user_via_github_comment;
     }
 
-    public static String get_id_by_user_name(final String user_name) {
+    public static String get_id_by_user_name(@Nonnull final String user_name) {
+        assert user_name != null;
         return user_name + "@extended_info";
     }
 
@@ -52,7 +57,8 @@ public class model_user_extended_info extends Model {
         return find.setUseQueryCache(true);
     }
 
-    public static void deleteById(String id) {
+    public static void deleteById(@Nonnull String id) {
+        assert id != null;
         find.deleteById(id);
     }
 

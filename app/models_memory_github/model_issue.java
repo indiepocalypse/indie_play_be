@@ -3,33 +3,45 @@ package models_memory_github;
 import com.fasterxml.jackson.databind.JsonNode;
 import models_db_github.model_user;
 
+import javax.annotation.Nonnull;
+
 /**
  * Created by skariel on 14/10/15.
  */
 public class model_issue {
+    @Nonnull
     public final model_user user;
+    @Nonnull
     public final String number;
+    @Nonnull
     public final String body;
+    @Nonnull
     public final String title;
     // TODO: add labels, etc.
+    @Nonnull
     private final String url;
+    @Nonnull
     private final String html_url;
+    @Nonnull
     private final String comments_url;
+    @Nonnull
     private final Long id;
+    @Nonnull
     private final String comments;
+    @Nonnull
     public String state;
 
     private model_issue(
-            String p_url,
-            String p_html_url,
-            String p_comments_url,
-            Long p_id,
-            model_user p_user,
-            String p_body,
-            String p_number,
-            String p_comments,
-            String p_title,
-            String p_state
+            @Nonnull String p_url,
+            @Nonnull String p_html_url,
+            @Nonnull String p_comments_url,
+            @Nonnull Long p_id,
+            @Nonnull model_user p_user,
+            @Nonnull String p_body,
+            @Nonnull String p_number,
+            @Nonnull String p_comments,
+            @Nonnull String p_title,
+            @Nonnull String p_state
     ) {
         assert p_url != null;
         assert p_html_url != null;
@@ -54,7 +66,8 @@ public class model_issue {
         this.state = p_state;
     }
 
-    public static model_issue from_json(JsonNode json) {
+    public static model_issue from_json(@Nonnull JsonNode json) {
+        assert json != null;
         String url = json.get("url").asText();
         String html_url = json.get("html_url").asText();
         String comments_url = json.get("comments_url").asText();

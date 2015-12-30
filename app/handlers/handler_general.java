@@ -184,15 +184,14 @@ public class handler_general {
                     transaction_info.from_user_ownership.percent.subtract(transaction_info.transaction.amount_percent)
             );
 
-            final model_offer_for_merge new_offer = model_offer_for_merge
-                    .same_but_accepted_now(transaction_info.offer);
+            if (transaction_info.offer!=null) {
+                final model_offer_for_merge new_offer = model_offer_for_merge
+                        .same_but_accepted_now(transaction_info.offer);
+                store_local_db.update_offer(new_offer);
+            }
 
 
             store_local_db.update_ownership(new_from_ownership);
-            // the offer can actually be null...
-            if (new_offer != null) {
-                store_local_db.update_offer(new_offer);
-            }
 
             store_local_db.update_merge_transaction(transaction_info.transaction);
 

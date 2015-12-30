@@ -5,6 +5,7 @@ import com.avaje.ebean.Query;
 import com.avaje.ebean.annotation.CacheStrategy;
 import play.Logger;
 
+import javax.annotation.Nonnull;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Date;
@@ -22,7 +23,8 @@ public class model_gmail_last_date_read extends Model {
     private final String id;
     public Date lastdate;
 
-    public model_gmail_last_date_read(Date date) {
+    public model_gmail_last_date_read(@Nonnull Date date) {
+        assert date != null;
         this.lastdate = date;
         this.id = constid;
     }
