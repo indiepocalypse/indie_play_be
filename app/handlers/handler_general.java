@@ -11,6 +11,7 @@ import play.cache.Cache;
 import stores.*;
 import sync.sync_gmail;
 
+import javax.annotation.Nonnull;
 import java.math.BigDecimal;
 
 /**
@@ -138,7 +139,9 @@ public class handler_general {
         Cache.remove(controller_main.EXPLORE_PAGE_CONTENT_CACHE_KEY);
     }
 
-    public static boolean locally_update_pull_request_and_clear_offers_if_necessary(model_pull_request pull_request) {
+    public static boolean locally_update_pull_request_and_clear_offers_if_necessary(@Nonnull model_pull_request pull_request) {
+        assert pull_request != null;
+
         // this method deletes offers iff pull reuqest was updated.
         // users notification here. Reason is that this is always coupled:
         // when deleting offers, users always need to be notified!
@@ -149,8 +152,8 @@ public class handler_general {
         if ((old_pull_request != null) && (!old_pull_request.SHA.equals(pull_request.SHA))) {
             updated = true;
             // updated pull requests contains different code, all previous offers rendered irrelevant
-            store_local_db.delete_request_by_pull_request(pull_request.repo_name, pull_request.number);
-            store_local_db.delete_offers_by_pull_request(pull_request.repo_name, pull_request.number);
+            store_local_db.delete_request_by_pull_request(pull_request);
+            store_local_db.delete_offers_by_pull_request(pull_request);
             // notify users
             try {
                 notify_by_comment_that_pr_changed_and_offers_are_removed(pull_request);

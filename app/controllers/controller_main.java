@@ -176,7 +176,7 @@ public class controller_main extends Controller {
             try {
                 @Nonnull final byte[] bytes = java.nio.file.Files.readAllBytes(file.toPath());
                 assert bytes != null;
-                Logger.info("XXXXXXX lenbytes=" + Integer.toString(bytes.length));
+                Logger.info("image lenbytes=" + Integer.toString(bytes.length));
                 model_repo_image repo_image = new model_repo_image(repo_name, store_session.get_user_name(), bytes);
                 store_local_db.update_repo_image(repo_image);
                 return ok("File uploaded, user name is " + store_session.get_user_name() + " file name: " + repo_image.file_name);

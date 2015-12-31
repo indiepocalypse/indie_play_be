@@ -298,13 +298,12 @@ public class store_local_db {
         }
     }
 
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    public static void delete_offers_by_pull_request(String repo_name, String number) {
+    public static void delete_offers_by_pull_request(model_pull_request pull_request) {
         try {
             // TODO: this delete one by one is bad. Fix it!
             List<model_offer_for_merge> offers = model_offer_for_merge.fetch()
-                    .where().eq("pull_request.number", number)
-                    .where().eq("pull_request.repo.repo_name", repo_name).findList();
+                    .where().eq("pull_request_id", pull_request.id)
+                    .findList();
             if (offers != null) {
                 for (model_offer_for_merge offer : offers) {
                     model_offer_for_merge.deleteById(offer.id);
@@ -319,7 +318,7 @@ public class store_local_db {
         try {
             // TODO: this delete one by one is bad. Fix it!
             List<model_offer_for_merge> offers = model_offer_for_merge.fetch()
-                    .where().eq("pull_request.repo.repo_name", repo.repo_name).findList();
+                    .where().eq("repo_name", repo.repo_name).findList();
             if (offers != null) {
                 for (model_offer_for_merge offer : offers) {
                     model_offer_for_merge.deleteById(offer.id);
@@ -351,28 +350,26 @@ public class store_local_db {
     public static List<model_request_for_merge> get_requests_by_user(String user_name) {
         try {
             return model_request_for_merge.fetch()
-                    .where().eq("user.user_name", user_name).findList();
+                    .where().eq("user_name", user_name).findList();
         } catch (Exception ignore) {
             return new ArrayList<>(0);
         }
     }
 
-    public static model_request_for_merge get_request_by_pull_request(String repo_name, String number) {
+    public static model_request_for_merge get_request_by_pull_request(model_pull_request pull_request) {
         try {
             return model_request_for_merge.fetch()
-                    .where().eq("pull_request.number", number)
-                    .where().eq("pull_request.repo.repo_name", repo_name)
+                    .where().eq("pull_request_is", pull_request.id)
                     .findUnique();
         } catch (Exception ignore) {
             return null;
         }
     }
 
-    public static void delete_request_by_pull_request(String repo_name, String number) {
+    public static void delete_request_by_pull_request(model_pull_request pull_request) {
         try {
             model_request_for_merge.fetch()
-                    .where().eq("pull_request.number", number)
-                    .where().eq("pull_request.repo.repo_name", repo_name)
+                    .where().eq("pull_request_id", pull_request.id)
                     .findUnique().delete();
         } catch (Exception e) {
             Logger.error("failed to delete request by pull request:", e);
@@ -383,9 +380,7 @@ public class store_local_db {
         try {
             // TODO: this delete one by one is bad. Fix it!
             List<model_request_for_merge> requests = model_request_for_merge.fetch()
-                    .where()
-                    .eq("pull_request.repo.repo_name", repo.repo_name)
-                    .findList();
+                    .where().eq("repo_name", repo.repo_name).findList();
             if (requests != null) {
                 for (model_request_for_merge offer : requests) {
                     model_request_for_merge.deleteById(offer.id);
@@ -543,7 +538,7 @@ public class store_local_db {
                     .where().idEq(file_name)
                     .findUnique();
         } catch (Exception e) {
-            Logger.error("WHILE FETCHING IMAGE WITH NAME " + file_name + ": ", e);
+            Logger.error("while fetching image with name " + file_name + ": ", e);
             return null;
         }
     }
@@ -551,7 +546,7 @@ public class store_local_db {
     public static List<model_repo_image> get_all_repo_images(String repo_name) {
         try {
             return model_repo_image.fetch()
-                    .where().eq("repo.repo_name", repo_name)
+                    .where().eq("repo_name", repo_name)
                     .findList();
         } catch (Exception ignore) {
             return null;
@@ -561,7 +556,7 @@ public class store_local_db {
     public static List<Object> get_all_repo_images_id(String repo_name) {
         try {
             return model_repo_image.fetch()
-                    .where().eq("repo.repo_name", repo_name)
+                    .where().eq("repo_name", repo_name)
                     .findIds();
         } catch (Exception ignore) {
             return null;
@@ -594,7 +589,7 @@ public class store_local_db {
                     .orderBy("date_performed")
                     .findList();
         } catch (Exception e) {
-            Logger.error("WHILE FETCHING USER INTERACTIONS FOR " + user_name + ": ", e);
+            Logger.error("while fetching user interactions for " + user_name + ": ", e);
             return null;
         }
     }
@@ -607,7 +602,7 @@ public class store_local_db {
                     .orderBy("date_performed")
                     .findPagedList(page_num, per_page);
         } catch (Exception e) {
-            Logger.error("WHILE FETCHING USER INTERACTIONS FOR " + user_name + ": ", e);
+            Logger.error("while fetching (paginated) user interactions for " + user_name + ": ", e);
             return null;
         }
     }
@@ -622,7 +617,7 @@ public class store_local_db {
                     .ge("date_performed", past_date)
                     .findRowCount();
         } catch (Exception e) {
-            Logger.error("WHILE COUNTING USER INTERACTIONS FOR " + user_name + ": ", e);
+            Logger.error("while counting user interactions for " + user_name + ": ", e);
             return -1;
         }
     }

@@ -107,7 +107,7 @@ public class handler_commands {
         }
 
         String request_str;
-        model_request_for_merge request = store_local_db.get_request_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
+        model_request_for_merge request = store_local_db.get_request_by_pull_request(hook.get_pull_request());
         if (request == null) {
             request_str = "no requested percentage for merging yet\n";
         } else {
@@ -242,7 +242,7 @@ public class handler_commands {
 
         // we can make or update the user request...
 
-        model_request_for_merge current_request = store_local_db.get_request_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
+        model_request_for_merge current_request = store_local_db.get_request_by_pull_request(hook.get_pull_request());
 
         final boolean is_active = true;
         final boolean was_positively_accepted = false;
@@ -301,13 +301,15 @@ public class handler_commands {
 
     // this is like handle_make_offer but offers an exact amount to accept the offer
     public static String handle_tailor_offer(interface_github_webhook hook) {
-        final model_request_for_merge request = store_local_db.get_request_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
-        if (request!=null) {
-            return handle_make_offer(hook, request.amount_percent.toString());
+        model_pull_request pull_request = hook.get_pull_request();
+        model_request_for_merge request = null;
+        if (pull_request!=null) {
+            request = store_local_db.get_request_by_pull_request(pull_request);
         }
-        else {
+        if (request==null) {
             return "cannot find the request. Please try again later, or contact an admin";
         }
+        return handle_make_offer(hook, request.amount_percent.toString());
     }
 
     public static String handle_make_offer(interface_github_webhook hook, String percent_amount) {
@@ -360,7 +362,9 @@ public class handler_commands {
                     was_positively_accepted,
                     current_offer.date_created,
                     current_offer.date_accepted_if_accepted,
-                    current_offer.user_ownership_percent
+                    current_offer.user_ownership_percent,
+                    pull_request.number,
+                    pull_request.repo_name
             );
             store_local_db.update_offer(current_offer);
             result = "offer for merge updated to " + percent_amount + "%";
@@ -375,12 +379,14 @@ public class handler_commands {
                     was_positively_accepted,
                     date_created,
                     date_accepted_if_accepted,
-                    user_ownership.percent);
+                    user_ownership.percent,
+                    pull_request.number,
+                    pull_request.repo_name);
             store_local_db.update_offer(current_offer);
             result = "offer for merge created as " + percent_amount + "%";
         }
 
-        final model_request_for_merge request = store_local_db.get_request_by_pull_request(hook.get_repo().repo_name, hook.get_issue_num());
+        final model_request_for_merge request = store_local_db.get_request_by_pull_request(hook.get_pull_request());
         final List<model_offer_for_merge> offers = store_local_db.get_offers_by_pull_request(hook.get_pull_request());
         final model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo());
         final List<model_ownership> ownerships = store_local_db.get_ownerships_by_repo_name(hook.get_repo().repo_name);

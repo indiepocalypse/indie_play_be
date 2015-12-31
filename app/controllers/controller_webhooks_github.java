@@ -70,6 +70,8 @@ public class controller_webhooks_github extends Controller {
         store_local_db.update_hook_components(hook);
 
         if (hook_is_pull_request) {
+            assert hook.get_pull_request() != null;
+
             // create an ownership for this user if one is not existing
             model_ownership ownership = null;
             try {

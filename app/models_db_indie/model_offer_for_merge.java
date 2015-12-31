@@ -36,6 +36,10 @@ public class model_offer_for_merge extends Model {
     @Nonnull
     final public Date date_created;
     @Nonnull
+    private final String issue_num;
+    @Nonnull
+    private final String repo_name;
+    @Nonnull
     private final String pull_request_id;
     @Nonnull
     private Boolean is_active;
@@ -50,7 +54,9 @@ public class model_offer_for_merge extends Model {
             @Nonnull Boolean p_was_positively_accepted,
             @Nonnull Date p_date_created,
             @Nullable Date p_date_accepted_if_accepted,
-            @Nonnull BigDecimal p_user_ownership_percent) {
+            @Nonnull BigDecimal p_user_ownership_percent,
+            @Nonnull String p_issue_num,
+            @Nonnull String p_repo_name) {
         assert p_user_name != null;
         assert p_pull_request_id != null;
         assert p_amount_percent != null;
@@ -58,6 +64,8 @@ public class model_offer_for_merge extends Model {
         assert p_was_positively_accepted != null;
         assert p_date_created != null;
         assert p_user_ownership_percent != null;
+        assert p_issue_num != null;
+        assert p_repo_name != null;
 
         this.id = "offer_for_merge_from_user_" + p_user_name + "_for_pull_request_id_" + p_pull_request_id;
         this.user_name = p_user_name;
@@ -68,6 +76,8 @@ public class model_offer_for_merge extends Model {
         this.date_created = p_date_created;
         this.date_accepted_if_accepted = p_date_accepted_if_accepted;
         this.user_ownership_percent = p_user_ownership_percent;
+        this.issue_num = p_issue_num;
+        this.repo_name = p_repo_name;
     }
 
     public static model_offer_for_merge same_but_accepted_now(@Nonnull model_offer_for_merge model_offer_for_merge) {
@@ -83,7 +93,9 @@ public class model_offer_for_merge extends Model {
                 was_positively_accepted,
                 model_offer_for_merge.date_created,
                 date_accepted_if_accepted,
-                model_offer_for_merge.user_ownership_percent
+                model_offer_for_merge.user_ownership_percent,
+                model_offer_for_merge.issue_num,
+                model_offer_for_merge.repo_name
         );
     }
 
