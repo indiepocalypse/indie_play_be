@@ -32,6 +32,8 @@ create table model_offer_for_merge (
   user_ownership_percent    decimal(5,2),
   date_accepted_if_accepted timestamp,
   date_created              timestamp,
+  issue_num                 varchar(255),
+  repo_name                 varchar(255),
   pull_request_id           varchar(255),
   is_active                 boolean,
   was_positively_accepted   boolean,
@@ -80,7 +82,7 @@ create table model_repo_image (
   repo_name                 varchar(255),
   uploaded_date             timestamp,
   uploaded_by_user_name     varchar(255),
-  image                     bytea,
+  image                     blob,
   constraint pk_model_repo_image primary key (file_name))
 ;
 

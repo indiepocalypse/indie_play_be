@@ -34,7 +34,7 @@ public class controller_main extends Controller {
     // TODO: pretty-print the BigDecimals
     // TODO: fix double "%" printing when making an offer or request
     // TODO: refactor out content pages into a handler, all cached. This controller should not touch caching
-    // TODO: rethink caching strategy
+    // TODO: view caching
 
     public final static String EXPLORE_PAGE_CONTENT_CACHE_KEY = "exlpore_webpage_content";
     private final static String main_title = "it's the Indiepocalypse!";
@@ -58,7 +58,6 @@ public class controller_main extends Controller {
     }
 
     public Result newrepo_get() {
-        // TODO: rate limit!
         if (!handler_policy.can_create_new_repo()) {
             return ok(view_main.render("new repo", enum_main_page_type.INDEX, view_newrepo_too_many.render()));
         }
@@ -72,8 +71,6 @@ public class controller_main extends Controller {
     }
 
     public Result newrepo_post() {
-        // TODO: rate limit!
-        // TODO: make sure user can actually make the repo, maybe use the newrepo_get to put some flag in the session, so no need to touch the db
         DynamicForm data = Form.form().bindFromRequest();
 
         @Nonnull String repo_name = "";
