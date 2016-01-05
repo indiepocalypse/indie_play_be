@@ -82,7 +82,7 @@ create table model_repo_image (
   repo_name                 varchar(255),
   uploaded_date             timestamp,
   uploaded_by_user_name     varchar(255),
-  image                     blob,
+  image                     bytea,
   constraint pk_model_repo_image primary key (file_name))
 ;
 
@@ -147,84 +147,32 @@ create table model_user_interaction (
   constraint pk_model_user_interaction primary key (id))
 ;
 
-create sequence model_gmail_last_date_read_seq;
-
-create sequence model_merge_transaction_seq;
-
-create sequence model_offer_for_merge_seq;
-
-create sequence model_ownership_seq;
-
-create sequence model_pull_request_seq;
-
-create sequence model_repo_seq;
-
-create sequence model_repo_image_seq;
-
-create sequence model_repo_policy_seq;
-
-create sequence model_request_for_merge_seq;
-
-create sequence model_user_seq;
-
-create sequence model_user_extended_info_seq;
-
-create sequence model_user_interaction_seq;
-
 
 
 
 # --- !Downs
 
-SET REFERENTIAL_INTEGRITY FALSE;
+drop table if exists model_gmail_last_date_read cascade;
 
-drop table if exists model_gmail_last_date_read;
+drop table if exists model_merge_transaction cascade;
 
-drop table if exists model_merge_transaction;
+drop table if exists model_offer_for_merge cascade;
 
-drop table if exists model_offer_for_merge;
+drop table if exists model_ownership cascade;
 
-drop table if exists model_ownership;
+drop table if exists model_pull_request cascade;
 
-drop table if exists model_pull_request;
+drop table if exists model_repo cascade;
 
-drop table if exists model_repo;
+drop table if exists model_repo_image cascade;
 
-drop table if exists model_repo_image;
+drop table if exists model_repo_policy cascade;
 
-drop table if exists model_repo_policy;
+drop table if exists model_request_for_merge cascade;
 
-drop table if exists model_request_for_merge;
+drop table if exists model_user cascade;
 
-drop table if exists model_user;
+drop table if exists model_user_extended_info cascade;
 
-drop table if exists model_user_extended_info;
-
-drop table if exists model_user_interaction;
-
-SET REFERENTIAL_INTEGRITY TRUE;
-
-drop sequence if exists model_gmail_last_date_read_seq;
-
-drop sequence if exists model_merge_transaction_seq;
-
-drop sequence if exists model_offer_for_merge_seq;
-
-drop sequence if exists model_ownership_seq;
-
-drop sequence if exists model_pull_request_seq;
-
-drop sequence if exists model_repo_seq;
-
-drop sequence if exists model_repo_image_seq;
-
-drop sequence if exists model_repo_policy_seq;
-
-drop sequence if exists model_request_for_merge_seq;
-
-drop sequence if exists model_user_seq;
-
-drop sequence if exists model_user_extended_info_seq;
-
-drop sequence if exists model_user_interaction_seq;
+drop table if exists model_user_interaction cascade;
 
