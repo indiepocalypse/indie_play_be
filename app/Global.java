@@ -15,9 +15,6 @@ public class Global extends GlobalSettings {
     public void onStart(Application app) {
         super.onStart(app);
 
-        Logger.info("ABCD: " + ConfigFactory.load().getString("a.b.c.d"));
-
-
         // TODO: this is just stub. DOC files should be parsed and generate some nice html, etc.
         File directory = app.getFile("./conf/internal_resources/docs"); //new File("/app");
         final File[] fList = directory.listFiles();

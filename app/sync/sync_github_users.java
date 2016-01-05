@@ -23,7 +23,7 @@ public class sync_github_users {
         stop();
 
         // some hard coded data
-        model_user indiepocalypse = handler_general.get_integrate_github_user_by_name(store_credentials.github.name);
+        model_user indiepocalypse = handler_general.get_integrate_github_user_by_name(store_credentials.get_github_indie_user_name());
         model_user skariel = handler_general.get_integrate_github_user_by_name("skariel");
         final boolean indiepocalypse_is_admin = true;
         model_user_extended_info extended_info_indiepocalypse = model_user_extended_info.create(indiepocalypse.user_name, indiepocalypse_is_admin);

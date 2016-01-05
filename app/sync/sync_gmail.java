@@ -310,13 +310,13 @@ public class sync_gmail {
         smtp_session = Session.getInstance(smtp_properties,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(store_credentials.gmail.name, store_credentials.gmail.pssw);
+                        return new PasswordAuthentication(store_credentials.get_gmail_indie_user_name(), store_credentials.get_gmail_indie_password());
                     }
                 });
 
         try {
             mail_store = imap_session.getStore("imaps");
-            mail_store.connect("imap.gmail.com", store_credentials.gmail.name, store_credentials.gmail.pssw);
+            mail_store.connect("imap.gmail.com", store_credentials.get_gmail_indie_user_name(), store_credentials.get_gmail_indie_password());
             inbox = (IMAPFolder) mail_store.getFolder("inbox");
             inbox.open(Folder.READ_WRITE);
             final model_gmail_last_date_read f_last_date_read_model = store_local_db.get_gmail_latest_sync_date();

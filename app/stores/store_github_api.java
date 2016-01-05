@@ -37,7 +37,7 @@ public class store_github_api {
 
     public static String get_github_access_url(String state) {
         final String github_access = "https://github.com/login/oauth/authorize?client_id=__CLIENT_ID__&redirect_uri=__CALLBACK_URI__&scope=" + scope + "&state=__STATE__";
-        final String client_id = store_credentials.github.getClient_id();
+        final String client_id = store_credentials.get_github_indie_client_id();
         final String callback_uri = ConfigFactory.load().getString("credentials.indie.github.login.callback");
         return github_access.replace("__STATE__", state)
                 .replace("__CLIENT_ID__", client_id)
@@ -45,8 +45,8 @@ public class store_github_api {
     }
 
     public static String get_github_access_token(String state, String code) {
-        final String client_id = store_credentials.github.getClient_id();
-        final String client_secret = store_credentials.github.getClient_secret();
+        final String client_id = store_credentials.get_github_indie_client_id();
+        final String client_secret = store_credentials.get_github_indie_client_secret();
 
         WSResponse res = utils_general.getwsclient().url("https://github.com/login/oauth/access_token")
                 .setMethod("POST")
@@ -71,7 +71,7 @@ public class store_github_api {
     private static WSRequest indie_auth_request(String path) {
         WSClient ws = utils_general.getwsclient();
         return ws.url("https://api.github.com" + path)
-                .setHeader("Authorization", "Basic " + store_credentials.github.getAuth())
+                .setHeader("Authorization", "Basic " + store_credentials.get_github_indie_auth())
                 .setHeader("Accept", "application/vnd.github.v3 + json");
     }
 
@@ -198,7 +198,7 @@ public class store_github_api {
                 "}";
         json_payload_to_create = json_payload_to_create.replace("__GITHUB_WEBHOOK_URL__", store_conf.get_github_webhook_url());
         String path = "/repos/__OWNER__/__REPO__/hooks"
-                .replace("__OWNER__", store_credentials.github.name)
+                .replace("__OWNER__", store_credentials.get_github_indie_user_name())
                 .replace("__REPO__", repo.repo_name);
         WSRequest req = post_indie_auth_request(path, json_payload_to_create);
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
@@ -219,7 +219,7 @@ public class store_github_api {
         // returns success as usual...
         JsonNode json = JsonNodeFactory.instance.objectNode().put("body", comment_body);
         String path = "/repos/__OWNER__/__REPO__/issues/__NUMBER__/comments"
-                .replace("__OWNER__", store_credentials.github.name)
+                .replace("__OWNER__", store_credentials.get_github_indie_user_name())
                 .replace("__REPO__", repo_name)
                 .replace("__NUMBER__", issue_num);
         WSRequest req = post_indie_auth_request(path, json);
@@ -239,7 +239,7 @@ public class store_github_api {
                 .put("title", issue.title)
                 .put("body", issue.body);
         String path = "/repos/__OWNER__/__REPO__/issues/__NUMBER__"
-                .replace("__OWNER__", store_credentials.github.name)
+                .replace("__OWNER__", store_credentials.get_github_indie_user_name())
                 .replace("__REPO__", repo.repo_name)
                 .replace("__NUMBER__", issue.number);
         WSRequest req = indie_auth_request(path)
@@ -260,7 +260,7 @@ public class store_github_api {
                 .put("title", pull_request.title)
                 .put("body", pull_request.body);
         String path = "/repos/__OWNER__/__REPO__/pulls/__NUMBER__"
-                .replace("__OWNER__", store_credentials.github.name)
+                .replace("__OWNER__", store_credentials.get_github_indie_user_name())
                 .replace("__REPO__", pull_request.repo_name)
                 .replace("__NUMBER__", pull_request.number);
         WSRequest req = indie_auth_request(path)
@@ -337,7 +337,7 @@ public class store_github_api {
                 .put("commit_message", commit_message)
                 .put("sha", pull_request.SHA);
         String path = "/repos/__OWNER__/__REPO__/pulls/__NUMBER__/merge"
-                .replace("__OWNER__", store_credentials.github.name)
+                .replace("__OWNER__", store_credentials.get_github_indie_user_name())
                 .replace("__REPO__", pull_request.repo_name)
                 .replace("__NUMBER__", pull_request.number);
         WSRequest req = put_indie_auth_request(path, json);
@@ -352,7 +352,7 @@ public class store_github_api {
     public static void delete_repo(model_repo repo) throws github_io_exception {
         // returns success
         String path = "/repos/__OWNER__/__REPO__"
-                .replace("__OWNER__", store_credentials.github.name)
+                .replace("__OWNER__", store_credentials.get_github_indie_user_name())
                 .replace("__REPO__", repo.repo_name);
         WSRequest req = indie_auth_request(path).setMethod("DELETE");
         WSResponse res = req.execute().get(60, TimeUnit.SECONDS);
