@@ -19,6 +19,8 @@ POST    /webhooks/github                                       controllers.contr
 
 #images
 
+# get raw image!
 GET     /i/$image_file_name<[A-Za-z0-9_\-\.]+>                 controllers.controller_main.image_get(image_file_name: String)
+# upload an image!
 POST    /r/$repo_name<[A-Za-z0-9_\-]+>/i                       controllers.controller_main.repo_image_upload_post(repo_name: String)
 GET     /r/$repo_name<[A-Za-z0-9_\-]+>/i                       controllers.controller_main.repo_image_upload_get(repo_name: String)
