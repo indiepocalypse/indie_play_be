@@ -15,7 +15,7 @@ import java.util.Date;
 /**
  * Created by skariel on 29/09/15.
  */
-@CacheStrategy(readOnly = true, warmingQuery = "order by file_name")
+@CacheStrategy(readOnly = true, warmingQuery = "order by unique_file_name")
 @Entity
 public class model_image extends Model {
     @Nonnull

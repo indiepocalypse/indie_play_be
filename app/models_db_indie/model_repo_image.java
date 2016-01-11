@@ -11,7 +11,7 @@ import javax.persistence.Id;
 /**
  * Created by skariel on 29/09/15.
  */
-@CacheStrategy(readOnly = true, warmingQuery = "order by file_name")
+@CacheStrategy(readOnly = true, warmingQuery = "order by id")
 @Entity
 public class model_repo_image extends Model {
     // TODO: split into image model and repo pointer to it
