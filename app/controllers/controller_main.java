@@ -5,10 +5,7 @@ import handlers.handler_policy;
 import models_db_github.model_pull_request;
 import models_db_github.model_repo;
 import models_db_github.model_user;
-import models_db_indie.enum_user_interaction_web_type;
-import models_db_indie.model_ownership;
-import models_db_indie.model_repo_image;
-import models_db_indie.model_user_interaction;
+import models_db_indie.*;
 import org.markdown4j.Markdown4jProcessor;
 import play.Logger;
 import play.cache.Cache;
@@ -35,13 +32,15 @@ public class controller_main extends Controller {
     // TODO: fix double "%" printing when making an offer or request
     // TODO: refactor out content pages into a handler, all cached. This controller should not touch caching
     // TODO: view caching
+    // TODO: a nice generic error page with login option, etc.
 
-    public final static String EXPLORE_PAGE_CONTENT_CACHE_KEY = "exlpore_webpage_content";
     private final static String main_title = "it's the Indiepocalypse!";
-
     private boolean is_redirected_from_github_login() {
         return request().getQueryString("code") != null;
     }
+
+    public final static String EXPLORE_PAGE_CONTENT_CACHE_KEY = "exlpore_webpage_content";
+
 
     public Result docs() {
         return ok(view_main.render("docs", enum_main_page_type.DOCS, view_docs.render()));
@@ -58,6 +57,9 @@ public class controller_main extends Controller {
     }
 
     public Result newrepo_get() {
+        if (!store_session.user_is_logged()) {
+            return ok(view_main.render("new repo", enum_main_page_type.INDEX, "you must be logged in to create a new repo"));
+        }
         if (!handler_policy.can_create_new_repo()) {
             return ok(view_main.render("new repo", enum_main_page_type.INDEX, view_newrepo_too_many.render()));
         }
@@ -147,13 +149,13 @@ public class controller_main extends Controller {
         }
     }
 
-    public Result repo_image_get(String file_name) {
-        model_repo_image model_repo_image = store_local_db.get_repo_image_by_file_name(file_name);
-        if (model_repo_image==null) {
+    public Result image_get(String unique_file_name) {
+        model_image model_image = store_local_db.get_image_by_id(unique_file_name);
+        if (model_image==null) {
             return ok("no image for this repo");
         }
         response().setHeader("Content-Type", "image");
-        return ok(model_repo_image.getImage());
+        return ok(model_image.getImage());
     }
 
     public Result repo_image_upload_get(String repo_name) {
@@ -162,6 +164,32 @@ public class controller_main extends Controller {
     }
 
     public Result repo_image_upload_post(String repo_name) {
+        if (store_session.user_is_logged()) {
+            return ok(view_main.render("image upload", enum_main_page_type.INDEX, "you have to be logged in to upload an image"));
+        }
+        final handler_policy.can_upload_image_result can_upload = handler_policy.can_upload_image(store_session.get_user_name(), repo_name);
+        if (!can_upload.can_upload) {
+            String text = "";
+            switch (can_upload.enum_result) {
+                case NULL_NAME:
+                    text = "a null user name was found";
+                    break;
+                case NULL_OWNERHSIP:
+                    text = "null ownership was found";
+                    break;
+                case NOT_ENOUGH_OWNERSHIP:
+                    text = "ownership required to upload an image per repository policy is "+can_upload.required_ownership.toString()+"%"+" but you have only "+can_upload.user_ownership.toString()+"%";
+                    break;
+                case NO_REPO_POLICY:
+                    text = "no repo policy on image uploads";
+                    break;
+                case SEE_CAN_UPLOAD_FIELD:
+                    text = "some problem with no good description happened, please contact an admin";
+                    break;
+            }
+            text = "problem uploading image to repo " + repo_name + ": " + text;
+            return ok(view_main.render("image upload", enum_main_page_type.INDEX, text));
+        }
         play.mvc.Http.MultipartFormData body = request().body().asMultipartFormData();
         play.mvc.Http.MultipartFormData.FilePart image = body.getFile("image");
         if (image != null) {
@@ -174,9 +202,15 @@ public class controller_main extends Controller {
                 @Nonnull final byte[] bytes = java.nio.file.Files.readAllBytes(file.toPath());
                 assert bytes != null;
                 Logger.info("image lenbytes=" + Integer.toString(bytes.length));
-                model_repo_image repo_image = new model_repo_image(repo_name, store_session.get_user_name(), bytes);
-                store_local_db.update_repo_image(repo_image);
-                return ok("File uploaded, user name is " + store_session.get_user_name() + " file name: " + repo_image.file_name);
+
+                model_image model_image =  new model_image(store_session.get_user_name(), bytes);
+                model_repo_image model_repo_image = new model_repo_image(repo_name, model_image.unique_file_name);
+                // TODO: start transaction
+                store_local_db.update_image(model_image);
+                store_local_db.update_repo_image(model_repo_image);
+                // TODO: end transaction
+                // TODO: ad transactions in all places!
+                return ok("File uploaded, user name is " + store_session.get_user_name() + " file name: " + model_image.unique_file_name);
             } catch (Exception e) {
                 Logger.error("while reading all byte from image ", e);
                 // TODO: make a dedicated error page for this stuff. It's all over the place

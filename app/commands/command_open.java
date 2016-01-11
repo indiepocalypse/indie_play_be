@@ -29,9 +29,9 @@ public class command_open implements interface_command {
         // check for percentage repo policy only if user is not user that opened issue
         if (!hook.get_user().user_name.equals(hook.get_issue().user.user_name)) {
 
-            model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo());
+            model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo().repo_name);
             if (policy != null) {
-                model_ownership ownership = store_local_db.get_ownership_by_user_name_and_repo_name(hook.get_user(), hook.get_repo());
+                model_ownership ownership = store_local_db.get_ownership_by_user_name_and_repo_name(hook.get_user().user_name, hook.get_repo().repo_name);
                 BigDecimal min_ownership = policy.ownership_required_to_manage_issues;
                 if (ownership == null) {
                     return "Only owners with more than " + min_ownership.toString() + "% ownership can reopen issues. You currently have no ownership at all...";

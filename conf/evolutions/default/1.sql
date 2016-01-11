@@ -9,6 +9,14 @@ create table model_gmail_last_date_read (
   constraint pk_model_gmail_last_date_read primary key (id))
 ;
 
+create table model_image (
+  unique_file_name          varchar(255) not null,
+  uploaded_date             timestamp,
+  uploaded_by_user_name     varchar(255),
+  image                     bytea,
+  constraint pk_model_image primary key (unique_file_name))
+;
+
 create table model_merge_transaction (
   id                        varchar(255) not null,
   offer_id                  varchar(255),
@@ -78,12 +86,10 @@ create table model_repo (
 ;
 
 create table model_repo_image (
-  file_name                 varchar(255) not null,
+  id                        varchar(255) not null,
+  unique_file_name          varchar(255),
   repo_name                 varchar(255),
-  uploaded_date             timestamp,
-  uploaded_by_user_name     varchar(255),
-  image                     bytea,
-  constraint pk_model_repo_image primary key (file_name))
+  constraint pk_model_repo_image primary key (id))
 ;
 
 create table model_repo_policy (
@@ -153,6 +159,8 @@ create table model_user_interaction (
 # --- !Downs
 
 drop table if exists model_gmail_last_date_read cascade;
+
+drop table if exists model_image cascade;
 
 drop table if exists model_merge_transaction cascade;
 

@@ -206,11 +206,11 @@ public class store_local_db {
         }
     }
 
-    public static model_ownership get_ownership_by_user_name_and_repo_name(model_user user, model_repo repo) {
+    public static model_ownership get_ownership_by_user_name_and_repo_name(String user_name, String repo_name) {
         try {
             return model_ownership.fetch().where()
-                    .eq("repo_name", repo.repo_name)
-                    .eq("user_name", user.user_name)
+                    .eq("repo_name", repo_name)
+                    .eq("user_name", user_name)
                     .findUnique();
         } catch (Exception ignore) {
             return null;
@@ -409,10 +409,10 @@ public class store_local_db {
         }
     }
 
-    public static model_repo_policy get_policy_by_repo(model_repo repo) {
+    public static model_repo_policy get_policy_by_repo(String repo_name) {
         try {
             return model_repo_policy.fetch()
-                    .where().eq("repo_name", repo.repo_name).findUnique();
+                    .where().eq("repo_name", repo_name).findUnique();
         } catch (Exception ignore) {
             return null;
         }
@@ -518,6 +518,41 @@ public class store_local_db {
      * IMAGES!
      ********************************/
 
+    public static void update_image(model_image model_image) {
+        try {
+            model_image.save();
+        } catch (Exception e1) {
+            try {
+                model_image.update();
+            } catch (Exception e) {
+                Logger.error("cannot save image ", e1);
+                Logger.error("could not update model_image", e);
+                throw e;
+            }
+        }
+    }
+
+    public static model_image get_image_by_id(String unique_file_name) {
+        try {
+            return model_image.fetch()
+                    .where().idEq(unique_file_name)
+                    .findUnique();
+        } catch (Exception e) {
+            Logger.error("while fetching image with name " + unique_file_name + ": ", e);
+            return null;
+        }
+    }
+
+    public static List<Object> get_images_id_by_repo(String repo_name) {
+        try {
+            return model_repo_image.fetch()
+                    .where().eq("repo_name", repo_name)
+                    .findIds();
+        } catch (Exception ignore) {
+            return null;
+        }
+    }
+
     public static void update_repo_image(model_repo_image model_repo_image) {
         try {
             model_repo_image.save();
@@ -532,36 +567,21 @@ public class store_local_db {
         }
     }
 
-    public static model_repo_image get_repo_image_by_file_name(String file_name) {
+    public static void delete_repo_images_by_repo(model_repo repo) {
         try {
-            return model_repo_image.fetch()
-                    .where().idEq(file_name)
-                    .findUnique();
+            // TODO: this delete one by one is bad. Fix it!
+            List<model_repo_image> repo_images = model_repo_image.fetch()
+                    .where().eq("repo_name", repo.repo_name).findList();
+            if (repo_images != null) {
+                for (model_repo_image repo_image : repo_images) {
+                    model_repo_image.deleteById(repo_image.id);
+                }
+            }
         } catch (Exception e) {
-            Logger.error("while fetching image with name " + file_name + ": ", e);
-            return null;
+            Logger.error("failed to delete repo_images by repo:", e);
         }
     }
 
-    public static List<model_repo_image> get_all_repo_images(String repo_name) {
-        try {
-            return model_repo_image.fetch()
-                    .where().eq("repo_name", repo_name)
-                    .findList();
-        } catch (Exception ignore) {
-            return null;
-        }
-    }
-
-    public static List<Object> get_all_repo_images_id(String repo_name) {
-        try {
-            return model_repo_image.fetch()
-                    .where().eq("repo_name", repo_name)
-                    .findIds();
-        } catch (Exception ignore) {
-            return null;
-        }
-    }
 
     /********************************
      * USER INTERACTIONS!

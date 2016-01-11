@@ -133,6 +133,7 @@ public class handler_general {
         store_local_db.delete_offers_by_repo(repo);
         store_local_db.delete_ownerships_by_repo(repo);
         store_local_db.delete_policy_by_repo(repo);
+        store_local_db.delete_repo_images_by_repo(repo);
         store_local_db.delete_pull_requests_by_repo(repo);
         __delete_repo(repo);
         store_github_api.delete_repo(repo);

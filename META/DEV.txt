@@ -17,6 +17,7 @@ Current development practices:
        policies are managed with a db model model_repo_policy
 11) models are always fully initialised! at least that is, one level deep. This should be done recursively, there's a todo about it
 12) store_local_db only saves the 1st level in each model!
+13) caching: Just some simple whole-page caching
 
 to remotely debug:
 
@@ -30,6 +31,7 @@ TODO: cloudflare?
 TODO: google analytics?
 TODO: cache everything: index / faq / help / explore (every few hrs or minutes) / etc
 TODO: limit image size
+TODO: use transactions... (for god sake!!!!!!!)
 // look here: https://www.playframework.com/documentation/2.0/JavaCache
 
 Currenly working on:

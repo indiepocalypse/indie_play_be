@@ -75,7 +75,7 @@ public class controller_webhooks_github extends Controller {
             // create an ownership for this user if one is not existing
             model_ownership ownership = null;
             try {
-                ownership = store_local_db.get_ownership_by_user_name_and_repo_name(hook.get_user(), hook.get_repo());
+                ownership = store_local_db.get_ownership_by_user_name_and_repo_name(hook.get_user().user_name, hook.get_repo().repo_name);
             } catch (Exception ignore) {
             }
             if (ownership == null) {

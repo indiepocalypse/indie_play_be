@@ -263,7 +263,7 @@ public class handler_commands {
         } else {
             final Date date_accepted_if_accepted = null;
             final Date date_created = new Date();
-            final model_ownership user_ownership = store_local_db.get_ownership_by_user_name_and_repo_name(hook.get_user(), hook.get_repo());
+            final model_ownership user_ownership = store_local_db.get_ownership_by_user_name_and_repo_name(hook.get_user().user_name, hook.get_repo().repo_name);
             if (user_ownership != null) {
                 current_request = new model_request_for_merge(
                         hook.get_user().user_name,
@@ -282,7 +282,7 @@ public class handler_commands {
         }
 
         final List<model_offer_for_merge> offers = store_local_db.get_offers_by_pull_request(hook.get_pull_request());
-        final model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo());
+        final model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo().repo_name);
         final List<model_ownership> ownerships = store_local_db.get_ownerships_by_repo_name(hook.get_repo().repo_name);
         try {
             final negotiation_status negotiation_status = new negotiation_status(pull_request, current_request, offers, policy, ownerships, hook.get_repo());
@@ -326,7 +326,7 @@ public class handler_commands {
         if (hook.get_pull_request().is_closed()) {
             return "this pull request is closed, cannot place an offer";
         }
-        final model_ownership user_ownership = store_local_db.get_ownership_by_user_name_and_repo_name(hook.get_user(), hook.get_repo());
+        final model_ownership user_ownership = store_local_db.get_ownership_by_user_name_and_repo_name(hook.get_user().user_name, hook.get_repo().repo_name);
         if ((user_ownership == null) ||
                 (user_ownership.percent.compareTo(BigDecimal.ZERO) <= 0)) {
             return "Only owners with ownership can make offers";
@@ -388,7 +388,7 @@ public class handler_commands {
 
         final model_request_for_merge request = store_local_db.get_request_by_pull_request(hook.get_pull_request());
         final List<model_offer_for_merge> offers = store_local_db.get_offers_by_pull_request(hook.get_pull_request());
-        final model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo());
+        final model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo().repo_name);
         final List<model_ownership> ownerships = store_local_db.get_ownerships_by_repo_name(hook.get_repo().repo_name);
         try {
             final negotiation_status negotiation_status = new negotiation_status(pull_request, request, offers, policy, ownerships, hook.get_repo());

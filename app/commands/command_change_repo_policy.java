@@ -35,9 +35,9 @@ public class command_change_repo_policy implements interface_command {
 
     @Override
     public String handle(model_command command, interface_github_webhook hook) {
-        model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo());
+        model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo().repo_name);
         if (policy != null) {
-            model_ownership ownership = store_local_db.get_ownership_by_user_name_and_repo_name(hook.get_user(), hook.get_repo());
+            model_ownership ownership = store_local_db.get_ownership_by_user_name_and_repo_name(hook.get_user().user_name, hook.get_repo().repo_name);
             BigDecimal min_ownership = policy.ownership_required_to_change_policy;
             if (ownership == null) {
                 return "Only owners with more than " + min_ownership.toString() + "% ownership can change policy of this repo. You currently have no ownership at all...";

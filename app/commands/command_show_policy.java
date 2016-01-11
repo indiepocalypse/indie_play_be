@@ -17,7 +17,7 @@ public class command_show_policy implements interface_command {
 
     @Override
     public String handle(model_command command, interface_github_webhook hook) {
-        model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo());
+        model_repo_policy policy = store_local_db.get_policy_by_repo(hook.get_repo().repo_name);
         if (policy == null) {
             return "no policy for this repo";
         }
