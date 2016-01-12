@@ -51,7 +51,8 @@ public class controller_main extends Controller {
             Logger.info("GENERATING EXPLORE PAGE CONTENT CACHE!!!!!!!!!!!!!!!!!");
             List<model_repo> repos = store_local_db.get_all_repos();
             List<model_user> users = store_local_db.get_all_users();
-            return view_repo_explore.render(repos, users);
+            Map<String, List<model_repo_image>> repo_images_map = store_local_db.get_map_all_repo_names_to_images();
+            return view_repo_explore.render(repos, users, repo_images_map);
         }, (int) store_conf.get_delay_L2_seconds());
         return ok(view_main.render("explore", enum_main_page_type.EXPLORE, explore_page_content));
     }

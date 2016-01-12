@@ -577,7 +577,7 @@ public class store_local_db {
         }
     }
 
-    public Map<String /* repo name */, List<model_repo_image>> get_map_all_repo_names_to_images() {
+    public static Map<String /* repo name */, List<model_repo_image>> get_map_all_repo_names_to_images() {
         // TODO: paginate this!
         List<model_repo_image> all_repo_images = get_all_repo_images();
         List<model_repo> all_repos = get_all_repos();
