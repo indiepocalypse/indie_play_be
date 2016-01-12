@@ -164,7 +164,7 @@ public class controller_main extends Controller {
     }
 
     public Result repo_image_upload_post(String repo_name) {
-        if (store_session.user_is_logged()) {
+        if (!store_session.user_is_logged()) {
             return ok(view_main.render("image upload", enum_main_page_type.INDEX, "you have to be logged in to upload an image"));
         }
         final handler_policy.can_upload_image_result can_upload = handler_policy.can_upload_image(store_session.get_user_name(), repo_name);
@@ -193,8 +193,6 @@ public class controller_main extends Controller {
         play.mvc.Http.MultipartFormData body = request().body().asMultipartFormData();
         play.mvc.Http.MultipartFormData.FilePart image = body.getFile("image");
         if (image != null) {
-            String file_name = image.getFilename();
-            String contentType = image.getContentType();
             java.io.File file = image.getFile();
             // TODO: limit file size!
             // TODO: check user can actually upload to that repo...

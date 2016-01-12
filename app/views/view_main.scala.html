@@ -14,14 +14,20 @@
     <title>@title</title>
     <link rel="shortcut icon" type="image/png" href='@routes.Assets.versioned("images/favicon.png")'>
 
+    <!-- JS -->
     <!-- JQuery! -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" async="async"></script>
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">-->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" async="async"></script>
     <!-- Bootstrap! -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" media="screen" href='@routes.Assets.versioned("stylesheets/main.css")'>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" async="async"></script>
+    <!-- My JS, actually mostly empty-->
     <!--<script src="@routes.Assets.versioned("javascripts/hello.js")" type="text/javascript"></script>-->
+
+    <!-- CSS -->
+    <!-- Bootstrap! -->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- My CSS! -->
+    <link rel="stylesheet" media="screen" href='@routes.Assets.versioned("stylesheets/main.css")'>
 
 </head>
 
@@ -42,7 +48,7 @@
 
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li @if(page_type==views.enum_main_page_type.DOCS){class="active" }><a class="nav_center_vertical" href="/faq">FAQ</a></li>
+                <li @if(page_type==views.enum_main_page_type.DOCS){class="active" }><a class="nav_center_vertical" href="/docs">FAQ</a></li>
                 <li @if(page_type==views.enum_main_page_type.EXPLORE){class="active" }><a class="nav_center_vertical" href="/explore">Explore</a></li>
                 <li @if(page_type==views.enum_main_page_type.BLOG){class="active" }><a class="nav_center_vertical" href="/blog">Blog</a></li>
             </ul>
@@ -66,7 +72,7 @@
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                     <li class="dropdown-header">logged in as <strong>@stores.store_session.get_user_name()</strong></li>
                     <li role="separator" class="divider"></li>
-                    <li><a href="u/@stores.store_session.get_user_name()">Profile</a></li>
+                    <li><a href="/u/@stores.store_session.get_user_name()">Profile</a></li>
                     <li><a href="/settings">Settings</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="/logout">Logout</a></li>
@@ -84,6 +90,18 @@
         </div>
     </div>
 </nav>
+<section id="landing_section">
+    <div class="container col-md-12">
+        <h1>CREATE GAMES TOGETHER</h1>
+        <h3>
+            help develop a commercial game, negotiate your share from the revenue
+        </h3>
+
+    </div>
+    <!--<div class="container col-md-6">-->
+        <!--<h1>Create games together!</h1>-->
+    <!--</div>-->
+</section>
 <section id="content">
 <div class="container">
     @content
