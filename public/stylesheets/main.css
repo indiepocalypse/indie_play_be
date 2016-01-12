@@ -17,10 +17,11 @@
     padding-bottom: 20px;
     color: #FFFFFF;
 }
-footer {
+body > footer {
     padding-top: 50px;
     padding-bottom: 50px;
-    color: #f0f0f0;
+    color: #303030;
+    background: rgba(255,255,255,1.0);
 }
 .navbar-inverse .navbar-nav li > a {
     color: #f0f0f0;
@@ -29,7 +30,7 @@ body {
     background-image: url('../images/body_bkg.jpg');
     background-attachment: fixed;
     background-size: cover;
-    background-position: 0px -200px;
+    background-position: 0px 0px;
 }
 #content {
     background-color: #FFFFFF;
@@ -38,10 +39,6 @@ body {
     padding-bottom: 90px;
     min-height: 700px;
     margin-top: 300px;
-}
-.container-fluid {
-    padding-left: 50px;
-    padding-right: 50px;
 }
 a:active {
     outline: none;
@@ -64,7 +61,6 @@ a:focus {
 }
 #landing_section h3 {
     font-size: 25px;
-    //font-weight: 100;
     padding-top: 0px;
     padding-bottom: 0px;
     font-family: Montserrat,sans-serif;
@@ -85,4 +81,13 @@ div.light-bk-div {
     padding-bottom: 5px;
     padding-left: 5px;
     padding-right: 5px;
+}
+div.row > div > div > div {
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+}
+div.row > div > div img {
+    height: auto;
+    width: 100%;
 }

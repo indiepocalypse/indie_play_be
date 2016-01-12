@@ -1,30 +1,33 @@
-@(repos: List[models_db_github.model_repo])(users: List[models_db_github.model_user])(repos_images: Map[String, List[models_db_indie.model_repo_image]])
+@(list_repos: List[ArrayList[models_db_github.model_repo]])(users: List[models_db_github.model_user])(repos_images: Map[String, List[models_db_indie.model_repo_image]])
 
 
 <!--EXPLORE REPOS!-->
-<div class="container col-md-12">
     <h1>Explore repos!</h1>
-    @repos.map{repo=>
-    @defining("/r/"+repo.repo_name) { indie_html_url =>
-    <div class="col-sm-4 no-padding">
-        <div class="light-bk-div">
-            @if(repos_images.get(repo.repo_name).size()==0){
-                <img src='@routes.Assets.versioned("images/img_not_found.jpg")' width="100%">
-            }else{
-                @defining("/i/"+repos_images.get(repo.repo_name).get(0).unique_file_name) { url =>
-                    <img src='@url' width="100%">
-                }
+    @list_repos.map{repos=>
+    <div class="row">
+        @repos.map{repo=>
+            @defining("/r/"+repo.repo_name) { indie_html_url =>
+            <div class="col-sm-3 no-padding">
+                <div class="light-bk-div">
+                    <div class="crop">
+                    @if(repos_images.get(repo.repo_name).size()==0){
+                        <img src='@routes.Assets.versioned("images/img_not_found.jpg")' width="100%">
+                    }else{
+                        @defining("/i/"+repos_images.get(repo.repo_name).get(0).unique_file_name) { url =>
+                            <img src='@url' width="100%">
+                        }
+                    }
+                    </div>
+                    <h3><a href="@indie_html_url">@repo.repo_name</a></h3>
+                    <a href="@repo.github_html_url">see in github</a>
+                </div>
+            </div>
             }
-            <h3><a href="@indie_html_url">@repo.repo_name</a></h3>
-            <a href="@repo.github_html_url">see in github</a>
-        </div>
+        }
     </div>
     }
-    }
-</div>
 
 <!--EXPLORE USERS!-->
-<div class="container col-md-8">
     <h1>Explore users!</h1>
     @users.map{user=>
     @defining("/u/"+user.user_name) { indie_html_url =>
@@ -35,6 +38,5 @@
     </div>
     }
     }
-</div>
 
 @view_repo_image_upload.render()
