@@ -567,6 +567,34 @@ public class store_local_db {
         }
     }
 
+    public static List<model_repo_image> get_all_repo_images() {
+        // TODO: paginate this
+        try {
+            return model_repo_image.fetch().findList();
+        } catch (Exception e) {
+            Logger.error("failed to fetch all repo_images:", e);
+            return new ArrayList<>(1);
+        }
+    }
+
+    public Map<String /* repo name */, List<model_repo_image>> get_map_all_repo_names_to_images() {
+        // TODO: paginate this!
+        List<model_repo_image> all_repo_images = get_all_repo_images();
+        List<model_repo> all_repos = get_all_repos();
+        Map<String /* repo name */, List<model_repo_image>> map = new HashMap<>(3);
+        for (model_repo repo: all_repos) {
+            // repo name should be unique...
+            assert !map.containsKey(repo.repo_name);
+            map.put(repo.repo_name, new ArrayList<>(3));
+        }
+        for (model_repo_image repo_image: all_repo_images) {
+            // image should be owned by existing repo
+            assert map.containsKey(repo_image.repo_name);
+            map.get(repo_image.repo_name).add(repo_image);
+        }
+        return map;
+    }
+
     public static void delete_repo_images_by_repo(model_repo repo) {
         try {
             // TODO: this delete one by one is bad. Fix it!
