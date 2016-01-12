@@ -9,7 +9,6 @@
             @defining("/r/"+repo.repo_name) { indie_html_url =>
             <div class="col-sm-3 no-padding">
                 <div class="light-bk-div">
-                    <div class="crop">
                     @if(repos_images.get(repo.repo_name).size()==0){
                         <img src='@routes.Assets.versioned("images/img_not_found.jpg")' width="100%">
                     }else{
@@ -17,7 +16,6 @@
                             <img src='@url' width="100%">
                         }
                     }
-                    </div>
                     <h3><a href="@indie_html_url">@repo.repo_name</a></h3>
                     <a href="@repo.github_html_url">see in github</a>
                 </div>

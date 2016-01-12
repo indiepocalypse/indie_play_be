@@ -38,7 +38,7 @@ body {
     padding-top: 50px;
     padding-bottom: 90px;
     min-height: 700px;
-    margin-top: 300px;
+    margin-top: 50px;
 }
 a:active {
     outline: none;
@@ -52,6 +52,40 @@ a:focus {
 #landing_section {
     text-align: center;
 }
+
+@media (min-width: 768px) {
+#landing_section h1 {
+    font-size: 50px;
+    font-weight: 100;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-family: Montserrat,sans-serif;
+}
+#landing_section h3 {
+    font-size: 20px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    font-family: Montserrat,sans-serif;
+}
+}
+
+@media (min-width: 992px) {
+#landing_section h1 {
+    font-size: 60px;
+    font-weight: 100;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-family: Montserrat,sans-serif;
+}
+#landing_section h3 {
+    font-size: 22px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    font-family: Montserrat,sans-serif;
+}
+}
+
+@media (min-width: 1200px) {
 #landing_section h1 {
     font-size: 70px;
     font-weight: 100;
@@ -65,6 +99,8 @@ a:focus {
     padding-bottom: 0px;
     font-family: Montserrat,sans-serif;
 }
+}
+
 div.no-padding {
     padding-top: 0px;
     padding-bottom: 0px;
@@ -82,12 +118,10 @@ div.light-bk-div {
     padding-left: 5px;
     padding-right: 5px;
 }
-div.row > div > div > div {
+div.row > div img {
     width: 100%;
-    height: 150px;
-    overflow: hidden;
+    height: 100%;
 }
-div.row > div > div img {
-    height: auto;
-    width: 100%;
+.navbar-inverse .navbar-toggle {
+    border-color: #ffffff;
 }
