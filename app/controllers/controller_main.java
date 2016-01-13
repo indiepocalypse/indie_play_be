@@ -309,6 +309,26 @@ public class controller_main extends Controller {
         return ok(view_main.render(main_title, enum_main_page_type.INDEX, view_landing.render()));
     }
 
+    public Result about() {
+        // TODO: implement!
+        return ok(view_main.render("About", enum_main_page_type.INDEX, "This is the about..."));
+    }
+
+    public Result privacy_policy() {
+        // TODO: implement!
+        return ok(view_main.render("Privacy Policy", enum_main_page_type.INDEX, "This is the privacy policy..."));
+    }
+
+    public Result terms_and_conditions() {
+        // TODO: implement!
+        return ok(view_main.render("Terms and Conditions", enum_main_page_type.INDEX, "This is the terms and conditions..."));
+    }
+
+    public Result contact() {
+        // TODO: implement!
+        return ok(view_main.render("Contact", enum_main_page_type.INDEX, "This is the contact..."));
+    }
+
     public Result logout() {
         // we have to check. Otherwise get_user_name below will throw
         if (!store_session.user_is_logged()) {

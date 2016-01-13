@@ -160,3 +160,6 @@ div.row.landing_buttons_row > a {
     background: rgba(54,54,54,0.5);
     padding-bottom: 20px;
 }
+body > footer:nth-child(4) > div:nth-child(1) > h4:nth-child(1) {
+    text-align: center;
+}

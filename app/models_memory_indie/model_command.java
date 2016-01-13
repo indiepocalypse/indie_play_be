@@ -1,5 +1,6 @@
 package models_memory_indie;
 
+import controllers.routes;
 import play.Logger;
 
 import javax.annotation.Nonnull;

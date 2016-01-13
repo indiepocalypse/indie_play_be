@@ -3,6 +3,10 @@
 # ~~~~
 
 GET     /                                                      controllers.controller_main.index()
+GET     /about                                                 controllers.controller_main.about()
+GET     /contact                                               controllers.controller_main.contact()
+GET     /terms_and_conditions                                  controllers.controller_main.terms_and_conditions()
+GET     /privacy_policy                                        controllers.controller_main.privacy_policy()
 GET     /logout                                                controllers.controller_main.logout()
 GET     /docs                                                  controllers.controller_main.docs()
 GET     /explore                                               controllers.controller_main.explore()
