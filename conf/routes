@@ -4,6 +4,7 @@
 
 GET     /                                                      controllers.controller_main.index()
 GET     /about                                                 controllers.controller_main.about()
+GET     /captcha                                               controllers.controller_main.captcha_image_get()
 GET     /contact                                               controllers.controller_main.contact()
 GET     /terms_and_conditions                                  controllers.controller_main.terms_and_conditions()
 GET     /privacy_policy                                        controllers.controller_main.privacy_policy()

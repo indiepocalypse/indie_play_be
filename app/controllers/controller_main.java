@@ -7,6 +7,8 @@ import models_db_github.model_repo;
 import models_db_github.model_user;
 import models_db_indie.*;
 import org.markdown4j.Markdown4jProcessor;
+import org.smx.captcha.Producer;
+import org.smx.captcha.impl.FactoryLanguageImpl;
 import play.Logger;
 import play.cache.Cache;
 import play.data.DynamicForm;
@@ -19,9 +21,13 @@ import views.enum_main_page_type;
 import views.html.*;
 
 import javax.annotation.Nonnull;
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.Callable;
 
 public class controller_main extends Controller {
@@ -166,6 +172,31 @@ public class controller_main extends Controller {
         }
         response().setHeader("Content-Type", "image");
         return ok(model_image.getImage());
+    }
+
+    public Result captcha_image_get() {
+        // TODO: integrate with session
+        Properties props = new Properties();
+        props.put("format", "jpg");
+        props.put("font", "Helvetica");
+        props.put("fontsize", "28");
+        props.put("min-width", "180");
+        props.put("padding-x", "25");
+        props.put("padding-y", "25");
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        try {
+            FactoryLanguageImpl inst = (FactoryLanguageImpl) Producer.forName("org.smx.captcha.impl.FactoryLanguageImpl");
+            inst.setLanguageDirectory("./conf/internal_resources/icaptcha_langs");
+            inst.setLanguage("EN");
+            inst.setRange(5, 10); //Select words between 5-10 letters
+            Producer.render(os, inst, props);
+        }
+        catch (Exception e) {
+            Logger.error("while generating captcha: ",e);
+            return ok(view_main.render("captcha error", enum_main_page_type.INDEX, "error while generating captcha. Please contact an admin"));
+        }
+        response().setHeader("Content-Type", "image");
+        return ok(os.toByteArray());
     }
 
     public Result repo_image_upload_get(String repo_name) {
