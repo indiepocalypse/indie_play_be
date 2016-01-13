@@ -2,7 +2,6 @@
 
 
 <!--EXPLORE REPOS!-->
-    <h1>Explore repos!</h1>
     @list_repos.map{repos=>
     <div class="row">
         @repos.map{repo=>
@@ -26,7 +25,6 @@
     }
 
 <!--EXPLORE USERS!-->
-    <h1>Explore users!</h1>
     @users.map{user=>
     @defining("/u/"+user.user_name) { indie_html_url =>
     <div class="container col-md-6">

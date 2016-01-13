@@ -38,7 +38,7 @@ body {
     padding-top: 50px;
     padding-bottom: 90px;
     min-height: 700px;
-    margin-top: 50px;
+    margin-top: 0px;
 }
 a:active {
     outline: none;
@@ -147,12 +147,16 @@ div.row.landing_buttons_row > a {
     width: 150px;
     text-shadow: 1px 1px #000000;
 }
-.navbar-header {
-    width: 190px;
-}
 .container-fluid > .navbar-collapse, .container-fluid > .navbar-header, .container > .navbar-collapse, .container > .navbar-header {
     margin-left: 30px;
 }
 #navbar {
     margin-right: 30px;
+}
+.navbar-brand > img:nth-child(1) {
+    width: 190px;
+}
+.container-fluid.dark_bk {
+    background: rgba(54,54,54,0.5);
+    padding-bottom: 20px;
 }
