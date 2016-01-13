@@ -13,7 +13,7 @@
     color: #FFFFFF;
 }
 .navbar-brand.nav_center_vertical {
-    padding-top: 20px;
+    padding-top: 13px;
     padding-bottom: 20px;
     color: #FFFFFF;
 }
@@ -30,7 +30,7 @@ body {
     background-image: url('../images/body_bkg.jpg');
     background-attachment: fixed;
     background-size: cover;
-    background-position: 0px 0px;
+    background-position: 0px -150px;
 }
 #content {
     background-color: #FFFFFF;
@@ -146,4 +146,13 @@ div.row.landing_buttons_row > a {
     margin-right: 30px;
     width: 150px;
     text-shadow: 1px 1px #000000;
+}
+.navbar-header {
+    width: 190px;
+}
+.container-fluid > .navbar-collapse, .container-fluid > .navbar-header, .container > .navbar-collapse, .container > .navbar-header {
+    margin-left: 30px;
+}
+#navbar {
+    margin-right: 30px;
 }
