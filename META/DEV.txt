@@ -33,6 +33,7 @@ TODO: cache everything: index / faq / help / explore (every few hrs or minutes) 
 TODO: limit image size
 TODO: use transactions... (for god sake!!!!!!!)
 // look here: https://www.playframework.com/documentation/2.0/JavaCache
+icaptcha: http://code.google.com/p/icaptcha/
 
 Currenly working on:
 

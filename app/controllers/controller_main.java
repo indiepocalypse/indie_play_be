@@ -326,7 +326,7 @@ public class controller_main extends Controller {
 
     public Result contact() {
         // TODO: implement!
-        return ok(view_main.render("Contact", enum_main_page_type.INDEX, "This is the contact..."));
+        return ok(view_main.render("Contact", enum_main_page_type.INDEX, view_contact.render()));
     }
 
     public Result logout() {

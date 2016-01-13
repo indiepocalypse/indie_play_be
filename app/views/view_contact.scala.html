@@ -1,0 +1,21 @@
+<div class="container col-md-6">
+
+    <form method="post">
+        <div class="form-group has-feedback">
+            <label class="control-label" for="input_email">Your email address</label>
+            <input type="text" class="form-control" id="input_email" name="@stores.store_session.mail_name_name"
+                   value="" required>
+            <span class="glyphicon glyphicon-asterisk form-control-feedback" aria-hidden="true"
+                  style="color:red"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="contact_message_description">Message</label>
+            <textarea class="form-control" rows="3" id="contact_message_description"
+                      name="@stores.store_session.contact_message_description_name"
+                      value=""></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-default">Send message</button>
+    </form>
+
+</div>

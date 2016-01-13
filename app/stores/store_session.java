@@ -9,6 +9,8 @@ import javax.annotation.Nonnull;
  * Created by skariel on 11/10/15.
  */
 public class store_session {
+    public static final String mail_name_name = "mail_name";
+    public static final String contact_message_description_name = "contact_message_description_name";
     public static final String repo_name_name = "repo_name";
     public static final String repo_homepage_name = "repo_homepage";
     public static final String repo_description_name = "repo_description";
